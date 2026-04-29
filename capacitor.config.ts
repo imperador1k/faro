@@ -5,8 +5,6 @@ const config: CapacitorConfig = {
   appName: 'MyDuolingo',
   webDir: 'out', // Pasta de build padrão
   server: {
-    // IMPORTANTE: Permitir navegação para o domínio da Vercel
-    // Isto garante que Server Actions e Auth (Clerk) funcionem
     url: 'https://myduolingo.vercel.app',
     allowNavigation: [
       'myduolingo.vercel.app',

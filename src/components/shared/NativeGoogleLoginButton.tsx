@@ -46,7 +46,11 @@ export default function NativeGoogleLoginButton() {
     // that often break native Google Login in the first build.
     return (
         <div className="flex flex-col gap-2 w-full">
-            <SignInButton mode="modal">
+            <SignInButton 
+                mode="modal" 
+                fallbackRedirectUrl="/auth-success"
+                forceRedirectUrl="/auth-success"
+            >
                 <GoogleButtonUI />
             </SignInButton>
             
