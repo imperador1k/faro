@@ -10,6 +10,17 @@ body,
 :root {
   min-height: 100vh;
   font-family: 'Nunito', sans-serif;
+  /* Mobile: Impede o "puxar para atualizar" do browser e scroll elástico indesejado */
+  overscroll-behavior-y: none;
+  /* Mobile: Impede a seleção de texto acidental na UI (parece mais nativo) */
+  user-select: none;
+  /* Mobile: Remove o delay de clique e a caixa azul no Android */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Permitir seleção apenas onde faz sentido */
+input, textarea, [contenteditable="true"] {
+  user-select: text;
 }
 
 :root {

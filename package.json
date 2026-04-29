@@ -25,6 +25,13 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "@capacitor/android": "^8.3.1",
+    "@capacitor/app": "^8.1.0",
+    "@capacitor/cli": "^8.3.1",
+    "@capacitor/core": "^8.3.1",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/keyboard": "^8.0.3",
+    "@capacitor/status-bar": "^8.0.2",
     "@clerk/localizations": "^3.34.0",
     "@clerk/nextjs": "^6.36.7",
     "@giphy/js-fetch-api": "^5.7.0",
@@ -54,6 +61,7 @@
     "matter-js": "^0.20.0",
     "next": "14.2.35",
     "null": "^2.0.0",
+    "onesignal-cordova-plugin": "^5.3.6",
     "postgres": "^3.4.8",
     "react": "^18",
     "react-dom": "^18",
@@ -71,6 +79,7 @@
     "zustand": "^5.0.9"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@playwright/test": "^1.58.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/canvas-confetti": "^1.9.0",

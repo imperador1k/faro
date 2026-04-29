@@ -49,3 +49,24 @@ node_modules/
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Capacitor & Android
+/android/local.properties
+/android/app/build
+/android/build
+/android/.gradle
+/android/.idea
+/android/app/src/main/assets/public
+/android/app/src/main/res/raw/
+/android/app/src/main/assets/capacitor.config.json
+/android/capacitor.config.json
+*.keystore
+*.jks
+
+# Sensitive Configs
+appConfig.json
+google-services.json
+android/app/google-services.json
+
+# Assets folder for generation
+/assets

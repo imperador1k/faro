@@ -10,6 +10,7 @@ import { FloatingMarco } from "@/components/shared/floating-marco";
 import { TTSUnlocker } from "@/components/shared/tts-unlocker";
 import { ReviewModal } from "@/components/modals/review-modal";
 import { GlobalPresenceProvider } from "@/components/providers/global-presence-provider";
+import { NativeBridge } from "@/components/providers/native-bridge";
 import "./globals.css";
 
 const nunito = Nunito({ subsets: ["latin"] });
@@ -86,6 +87,7 @@ export default function RootLayout({
           <CustomToastProvider>
             <Toaster richColors />
             <OneSignalProvider />
+            <NativeBridge />
             
             <ClerkLoading>
               <div className="fixed inset-0 z-above-modal bg-white flex items-center justify-center">

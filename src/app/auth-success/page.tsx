@@ -1,30 +1,20 @@
 "use client";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { LottieAnimation } from "@/components/ui/lottie-animation";
 
-const PROD_URL = "https://myduolingo.vercel.app";
-
 export default function AuthSuccessPage() {
+    const router = useRouter();
+
     useEffect(() => {
-        const homeUrl = encodeURIComponent(`${PROD_URL}/learn`);
+        // In Capacitor (Live URL mode), we are already in the main WebView.
+        // We just need to navigate to the home page.
+        const timeout = setTimeout(() => {
+            router.replace("/learn");
+        }, 1500); // Give some time for the animation to be seen
 
-        // 1. Tell the Main Webview to navigate to the home page
-        //    (this carries the Clerk session cookies over)
-        window.location.href = `median://open/internal?url=${homeUrl}`;
-
-        // 2. Dismiss the App Browser (Custom Tab) itself
-        setTimeout(() => {
-            window.location.href = "median://appbrowser/close";
-        }, 100);
-
-        // 3. Fallback for plain web browsers (PC, non-Median mobile)
-        //    If we're still here after 800ms, Median bridge was not active → go home normally
-        setTimeout(() => {
-            if (window.location.pathname.startsWith("/auth-success")) {
-                window.location.replace("/learn");
-            }
-        }, 800);
-    }, []);
+        return () => clearTimeout(timeout);
+    }, [router]);
 
     return (
         <div className="flex h-full w-full min-h-screen flex-col items-center justify-center bg-white z-50 fixed inset-0">

@@ -1,16 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { SignInButton, useSignIn } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+import { SignInButton } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
-
-// Extend window type to allow the Median callback function
-declare global {
-    interface Window {
-        medianGoogleCallback?: (response: { idToken?: string; error?: string }) => void;
-    }
-}
+import { Capacitor } from "@capacitor/core";
 
 const GoogleIcon = () => (
     <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" xmlns="http://www.w3.org/2000/svg">
@@ -42,98 +35,25 @@ const GoogleButtonUI = ({ onClick, loading = false }: ButtonUIProps) => (
 );
 
 export default function NativeGoogleLoginButton() {
-    const [isMedian, setIsMedian] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [isNative, setIsNative] = useState(false);
 
-    const { signIn, setActive, isLoaded } = useSignIn();
-    const router = useRouter();
-
-    // Detect Median wrapper on mount (SSR-safe)
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            setIsMedian(navigator.userAgent.toLowerCase().includes("median"));
-        }
+        setIsNative(Capacitor.isNativePlatform());
     }, []);
 
-    // Register the global callback for the Median JS Bridge response
-    useEffect(() => {
-        window.medianGoogleCallback = async (response) => {
-            if (!response?.idToken) {
-                console.error("[NativeGoogleLogin] No idToken in response:", response);
-                setError("Falha no login com Google. Tenta de novo.");
-                setLoading(false);
-                return;
-            }
-
-            console.log("[NativeGoogleLogin] Got native Google ID token, verifying...");
-
-            try {
-                // ── Step 1: Verify token on backend and get Clerk ticket ────
-                const res = await fetch("/api/auth/native-google", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ idToken: response.idToken }),
-                });
-
-                const data = await res.json();
-
-                if (!res.ok || !data.ticket) {
-                    throw new Error(data.error || "Failed to get sign-in ticket");
-                }
-
-                console.log("[NativeGoogleLogin] Got Clerk ticket, creating session...");
-
-                // ── Step 2: Consume the Clerk ticket to create a real session ──
-                if (!isLoaded || !signIn) {
-                    throw new Error("Clerk not ready");
-                }
-
-                const result = await signIn.create({
-                    strategy: "ticket",
-                    ticket: data.ticket,
-                });
-
-                // ── Step 3: Set the active session and redirect ─────────────
-                await setActive({ session: result.createdSessionId });
-
-                console.log("[NativeGoogleLogin] Session created! Redirecting...");
-                router.replace("/learn");
-            } catch (err: unknown) {
-                const message = err instanceof Error ? err.message : "Erro desconhecido";
-                console.error("[NativeGoogleLogin] Auth error:", message);
-                setError("Erro ao autenticar. Tenta de novo.");
-                setLoading(false);
-            }
-        };
-
-        return () => {
-            window.medianGoogleCallback = undefined;
-        };
-    }, [isLoaded, signIn, setActive, router]);
-
-    const handleNativeGoogleLogin = () => {
-        if (loading) return;
-        setLoading(true);
-        setError(null);
-        // Trigger Median's native Google Sign-In. The SDK calls
-        // window.medianGoogleCallback() with the result idToken.
-        window.location.href = "median://socialLogin/google?callback=medianGoogleCallback";
-    };
-
+    // For the initial migration, we use Clerk's robust web flow even on native.
+    // This avoids complex SHA-1/Redirect URI issues in Firebase/Google Console
+    // that often break native Google Login in the first build.
     return (
         <div className="flex flex-col gap-2 w-full">
-            {isMedian ? (
-                // Inside Median → trigger native Google auth via JS Bridge
-                <GoogleButtonUI onClick={handleNativeGoogleLogin} loading={loading} />
-            ) : (
-                // Regular browser → standard Clerk web sign-in
-                <SignInButton mode="modal">
-                    <GoogleButtonUI />
-                </SignInButton>
-            )}
-            {error && (
-                <p className="text-center text-xs text-red-500">{error}</p>
+            <SignInButton mode="modal">
+                <GoogleButtonUI />
+            </SignInButton>
+            
+            {isNative && (
+                <p className="text-center text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-widest">
+                    Conexão Segura Native
+                </p>
             )}
         </div>
     );
