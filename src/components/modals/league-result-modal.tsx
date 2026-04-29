@@ -65,20 +65,18 @@ export function LeagueResultModal({ result }: Props) {
         }
     }, [result.status]);
 
-    const handleClose = () => {
-        // Optimistic UI: Close immediately so the user isn't stuck
+    const handleClose = async () => {
+        if (!isOpen) return;
+        
+        // 1. Close the UI immediately and unconditionally
         setIsOpen(false);
 
-        startTransition(async () => {
-            try {
-                const res = await clearLeagueResult();
-                if (res?.error) {
-                    console.error("Failed to clear league result:", res.error);
-                }
-            } catch (err) {
-                console.error("Critical error clearing league result:", err);
-            }
-        });
+        // 2. Clear the server-side state in the background
+        try {
+            await clearLeagueResult();
+        } catch (err) {
+            console.error("Failed to clear league result on server:", err);
+        }
     };
 
     if (!mounted) return null;
@@ -115,104 +113,101 @@ export function LeagueResultModal({ result }: Props) {
     return createPortal(
         <AnimatePresence>
             {isOpen && (
-                <>
+                <motion.div 
+                    className="fixed inset-0 z-supreme flex items-center justify-center p-4 overflow-hidden"
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                >
+                    {/* Backdrop */}
                     <motion.div
-                        className="fixed inset-0 bg-stone-900/80 backdrop-blur-md z-supreme"
+                        className="absolute inset-0 bg-stone-900/80 backdrop-blur-md"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
+                        onClick={handleClose}
                     />
+
+                    {/* Modal Content */}
                     <motion.div
-                        className="fixed inset-0 flex items-center justify-center p-4 z-supreme pointer-events-none"
+                        className={cn(
+                            "relative w-full max-w-[440px] bg-white rounded-[3rem] border-2 border-stone-200 border-b-[12px] shadow-2xl p-8 flex flex-col items-center text-center overflow-hidden pointer-events-auto",
+                            "before:absolute before:inset-0 before:bg-gradient-to-b before:opacity-50",
+                            gradient
+                        )}
+                        initial={{ scale: 0.5, opacity: 0, rotate: -5 }}
+                        animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                        exit={{ scale: 0.8, opacity: 0, y: 100 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
-                        <motion.div
-                            className={cn(
-                                "relative w-full max-w-[440px] bg-white rounded-[3rem] border-2 border-stone-200 border-b-[12px] shadow-2xl p-8 flex flex-col items-center text-center overflow-hidden pointer-events-auto",
-                                "before:absolute before:inset-0 before:bg-gradient-to-b before:opacity-50",
-                                gradient
-                            )}
-                            initial={{ scale: 0.5, opacity: 0, rotate: -5 }}
-                            animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                            exit={{ scale: 0.8, opacity: 0, y: 100 }}
-                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        {/* Decorative Shimmer */}
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer" />
+
+                        {/* Floating Badge Container */}
+                        <motion.div 
+                            className="relative mb-8 mt-4"
+                            animate={{ y: [0, -12, 0], rotate: [0, 5, 0, -5, 0] }}
+                            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
                         >
-                            {/* Decorative Shimmer */}
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer" />
-
-                            {/* Floating Badge Container */}
-                            <motion.div 
-                                className="relative mb-8 mt-4"
-                                animate={{ y: [0, -12, 0], rotate: [0, 5, 0, -5, 0] }}
-                                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-                            >
-                                <div className="absolute inset-0 bg-current opacity-10 blur-3xl rounded-full" />
-                                <div className="relative flex h-32 w-32 items-center justify-center rounded-[2.5rem] bg-white border-2 border-stone-100 border-b-[10px] shadow-xl overflow-hidden group">
-                                    {/* Inner Shine */}
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                                    
-                                    <Icon className={cn("h-16 w-16 drop-shadow-lg", currentCfg.color)} />
-                                </div>
+                            <div className="absolute inset-0 bg-current opacity-10 blur-3xl rounded-full" />
+                            <div className="relative flex h-32 w-32 items-center justify-center rounded-[2.5rem] bg-white border-2 border-stone-100 border-b-[10px] shadow-xl overflow-hidden group">
+                                {/* Inner Shine */}
+                                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                                 
-                                {/* Little Sparkles */}
-                                {result.status === 'PROMOTED' && (
-                                    <motion.div 
-                                        className="absolute -top-4 -right-4 text-yellow-400"
-                                        animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                                        transition={{ repeat: Infinity, duration: 1.5 }}
-                                    >
-                                        <Star className="fill-current w-8 h-8" />
-                                    </motion.div>
-                                )}
-                            </motion.div>
-
-                            <motion.h2 
-                                className={cn("text-4xl font-[1000] tracking-tighter uppercase mb-3", accentColor)}
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.2 }}
-                            >
-                                {title}
-                            </motion.h2>
+                                <Icon className={cn("h-16 w-16 drop-shadow-lg", currentCfg.color)} />
+                            </div>
                             
-                            <motion.p 
-                                className="text-stone-500 font-bold text-xl mb-10 px-4 leading-[1.3] tracking-tight"
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.3 }}
-                            >
-                                {message}
-                            </motion.p>
-
-                            <motion.button
-                                onClick={handleClose}
-                                disabled={isPending}
-                                className={cn(
-                                    "w-full py-5 rounded-2xl border-b-[6px] text-white font-black text-lg uppercase tracking-wider transition-all active:translate-y-1 active:border-b-2 disabled:opacity-50",
-                                    buttonColor
-                                )}
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                            >
-                                {isPending ? (
-                                    <div className="flex items-center justify-center gap-2">
-                                        <div className="w-5 h-5 border-4 border-white/30 border-t-white rounded-full animate-spin" />
-                                        <span>A Processar...</span>
-                                    </div>
-                                ) : (
-                                    "Continuar a Treinar"
-                                )}
-                            </motion.button>
-
-                            {/* Little hint below */}
-                            <p className="mt-6 text-[11px] font-black text-stone-300 uppercase tracking-widest">
-                                Nova Liga • Começa agora!
-                            </p>
+                            {/* Little Sparkles */}
+                            {result.status === 'PROMOTED' && (
+                                <motion.div 
+                                    className="absolute -top-4 -right-4 text-yellow-400"
+                                    animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                                    transition={{ repeat: Infinity, duration: 1.5 }}
+                                >
+                                    <Star className="fill-current w-8 h-8" />
+                                </motion.div>
+                            )}
                         </motion.div>
+
+                        <motion.h2 
+                            className={cn("text-4xl font-[1000] tracking-tighter uppercase mb-3", accentColor)}
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                        >
+                            {title}
+                        </motion.h2>
+                        
+                        <motion.p 
+                            className="text-stone-500 font-bold text-xl mb-10 px-4 leading-[1.3] tracking-tight"
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                        >
+                            {message}
+                        </motion.p>
+
+                        <motion.button
+                            onClick={handleClose}
+                            className={cn(
+                                "w-full py-5 rounded-2xl border-b-[6px] text-white font-black text-lg uppercase tracking-wider transition-all active:translate-y-1 active:border-b-2",
+                                buttonColor
+                            )}
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.4 }}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            Continuar a Treinar
+                        </motion.button>
+
+                        {/* Little hint below */}
+                        <p className="mt-6 text-[11px] font-black text-stone-300 uppercase tracking-widest">
+                            Nova Liga • Começa agora!
+                        </p>
                     </motion.div>
-                </>
+                </motion.div>
             )}
         </AnimatePresence>,
         document.body
