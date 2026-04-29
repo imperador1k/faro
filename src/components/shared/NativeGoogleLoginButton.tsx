@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { SignInButton } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
 import { Capacitor } from "@capacitor/core";
 import { Browser } from "@capacitor/browser";
@@ -15,66 +14,54 @@ const GoogleIcon = () => (
     </svg>
 );
 
-type ButtonUIProps = {
-    onClick?: () => void;
-    loading?: boolean;
-};
-
-const GoogleButtonUI = ({ onClick, loading = false }: ButtonUIProps) => (
-    <button
-        onClick={onClick}
-        disabled={loading}
-        className="group flex w-full items-center justify-center gap-3 rounded-xl border-2 border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:border-slate-300 hover:bg-slate-50 hover:shadow-md active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
-    >
-        {loading ? (
-            <Loader2 className="h-5 w-5 animate-spin text-slate-500" />
-        ) : (
-            <GoogleIcon />
-        )}
-        <span>{loading ? "A autenticar..." : "Continuar com Google"}</span>
-    </button>
-);
-
-export default function NativeGoogleLoginButton() {
+export default function NativeGoogleLoginButton({ mode = "sign-in" }: { mode?: "sign-in" | "sign-up" }) {
+    const [loading, setLoading] = useState(false);
     const [isNative, setIsNative] = useState(false);
 
     useEffect(() => {
         setIsNative(Capacitor.isNativePlatform());
     }, []);
 
-    const handleNativeLogin = async () => {
-        if (!isNative) return;
-        // Abrimos a nossa própria página de login na Custom Tab
-        // O Clerk lá dentro vai tratar de tudo e o Deep Link vai trazer-nos de volta
-        await Browser.open({ 
-            url: 'https://myduolingo.vercel.app/sign-in',
-            windowName: '_blank'
-        });
+    const handleLogin = async () => {
+        setLoading(true);
+
+        try {
+            console.log("Iniciando Google OAuth via Browser Externo para App Nativa...");
+            
+            // Redirecionamos para a nossa página dedicada que lidará com o início do OAuth
+            const authUrl = `https://myduolingo.vercel.app/mobile-auth?mode=${mode}`;
+            
+            if (Capacitor.isNativePlatform()) {
+                await Browser.open({ url: authUrl });
+                // We reset loading after 3 seconds in case they close the browser without finishing
+                setTimeout(() => setLoading(false), 3000); 
+            } else {
+                window.location.href = authUrl;
+            }
+        } catch (err) {
+            console.error("Erro ao abrir browser nativo:", err);
+            setLoading(false);
+        }
     };
 
     return (
         <div className="flex flex-col gap-2 w-full">
-            {isNative ? (
-                <button 
-                    onClick={handleNativeLogin}
-                    className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-slate-200 rounded-xl font-bold text-slate-700 hover:bg-slate-50 transition-all active:scale-[0.98]"
-                >
+            <button 
+                onClick={handleLogin}
+                disabled={loading}
+                className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-slate-200 rounded-xl font-bold text-slate-700 hover:bg-slate-50 transition-all active:scale-[0.98] disabled:opacity-70"
+            >
+                {loading ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
                     <GoogleIcon />
-                    <span>Continuar com Google</span>
-                </button>
-            ) : (
-                <SignInButton 
-                    mode="modal" 
-                    fallbackRedirectUrl="/auth-success"
-                    forceRedirectUrl="/auth-success"
-                >
-                    <GoogleButtonUI />
-                </SignInButton>
-            )}
+                )}
+                <span>{loading ? "A processar..." : (mode === "sign-in" ? "Continuar com Google" : "Criar conta com Google")}</span>
+            </button>
             
             {isNative && (
                 <p className="text-center text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-widest">
-                    Conexão Segura Native
+                    Browser Seguro
                 </p>
             )}
         </div>

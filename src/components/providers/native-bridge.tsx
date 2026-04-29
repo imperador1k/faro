@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { useClerk } from "@clerk/nextjs";
 import { App } from "@capacitor/app";
 import { Browser } from "@capacitor/browser";
 import { Capacitor } from "@capacitor/core";
@@ -9,23 +10,35 @@ import { Capacitor } from "@capacitor/core";
 export function NativeBridge() {
   const router = useRouter();
   const pathname = usePathname();
+  const clerk = useClerk();
 
   useEffect(() => {
     if (!Capacitor.isNativePlatform()) return;
 
     // Handle Deep Links (App Links)
     const setupDeepLinks = async () => {
-      await App.addListener('appUrlOpen', (data) => {
-        // data.url will be something like https://myduolingo.vercel.app/auth-success
-        const url = new URL(data.url);
-        const path = url.pathname + url.search;
-        
-        // Close the Custom Tab if it's still open
-        Browser.close().catch(() => {});
-        
-        // Navigate inside our Next.js app
-        router.push(path);
-      });
+        await App.addListener('appUrlOpen', async (data) => {
+            console.log("App abriu com URL:", data.url);
+            
+            // Fechamos a Custom Tab se ainda estiver aberta
+            Browser.close().catch(() => {});
+            
+            // Se o Chrome redirecionar para a app usando o nosso custom scheme
+            if (data.url.includes('myduolingo://native-callback')) {
+                console.log("Recebido callback nativo do OAuth!");
+                const url = new URL(data.url.replace('myduolingo://', 'https://'));
+                const searchParams = url.search;
+                
+                // Dizemos ao router interno do Next.js para abrir o nosso processador SSO
+                router.push(`/sso-callback${searchParams}`);
+                return;
+            }
+
+            // Fallback: se não for o nosso custom scheme específico
+            const url = new URL(data.url);
+            const path = url.pathname + url.search;
+            router.push(path);
+        });
     };
 
     const setupBackButton = async () => {
