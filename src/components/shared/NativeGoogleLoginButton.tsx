@@ -32,7 +32,7 @@ export default function NativeGoogleLoginButton({ mode = "sign-in" }: { mode?: "
             const authUrl = `https://myduolingo.vercel.app/mobile-auth?mode=${mode}`;
             
             if (Capacitor.isNativePlatform()) {
-                await Browser.open({ url: authUrl });
+                await Browser.open({ url: authUrl, windowName: '_system' });
                 // We reset loading after 3 seconds in case they close the browser without finishing
                 setTimeout(() => setLoading(false), 3000); 
             } else {
