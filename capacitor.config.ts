@@ -11,8 +11,6 @@ const config: CapacitorConfig = {
     url: 'https://myduolingo.vercel.app',
     allowNavigation: [
       'myduolingo.vercel.app',
-      '*.clerk.accounts.dev',
-      '*.clerk.com',
       '*.onesignal.com'
     ]
   },
