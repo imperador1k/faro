@@ -39,8 +39,8 @@ export default function NativeGoogleLoginButton({ mode = "sign-in" }: { mode?: "
                 // We reset loading after 3 seconds in case they close the browser without finishing
                 setTimeout(() => setLoading(false), 3000); 
             } else if (isTauri) {
-                const { open } = await import('@tauri-apps/plugin-opener');
-                await open(authUrl);
+                const { openUrl } = await import('@tauri-apps/plugin-opener');
+                await openUrl(authUrl);
                 setTimeout(() => setLoading(false), 3000);
             } else {
                 window.location.href = authUrl;
