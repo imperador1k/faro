@@ -17,14 +17,14 @@ export default function MobileAuthPage() {
                 if (isSignUp) {
                     await signUp.authenticateWithRedirect({
                         strategy: "oauth_google",
-                        redirectUrl: "https://myduolingo.vercel.app/native-callback",
-                        redirectUrlComplete: "https://myduolingo.vercel.app/learn",
+                        redirectUrl: "https://myduolingo.vercel.app/sso-callback",
+                        redirectUrlComplete: "https://myduolingo.vercel.app/auth-success",
                     });
                 } else {
                     await signIn.authenticateWithRedirect({
                         strategy: "oauth_google",
-                        redirectUrl: "https://myduolingo.vercel.app/native-callback",
-                        redirectUrlComplete: "https://myduolingo.vercel.app/learn",
+                        redirectUrl: "https://myduolingo.vercel.app/sso-callback",
+                        redirectUrlComplete: "https://myduolingo.vercel.app/auth-success",
                     });
                 }
             } catch (error) {

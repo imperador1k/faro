@@ -7,6 +7,9 @@ const isPublicRoute = createRouteMatcher([
     "/sign-up(.*)",
     "/admin-login(.*)", // Crucial: explicitly mark as public
     "/auth-success(.*)",
+    "/sso-callback(.*)",
+    "/mobile-auth(.*)",
+    "/native-callback(.*)",
     "/api/webhooks(.*)",
     "/api/auth/native-google",
 ]);

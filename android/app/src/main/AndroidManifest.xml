@@ -27,12 +27,12 @@
                 <data android:scheme="https" android:host="myduolingo.vercel.app" />
             </intent-filter>
 
-            <!-- Deep Link Secreto para o Auth -->
+            <!-- Deep Link for OAuth callback (myduolingo://sso-callback, myduolingo://native-callback, etc.) -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="myduolingo" android:host="native-callback" />
+                <data android:scheme="myduolingo" />
             </intent-filter>
         </activity>
 

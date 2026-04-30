@@ -2,53 +2,57 @@
 
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useClerk } from "@clerk/nextjs";
 import { App } from "@capacitor/app";
 import { Browser } from "@capacitor/browser";
 import { Capacitor } from "@capacitor/core";
 
+/**
+ * NativeBridge — Handles Android-specific behaviors:
+ * 1. Deep Links: Intercepts custom scheme URLs (myduolingo://) from OAuth bounce
+ * 2. Back Button: Maps hardware back button to browser history
+ * 3. Link Interception: Forces Clerk/Google auth links into Chrome Custom Tabs
+ */
 export function NativeBridge() {
   const router = useRouter();
   const pathname = usePathname();
-  const clerk = useClerk();
 
   useEffect(() => {
     if (!Capacitor.isNativePlatform()) return;
 
-    // Handle Deep Links (App Links)
     const setupDeepLinks = async () => {
         await App.addListener('appUrlOpen', async (data) => {
-            console.log("App abriu com URL:", data.url);
+            console.log("[NativeBridge] App opened with URL:", data.url);
             
-            // Fechamos a Custom Tab se ainda estiver aberta
+            // Close the Chrome Custom Tab if it's still open
             Browser.close().catch(() => {});
             
-            // Se o Chrome redirecionar para a app usando o nosso custom scheme
-            if (data.url.includes('myduolingo://native-callback')) {
-                console.log("Recebido callback nativo do OAuth!");
-                const url = new URL(data.url.replace('myduolingo://', 'https://'));
-                const searchParams = url.search;
+            // Handle our custom scheme from OAuth bounce (sso-callback or native-callback)
+            if (data.url.startsWith('myduolingo://')) {
+                const fakeUrl = new URL(data.url.replace('myduolingo://', 'https://placeholder.com/'));
+                const path = '/' + fakeUrl.pathname.replace(/^\/+/, '');
+                const searchParams = fakeUrl.search;
                 
-                // Dizemos ao router interno do Next.js para abrir o nosso processador SSO
-                router.push(`/sso-callback${searchParams}`);
+                console.log(`[NativeBridge] OAuth bounce received, navigating to: ${path}${searchParams}`);
+                router.push(`${path}${searchParams}`);
                 return;
             }
 
-            // Fallback: se não for o nosso custom scheme específico
-            const url = new URL(data.url);
-            const path = url.pathname + url.search;
-            router.push(path);
+            // Standard App Links (https://myduolingo.vercel.app/*)
+            try {
+                const url = new URL(data.url);
+                const path = url.pathname + url.search;
+                router.push(path);
+            } catch {
+                console.error("[NativeBridge] Failed to parse URL:", data.url);
+            }
         });
     };
 
     const setupBackButton = async () => {
-      // In Capacitor, we can listen to the native back button
-      await App.addListener('backButton', (data) => {
-        // Logic: If we are not on a main entry page, go back in history
+      await App.addListener('backButton', () => {
         if (pathname !== '/learn' && pathname !== '/' && pathname !== '/welcome') {
           window.history.back();
         } else {
-          // Otherwise, exit the app
           App.exitApp();
         }
       });
