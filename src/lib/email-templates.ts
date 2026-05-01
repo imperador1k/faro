@@ -1,11 +1,11 @@
-const COLORS = { 
-    primary: '#1CB0F6', 
-    primaryDark: '#1899D6', 
-    green: '#58CC02', 
-    greenDark: '#46a302', 
-    bg: '#f5f5f4', 
-    card: '#ffffff', 
-    text: '#333333', 
+const COLORS = {
+    primary: '#1CB0F6',
+    primaryDark: '#1899D6',
+    green: '#58CC02',
+    greenDark: '#46a302',
+    bg: '#f5f5f4',
+    card: '#ffffff',
+    text: '#333333',
     textMuted: '#888888',
     amber: '#FFC800',
     red: '#ea2b2b'
@@ -37,7 +37,7 @@ export function getEmailLayout(content: string, preheader: string = "Notifica√ß√
                     <!-- Header -->
                     <tr>
                         <td align="center" style="background-color: ${headerColor}; padding: 40px 30px 20px; border-bottom: 2px solid #f0f0f0; text-align: center;">
-                            <img src="https://myduolingo.vercel.app/mascot.svg" alt="MyDuolingo Mascot" width="60" style="display: inline-block; margin-bottom: 15px;" />
+                            <img src="https://myduolingo.vercel.app/duo_crying.png" alt="MyDuolingo Mascot" width="60" style="display: inline-block; margin-bottom: 15px;" />
                             <h1 style="margin: 0; color: ${COLORS.green}; font-size: 20px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;">
                                 ${headerTitle}
                             </h1>

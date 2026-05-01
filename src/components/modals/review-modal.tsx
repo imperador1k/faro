@@ -33,7 +33,7 @@ export const ReviewModal = () => {
         startTransition(() => {
             upsertReviewAction(rating, comment).then((res) => {
                 if (res.success) {
-                    try { playStart(); } catch (e) {}
+                    try { playStart(); } catch (e) { }
                     toast.success("Obrigado pelo teu feedback! Foi guardado com sucesso.");
                     setTimeout(() => {
                         close();
@@ -48,7 +48,7 @@ export const ReviewModal = () => {
     };
 
     const handleClose = () => {
-        try { playWhoosh(); } catch(e) {}
+        try { playWhoosh(); } catch (e) { }
         close();
     };
 
@@ -56,11 +56,11 @@ export const ReviewModal = () => {
         <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
             <DialogContent className="max-w-md w-[95vw] sm:w-full p-0 bg-transparent border-none shadow-none z-modal outline-none [&>button]:hidden flex items-center justify-center">
                 <DialogTitle className="sr-only">Avalia a tua experiência</DialogTitle>
-                
+
                 <div className="relative w-full bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-6 sm:p-8 text-center flex flex-col items-center outline-none my-16">
-                    
+
                     {/* Custom Close Button */}
-                    <button 
+                    <button
                         onClick={handleClose}
                         className="absolute right-3 top-3 sm:right-4 sm:top-4 p-2 rounded-xl bg-stone-100 text-stone-400 hover:text-stone-600 hover:bg-stone-200 active:scale-95 transition-all z-50"
                     >
@@ -69,10 +69,10 @@ export const ReviewModal = () => {
 
                     {/* Mascot Head popping out the top */}
                     <div className="absolute -top-14 sm:-top-16 left-1/2 -translate-x-1/2 w-24 h-24 sm:w-28 sm:h-28 mix-blend-normal drop-shadow-xl z-[40] transition-transform hover:scale-105 hover:-translate-y-1 cursor-pointer bg-white rounded-full border-4 border-stone-200 border-b-0">
-                        <Image 
-                            src="/mascot.svg" 
-                            alt="Marco Mascot" 
-                            fill 
+                        <Image
+                            src="/duo_crying.png"
+                            alt="Marco Mascot"
+                            fill
                             className="object-contain p-2 sm:p-3"
                         />
                     </div>
@@ -80,7 +80,7 @@ export const ReviewModal = () => {
                     <h2 className="text-2xl sm:text-3xl font-black text-stone-800 mt-10 mb-2 tracking-tight">
                         Estás a adorar a viagem?
                     </h2>
-                    
+
                     <p className="text-stone-500 font-medium mb-6">
                         A tua opinião ajuda a construir o futuro da plataforma. O que achas até agora?
                     </p>
@@ -90,7 +90,7 @@ export const ReviewModal = () => {
                     </div>
 
                     <div className="w-full relative mb-6">
-                        <textarea 
+                        <textarea
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                             disabled={isPending}
@@ -100,7 +100,7 @@ export const ReviewModal = () => {
                         <div className="absolute top-0 right-0 w-8 h-8 rounded-tr-xl bg-gradient-to-bl from-white to-transparent opacity-50 pointer-events-none mix-blend-overlay"></div>
                     </div>
 
-                    <Button 
+                    <Button
                         disabled={isPending}
                         onClick={handleSubmit}
                         className="w-full bg-[#FFC800] text-yellow-950 border-2 border-yellow-500 border-b-8 rounded-2xl py-7 text-lg font-black uppercase tracking-widest hover:bg-[#ffdb4d] hover:border-yellow-400 active:border-b-2 active:translate-y-[6px] transition-all shadow-sm flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
@@ -112,7 +112,7 @@ export const ReviewModal = () => {
                         )}
                     </Button>
 
-                    <Link 
+                    <Link
                         href="/reviews"
                         onClick={handleClose}
                         className="w-full mt-4 bg-purple-50 text-purple-600 border-2 border-purple-200 border-b-4 rounded-2xl py-3 flex items-center justify-center gap-2 font-bold hover:bg-purple-100 active:translate-y-1 active:border-b-0 transition-all text-sm uppercase tracking-widest"
@@ -120,7 +120,7 @@ export const ReviewModal = () => {
                         <Heart className="w-4 h-4 fill-purple-600" />
                         Ver mural de feedback
                     </Link>
-                    
+
                 </div>
             </DialogContent>
         </Dialog>

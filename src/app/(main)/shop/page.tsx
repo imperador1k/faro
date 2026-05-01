@@ -47,9 +47,9 @@ async function ShopData() {
                 <div className="relative z-10 flex items-center gap-6 sm:gap-8 w-full sm:w-auto justify-center sm:justify-end">
                     {/* Mascot */}
                     <div className="hidden md:flex shrink-0 transition-transform duration-500 hover:scale-110 hover:-translate-y-2">
-                        <img src="/mascot.svg" alt="Mascot" className="w-32 h-32 xl:w-40 xl:h-40 drop-shadow-2xl object-contain" />
+                        <img src="/duo_crying.png" alt="Mascot" className="w-32 h-32 xl:w-40 xl:h-40 drop-shadow-2xl object-contain" />
                     </div>
-                    
+
                     {/* Premium XP Integration */}
                     <div className="flex items-center gap-3 bg-white/95 backdrop-blur-sm px-6 py-4 rounded-[1.5rem] border-2 border-sky-100 border-b-6 shadow-sm transition-transform hover:scale-[1.03] active:scale-95 cursor-default group-hover:-translate-y-1">
                         <Zap className="h-8 w-8 text-sky-500 fill-sky-400 drop-shadow-sm animate-pulse" />
@@ -70,12 +70,12 @@ async function ShopData() {
                 <div className="flex flex-col items-center justify-between rounded-[2.5rem] border-2 border-rose-200 border-b-[10px] bg-white p-8 md:p-10 shadow-sm sm:flex-row transition-all hover:shadow-md hover:scale-[1.01] overflow-hidden relative group">
                     {/* Decorative Blur */}
                     <div className="absolute top-0 right-0 w-48 h-48 bg-rose-100 rounded-full blur-3xl opacity-50 -z-10 translate-x-10 -translate-y-10 transition-transform group-hover:scale-110" />
-                    
+
                     <div className="flex flex-col text-center sm:text-left mb-6 sm:mb-0">
                         <h3 className="text-2xl md:text-3xl font-black text-stone-700 tracking-tight">Vidas Atuais</h3>
                         <p className="text-stone-500 font-bold mt-1 text-lg">A tua energia para aprender.</p>
                     </div>
-                    
+
                     <div className="flex items-center gap-2">
                         {isPro ? (
                             <div className="flex items-center gap-4 bg-rose-50 px-8 py-4 rounded-2xl border-2 border-rose-200 border-b-4 shadow-sm transition-transform hover:scale-105">
@@ -89,10 +89,10 @@ async function ShopData() {
                                         key={i}
                                         className={cn(
                                             "h-10 w-10 md:h-12 md:w-12 transition-all duration-300",
-                                            i <= (userProgress.hearts || 0) 
-                                                ? "fill-rose-500 text-rose-500 drop-shadow-md hover:scale-110 active:scale-95 cursor-pointer" 
+                                            i <= (userProgress.hearts || 0)
+                                                ? "fill-rose-500 text-rose-500 drop-shadow-md hover:scale-110 active:scale-95 cursor-pointer"
                                                 : "fill-stone-100 text-stone-200 stroke-2",
-                                            i <= (userProgress.hearts || 0) ? "animate-pulse" : "" 
+                                            i <= (userProgress.hearts || 0) ? "animate-pulse" : ""
                                         )}
                                     />
                                 ))}
@@ -105,7 +105,7 @@ async function ShopData() {
                 {!isPro && (userProgress.hearts || 0) < 5 && (
                     <PracticeButton />
                 )}
-                
+
                 {/* Inventory Cards (Grid VIP Bento) */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
                     {/* XP Boost */}
@@ -187,11 +187,11 @@ const ShopSkeleton = () => {
                     <div className="w-12 h-12 rounded-full bg-stone-100 border-2 border-stone-200 border-b-4 animate-pulse" />
                     <div className="h-10 w-56 bg-stone-200 rounded-xl animate-pulse" />
                 </div>
-                
+
                 <div className="flex flex-col gap-6">
-                     {[1, 2, 3].map((i) => (
-                         <div key={i} className="h-[140px] w-full rounded-[2.5rem] border-2 border-stone-200 border-b-[10px] bg-stone-50 animate-pulse" />
-                     ))}
+                    {[1, 2, 3].map((i) => (
+                        <div key={i} className="h-[140px] w-full rounded-[2.5rem] border-2 border-stone-200 border-b-[10px] bg-stone-50 animate-pulse" />
+                    ))}
                 </div>
             </div>
         </div>

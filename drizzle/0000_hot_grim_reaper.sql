@@ -74,7 +74,7 @@ CREATE TABLE "user_progress" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"user_name" text DEFAULT 'User' NOT NULL,
-	"user_image_src" text DEFAULT '/mascot.svg' NOT NULL,
+	"user_image_src" text DEFAULT '/duo_crying.png' NOT NULL,
 	"hearts" integer DEFAULT 5 NOT NULL,
 	"points" integer DEFAULT 0 NOT NULL,
 	"total_xp_earned" integer DEFAULT 0 NOT NULL,

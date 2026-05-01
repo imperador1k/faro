@@ -831,7 +831,7 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "'/mascot.svg'"
+          "default": "'/duo_crying.png'"
         },
         "hearts": {
           "name": "hearts",

@@ -121,7 +121,7 @@ export const userProgress = pgTable("user_progress", {
     id: serial("id").primaryKey(),
     userId: text("user_id").notNull().unique(),
     userName: text("user_name").notNull().default("User"),
-    userImageSrc: text("user_image_src").notNull().default("/mascot.svg"),
+    userImageSrc: text("user_image_src").notNull().default("/duo_crying.png"),
     hearts: integer("hearts").notNull().default(5),
     points: integer("points").notNull().default(0),
     totalXpEarned: integer("total_xp_earned").notNull().default(0),

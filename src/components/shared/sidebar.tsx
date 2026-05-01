@@ -54,7 +54,7 @@ const SidebarItem = ({ label, iconSrc, href, notificationCount, isCollapsed }: S
                     )}
                 >
                     {iconSrc}
-                    
+
                     <span className={cn(
                         "hidden lg:block font-bold text-sm tracking-wide uppercase transition-all duration-300 overflow-hidden whitespace-nowrap",
                         isCollapsed ? "opacity-0 w-0 ml-0" : "opacity-100 ml-2"
@@ -108,7 +108,7 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
             className
         )}>
             {/* Collapse Toggle Button */}
-            <button 
+            <button
                 onClick={() => setIsCollapsed(!isCollapsed)}
                 className="absolute -right-3.5 top-12 bg-white border-2 border-stone-200 border-b-4 rounded-full p-1 shadow-sm hover:scale-110 active:scale-95 active:border-b-2 active:translate-y-[2px] transition-all z-30"
             >
@@ -120,10 +120,10 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
                 isCollapsed ? "justify-center" : "justify-start pl-6"
             )}>
                 <Link href="/learn" className="flex items-center gap-3 w-full">
-                    <img 
-                        alt="Duolingo Logo" 
-                        className="h-10 w-auto shrink-0 hidden lg:block" 
-                        src="/mascot.svg" 
+                    <img
+                        alt="Duolingo Logo"
+                        className="h-10 w-auto shrink-0 hidden lg:block"
+                        src="/duo_crying.png"
                     />
                     <div className="lg:hidden bg-[#58cc02] rounded-2xl p-2 w-12 h-12 flex items-center justify-center border-b-4 border-[#46a302] hover:brightness-110 transition-all shrink-0">
                         <Bird className="text-white w-6 h-6 shrink-0" fill="currentColor" />
@@ -136,9 +136,9 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
                     </h1>
                 </Link>
             </div>
-            
+
             <nav className="flex-1 w-full px-4 space-y-2 flex flex-col items-center lg:items-stretch overflow-y-auto overflow-x-hidden custom-scrollbar pb-10">
-                
+
                 {/* Core Routes - Using strictly V2 visual architecture */}
                 <SidebarItem
                     label="Learn"
@@ -205,7 +205,7 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
                         )}>
                             Mais
                         </span>
-                        
+
                         {/* Visual indicator for notification in the "Mais" menu when closed */}
                         {!isMoreOpen && (Number(notificationCount) > 0 || Number(unreadMessageCount) > 0) && (
                             <span className={cn(
@@ -214,7 +214,7 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
                             )}></span>
                         )}
                     </div>
-                     {/* Hover Tooltip for Mais */}
+                    {/* Hover Tooltip for Mais */}
                     {isCollapsed && (
                         <div className="hidden lg:block opacity-0 group-hover:opacity-100 absolute left-full top-1/2 -translate-y-1/2 ml-4 bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl z-50 pointer-events-none whitespace-nowrap shadow-xl transition-all duration-200">
                             Mais
@@ -296,7 +296,7 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
 
             {/* Hint for global search */}
             <div className="mt-auto hidden lg:flex flex-col pt-4 items-center justify-center text-stone-400 gap-2 mb-2 w-full transition-all duration-300">
-                <div 
+                <div
                     className="flex items-center gap-2 px-3 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 hover:text-stone-600 transition-colors cursor-pointer border-2 border-stone-200 border-b-4 active:border-b-2 active:translate-y-[2px]"
                     onClick={() => {
                         document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }));

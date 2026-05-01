@@ -15,7 +15,7 @@ export const AdminSidebar = () => {
             <Link href="/admin">
                 <div className="flex items-center gap-x-3 pb-6 pl-6 pt-8 border-b-2 border-stone-100">
                     <div className="bg-sky-100 p-2 rounded-xl rounded-br-sm border-2 border-sky-200 shadow-sm relative">
-                        <Image src="/mascot.svg" height={32} width={32} alt="Mascot" className="drop-shadow-sm" />
+                        <Image src="/duo_crying.png" height={32} width={32} alt="Mascot" className="drop-shadow-sm" />
                         <div className="absolute -top-2.5 -right-2.5 bg-amber-400 p-1 rounded-full border-2 border-amber-500 shadow-sm rotate-12">
                             <span className="text-[10px] leading-none block">👑</span>
                         </div>
@@ -33,7 +33,7 @@ export const AdminSidebar = () => {
 
             <nav className="flex-1 p-5 flex flex-col gap-y-2 mt-4">
                 <div className="text-[11px] font-black text-stone-400 uppercase tracking-widest pl-2 mb-3">Comandos Globais</div>
-                
+
                 <Link href="/admin" className={cn("flex items-center gap-x-3 rounded-[16px] px-4 py-3.5 transition-all font-black text-[13px] uppercase tracking-wider", pathname === "/admin" ? "bg-[#1CB0F6] text-white border-2 border-transparent border-b-[4px] hover:border-b-[4px] border-b-[#0092d6] active:border-b-[2px] active:translate-y-[2px] shadow-sm cursor-default" : "text-stone-500 hover:bg-stone-50 border-2 border-transparent border-b-[4px] hover:translate-x-1 cursor-pointer")}>
                     <LayoutDashboard className="w-5 h-5" />
                     <span>Visão Geral</span>

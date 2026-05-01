@@ -40,7 +40,7 @@ export const ShopItems = ({ hearts, points, xpBoostLessons, heartShields, streak
     const router = useRouter();
     const { isOpen, data: popupData, open: openPopup, close: closePopupStore } = usePurchaseStore();
     const { openModal: openProModal } = useProModalStore();
-    
+
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | null>(null);
     const [confirmModal, setConfirmModal] = useState<{
@@ -123,14 +123,14 @@ export const ShopItems = ({ hearts, points, xpBoostLessons, heartShields, streak
                     <div className="w-full max-w-[420px] rounded-[2.5rem] bg-white p-8 md:p-10 shadow-2xl animate-in zoom-in-95 duration-300 border-2 border-stone-200 border-b-8 relative overflow-hidden">
                         {/* Decorative background element */}
                         <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-50 rounded-full blur-3xl opacity-50" />
-                        
+
                         <div className="relative z-10">
                             <h2 className="mb-4 text-3xl font-black text-stone-700 tracking-tight text-center leading-tight">
                                 Confirmar Compra
                             </h2>
                             <p className="mb-10 text-stone-500 font-bold text-center text-lg md:text-xl leading-relaxed">
-                                Queres gastar <span className="font-black text-amber-500 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200 shadow-sm">{confirmModal.cost} XP</span> para comprar 
-                                <br/>
+                                Queres gastar <span className="font-black text-amber-500 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200 shadow-sm">{confirmModal.cost} XP</span> para comprar
+                                <br />
                                 <span className="font-black text-stone-700 block mt-2 text-2xl uppercase tracking-tight">{confirmModal.itemName}</span>?
                             </p>
 
@@ -209,12 +209,12 @@ export const ShopItems = ({ hearts, points, xpBoostLessons, heartShields, streak
                 )}
 
                 {/* ===== SUPER PRO BANNER ===== */}
-                <div 
+                <div
                     onClick={isPro ? () => router.push("/settings") : openProModal}
                     className={cn(
                         "relative mb-10 flex w-full cursor-pointer flex-col md:flex-row md:items-center justify-between gap-8 overflow-hidden rounded-[2.5rem] border-2 border-b-[10px] p-8 md:p-12 shadow-md transition-all hover:scale-[1.02] hover:-translate-y-1 active:scale-95 group",
-                        isPro 
-                            ? "border-rose-200 bg-gradient-to-tr from-rose-500 via-rose-400 to-rose-600" 
+                        isPro
+                            ? "border-rose-200 bg-gradient-to-tr from-rose-500 via-rose-400 to-rose-600"
                             : "border-amber-200 bg-gradient-to-tr from-amber-400 via-yellow-200 to-amber-500"
                     )}
                 >
@@ -223,22 +223,22 @@ export const ShopItems = ({ hearts, points, xpBoostLessons, heartShields, streak
 
                     <div className="relative z-10 flex items-center gap-6">
                         <div className="flex shrink-0 items-center justify-center -mt-2 group-hover:-translate-y-2 transition-transform duration-500">
-                            <img src="/mascot.svg" alt="Mascote PRO" className="w-24 h-24 md:w-28 md:h-28 drop-shadow-xl" />
+                            <img src="/duo_crying.png" alt="Mascote PRO" className="w-24 h-24 md:w-28 md:h-28 drop-shadow-xl" />
                         </div>
                         <div className="flex flex-col text-white">
                             <span className={cn(
                                 "text-2xl md:text-3xl font-black tracking-tight drop-shadow-sm flex items-center gap-2",
                                 !isPro && "text-stone-800"
                             )}>
-                                {isPro ? "És um SUPER PRO!" : "Liga o SUPER PRO"} 
+                                {isPro ? "És um SUPER PRO!" : "Liga o SUPER PRO"}
                                 <Sparkles className={cn("h-6 w-6 animate-pulse", isPro ? "text-white fill-white" : "text-amber-100 fill-amber-100")} />
                             </span>
                             <span className={cn(
                                 "text-base font-bold leading-snug mt-1",
                                 isPro ? "text-rose-100" : "text-amber-900/80"
                             )}>
-                                {isPro 
-                                    ? "A tua subscrição está ativa. Desfruta de todas as vantagens exclusivas!" 
+                                {isPro
+                                    ? "A tua subscrição está ativa. Desfruta de todas as vantagens exclusivas!"
                                     : "Corações ilimitados e sem anúncios! Chega ao topo hoje."}
                             </span>
                         </div>
@@ -259,12 +259,12 @@ export const ShopItems = ({ hearts, points, xpBoostLessons, heartShields, streak
 
                 {/* BENTO BOX STOREFRONT ITEMS */}
                 <div className="grid grid-cols-1 gap-6">
-                    
+
                     {/* PRO Hearts State */}
                     {isPro && (
                         <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-8 rounded-[2.5rem] border-2 border-b-[10px] border-rose-200 bg-rose-50/60 p-8 md:p-10 cursor-default overflow-hidden group relative transition-transform hover:scale-[1.01]">
-                             <div className="absolute top-0 right-0 w-48 h-48 bg-rose-100 rounded-full blur-3xl opacity-50 -z-10 translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform" />
-                             <div className="flex items-center gap-6">
+                            <div className="absolute top-0 right-0 w-48 h-48 bg-rose-100 rounded-full blur-3xl opacity-50 -z-10 translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform" />
+                            <div className="flex items-center gap-6">
                                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] border-2 border-b-4 border-rose-100 bg-rose-50 group-hover:rotate-12 transition-transform">
                                     <Infinity className="h-10 w-10 text-rose-500" />
                                 </div>
@@ -328,7 +328,7 @@ export const ShopItems = ({ hearts, points, xpBoostLessons, heartShields, streak
                     {/* Max Hearts Reached State */}
                     {!isPro && hearts === 5 && (
                         <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-8 rounded-[2.5rem] border-2 border-b-[10px] border-rose-200 bg-rose-50/60 p-8 md:p-10 cursor-default opacity-80 decoration-rose-200 grayscale-[20%] transition-transform hover:scale-[1.01]">
-                             <div className="flex items-center gap-6">
+                            <div className="flex items-center gap-6">
                                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] border-2 border-b-4 border-rose-100 bg-rose-50">
                                     <Heart className="h-10 w-10 fill-rose-500 text-rose-500" />
                                 </div>

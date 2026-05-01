@@ -16,12 +16,12 @@ export default async function PracticeLayout({
             <div className="flex flex-col items-center justify-center min-h-[80vh] px-4 max-w-[1056px] mx-auto w-full">
                 <div className="bg-white rounded-[2rem] border-2 border-stone-200 border-b-8 p-8 md:p-12 flex flex-col items-center text-center space-y-6 md:max-w-xl transition-all">
                     <div className="w-24 h-24 bg-stone-100 rounded-full flex items-center justify-center border-b-4 border-stone-200 shadow-inner relative">
-                        <Image src="/mascot.svg" alt="Mascot" width={60} height={60} className="opacity-50 grayscale" />
+                        <Image src="/duo_crying.png" alt="Mascot" width={60} height={60} className="opacity-50 grayscale" />
                         <div className="absolute -bottom-2 -right-2 bg-stone-400 rounded-full p-2 border-2 border-white">
                             <Lock className="h-6 w-6 text-white" strokeWidth={3} />
                         </div>
                     </div>
-                    
+
                     <div className="space-y-4">
                         <h2 className="text-3xl md:text-4xl font-black text-stone-700 tracking-tight">Prática com IA Bloqueada</h2>
                         <p className="text-lg font-medium text-stone-500 leading-relaxed max-w-md mx-auto">

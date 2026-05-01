@@ -30,11 +30,11 @@ export default function GlobalError({
                 className="object-contain"
                 onError={(e) => {
                   // Fallback if sad mascot doesn't exist
-                  e.currentTarget.src = "/mascot.svg";
+                  e.currentTarget.src = "/duo_crying.png";
                 }}
               />
             </div>
-            
+
             <div className="space-y-2">
               <h1 className="text-2xl font-extrabold text-slate-800 tracking-tight">
                 Oops! O sistema tropeçou.

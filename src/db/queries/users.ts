@@ -112,12 +112,12 @@ import { calculateIsPro } from "@/lib/subscription";
 export const getUserProgressById = cache(async (userId: string) => {
     const data = await db.query.userProgress.findFirst({
         where: eq(userProgress.userId, userId),
-        with: { 
+        with: {
             activeCourse: true,
             subscription: true,
         },
     });
-    
+
     if (!data) return null;
 
     return {
@@ -150,7 +150,7 @@ export const createUserProgress = async (courseId: number) => {
         .values({
             userId,
             userName: "Estudante",
-            userImageSrc: "/mascot.svg",
+            userImageSrc: "/duo_crying.png",
             activeCourseId: courseId,
             activeLanguage: course.language,
             hearts: 5,
@@ -166,7 +166,7 @@ export const updateUserInfo = async (name: string, imageUrl: string) => {
     if (!userId) return { error: "Unauthorized" };
     await db
         .update(userProgress)
-        .set({ userName: name || "Estudante", userImageSrc: imageUrl || "/mascot.svg" })
+        .set({ userName: name || "Estudante", userImageSrc: imageUrl || "/duo_crying.png" })
         .where(eq(userProgress.userId, userId));
 };
 
@@ -198,9 +198,9 @@ export const addPoints = async (amount: number) => {
 
     const [updatedProgress] = await db
         .update(userProgress)
-        .set({ 
-            points: sql`${userProgress.points} + ${amount}`, 
-            totalXpEarned: sql`${userProgress.totalXpEarned} + ${amount}` 
+        .set({
+            points: sql`${userProgress.points} + ${amount}`,
+            totalXpEarned: sql`${userProgress.totalXpEarned} + ${amount}`
         })
         .where(eq(userProgress.userId, userId))
         .returning({ points: userProgress.points, totalXpEarned: userProgress.totalXpEarned });
@@ -239,9 +239,9 @@ export const buyOneHeart = async () => {
 
     const [updatedProgress] = await db
         .update(userProgress)
-        .set({ 
-            hearts: sql`${userProgress.hearts} + 1`, 
-            points: sql`${userProgress.points} - ${cost}` 
+        .set({
+            hearts: sql`${userProgress.hearts} + 1`,
+            points: sql`${userProgress.points} - ${cost}`
         })
         .where(eq(userProgress.userId, userId))
         .returning({ hearts: userProgress.hearts, points: userProgress.points });

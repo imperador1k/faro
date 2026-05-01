@@ -39,14 +39,14 @@ export const updateNotificationPreference = async (enabled: boolean) => {
     if (!parsed.success) return actionError("INVALID_PAYLOAD", "Payload inválido: enabled tem de ser um boolean");
     const { userId } = await auth();
     if (!userId) return actionError("UNAUTHORIZED", "Não estás autenticado");
-    
+
     await db.update(userProgress)
         .set({ notificationsEnabled: enabled })
         .where(eq(userProgress.userId, userId));
-        
+
     revalidatePath("/settings");
     revalidatePath("/notifications");
-    
+
     return { success: true, enabled };
 };
 
@@ -114,7 +114,7 @@ export const onChallengeComplete = async (challengeId: number) => {
     // 🛡️ ANTI-CHEAT: Hardcoded Server Rewards
     const xpAmount = hasXpBoost ? 20 : 10;
     await addPoints(xpAmount);
-    
+
     // Log XP for daily stats
     await recordDailyStatsAction(xpAmount, 0);
 
@@ -239,11 +239,11 @@ export const onChallengeWrong = async (challengeId?: number) => {
         if (parsed.data.challengeId) {
             await logMistake(parsed.data.challengeId);
         }
-        return { 
-            success: true, 
+        return {
+            success: true,
             hearts: userProgressData.hearts, // Return current hearts, frontend knows it's infinity
             shieldUsed: false,
-            isPro: true 
+            isPro: true
         };
     }
 
@@ -307,7 +307,7 @@ export const onSelectCourse = async (courseId: number) => {
         ? `${user.firstName}${user.lastName ? ' ' + user.lastName : ''}`
         : user.username || "Estudante";
 
-    await updateUserInfo(userName, user.imageUrl || "/mascot.svg");
+    await updateUserInfo(userName, user.imageUrl || "/duo_crying.png");
 
     revalidatePath("/learn");
     revalidatePath("/courses");
@@ -331,7 +331,7 @@ export const onRefillHearts = async () => {
 
     const userProgressData = await getUserProgress();
     if (!userProgressData) return actionError("NOT_FOUND", "Progresso não encontrado.");
-    
+
     // 🛡️ ANTI-CHEAT: Hard boundaries
     if (userProgressData.hearts === 5) return actionError("CONFLICT", "Os teus corações já estão no máximo.");
     if (userProgressData.points < 100) return actionError("INSUFFICIENT_FUNDS", "Não tens XP suficiente.");
@@ -364,7 +364,7 @@ export const onBuyOneHeart = async () => {
 
     const userProgressData = await getUserProgress();
     if (!userProgressData) return actionError("NOT_FOUND", "Progresso não encontrado.");
-    
+
     // 🛡️ ANTI-CHEAT: Hard boundaries
     if (userProgressData.hearts >= 5) return actionError("CONFLICT", "Os teus corações já estão no máximo.");
     if (userProgressData.points < 20) return actionError("INSUFFICIENT_FUNDS", "Não tens XP suficiente.");
@@ -399,7 +399,7 @@ export const onSyncUserInfo = async () => {
         ? `${user.firstName}${user.lastName ? ' ' + user.lastName : ''}`
         : user.username || "Estudante";
 
-    await updateUserInfo(userName, user.imageUrl || "/mascot.svg");
+    await updateUserInfo(userName, user.imageUrl || "/duo_crying.png");
 
     revalidatePath("/leaderboard");
     revalidatePath("/profile");
@@ -629,7 +629,7 @@ export const addArcadePoints = async (amount: number) => {
     }
 
     await addPoints(amount);
-    
+
     // Log XP for daily stats
     await recordDailyStatsAction(amount, 0);
 

@@ -95,7 +95,7 @@ export const ProModal = () => {
                             {/* Mascot with Crown */}
                             <div className="relative mx-auto mb-4 h-24 w-24">
                                 <Image
-                                    src="/mascot.svg"
+                                    src="/duo_crying.png"
                                     alt="Marco PRO"
                                     fill
                                     className="object-contain drop-shadow-lg pro-mascot-float"

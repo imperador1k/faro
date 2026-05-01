@@ -30,7 +30,7 @@ export default function ReviewsPage() {
 
 async function ReviewsData() {
     const reviews = await getLatestReviewsAction(50);
-    
+
     // Calculate global average
     const totalRating = reviews.reduce((acc: number, rev: any) => acc + rev.rating, 0);
     const average = reviews.length > 0 ? (totalRating / reviews.length).toFixed(1) : "0.0";
@@ -41,12 +41,12 @@ async function ReviewsData() {
                 <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left gap-4">
                     <h1 className="text-4xl md:text-5xl font-black text-stone-800 leading-tight flex items-center justify-center md:justify-start gap-2 flex-wrap">
                         O que dizem de <span className="text-[#1CB0F6] bg-sky-100 px-4 py-1 rounded-2xl ml-1">nós</span>
-                        <Image src="/mascot.svg" alt="Marco" width={48} height={48} className="drop-shadow-md animate-bounce ml-2" />
+                        <Image src="/duo_crying.png" alt="Marco" width={48} height={48} className="drop-shadow-md animate-bounce ml-2" />
                     </h1>
                     <p className="text-stone-500 font-medium text-lg leading-relaxed max-w-md">
                         A comunidade constrói o futuro da aprendizagem. Vê o que os teus amigos estão a achar da jornada.
                     </p>
-                    
+
                     <ReviewCTA />
                 </div>
 
@@ -77,17 +77,17 @@ async function ReviewsData() {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     {reviews.map((review: any) => (
-                        <div 
-                            key={review.id} 
+                        <div
+                            key={review.id}
                             className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-5 sm:p-6 relative flex flex-col gap-4 animate-in zoom-in-95 duration-500 hover:-translate-y-1 transition-transform group overflow-hidden"
                         >
                             <div className="flex flex-col gap-3 w-full">
                                 <div className="flex items-center gap-3">
                                     <div className="w-12 h-12 relative shrink-0 rounded-full border-4 border-stone-100 overflow-hidden bg-stone-50 group-hover:border-[#1CB0F6]/20 transition-colors">
-                                        <Image 
-                                            src={review.userImageSrc} 
-                                            alt={review.userName} 
-                                            fill 
+                                        <Image
+                                            src={review.userImageSrc}
+                                            alt={review.userName}
+                                            fill
                                             className="object-cover"
                                         />
                                     </div>
@@ -100,17 +100,17 @@ async function ReviewsData() {
                                         </span>
                                     </div>
                                 </div>
-                                
+
                                 <div className="flex gap-0.5 shrink-0 bg-yellow-50 w-fit px-2 py-1.5 rounded-xl border border-yellow-100">
                                     {[1, 2, 3, 4, 5].map((s) => (
-                                        <Star 
-                                            key={s} 
-                                            className={`w-4 h-4 drop-shadow-sm ${s <= review.rating ? "fill-[#FFC800] text-[#FFC800]" : "fill-stone-200 text-stone-200"}`} 
+                                        <Star
+                                            key={s}
+                                            className={`w-4 h-4 drop-shadow-sm ${s <= review.rating ? "fill-[#FFC800] text-[#FFC800]" : "fill-stone-200 text-stone-200"}`}
                                         />
                                     ))}
                                 </div>
                             </div>
-                            
+
                             <div className="relative mt-2">
                                 <span className="text-5xl text-stone-200 font-serif absolute -top-4 -left-2 opacity-50 z-0">"</span>
                                 <p className="text-stone-600 font-medium italic text-lg leading-relaxed relative z-10 pl-4 py-2">

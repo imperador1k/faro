@@ -32,7 +32,7 @@ export async function getInboxItems(showArchived: boolean = false): Promise<Inbo
 
         // Obter tickets
         const tickets = await db.query.supportTickets.findMany({
-            where: showArchived 
+            where: showArchived
                 ? and(eq(supportTickets.status, "resolved"), gte(supportTickets.createdAt, sevenDaysAgo))
                 : eq(supportTickets.status, "open"),
             orderBy: [desc(supportTickets.createdAt)],
@@ -45,7 +45,7 @@ export async function getInboxItems(showArchived: boolean = false): Promise<Inbo
 
         // Obter reviews
         const reviews = await db.query.userReviews.findMany({
-            where: showArchived 
+            where: showArchived
                 ? and(eq(userReviews.read, true), gte(userReviews.createdAt, sevenDaysAgo))
                 : eq(userReviews.read, false),
             orderBy: [desc(userReviews.createdAt)],
@@ -58,7 +58,7 @@ export async function getInboxItems(showArchived: boolean = false): Promise<Inbo
             type: "ticket" as const,
             userName: t.userName,
             userEmail: t.userEmail,
-            userImageSrc: t.user?.userImageSrc || "/mascot.svg",
+            userImageSrc: t.user?.userImageSrc || "/duo_crying.png",
             subject: t.subject,
             message: t.message,
             createdAt: t.createdAt,

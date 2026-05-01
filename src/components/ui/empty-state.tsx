@@ -15,7 +15,7 @@ type Props = {
 export const EmptyState = ({
     title,
     description,
-    imageSrc = "/mascot.svg",
+    imageSrc = "/duo_crying.png",
     actionText,
     onAction
 }: Props) => {
@@ -39,15 +39,15 @@ export const EmptyState = ({
                     className="object-contain"
                 />
             </motion.div>
-            
+
             <h2 className="text-3xl font-black text-stone-700 mb-4 tracking-tight">
                 {title}
             </h2>
-            
+
             <p className="text-lg text-stone-500 font-bold mb-10 max-w-md mx-auto leading-relaxed">
                 {description}
             </p>
-            
+
             <Button
                 size="lg"
                 onClick={onAction}
