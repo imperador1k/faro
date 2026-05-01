@@ -4,7 +4,7 @@
     "target": "es2023",
     "lib": ["ES2023", "DOM"],
     "module": "esnext",
-    "types": ["vite/client"],
+    "types": ["vite/client", "@tauri-apps/plugin-shell", "@tauri-apps/plugin-window-state"],
     "skipLibCheck": true,
 
     /* Bundler mode */
