@@ -1,0 +1,5 @@
+# Ignorar pastas nativas na build do Vercel
+src-tauri/
+android/
+ios/
+installer/

@@ -41,9 +41,9 @@ myduolingo-449c1-firebase-adminsdk-fbsvc-035fdac656.json
 **/dist
 **/node_modules
 
-# Installer specific
-/installer/dist
-/installer/src-tauri/target
+# Installer specific (moved inside src-tauri)
+**/src-tauri/installer/dist
+**/src-tauri/installer/src-tauri/target
 
 # typescript
 *.tsbuildinfo
