@@ -78,6 +78,33 @@ export default function CustomSignIn() {
     }
   }, [isLoaded, signIn?.status]);
 
+  // Prevents the "flash" of login form if already signed in or loading
+  if (!isLoaded || isSignedIn) {
+    return (
+      <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center bg-white">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col items-center gap-6"
+        >
+          <div className="w-32 h-32 relative">
+            <Image src="/marco.png" alt="Carregando..." fill className="object-contain animate-bounce" />
+          </div>
+          <div className="flex gap-2">
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                animate={{ scale: [1, 1.5, 1], opacity: [0.3, 1, 0.3] }}
+                transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
+                className="w-3 h-3 bg-[#58cc02] rounded-full"
+              />
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   const handleGoogleSignIn = async () => {
     if (!isLoaded) return;
     try {
