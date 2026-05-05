@@ -71,6 +71,13 @@ export default function CustomSignIn() {
     }
   }, [isLoaded, isSignedIn, router]);
 
+  // Auto-detect MFA status on load (e.g. returning from Google OAuth)
+  useEffect(() => {
+    if (isLoaded && signIn?.status === "needs_second_factor") {
+      setStep("mfa");
+    }
+  }, [isLoaded, signIn?.status]);
+
   const handleGoogleSignIn = async () => {
     if (!isLoaded) return;
     try {
