@@ -10,6 +10,7 @@ import { StepGetReady } from "./step-get-ready";
 import { StepCourse } from "./step-course";
 import { StepMotivation } from "./step-motivation";
 import { StepLevel } from "./step-level";
+import { StepPlacement } from "./step-placement";
 import { StepPlacementResult } from "./step-placement-result";
 import { StepSignUp } from "./step-sign-up";
 
@@ -22,7 +23,7 @@ interface OnboardingClientProps {
   }[];
 }
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 8;
 
 const variants = {
   initial: { x: "100%", opacity: 0 },
@@ -46,13 +47,25 @@ const variants = {
 
 export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
   const router = useRouter();
-  const { step, prevStep, nextStep, selectedCourse, motivation, experienceLevel, completeOnboarding } = useOnboardingStore();
+  const { step, setStep, prevStep, nextStep, selectedCourse, motivation, experienceLevel, completeOnboarding } = useOnboardingStore();
 
   const progress = (step / TOTAL_STEPS) * 100;
+  
+  const selectedCourseTitle = courses.find(c => c.id === selectedCourse)?.title || "Inglês";
 
   const handleBack = () => {
-    if (step === 1) router.push("/");
-    else prevStep();
+    if (step === 1) {
+      router.push("/");
+      return;
+    }
+
+    // Logic for jumping back from Sign Up if beginner
+    if (step === 8 && experienceLevel === "beginner") {
+      setStep(5);
+      return;
+    }
+
+    prevStep();
   };
 
   const canContinue = 
@@ -62,21 +75,35 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
     (step === 4 && motivation !== null) ||
     (step === 5 && experienceLevel !== null) ||
     (step === 6) ||
-    (step === 7);
+    (step === 7) ||
+    (step === 8);
 
   const handleContinue = () => {
     if (!canContinue) return;
+    
+    // Logic for Step 5 (Level selection)
+    if (step === 5) {
+      if (experienceLevel === "beginner") {
+        setStep(8); // Go straight to sign up
+        return;
+      }
+      nextStep();
+      return;
+    }
+
     if (step < TOTAL_STEPS) {
       nextStep();
     } else {
       completeOnboarding();
+      // Set a cookie to allow middleware to verify onboarding completion
+      document.cookie = "onboarding_completed=true; path=/; max-age=3600; SameSite=Lax";
       router.push("/sign-up");
     }
   };
 
   return (
     <div className="flex flex-col h-[100dvh] w-full bg-white text-[#042c60]">
-      <header className="flex items-center px-4 pt-4 pb-2 md:max-w-3xl md:mx-auto w-full gap-4">
+      <header className="flex items-center px-4 pt-4 pb-2 lg:max-w-5xl lg:mx-auto w-full gap-4">
         <button onClick={handleBack} className="text-gray-400 hover:text-gray-600 transition-colors">
           <ArrowLeft size={28} strokeWidth={2.5} />
         </button>
@@ -89,7 +116,7 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto overflow-x-hidden relative md:max-w-3xl md:mx-auto w-full px-4 pt-4 pb-32 sm:pb-36">
+      <main className="flex-1 overflow-y-auto overflow-x-hidden relative lg:max-w-5xl lg:mx-auto w-full px-4 pt-4">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -97,20 +124,21 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="absolute inset-0 px-4 flex flex-col items-center min-h-full"
+            className="min-h-full w-full flex flex-col items-center justify-center relative overflow-x-hidden pt-6 pb-28 sm:pb-32"
           >
             {step === 1 && <StepWelcome />}
             {step === 2 && <StepGetReady />}
             {step === 3 && <StepCourse courses={courses} />}
             {step === 4 && <StepMotivation />}
-            {step === 5 && <StepLevel />}
-            {step === 6 && <StepPlacementResult />}
-            {step === 7 && <StepSignUp />}
+            {step === 5 && <StepLevel courseTitle={selectedCourseTitle} />}
+            {step === 6 && <StepPlacement courseTitle={selectedCourseTitle} />}
+            {step === 7 && <StepPlacementResult />}
+            {step === 8 && <StepSignUp />}
           </motion.div>
         </AnimatePresence>
       </main>
 
-      <footer className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t-2 border-gray-100 md:max-w-3xl md:mx-auto z-50">
+      <footer className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t-2 border-gray-100 lg:max-w-5xl lg:mx-auto z-50">
         <button
           onClick={handleContinue}
           disabled={!canContinue}

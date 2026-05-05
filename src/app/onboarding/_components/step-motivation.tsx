@@ -2,98 +2,185 @@
 
 import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { motion } from "framer-motion";
+import { 
+  Briefcase, 
+  Plane, 
+  GraduationCap, 
+  Brain, 
+  Users, 
+  Music, 
+  MoreHorizontal,
+  Check
+} from "lucide-react";
 import Image from "next/image";
 
 const MOTIVATIONS = [
-  { id: "travel", title: "Viagens", description: "Preparar para novas aventuras", icon: "✈️", color: "#3b82f6" },
-  { id: "career", title: "Carreira", description: "Impulsionar o meu currículo", icon: "💼", color: "#f59e0b" },
-  { id: "brain", title: "Exercício Mental", description: "Manter a mente afiada", icon: "🧠", color: "#8b5cf6" },
-  { id: "fun", title: "Diversão", description: "Aprender por puro prazer", icon: "😎", color: "#ec4899" },
-];
+  { 
+    id: "career", 
+    title: "Carreira", 
+    description: "Impulsionar o meu currículo", 
+    icon: <Briefcase className="w-6 h-6 sm:w-8 sm:h-8" />, 
+    color: "bg-blue-100", 
+    accent: "text-blue-600" 
+  },
+  { 
+    id: "travel", 
+    title: "Viagens", 
+    description: "Preparar-me para aventuras", 
+    icon: <Plane className="w-6 h-6 sm:w-8 sm:h-8" />, 
+    color: "bg-orange-100", 
+    accent: "text-orange-600" 
+  },
+  { 
+    id: "school", 
+    title: "Educação", 
+    description: "Apoio escolar ou académico", 
+    icon: <GraduationCap className="w-6 h-6 sm:w-8 sm:h-8" />, 
+    color: "bg-green-100", 
+    accent: "text-green-600" 
+  },
+  { 
+    id: "brain", 
+    title: "Mente Afiada", 
+    description: "Exercitar o cérebro", 
+    icon: <Brain className="w-6 h-6 sm:w-8 sm:h-8" />, 
+    color: "bg-purple-100", 
+    accent: "text-purple-600" 
+  },
+  { 
+    id: "family", 
+    title: "Família e Amigos", 
+    description: "Conectar-me com pessoas", 
+    icon: <Users className="w-6 h-6 sm:w-8 sm:h-8" />, 
+    color: "bg-pink-100", 
+    accent: "text-pink-600" 
+  },
+  { 
+    id: "culture", 
+    title: "Cultura", 
+    description: "Música, filmes e lazer", 
+    icon: <Music className="w-6 h-6 sm:w-8 sm:h-8" />, 
+    color: "bg-yellow-100", 
+    accent: "text-yellow-600" 
+  },
+  { 
+    id: "other", 
+    title: "Outro", 
+    description: "Um objetivo diferente", 
+    icon: <MoreHorizontal className="w-6 h-6 sm:w-8 sm:h-8" />, 
+    color: "bg-gray-100", 
+    accent: "text-gray-600" 
+  },
+] as const;
 
 export const StepMotivation = () => {
   const { motivation, setMotivation } = useOnboardingStore();
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08
+      }
+    }
+  };
+
+  const item = {
+    hidden: { scale: 0.9, opacity: 0 },
+    show: { scale: 1, opacity: 1 }
+  };
+
   return (
-    <div className="w-full h-full flex flex-col pt-4 max-w-2xl mx-auto px-2">
-      {/* Marco Intro Section */}
-      <div className="flex items-center gap-4 mb-8">
+    <div className="flex flex-col items-center w-full max-w-2xl mx-auto space-y-8 pb-10">
+      {/* Mascot Conversation Bubble */}
+      <div className="flex items-center gap-6 w-full max-w-lg mb-4">
         <motion.div
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0"
+          transition={{ type: "spring", stiffness: 300 }}
+          className="relative w-24 h-24 shrink-0"
         >
-          <Image
-            src="/marco.png"
-            alt="Marco"
-            fill
-            className="object-contain"
-          />
+          <Image src="/marco.png" alt="Marco" fill className="object-contain" />
         </motion.div>
         
         <motion.div
-          initial={{ y: 10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="relative bg-white border-2 border-gray-200 rounded-2xl p-4 shadow-sm"
+          className="relative bg-white border-2 border-gray-200 rounded-3xl p-5 shadow-sm"
         >
-          <p className="text-sm sm:text-base font-bold text-[#4b4b4b]">
+          <p className="text-lg font-black text-[#4b4b4b] leading-tight">
             Boa escolha! Agora diz-me, o que te trouxe até aqui? 🧐
           </p>
-          <div className="absolute left-[-10px] top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-l-2 border-b-2 border-gray-200 rotate-45" />
+          <div className="absolute left-[-12px] top-1/2 -translate-y-1/2 w-6 h-6 bg-white border-l-2 border-b-2 border-gray-200 rotate-45 rounded-bl-lg" />
         </motion.div>
       </div>
 
-      <h1 className="text-2xl sm:text-3xl font-black text-[#042c60] mb-6 text-left px-2">
-        Qual é o teu <span className="text-sky-500">objetivo</span>?
-      </h1>
+      <div className="text-center md:text-left w-full space-y-2 px-2">
+        <h1 className="text-3xl font-black text-[#042c60] tracking-tight">
+          Qual é o teu <span className="text-sky-500 underline decoration-sky-100">objetivo</span>?
+        </h1>
+        <p className="text-gray-500 font-bold text-lg">
+          Personaliza a tua jornada escolhendo a tua motivação.
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full">
-        {MOTIVATIONS.map((item, index) => {
-          const isSelected = motivation === item.id;
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full px-2"
+      >
+        {MOTIVATIONS.map((itemObj) => {
+          const isSelected = motivation === itemObj.id;
 
           return (
             <motion.button
-              key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
+              key={itemObj.id}
+              variants={item}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setMotivation(item.id)}
+              onClick={() => setMotivation(itemObj.id)}
               className={`
-                group relative flex items-start gap-4 p-4 sm:p-5 rounded-2xl border-2 transition-all text-left
+                group relative flex items-center gap-5 p-5 rounded-3xl border-2 transition-all text-left
                 ${isSelected 
-                  ? "border-[#58cc02] bg-[#f7fff0] shadow-[0_4px_0_#46a302]" 
-                  : "border-gray-200 bg-white shadow-[0_4px_0_#e5e5e5] hover:bg-gray-50 active:shadow-none active:translate-y-[2px]"}
+                  ? "border-[#58cc02] bg-[#f7fff0] shadow-[0_6px_0_#46a302] translate-y-[-2px]" 
+                  : "border-gray-200 bg-white shadow-[0_6px_0_#e5e5e5] hover:bg-gray-50 active:shadow-none active:translate-y-[4px]"}
               `}
             >
               <div 
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center text-2xl sm:text-3xl shrink-0 transition-transform group-hover:scale-110"
-                style={{ backgroundColor: `${item.color}15` }}
+                className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:rotate-6 ${itemObj.color} ${itemObj.accent}`}
               >
-                {item.icon}
+                {itemObj.icon}
               </div>
 
-              <div className="flex flex-col">
-                <span className={`font-black text-base sm:text-lg ${isSelected ? "text-[#58cc02]" : "text-[#4b4b4b]"}`}>
-                  {item.title}
+              <div className="flex flex-col flex-1">
+                <span className={`font-black text-lg sm:text-xl leading-none mb-1 ${isSelected ? "text-[#58cc02]" : "text-[#042c60]"}`}>
+                  {itemObj.title}
                 </span>
-                <span className="text-xs sm:text-sm font-bold text-gray-400">
-                  {item.description}
+                <span className="text-sm font-bold text-gray-400 line-clamp-1">
+                  {itemObj.description}
                 </span>
               </div>
               
               {isSelected && (
-                <div className="absolute top-4 right-4 w-6 h-6 bg-[#58cc02] rounded-full flex items-center justify-center animate-in zoom-in duration-300">
-                  <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1.5 5.5L4.5 8.5L12.5 1.5" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
+                <motion.div 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="bg-[#58cc02] p-1 rounded-full text-white shadow-lg"
+                >
+                  <Check size={20} strokeWidth={4} />
+                </motion.div>
               )}
             </motion.button>
           );
         })}
-      </div>
+      </motion.div>
+
+      <p className="text-gray-400 font-bold text-sm italic pt-4">
+        * Vamos ajustar as lições com base na tua escolha.
+      </p>
     </div>
   );
 };

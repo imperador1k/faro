@@ -1,9 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { HappyStarLottie } from "@/components/ui/lottie-animation";
 
 export const StepPlacementResult = () => {
+  const { placementResults } = useOnboardingStore();
+
+  const levelMap = {
+    "A1": { section: 1, label: "Iniciante (A1)", bonus: 20 },
+    "A2": { section: 2, label: "Elementar (A2)", bonus: 50 },
+    "B1": { section: 3, label: "Intermédio (B1)", bonus: 100 },
+  };
+
+  const result = placementResults?.level ? levelMap[placementResults.level] : levelMap["A1"];
+
   return (
     <div className="w-full h-full flex flex-col items-center justify-center sm:justify-start sm:pt-6 text-center px-4 max-w-xl mx-auto">
       {/* Celebratory Animation */}
@@ -35,16 +46,26 @@ export const StepPlacementResult = () => {
           {/* Subtle background glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent to-yellow-50/50 opacity-0 group-hover:opacity-100 transition-opacity" />
           
-          <p className="text-base sm:text-lg font-bold text-gray-600 relative z-10">
-            Com base nos teus conhecimentos, o Marco decidiu colocar-te na <span className="text-sky-500 font-black">Secção 2</span>.
-          </p>
+          <div className="space-y-4">
+            <p className="text-base sm:text-lg font-bold text-gray-600 relative z-10">
+              Com base nos teus {placementResults?.score} acertos, o Marco colocou-te no nível:
+            </p>
+            
+            <div className="text-4xl font-black text-[#1cb0f6] relative z-10">
+              {result.label}
+            </div>
+
+            <p className="text-gray-500 font-bold text-sm">
+              Começarás na <span className="text-[#042c60]">Secção {result.section}</span>.
+            </p>
+          </div>
           
-          <div className="mt-3 flex items-center justify-center gap-2 relative z-10">
+          <div className="mt-6 flex items-center justify-center gap-2 relative z-10">
             <span className="bg-amber-100 text-amber-600 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
               Atalho Ativado
             </span>
             <span className="bg-green-100 text-green-600 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-              +50 XP Bónus
+              +{result.bonus} XP Bónus
             </span>
           </div>
         </div>

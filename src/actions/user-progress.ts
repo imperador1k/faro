@@ -289,9 +289,18 @@ export const onChallengeWrong = async (challengeId?: number) => {
  * @param courseId - The ID of the course to activate.
  * @throws {Error} If the user is not authenticated or the course does not exist.
  */
-export const onSelectCourse = async (courseId: number) => {
-    const parsed = z.number().positive().safeParse(courseId);
-    if (!parsed.success) return actionError("INVALID_PAYLOAD", "Payload inválido: courseId deve ser positivo.");
+export const onSelectCourse = async (courseId: number, motivation?: string | null, experienceLevel?: string | null, cefrLevel?: string | null) => {
+    // 🛡️ ANTI-CHEAT: Zod Payload Validation & Sanitization
+    const schema = z.object({
+        courseId: z.number().positive(),
+        motivation: z.string().max(100).nullable().optional(),
+        experienceLevel: z.string().max(20).nullable().optional(),
+        cefrLevel: z.string().max(5).nullable().optional(),
+    });
+
+    const parsed = schema.safeParse({ courseId, motivation, experienceLevel, cefrLevel });
+    if (!parsed.success) return actionError("INVALID_PAYLOAD", "Dados inválidos.");
+    
     const { userId } = await auth();
     const user = await currentUser();
 
@@ -299,8 +308,14 @@ export const onSelectCourse = async (courseId: number) => {
         return actionError("UNAUTHORIZED", "Não estás autenticado");
     }
 
+    // 🛡️ ANTI-CHEAT: Rate Limiting
+    const { success } = await gameplayRateLimit.limit(userId);
+    if (!success) {
+        return actionError("RATE_LIMIT_EXCEEDED", "Estás a tentar mudar de curso demasiado rápido!");
+    }
+
     // Create or update user progress
-    await createUserProgress(courseId);
+    await createUserProgress(parsed.data.courseId, parsed.data.motivation, parsed.data.experienceLevel, parsed.data.cefrLevel);
 
     // Sync Clerk user data to DB (name and image)
     const userName = user.firstName

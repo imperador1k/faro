@@ -2,109 +2,156 @@
 
 import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { motion } from "framer-motion";
+import { Check, Sparkles } from "lucide-react";
 import Image from "next/image";
 
-export const StepLevel = () => {
-  const { experienceLevel, setExperienceLevel, setStep } = useOnboardingStore();
+const LEVELS = [
+  {
+    id: "beginner",
+    title: "Estou a começar do zero",
+    description: "Vais aprender as bases, desde os primeiros sons até frases simples.",
+    icon: "/duo_happy.png",
+    color: "bg-green-100",
+    borderColor: "border-green-200",
+    accent: "text-green-600",
+  },
+  {
+    id: "basic",
+    title: "Sei algumas palavras",
+    description: "Já conheces o básico? Vamos focar em expandir o teu vocabulário diário.",
+    icon: "/duo_thinking.png",
+    color: "bg-blue-100",
+    borderColor: "border-blue-200",
+    accent: "text-blue-600",
+  },
+  {
+    id: "intermediate",
+    title: "Consigo conversar",
+    description: "Tens confiança mas queres fluidez? Este é o teu lugar.",
+    icon: "/duo_gentleman.png",
+    color: "bg-amber-100",
+    borderColor: "border-amber-200",
+    accent: "text-amber-600",
+  },
+  {
+    id: "advanced",
+    title: "Nível Avançado",
+    description: "Já dominas a língua mas queres polir a tua pronúncia e gramática complexa.",
+    icon: "/duo_detective.png",
+    color: "bg-purple-100",
+    borderColor: "border-purple-200",
+    accent: "text-purple-600",
+  },
+] as const;
 
-  const handleSelect = (level: "novato" | "experiente") => {
-    setExperienceLevel(level);
-    
-    // Auto-advance with a slight delay for the tactile click animation
-    setTimeout(() => {
-        if (level === "novato") setStep(7); // Skip placement test result
-        if (level === "experiente") setStep(6); // Go to placement test result
-    }, 400); 
+interface StepLevelProps {
+  courseTitle: string;
+}
+
+export const StepLevel = ({ courseTitle }: StepLevelProps) => {
+  const { experienceLevel, setExperienceLevel } = useOnboardingStore();
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1 }
   };
 
   return (
-    <div className="w-full h-full flex flex-col pt-4 max-w-2xl mx-auto px-2">
-      {/* Marco Intro Section */}
-      <div className="flex items-center gap-4 mb-8">
+    <div className="flex flex-col items-center w-full max-w-2xl mx-auto space-y-10 pb-10">
+      <div className="flex flex-col items-center text-center space-y-4 max-w-md">
         <motion.div
-          initial={{ scale: 0, rotate: 10 }}
+          initial={{ scale: 0, rotate: -10 }}
           animate={{ scale: 1, rotate: 0 }}
-          className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0"
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          className="w-28 h-28 relative"
         >
-          <Image
-            src="/marco.png"
-            alt="Marco"
-            fill
-            className="object-contain"
-          />
+          <div className="absolute inset-0 bg-yellow-100 rounded-full blur-2xl opacity-50 animate-pulse" />
+          <Image src="/marco.png" alt="Mascote" fill className="object-contain relative z-10" />
         </motion.div>
         
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white border-2 border-gray-200 rounded-2xl p-4 shadow-sm relative"
-        >
-          <p className="text-sm sm:text-base font-bold text-[#4b4b4b]">
-            Não te preocupes, vamos encontrar o ponto de partida ideal para ti! 💪
+        <div className="space-y-2">
+          <h1 className="text-3xl font-black md:text-4xl tracking-tight text-[#042c60]">
+            Quanto sabes de <span className="text-[#58cc02] relative inline-block">
+              {courseTitle}
+              <motion.span 
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="absolute bottom-1 left-0 h-1 bg-[#58cc02]/20 rounded-full"
+              />
+            </span>?
+          </h1>
+          <p className="text-gray-500 font-bold text-lg md:text-xl">
+            O Marco vai desenhar o teu plano de estudos personalizado.
           </p>
-          <div className="absolute left-[-10px] top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-l-2 border-b-2 border-gray-200 rotate-45" />
-        </motion.div>
+        </div>
       </div>
 
-      <h1 className="text-2xl sm:text-3xl font-black text-[#042c60] mb-8 text-left">
-        Quanto <span className="text-amber-500">sabes</span> do idioma?
-      </h1>
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full"
+      >
+        {LEVELS.map((level) => (
+          <motion.button
+            key={level.id}
+            variants={item}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setExperienceLevel(level.id)}
+            className={`flex flex-col p-6 rounded-3xl border-2 border-b-8 transition-all text-left relative overflow-hidden group
+              ${experienceLevel === level.id 
+                ? "border-[#1cb0f6] bg-[#ddf4ff] shadow-[0_4px_0_#1cb0f6]" 
+                : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50 active:border-b-2 active:translate-y-1 shadow-[0_4px_0_#e5e5e5]"
+              }`}
+          >
+            {/* Background Accent */}
+            <div className={`absolute -top-4 -right-4 w-20 h-20 rounded-full opacity-10 transition-transform group-hover:scale-150 ${level.color}`} />
+            
+            <div className="flex items-center gap-4 mb-4 relative z-10">
+              <div className={`w-16 h-16 relative flex-shrink-0 rounded-2xl p-2 bg-white shadow-sm border border-gray-100`}>
+                <Image src={level.icon} alt={level.title} fill className="object-contain p-1" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-black text-xl text-[#042c60] leading-none mb-1">{level.title}</h3>
+                <div className={`flex items-center gap-1 text-[10px] font-black uppercase tracking-widest ${level.accent}`}>
+                  <Sparkles size={10} />
+                  {level.id === "beginner" ? "Recomendado" : "Nivelamento Ativo"}
+                </div>
+              </div>
+            </div>
 
-      <div className="grid grid-cols-1 gap-4 w-full">
-        {/* Option: Novato */}
-        <motion.button
-          whileTap={{ scale: 0.98 }}
-          onClick={() => handleSelect("novato")}
-          className={`
-            group relative flex items-center gap-5 p-6 rounded-3xl border-2 transition-all text-left
-            ${experienceLevel === "novato"
-              ? "border-[#58cc02] bg-[#f7fff0] shadow-[0_6px_0_#46a302]" 
-              : "border-gray-200 bg-white shadow-[0_6px_0_#e5e5e5] hover:bg-gray-50 active:shadow-none active:translate-y-[2px]"}
-          `}
-        >
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl shrink-0 group-hover:rotate-6 transition-transform">
-            🌱
-          </div>
-          <div className="flex flex-col">
-            <h3 className="font-black text-lg sm:text-2xl text-[#042c60] mb-1">
-              Sou novo nisto
-            </h3>
-            <p className="text-sm sm:text-base font-bold text-gray-400">
-              Vou começar do zero absoluto, passo a passo.
+            <p className="text-gray-500 font-bold text-sm leading-snug relative z-10">
+              {level.description}
             </p>
-          </div>
-        </motion.button>
 
-        {/* Option: Experiente */}
-        <motion.button
-          whileTap={{ scale: 0.98 }}
-          onClick={() => handleSelect("experiente")}
-          className={`
-            group relative flex items-center gap-5 p-6 rounded-3xl border-2 transition-all text-left
-            ${experienceLevel === "experiente"
-              ? "border-sky-500 bg-[#f0f9ff] shadow-[0_6px_0_#0369a1]" 
-              : "border-gray-200 bg-white shadow-[0_6px_0_#e5e5e5] hover:bg-gray-50 active:shadow-none active:translate-y-[2px]"}
-          `}
-        >
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sky-100 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl shrink-0 group-hover:-rotate-6 transition-transform">
-            ⭐
-          </div>
-          <div className="flex flex-col">
-            <h3 className="font-black text-lg sm:text-2xl text-[#042c60] mb-1">
-              Já sei um pouco
-            </h3>
-            <p className="text-sm sm:text-base font-bold text-gray-400">
-              Quero fazer um teste de nível para saltar o básico.
-            </p>
-          </div>
-          
-          {/* Tag for the shortcut */}
-          <div className="absolute -top-3 right-6 bg-sky-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">
-            Atalho
-          </div>
-        </motion.button>
-      </div>
+            {experienceLevel === level.id && (
+              <motion.div 
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="absolute right-4 bottom-4 bg-[#1cb0f6] p-1.5 rounded-full text-white shadow-lg"
+              >
+                <Check size={20} strokeWidth={4} />
+              </motion.div>
+            )}
+          </motion.button>
+        ))}
+      </motion.div>
+
+      <p className="text-gray-400 font-bold text-sm italic">
+        * Não te preocupes, podes sempre mudar o nível mais tarde.
+      </p>
     </div>
   );
 };

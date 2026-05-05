@@ -6,6 +6,7 @@ const isPublicRoute = createRouteMatcher([
     "/onboarding(.*)",
     "/sign-in(.*)",
     "/sign-up(.*)",
+    "/forgot-password(.*)",
     "/admin-login(.*)", // Crucial: explicitly mark as public
     "/auth-success(.*)",
     "/sso-callback(.*)",
@@ -21,6 +22,14 @@ export default clerkMiddleware(async (auth, request) => {
     // PREVENT INFINITE LOOP: If we are already on the admin-login page, let it load!
     if (request.nextUrl.pathname.startsWith("/admin-login")) {
         return NextResponse.next();
+    }
+
+    // Protection for /sign-up: must have completed onboarding
+    if (request.nextUrl.pathname.startsWith("/sign-up")) {
+        const onboardingCookie = request.cookies.get("onboarding_completed");
+        if (!onboardingCookie || onboardingCookie.value !== "true") {
+            return NextResponse.redirect(new URL("/onboarding", request.url));
+        }
     }
 
     // Military-grade Zero Trust for /admin route

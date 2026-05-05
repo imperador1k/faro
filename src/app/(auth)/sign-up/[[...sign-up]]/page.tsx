@@ -1,12 +1,13 @@
 "use client";
 
-import { useSignUp } from "@clerk/nextjs";
+import { useSignUp, useUser } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import { useOnboardingStore } from "@/store/use-onboarding-store";
+import { Eye, EyeOff } from "lucide-react";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0, scale: 0.95, y: 20 },
@@ -35,12 +36,32 @@ const itemVariants: Variants = {
 
 export default function CustomSignUp() {
   const { isLoaded, signUp, setActive } = useSignUp();
+  const { isSignedIn } = useUser();
   const { isOnboardingComplete } = useOnboardingStore();
   const [isHydrated, setIsHydrated] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  // Helper to translate Clerk errors
+  const translateError = (err: any) => {
+    const error = err.errors?.[0];
+    if (!error) return "Ocorreu um erro inesperado.";
+
+    switch (error.code) {
+      case "form_identifier_exists":
+        return "Este email já está em uso.";
+      case "form_password_length_too_short":
+        return "A palavra-passe deve ter pelo menos 8 caracteres.";
+      case "form_param_nil":
+        return "Por favor, preenche todos os campos.";
+      default:
+        return error.message || "Erro ao criar conta.";
+    }
+  };
 
   // Handle zustand hydration and onboarding protection
   useEffect(() => {
@@ -52,6 +73,12 @@ export default function CustomSignUp() {
       router.push("/onboarding");
     }
   }, [isHydrated, isOnboardingComplete, router]);
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      router.push("/learn");
+    }
+  }, [isLoaded, isSignedIn, router]);
 
   const handleGoogleSignUp = async () => {
     if (!isLoaded) return;
@@ -68,9 +95,10 @@ export default function CustomSignUp() {
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isLoaded) return;
+    if (!isLoaded || !signUp) return;
     
     setIsLoading(true);
+    setError("");
     try {
       await signUp.create({
         emailAddress: email,
@@ -78,8 +106,9 @@ export default function CustomSignUp() {
       });
       
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-    } catch (err) {
+    } catch (err: any) {
       console.error("Erro no registro:", err);
+      setError(translateError(err));
     } finally {
       setIsLoading(false);
     }
@@ -228,15 +257,34 @@ export default function CustomSignUp() {
                       required
                       className="w-full h-14 px-6 bg-slate-100/50 border-2 border-slate-200 rounded-2xl font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-[#1cb0f6] focus:bg-white transition-all text-base"
                     />
-                    <input
-                      type="password"
-                      placeholder="Palavra-passe"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="w-full h-14 px-6 bg-slate-100/50 border-2 border-slate-200 rounded-2xl font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-[#1cb0f6] focus:bg-white transition-all text-base"
-                    />
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Palavra-passe"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className="w-full h-14 px-6 bg-slate-100/50 border-2 border-slate-200 rounded-2xl font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-[#1cb0f6] focus:bg-white transition-all text-base pr-14"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                      >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </button>
+                    </div>
                   </motion.div>
+
+                  {error && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-rose-500 text-sm font-bold text-center bg-rose-50 p-3 rounded-xl border border-rose-100"
+                    >
+                      {error}
+                    </motion.p>
+                  )}
 
                   <motion.button
                     variants={itemVariants}

@@ -4,6 +4,13 @@ import { Loader2 } from "lucide-react";
 
 export default function NativeCallbackPage() {
     useEffect(() => {
+        // If we are on localhost, don't try to open the custom scheme, 
+        // just redirect to the app home.
+        if (window.location.hostname === 'localhost') {
+            window.location.href = '/learn';
+            return;
+        }
+
         // Redireciona de volta para a App usando o custom scheme
         // Passamos exatamente os mesmos query parameters que o Google nos enviou
         const queryParams = window.location.search;

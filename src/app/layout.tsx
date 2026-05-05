@@ -12,6 +12,7 @@ import { ReviewModal } from "@/components/modals/review-modal";
 import { GlobalPresenceProvider } from "@/components/providers/global-presence-provider";
 import { NativeBridge } from "@/components/providers/native-bridge";
 import { NativeUpdater } from "@/components/providers/native-updater";
+import { OnboardingSync } from "@/components/onboarding-sync";
 import "./globals.css";
 
 const nunito = Nunito({ subsets: ["latin"] });
@@ -99,6 +100,7 @@ export default function RootLayout({
 
             <ClerkLoaded>
               <GlobalPresenceProvider>
+                  <OnboardingSync />
                   <TTSUnlocker />
                   <ReviewModal />
                   {children}

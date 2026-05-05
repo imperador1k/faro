@@ -26,7 +26,9 @@ export default function SSOCallbackPage() {
 
     // In Chrome: bounce back to native app via deep link
     useEffect(() => {
-        if (isNative) return;
+        // If we are already in the native app, or if we are on localhost (web dev), 
+        // we don't want to bounce to the custom scheme.
+        if (isNative || window.location.hostname === 'localhost') return;
 
         const search = window.location.search;
         const hash = window.location.hash;
@@ -47,8 +49,15 @@ export default function SSOCallbackPage() {
         return () => clearTimeout(timeout);
     }, [isNative]);
 
-    // Chrome: show loading while deep link fires (AuthenticateWithRedirectCallback NOT rendered)
-    if (!isNative) {
+    // Determine if we should treat this as a pure Web environment (no bounce)
+    const isWebEnv = !isNative && (
+        window.location.hostname === 'localhost' || 
+        window.location.hostname === 'myduolingo.vercel.app'
+    );
+
+    // If we are in Chrome (not native) AND it's not the web app environment, 
+    // show the bounce loading screen.
+    if (!isNative && !isWebEnv) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-white flex-col gap-4">
                 <div className="h-8 w-8 animate-spin rounded-full border-4 border-green-500 border-t-transparent" />

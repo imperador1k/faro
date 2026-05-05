@@ -126,7 +126,12 @@ export const getUserProgressById = cache(async (userId: string) => {
     };
 });
 
-export const createUserProgress = async (courseId: number) => {
+export const createUserProgress = async (
+    courseId: number, 
+    motivation?: string | null, 
+    experienceLevel?: string | null,
+    cefrLevel?: string | null
+) => {
     const { userId } = await auth();
     if (!userId) return { error: "Unauthorized" };
 
@@ -137,26 +142,61 @@ export const createUserProgress = async (courseId: number) => {
 
     if (!course) return { error: "Course not found" };
 
+    const cefrLevels = existingProgress?.cefrLevels as Record<string, string> || {};
+    if (cefrLevel) {
+        cefrLevels[course.language] = cefrLevel;
+    }
+
     if (existingProgress) {
         await db
             .update(userProgress)
-            .set({ activeCourseId: courseId, activeLanguage: course.language })
+            .set({ 
+                activeCourseId: courseId, 
+                activeLanguage: course.language,
+                motivation: motivation || existingProgress.motivation,
+                experienceLevel: experienceLevel || existingProgress.experienceLevel,
+                cefrLevels: cefrLevels
+            })
             .where(eq(userProgress.userId, userId));
         return { ...existingProgress, activeCourseId: courseId, activeLanguage: course.language };
     }
+
+    const today = new Date().toISOString().split('T')[0];
+    const initialXp = cefrLevel ? 70 : 20;
 
     const [newProgress] = await db
         .insert(userProgress)
         .values({
             userId,
             userName: "Estudante",
-            userImageSrc: "/duo_crying.png",
+            userImageSrc: "/duo_happy.png",
             activeCourseId: courseId,
             activeLanguage: course.language,
+            motivation: motivation || null,
+            experienceLevel: experienceLevel || null,
+            cefrLevels: cefrLevels,
             hearts: 5,
-            points: 0,
+            points: 100, // Welcome gems
+            totalXpEarned: initialXp,
+            streak: 1, // Start with 1-day streak
+            longestStreak: 1,
+            lastStreakDate: today,
         })
         .returning();
+
+    // Create a notification for the welcome streak
+    createNotification(userId, "streak", "Iniciaste a tua primeira ofensiva! Mantém o ritmo. 🔥", "/learn").catch(console.error);
+    
+    // Also add to daily stats for today
+    await db.insert(userDailyStats).values({
+        userId,
+        date: today,
+        xpGained: initialXp,
+        lessonsCompleted: 0,
+    }).onConflictDoUpdate({
+        target: [userDailyStats.userId, userDailyStats.date],
+        set: { xpGained: sql`${userDailyStats.xpGained} + ${initialXp}` }
+    }).catch(console.error);
 
     return newProgress;
 };
