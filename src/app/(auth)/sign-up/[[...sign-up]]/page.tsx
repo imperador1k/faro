@@ -114,16 +114,30 @@ export default function CustomSignUp() {
     }
   };
 
-  // Prevent flicker during hydration check
-  if (!isHydrated || !isOnboardingComplete) {
+  // Show loading screen if not loaded, if already signed in, or if hydration/onboarding check is pending
+  const showLoading = !isLoaded || isSignedIn || !isHydrated || !isOnboardingComplete;
+
+  if (showLoading) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-white">
+      <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center bg-white">
         <motion.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-24 h-24 relative"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col items-center gap-6"
         >
-          <Image src="/marco.png" alt="Loading" fill className="object-contain grayscale" />
+          <div className="w-32 h-32 relative">
+            <Image src="/marco.png" alt="Carregando..." fill className="object-contain animate-bounce" />
+          </div>
+          <div className="flex gap-2">
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                animate={{ scale: [1, 1.5, 1], opacity: [0.3, 1, 0.3] }}
+                transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
+                className="w-3 h-3 bg-[#58cc02] rounded-full"
+              />
+            ))}
+          </div>
         </motion.div>
       </div>
     );
@@ -171,7 +185,7 @@ export default function CustomSignUp() {
         animate="visible"
         className="w-full max-w-5xl bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.14)] overflow-hidden flex flex-col lg:row relative z-10"
       >
-        <div className="flex flex-col lg:flex-row w-full">
+        <div className="flex flex-col lg:flex-row w-full min-h-[500px]">
           {/* Left Side (Desktop Only) */}
           <div className="hidden lg:flex lg:w-5/12 bg-[#58cc02] p-12 flex-col items-center justify-center text-white text-center relative overflow-hidden">
             <motion.div 
