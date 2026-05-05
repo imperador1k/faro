@@ -19,6 +19,7 @@ interface OnboardingState {
   setExperienceLevel: (level: "beginner" | "basic" | "intermediate" | "advanced") => void;
   setPlacementResults: (results: { score: number; level: "A1" | "A2" | "B1" }) => void;
   completeOnboarding: () => void;
+  reset: () => void;
 }
 
 export const useOnboardingStore = create<OnboardingState>()(
@@ -38,6 +39,14 @@ export const useOnboardingStore = create<OnboardingState>()(
       setExperienceLevel: (level) => set({ experienceLevel: level }),
       setPlacementResults: (results) => set({ placementResults: results }),
       completeOnboarding: () => set({ isOnboardingComplete: true }),
+      reset: () => set({
+        step: 1,
+        selectedCourse: null,
+        motivation: null,
+        experienceLevel: null,
+        placementResults: null,
+        isOnboardingComplete: false,
+      }),
     }),
     {
       name: "onboarding-storage",

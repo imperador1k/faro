@@ -36,13 +36,12 @@ const itemVariants: Variants = {
 };
 
 export default function CustomSignUp() {
-  const { 
-    selectedCourse, 
-    motivation, 
-    experienceLevel, 
-    placementResults,
-    isOnboardingComplete,
-  } = useOnboardingStore();
+  const selectedCourse = useOnboardingStore((state) => state.selectedCourse);
+  const motivation = useOnboardingStore((state) => state.motivation);
+  const experienceLevel = useOnboardingStore((state) => state.experienceLevel);
+  const placementResults = useOnboardingStore((state) => state.placementResults);
+  const isOnboardingComplete = useOnboardingStore((state) => state.isOnboardingComplete);
+  
   const { isLoaded, signUp } = useSignUp();
   const { isSignedIn } = useUser();
   const [isHydrated, setIsHydrated] = useState(false);
@@ -82,34 +81,10 @@ export default function CustomSignUp() {
   }, [isHydrated, isOnboardingComplete, router]);
 
   useEffect(() => {
-    const syncAndRedirect = async () => {
-      if (isLoaded && isSignedIn && isHydrated) {
-        // If we have onboarding data, sync it before redirecting
-        if (selectedCourse && isOnboardingComplete) {
-          try {
-            console.log("Sincronizando onboarding pós-signup...");
-            await onSelectCourse(
-              selectedCourse, 
-              motivation, 
-              experienceLevel, 
-              placementResults?.level
-            );
-            
-            // Clear local onboarding data
-            localStorage.removeItem("onboarding-storage");
-            document.cookie = "onboarding_data=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-            document.cookie = "onboarding_completed=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-          } catch (error) {
-            console.error("Erro na sincronização pós-signup:", error);
-          }
-        }
-        
-        router.push("/learn");
-      }
-    };
-
-    syncAndRedirect();
-  }, [isLoaded, isSignedIn, isHydrated, selectedCourse, isOnboardingComplete, motivation, experienceLevel, placementResults, router]);
+    if (isHydrated && !isOnboardingComplete) {
+      router.push("/onboarding");
+    }
+  }, [isHydrated, isOnboardingComplete, router]);
 
   const handleGoogleSignUp = async () => {
     if (!isLoaded) return;

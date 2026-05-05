@@ -18,15 +18,22 @@ export const OnboardingSync = ({ isFullScreen }: OnboardingSyncProps) => {
     experienceLevel, 
     placementResults,
     isOnboardingComplete,
+    reset,
   } = useOnboardingStore();
   const [isSyncing, setIsSyncing] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const syncData = async () => {
-      // 1. Try to get data from Store (Email Signup flow)
-      // 2. Try to get data from Cookies (OAuth/Google flow)
+      // 1. Safety locks
+      if (isSyncing || !isUserLoaded || !user) return;
       
+      // Prevent multiple syncs in the same window session
+      if (sessionStorage.getItem("onboarding_synced") === user.id) {
+        return;
+      }
+
+      // 2. Identify data to sync
       let dataToSync = null;
 
       if (selectedCourse && isOnboardingComplete) {
@@ -37,26 +44,23 @@ export const OnboardingSync = ({ isFullScreen }: OnboardingSyncProps) => {
           cefrLevel: placementResults?.level || null
         };
       } else {
-        // Look for cookie (OAuth flow)
         const cookies = document.cookie.split("; ");
         const onboardingCookie = cookies.find(row => row.startsWith("onboarding_data="));
         if (onboardingCookie) {
           try {
             dataToSync = JSON.parse(decodeURIComponent(onboardingCookie.split("=")[1]));
-            // Map cookie fields to expected names
-            if (dataToSync.selectedCourse) {
-              dataToSync.courseId = dataToSync.selectedCourse;
-            }
+            if (dataToSync.selectedCourse) dataToSync.courseId = dataToSync.selectedCourse;
           } catch (e) {
             console.error("Erro ao ler cookie de onboarding:", e);
           }
         }
       }
 
-      if (isUserLoaded && user && dataToSync && !isSyncing) {
+      // 3. Perform Sync
+      if (dataToSync) {
         setIsSyncing(true);
         try {
-          console.log("Sincronizando dados para o utilizador:", user.id);
+          console.log(`[Sync] A iniciar sincronização para ${user.id}...`);
           
           await onSelectCourse(
             dataToSync.courseId, 
@@ -65,23 +69,30 @@ export const OnboardingSync = ({ isFullScreen }: OnboardingSyncProps) => {
             dataToSync.cefrLevel
           );
           
-          // Cleanup
-          localStorage.removeItem("onboarding-storage");
-          document.cookie = "onboarding_data=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-          document.cookie = "onboarding_completed=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+          // Mark as synced in this session
+          sessionStorage.setItem("onboarding_synced", user.id);
           
-          // Trigger server-side refresh
+          // Cleanup
+          reset();
+          localStorage.removeItem("onboarding-storage");
+          
+          // Aggressive cookie clearing
+          const cookieOptions = "path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+          document.cookie = `onboarding_data=; ${cookieOptions}`;
+          document.cookie = `onboarding_completed=; ${cookieOptions}`;
+          
+          console.log("[Sync] Sucesso. A refrescar página...");
+          
           router.refresh();
         } catch (error) {
-          console.error("Erro ao sincronizar onboarding:", error);
-        } finally {
-          setIsSyncing(false);
+          console.error("[Sync] Erro crítico:", error);
+          setIsSyncing(false); 
         }
       }
     };
 
     syncData();
-  }, [isUserLoaded, user, selectedCourse, isOnboardingComplete, motivation, experienceLevel, placementResults, isSyncing, router]);
+  }, [isUserLoaded, user, selectedCourse, isOnboardingComplete, motivation, experienceLevel, placementResults, isSyncing, router, reset]);
 
   return null;
 };
