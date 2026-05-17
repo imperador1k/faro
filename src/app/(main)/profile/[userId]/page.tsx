@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getUserProgressById, getUnitsForUser, isFollowingUser } from "@/db/queries";
+import { getUserProgressById, isFollowingUser, getCompletedLessonsCount } from "@/db/queries";
 import { ACHIEVEMENTS, Achievement } from "@/constants/achievements";
 import { Flame, Target, Heart, Zap, MessageSquareText } from "lucide-react";
 import { FollowButton } from "@/components/shared/follow-button";
@@ -7,6 +7,7 @@ import { ProfileHero } from "@/components/shared/profile-hero";
 import { AchievementsList } from "@/components/shared/achievements-list";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 interface Props {
@@ -17,19 +18,12 @@ interface Props {
 
 export default async function PublicProfilePage({ params }: Props) {
     const userProgress = await getUserProgressById(params.userId);
-    const units = await getUnitsForUser(params.userId);
+    const completedLessons = await getCompletedLessonsCount(params.userId);
     const isFollowing = await isFollowingUser(params.userId);
 
     if (!userProgress) {
         redirect("/leaderboard");
     }
-
-    let completedLessons = 0;
-    units.forEach(unit => {
-        unit.lessons.forEach(lesson => {
-            if (lesson.completed) completedLessons++;
-        });
-    });
 
     const streak = userProgress.streak || 0;
     const totalXpEarned = userProgress.totalXpEarned || userProgress.points || 0;
@@ -104,11 +98,14 @@ export default async function PublicProfilePage({ params }: Props) {
                 <div className="absolute -top-10 -left-10 w-40 h-40 bg-sky-50 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity" />
                 
                 <div className="relative z-10 p-5 bg-sky-50 rounded-[2rem] border-2 border-sky-100 border-b-8 shadow-sky-200/50 group-hover:scale-105 transition-transform">
-                    <img 
-                        src={userProgress.activeCourse?.imageSrc || "/es.svg"} 
-                        alt="Course Flag" 
-                        className="h-20 w-24 object-cover rounded-xl shadow-md border-2 border-white"
-                    />
+                    <div className="relative h-20 w-24">
+                        <Image 
+                            src={userProgress.activeCourse?.imageSrc || "/es.svg"} 
+                            alt="Course Flag" 
+                            fill
+                            className="object-cover rounded-xl shadow-md border-2 border-white"
+                        />
+                    </div>
                 </div>
                 <div className="relative z-10 flex-1 text-center md:text-left flex flex-col gap-3">
                     <div className="flex items-center justify-center md:justify-start gap-2">

@@ -9,6 +9,7 @@ import { askMarco } from "@/actions/marco-chat";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { useAuth } from "@clerk/nextjs";
+import { useDebounce } from "@/hooks/use-debounce";
 
 type Message = {
     id: string;
@@ -35,6 +36,7 @@ export const FloatingMarco = () => {
     const [isLoading, setIsLoading] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
     const editorRef = useRef<HTMLDivElement>(null);
+    const debouncedInput = useDebounce(input, 150);
 
     // Ensure Placeholder CSS is injected manually if needed
     useEffect(() => {
@@ -52,7 +54,11 @@ export const FloatingMarco = () => {
             }
         `;
         document.head.appendChild(style);
-        return () => { document.head.removeChild(style); };
+        return () => { 
+            if (document.head.contains(style)) {
+                document.head.removeChild(style);
+            }
+        };
     }, []);
 
     // Auto-scroll to bottom of chat
@@ -442,7 +448,7 @@ export const FloatingMarco = () => {
                 {/* Input Area */}
                 <div className="p-4 bg-white border-t-2 border-stone-100 flex flex-col shrink-0 mb-safe relative">
                     {/* Slash Commands Pop-over */}
-                    {input === "/" && (
+                    {debouncedInput === "/" && (
                         <div className="absolute bottom-full left-4 mb-2 bg-white border-2 border-stone-200 rounded-2xl shadow-xl overflow-hidden z-30 w-64 animate-in slide-in-from-bottom-2 fade-in">
                             {SLASH_COMMANDS.map((cmd) => (
                                 <button

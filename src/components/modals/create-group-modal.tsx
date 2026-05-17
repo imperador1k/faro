@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { X, Users, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -142,9 +143,9 @@ export const CreateGroupModal = ({ isOpen, onClose }: Props) => {
                                         )}
                                     >
                                         <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 rounded-full border-2 border-white overflow-hidden bg-stone-100 shadow-sm">
+                                            <div className="relative h-10 w-10 rounded-full border-2 border-white overflow-hidden bg-stone-100 shadow-sm">
                                                 {friend.userImageSrc ? (
-                                                    <img src={friend.userImageSrc} alt={friend.userName} className="h-full w-full object-cover" />
+                                                    <Image src={friend.userImageSrc} alt={friend.userName} fill className="object-cover" />
                                                 ) : (
                                                     <div className="h-full w-full flex items-center justify-center font-black text-stone-400">
                                                         {friend.userName[0]?.toUpperCase()}

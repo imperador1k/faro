@@ -3,6 +3,7 @@
 import { Grid } from "@giphy/react-components";
 import { gf } from "@/lib/giphy";
 import { useState } from "react";
+import { useDebounce } from "@/hooks/use-debounce";
 
 type Props = {
     onSelect: (gif: any) => void;
@@ -10,15 +11,13 @@ type Props = {
 
 export const GifSelector = ({ onSelect }: Props) => {
     const [search, setSearch] = useState("");
-
-    // Simple inline debounce implementation if useDebounce is missing or complex
-    // But Grid fetchGifs prop is a function.
+    const debouncedSearch = useDebounce(search, 500);
 
     const fetchGifs = (offset: number) => {
-        if (!search) {
+        if (!debouncedSearch) {
             return gf.trending({ offset, limit: 10 });
         }
-        return gf.search(search, { offset, limit: 10 });
+        return gf.search(debouncedSearch, { offset, limit: 10 });
     };
 
     return (
@@ -34,7 +33,7 @@ export const GifSelector = ({ onSelect }: Props) => {
                     width={typeof window !== 'undefined' ? (window.innerWidth < 640 ? window.innerWidth - 64 : 316) : 316}
                     columns={2}
                     fetchGifs={fetchGifs}
-                    key={search}
+                    key={debouncedSearch}
                     onGifClick={(gif, e) => {
                         e.preventDefault();
                         onSelect(gif);

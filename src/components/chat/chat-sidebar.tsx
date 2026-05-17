@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { onSearchUsers } from "@/actions/user-actions";
 import { Search, Loader2, Users, UserPlus, BadgeCheck } from "lucide-react";
 import { CreateGroupModal } from "@/components/modals/create-group-modal";
@@ -154,9 +155,9 @@ export const ChatSidebar = ({ conversations }: Props) => {
                                         onClick={() => onSelectUser(user.userId)}
                                         className="flex items-center gap-4 p-4 hover:bg-stone-50 active:bg-stone-100 cursor-pointer transition border-b-2 border-stone-100 last:border-b-0"
                                     >
-                                        <div className="h-10 w-10 rounded-[12px] border-2 border-stone-200 overflow-hidden flex-shrink-0 bg-stone-100">
+                                        <div className="relative h-10 w-10 rounded-[12px] border-2 border-stone-200 overflow-hidden flex-shrink-0 bg-stone-100">
                                             {user.userImageSrc ? (
-                                                <img src={user.userImageSrc} alt={user.userName} className="h-full w-full object-cover" />
+                                                <Image src={user.userImageSrc} alt={user.userName} fill className="object-cover" />
                                             ) : (
                                                 <div className="flex h-full w-full items-center justify-center text-sm font-black text-stone-400">
                                                     {user.userName[0]?.toUpperCase()}
@@ -212,7 +213,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
                                                 )}
                                             >
                                                 {p.userImageSrc ? (
-                                                    <img src={p.userImageSrc} alt={p.userName || ""} className="h-full w-full object-cover" />
+                                                    <Image src={p.userImageSrc} alt={p.userName || ""} fill className="object-cover" />
                                                 ) : (
                                                     <div className="flex h-full w-full items-center justify-center text-[10px] font-black text-stone-400">
                                                         {p.userName?.[0] || "?"}
@@ -228,11 +229,11 @@ export const ChatSidebar = ({ conversations }: Props) => {
                                     </div>
                                 ) : (
                                     <div className={cn(
-                                        "h-14 w-14 rounded-[16px] border-2 overflow-hidden shrink-0 flex items-center justify-center shadow-sm",
+                                        "relative h-14 w-14 rounded-[16px] border-2 overflow-hidden shrink-0 flex items-center justify-center shadow-sm",
                                         isActive ? "border-[#1CB0F6] bg-white" : "border-stone-200 bg-stone-100"
                                     )}>
                                         {conv.partner?.userImageSrc ? (
-                                            <img src={conv.partner.userImageSrc} alt={conv.partner.userName} className="h-full w-full object-cover rounded-[14px]" />
+                                            <Image src={conv.partner.userImageSrc} alt={conv.partner.userName} fill className="object-cover rounded-[14px]" />
                                         ) : (
                                             <span className={cn("text-xl font-black", isActive ? "text-[#1CB0F6]" : "text-stone-400")}>
                                                 {conv.partner?.userName?.[0]?.toUpperCase()}

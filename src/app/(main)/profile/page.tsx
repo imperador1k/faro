@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { currentUser } from "@clerk/nextjs/server";
 import { SignOutButton } from "@clerk/nextjs";
-import { getUserProgress, getUnits } from "@/db/queries";
+import { getUserProgress, getCompletedLessonsCount } from "@/db/queries";
 import { ACHIEVEMENTS, Achievement } from "@/constants/achievements";
 import { Button } from "@/components/ui/button";
 import { Settings, LogOut, Flame, Target, Heart, Zap, Share2 } from "lucide-react";
@@ -29,18 +29,11 @@ export default function ProfilePage() {
 async function ProfileData() {
     const user = await currentUser();
     const userProgress = await getUserProgress();
-    const units = await getUnits();
+    const completedLessons = await getCompletedLessonsCount();
 
     if (!user || !userProgress) {
         redirect("/courses");
     }
-
-    let completedLessons = 0;
-    units.forEach(unit => {
-        unit.lessons.forEach(lesson => {
-            if (lesson.completed) completedLessons++;
-        });
-    });
 
     const streak = userProgress.streak || 0;
     const totalXpEarned = userProgress.totalXpEarned || userProgress.points || 0;

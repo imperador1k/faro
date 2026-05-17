@@ -203,3 +203,49 @@ export const completeClinicLesson = async () => {
     revalidatePath("/shop");
     return { hearts: newHearts };
 };
+
+export const getCompletedLessonsCount = cache(async (targetUserId?: string) => {
+    let finalUserId = targetUserId;
+    if (!finalUserId) {
+        const { userId } = await auth();
+        finalUserId = userId || undefined;
+    }
+    
+    if (!finalUserId) return 0;
+
+    const userProgressData = await getUserProgressById(finalUserId);
+    if (!userProgressData?.activeCourseId) return 0;
+
+    // Fetch ONLY the necessary data for computing lesson completion
+    const data = await db.query.lessons.findMany({
+        where: inArray(lessons.unitId, 
+            db.select({ id: units.id }).from(units).where(eq(units.courseId, userProgressData.activeCourseId))
+        ),
+        columns: { id: true },
+        with: {
+            challenges: {
+                columns: { id: true },
+                with: {
+                    challengeProgress: { 
+                        where: eq(challengeProgress.userId, finalUserId),
+                        columns: { completed: true }
+                    },
+                },
+            },
+        },
+    });
+
+    let completedCount = 0;
+    for (const lesson of data) {
+        const hasChallenges = lesson.challenges && lesson.challenges.length > 0;
+        const allChallengesCompleted = hasChallenges && lesson.challenges.every((challenge) => {
+            return challenge.challengeProgress && challenge.challengeProgress.length > 0 && challenge.challengeProgress.every((p) => p.completed);
+        });
+        
+        if (allChallengesCompleted) {
+            completedCount++;
+        }
+    }
+
+    return completedCount;
+});

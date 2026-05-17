@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import Image from "next/image";
 import { BadgeCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -36,9 +37,9 @@ export const ProfileHero = ({
                 
                 {/* Avatar Bento Box breaking out */}
                 <div className="absolute -top-20 flex left-1/2 max-md:-translate-x-1/2 md:left-12 md:translate-x-0">
-                    <div className="flex h-32 w-32 md:h-36 md:w-36 shrink-0 items-center justify-center rounded-[2rem] md:rounded-[2.5rem] bg-white text-5xl md:text-6xl shadow-2xl ring-4 md:ring-8 ring-white overflow-hidden border-2 border-stone-100 border-b-8 shadow-stone-200/50 group-hover:scale-105 transition-all duration-500 cursor-pointer">
+                    <div className="relative flex h-32 w-32 md:h-36 md:w-36 shrink-0 items-center justify-center rounded-[2rem] md:rounded-[2.5rem] bg-white text-5xl md:text-6xl shadow-2xl ring-4 md:ring-8 ring-white overflow-hidden border-2 border-stone-100 border-b-8 shadow-stone-200/50 group-hover:scale-105 transition-all duration-500 cursor-pointer">
                         {imageUrl ? (
-                            <img src={imageUrl} alt="Avatar" className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                            <Image src={imageUrl} alt="Avatar" fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                         ) : (
                             <div className="h-full w-full flex items-center justify-center bg-sky-50 text-sky-500 font-black">
                                 {name[0]?.toUpperCase() || "🧑‍🎓"}

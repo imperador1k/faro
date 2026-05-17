@@ -3,6 +3,7 @@
 import { useState, useTransition, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Zap, Shield, Snowflake, Sparkles, Heart, Infinity } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -222,8 +223,8 @@ export const ShopItems = ({ hearts, points, xpBoostLessons, heartShields, streak
                     <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[150%] animate-[shimmer_3s_infinite_ease-in-out] skew-x-12" />
 
                     <div className="relative z-10 flex items-center gap-6">
-                        <div className="flex shrink-0 items-center justify-center -mt-2 group-hover:-translate-y-2 transition-transform duration-500">
-                            <img src="/duo_crying.png" alt="Mascote PRO" className="w-24 h-24 md:w-28 md:h-28 drop-shadow-xl" />
+                        <div className="flex shrink-0 items-center justify-center -mt-2 group-hover:-translate-y-2 transition-transform duration-500 relative w-24 h-24 md:w-28 md:h-28">
+                            <Image src="/duo_crying.png" alt="Mascote PRO" fill className="drop-shadow-xl object-contain" />
                         </div>
                         <div className="flex flex-col text-white">
                             <span className={cn(

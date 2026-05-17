@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback } from "react";
 import { Trophy } from "lucide-react";
 import { UnitCardIsland } from "@/components/shared/unit-card-island";
 import { useLessonModalStore } from "@/store/use-lesson-modal-store";
@@ -33,13 +34,14 @@ export const UnitIslandFeed = ({ processedUnits, noHearts }: { processedUnits: U
     const { openModal } = useLessonModalStore();
     const { openModal: openHeartsModal } = useHeartsModalStore();
 
-    const handleLessonClick = (lesson: any) => {
+    const handleLessonClick = useCallback((lesson: any) => {
         if (noHearts) {
             openHeartsModal();
         } else {
             openModal(lesson);
         }
-    };
+    }, [noHearts, openHeartsModal, openModal]);
+
 
     return (
         <motion.div 

@@ -28,7 +28,9 @@ type MessageItemProps = {
     formatTimestamp: (date: any) => string;
 };
 
-export const MessageItem = ({
+import { memo } from "react";
+
+export const MessageItem = memo(({
     msg,
     i,
     userId,
@@ -227,4 +229,5 @@ export const MessageItem = ({
             </div>
         </div>
     );
-};
+});
+MessageItem.displayName = "MessageItem";

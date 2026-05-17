@@ -44,7 +44,7 @@ export const useRealtimeMessages = (initialMessages: any[], userId: string, conv
                     'postgres_changes' as any,
                     { event: '*', schema: 'public', table: 'messages' }, // Explicit schema for TS sanity
                     (payload: any) => {
-                        console.log("[RealtimeChat] 📡 EVENTO DETETADO NA TABELA!", payload.event, payload);
+                        if (process.env.NODE_ENV !== "production") console.log("[RealtimeChat] 📡 EVENTO DETETADO NA TABELA!", payload.event, payload);
                         
                         const newMsg = payload.new;
                         if (!newMsg) {
@@ -57,7 +57,7 @@ export const useRealtimeMessages = (initialMessages: any[], userId: string, conv
                         const currentConvId = String(conversationId).toLowerCase();
 
                         if (msgConvId === currentConvId) {
-                            console.log("[RealtimeChat] ✅ Mensagem válida! Atualizando...");
+                            if (process.env.NODE_ENV !== "production") console.log("[RealtimeChat] ✅ Mensagem válida! Atualizando...");
                             setMessages((prev) => {
                                 if (prev.some((m) => m.id === newMsg.id)) return prev;
                                 if (newMsg.sender_id !== userId) playPop();
@@ -69,7 +69,7 @@ export const useRealtimeMessages = (initialMessages: any[], userId: string, conv
                                 }];
                             });
                         } else {
-                            console.log(`[RealtimeChat] ⏭️ Ignorada: Conv ${msgConvId} != ${currentConvId}`);
+                            if (process.env.NODE_ENV !== "production") console.log(`[RealtimeChat] ⏭️ Ignorada: Conv ${msgConvId} != ${currentConvId}`);
                         }
                     }
                 );
@@ -82,7 +82,7 @@ export const useRealtimeMessages = (initialMessages: any[], userId: string, conv
 
                 channel.subscribe(async (status) => {
                     if (status === 'SUBSCRIBED') {
-                        console.log(`[RealtimeChat] 🟢 CANAL ATIVO: ${conversationId}`);
+                        if (process.env.NODE_ENV !== "production") console.log(`[RealtimeChat] 🟢 CANAL ATIVO: ${conversationId}`);
                         await channel.track({ isTyping: false });
                     }
                 });
@@ -98,7 +98,7 @@ export const useRealtimeMessages = (initialMessages: any[], userId: string, conv
         return () => {
             isStopped = true;
             if (channelRef.current) {
-                console.log(`[RealtimeChat] 🔴 Fechando canal ${conversationId}`);
+                if (process.env.NODE_ENV !== "production") console.log(`[RealtimeChat] 🔴 Fechando canal ${conversationId}`);
                 supabase.removeChannel(channelRef.current);
                 channelRef.current = null;
             }
@@ -107,7 +107,7 @@ export const useRealtimeMessages = (initialMessages: any[], userId: string, conv
 
     const trackTyping = useCallback((isTyping: boolean) => {
         if (channelRef.current && channelRef.current.state === "joined") {
-            console.log(`[RealtimeChat] ⌨️ Tracking typing: ${isTyping}`);
+            if (process.env.NODE_ENV !== "production") console.log(`[RealtimeChat] ⌨️ Tracking typing: ${isTyping}`);
             channelRef.current.track({ isTyping, online_at: new Date().toISOString() }).catch((err: any) => {
                 console.error("[RealtimeChat] ❌ Falha no trackTyping", err);
             });

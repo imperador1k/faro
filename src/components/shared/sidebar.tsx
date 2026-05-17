@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { cn } from "@/lib/utils";
 import {
     Bird,
@@ -36,11 +36,10 @@ type SidebarItemProps = {
     href: string;
     notificationCount?: number;
     isCollapsed?: boolean;
+    isActive?: boolean;
 };
 
-const SidebarItem = ({ label, iconSrc, href, notificationCount, isCollapsed }: SidebarItemProps) => {
-    const pathname = usePathname();
-    const isActive = pathname === href;
+const SidebarItem = memo(({ label, iconSrc, href, notificationCount, isCollapsed, isActive }: SidebarItemProps) => {
     const { playClick } = useUISounds();
 
     return (
@@ -84,7 +83,8 @@ const SidebarItem = ({ label, iconSrc, href, notificationCount, isCollapsed }: S
             )}
         </div>
     );
-};
+});
+SidebarItem.displayName = "SidebarItem";
 
 type Props = {
     className?: string;
@@ -93,6 +93,7 @@ type Props = {
 };
 
 export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Props) => {
+    const pathname = usePathname();
     const [isMoreOpen, setIsMoreOpen] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const { playClick } = useUISounds();
@@ -143,42 +144,49 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
                 <SidebarItem
                     label="Learn"
                     href="/learn"
+                    isActive={pathname === "/learn"}
                     isCollapsed={isCollapsed}
                     iconSrc={<BookOpen className="w-6 h-6 lg:w-7 lg:h-7 shrink-0" />}
                 />
                 <SidebarItem
                     label="Practice AI"
                     href="/practice"
+                    isActive={pathname === "/practice"}
                     isCollapsed={isCollapsed}
                     iconSrc={<Bot className="w-6 h-6 lg:w-7 lg:h-7 shrink-0" />}
                 />
                 <SidebarItem
                     label="Leaderboards"
                     href="/leaderboard"
+                    isActive={pathname === "/leaderboard"}
                     isCollapsed={isCollapsed}
                     iconSrc={<Trophy className="w-6 h-6 lg:w-7 lg:h-7 shrink-0" />}
                 />
                 <SidebarItem
                     label="Missões"
                     href="/quests"
+                    isActive={pathname === "/quests"}
                     isCollapsed={isCollapsed}
                     iconSrc={<Target className="w-6 h-6 lg:w-7 lg:h-7 shrink-0" />}
                 />
                 <SidebarItem
                     label="Arcade"
                     href="/arcade"
+                    isActive={pathname === "/arcade"}
                     isCollapsed={isCollapsed}
                     iconSrc={<Gamepad2 className="w-6 h-6 lg:w-7 lg:h-7 shrink-0" />}
                 />
                 <SidebarItem
                     label="Shop"
                     href="/shop"
+                    isActive={pathname === "/shop"}
                     isCollapsed={isCollapsed}
                     iconSrc={<ShoppingBag className="w-6 h-6 lg:w-7 lg:h-7 shrink-0" />}
                 />
                 <SidebarItem
                     label="Profile"
                     href="/profile"
+                    isActive={pathname === "/profile"}
                     isCollapsed={isCollapsed}
                     iconSrc={<UserIcon className="w-6 h-6 lg:w-7 lg:h-7 shrink-0" />}
                 />
@@ -229,36 +237,42 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
                         <SidebarItem
                             label="Cursos"
                             href="/courses"
+                    isActive={pathname === "/courses"}
                             isCollapsed={isCollapsed}
                             iconSrc={<BookOpen className="h-5 w-5 lg:w-6 lg:h-6 shrink-0" />}
                         />
                         <SidebarItem
                             label="Cofre"
                             href="/vocabulary"
+                    isActive={pathname === "/vocabulary"}
                             isCollapsed={isCollapsed}
                             iconSrc={<Archive className="h-5 w-5 lg:w-6 lg:h-6 shrink-0" />}
                         />
                         <SidebarItem
                             label="Estatísticas"
                             href="/analytics"
+                    isActive={pathname === "/analytics"}
                             isCollapsed={isCollapsed}
                             iconSrc={<BarChart className="h-5 w-5 lg:w-6 lg:h-6 shrink-0" />}
                         />
                         <SidebarItem
                             label="Avaliação"
                             href="/evaluation"
+                    isActive={pathname === "/evaluation"}
                             isCollapsed={isCollapsed}
                             iconSrc={<GraduationCap className="h-5 w-5 lg:w-6 lg:h-6 shrink-0" />}
                         />
                         <SidebarItem
                             label="Amigos"
                             href="/friends"
+                    isActive={pathname === "/friends"}
                             isCollapsed={isCollapsed}
                             iconSrc={<Users className="h-5 w-5 lg:w-6 lg:h-6 shrink-0" />}
                         />
                         <SidebarItem
                             label="Notificações"
                             href="/notifications"
+                    isActive={pathname === "/notifications"}
                             isCollapsed={isCollapsed}
                             iconSrc={<Bell className="h-5 w-5 lg:w-6 lg:h-6 shrink-0" />}
                             notificationCount={notificationCount}
@@ -266,6 +280,7 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
                         <SidebarItem
                             label="Mensagens"
                             href="/messages"
+                    isActive={pathname === "/messages"}
                             isCollapsed={isCollapsed}
                             iconSrc={<Mail className="h-5 w-5 lg:w-6 lg:h-6 shrink-0" />}
                             notificationCount={unreadMessageCount}
@@ -273,12 +288,14 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
                         <SidebarItem
                             label="Ajuda"
                             href="/support"
+                    isActive={pathname === "/support"}
                             isCollapsed={isCollapsed}
                             iconSrc={<LifeBuoy className="h-5 w-5 lg:w-6 lg:h-6 shrink-0" />}
                         />
                         <SidebarItem
                             label="Definições"
                             href="/settings"
+                    isActive={pathname === "/settings"}
                             isCollapsed={isCollapsed}
                             iconSrc={<Settings className="h-5 w-5 lg:w-6 lg:h-6 shrink-0" />}
                         />
@@ -286,6 +303,7 @@ export const Sidebar = ({ className, notificationCount, unreadMessageCount }: Pr
                             <SidebarItem
                                 label="Painel Admin"
                                 href="/admin"
+                    isActive={pathname === "/admin"}
                                 isCollapsed={isCollapsed}
                                 iconSrc={<ShieldAlert className="h-5 w-5 lg:w-6 lg:h-6 text-rose-500 shrink-0" />}
                             />

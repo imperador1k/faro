@@ -103,7 +103,7 @@ export const getUnreadMessageCount = cache(async () => {
     if (!userId) return 0;
 
     const [result] = await db
-        .select({ count: sql<number>`count(*)` })
+        .select({ count: count() })
         .from(messages)
         .innerJoin(
             conversationParticipants, 

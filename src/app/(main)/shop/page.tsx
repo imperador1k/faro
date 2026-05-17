@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getUserProgress } from "@/db/queries";
 import { Heart, Zap, Shield, Snowflake, ShoppingBag, Infinity } from "lucide-react";
@@ -46,8 +47,8 @@ async function ShopData() {
 
                 <div className="relative z-10 flex items-center gap-6 sm:gap-8 w-full sm:w-auto justify-center sm:justify-end">
                     {/* Mascot */}
-                    <div className="hidden md:flex shrink-0 transition-transform duration-500 hover:scale-110 hover:-translate-y-2">
-                        <img src="/duo_crying.png" alt="Mascot" className="w-32 h-32 xl:w-40 xl:h-40 drop-shadow-2xl object-contain" />
+                    <div className="hidden md:flex shrink-0 transition-transform duration-500 hover:scale-110 hover:-translate-y-2 relative w-32 h-32 xl:w-40 xl:h-40">
+                        <Image src="/duo_crying.png" alt="Mascot" fill className="drop-shadow-2xl object-contain" />
                     </div>
 
                     {/* Premium XP Integration */}

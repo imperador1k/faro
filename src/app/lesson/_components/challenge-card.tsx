@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type ChallengeOptionProps = {
     id: number;
@@ -38,7 +39,7 @@ export const ChallengeOptionCard = ({
         >
             {imageSrc && (
                 <div className="relative h-20 w-20 shrink-0 rounded-xl bg-slate-100 overflow-hidden border-2 border-slate-200/50">
-                    <img src={imageSrc} alt={text} className="w-full h-full object-cover" />
+                    <Image src={imageSrc} alt={text} fill className="object-cover" />
                 </div>
             )}
             <span className={cn(

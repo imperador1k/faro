@@ -25,7 +25,7 @@ export function NativeBridge() {
     const setupDeepLinks = async () => {
         // --- Tauri Desktop Handler ---
         if ((window as any).__TAURI_INTERNALS__) {
-            console.log("[NativeBridge] Tauri Desktop environment detected.");
+            if (process.env.NODE_ENV !== "production") console.log("[NativeBridge] Tauri Desktop environment detected.");
             
             // Listen for deep link events (single instance intercept)
             const { listen } = await import('@tauri-apps/api/event');
@@ -39,7 +39,7 @@ export function NativeBridge() {
                     const targetUrl = `${currentOrigin}/${pathAndSearch}`;
                     
                     if (window.location.href !== targetUrl) {
-                        console.log("[Tauri] Bouncing to:", targetUrl);
+                        if (process.env.NODE_ENV !== "production") console.log("[Tauri] Bouncing to:", targetUrl);
                         window.location.href = targetUrl;
                     }
                 }
@@ -47,7 +47,7 @@ export function NativeBridge() {
 
             // Listen for direct deep link opens
             onOpenUrlTauri((urls) => {
-                console.log("[Tauri] Deep link received:", urls);
+                if (process.env.NODE_ENV !== "production") console.log("[Tauri] Deep link received:", urls);
                 const url = urls.find(u => u.startsWith("myduolingo://"));
                 if (url) {
                     const currentOrigin = window.location.origin;
@@ -55,7 +55,7 @@ export function NativeBridge() {
                     const targetUrl = `${currentOrigin}/${pathAndSearch}`;
                     
                     if (window.location.href !== targetUrl) {
-                        console.log("[Tauri] Bouncing to:", targetUrl);
+                        if (process.env.NODE_ENV !== "production") console.log("[Tauri] Bouncing to:", targetUrl);
                         window.location.href = targetUrl;
                     }
                 }
@@ -65,7 +65,7 @@ export function NativeBridge() {
         // --- Capacitor Mobile Handler ---
         if (Capacitor.isNativePlatform()) {
             await App.addListener('appUrlOpen', async (data) => {
-                console.log("[NativeBridge] App opened with URL:", data.url);
+                if (process.env.NODE_ENV !== "production") console.log("[NativeBridge] App opened with URL:", data.url);
                 
                 Browser.close().catch(() => {});
                 
@@ -73,7 +73,7 @@ export function NativeBridge() {
                     const fakeUrl = new URL(data.url.replace('myduolingo://', 'https://placeholder.com/'));
                     const path = '/' + fakeUrl.pathname.replace(/^\/+/, '');
                     const targetUrl = `${window.location.origin}${path}${fakeUrl.search}${fakeUrl.hash}`;
-                    console.log(`[NativeBridge] OAuth bounce → full reload: ${targetUrl}`);
+                    if (process.env.NODE_ENV !== "production") console.log(`[NativeBridge] OAuth bounce → full reload: ${targetUrl}`);
                     window.location.href = targetUrl;
                     return;
                 }

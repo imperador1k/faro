@@ -2,6 +2,7 @@
 
 import { sendMessage, markAsRead, toggleReaction } from "@/actions/messages";
 import { useRef, useEffect, useState, useMemo } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { 
     Send, 
@@ -26,7 +27,7 @@ import { EmptyLottie } from "@/app/(main)/messages/empty-lottie";
 import Link from "next/link";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { UploadButton } from "./upload-button";
-import { GifSelector } from "./gif-selector";
+const GifSelector = dynamic(() => import("./gif-selector").then(mod => mod.GifSelector), { ssr: false });
 import { motion, AnimatePresence } from "framer-motion";
 import { useLongPress } from "@/hooks/use-long-press";
 import dynamic from "next/dynamic";
@@ -86,6 +87,12 @@ export const ChatWindow = ({ userId, conversationId, partner, participants, isGr
     }, []);
     const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const isTypingRef = useRef(false);
+
+    useEffect(() => {
+        return () => {
+            if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+        };
+    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (trackTyping) {
@@ -277,11 +284,12 @@ export const ChatWindow = ({ userId, conversationId, partner, participants, isGr
                                         <X className="w-5 h-5 sm:w-6 sm:h-6" />
                                     </button>
                                 </div>
-                                <div className="relative max-w-full rounded-[24px] sm:rounded-[32px] overflow-hidden border-4 border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.5)] bg-slate-900/50 backdrop-blur-sm">
-                                    <img
+                                <div className="relative max-w-full min-h-[50vh] sm:min-h-[60vh] min-w-[50vw] sm:min-w-[60vw] rounded-[24px] sm:rounded-[32px] overflow-hidden border-4 border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.5)] bg-slate-900/50 backdrop-blur-sm">
+                                    <Image
                                         src={selectedImage}
                                         alt="Enlarged media"
-                                        className="w-full h-auto object-contain max-h-[75dvh] sm:max-h-[80vh]"
+                                        fill
+                                        className="object-contain"
                                     />
                                 </div>
                             </div>
@@ -312,7 +320,7 @@ export const ChatWindow = ({ userId, conversationId, partner, participants, isGr
                                             )}
                                         >
                                             {p.userImageSrc ? (
-                                                <img src={p.userImageSrc} alt={p.userName || ""} className="h-full w-full object-cover" />
+                                                <Image src={p.userImageSrc} alt={p.userName || ""} fill className="object-cover" />
                                             ) : (
                                                 <div className="flex h-full w-full items-center justify-center text-[10px] font-black text-stone-400">
                                                     {p.userName?.[0] || "?"}
@@ -327,7 +335,7 @@ export const ChatWindow = ({ userId, conversationId, partner, participants, isGr
                                     )}
                                 </div>
                             ) : partner?.userImageSrc ? (
-                                <img src={partner.userImageSrc} alt={partner.userName} className="h-full w-full object-cover rounded-[16px]" />
+                                <Image src={partner.userImageSrc} alt={partner.userName} fill className="object-cover rounded-[16px]" />
                             ) : (
                                 <div className="flex h-full w-full items-center justify-center text-xl font-black text-stone-400 uppercase">
                                     {partner?.userName?.[0] || "?"}

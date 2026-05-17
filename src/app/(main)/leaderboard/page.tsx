@@ -1,4 +1,5 @@
-import { Suspense } from "react";
+import { Suspense, memo } from "react";
+import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getWeeklyLeaderboard } from "@/db/queries/users";
@@ -244,9 +245,9 @@ async function LeaderboardData() {
                                             </span>
                                         </div>
 
-                                        <div className="h-16 w-16 rounded-[1.25rem] border-2 border-stone-200 overflow-hidden bg-stone-100 flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                                        <div className="relative h-16 w-16 rounded-[1.25rem] border-2 border-stone-200 overflow-hidden bg-stone-100 flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
                                             {user.userImageSrc ? (
-                                                <img src={user.userImageSrc} alt={user.userName} className="h-full w-full object-cover" />
+                                                <Image src={user.userImageSrc} alt={user.userName} fill className="object-cover" />
                                             ) : (
                                                 <div className="flex justify-center items-center h-full w-full font-black text-stone-400 text-xl">
                                                     {user.userName[0]?.toUpperCase()}
@@ -369,7 +370,7 @@ const LeaderboardSkeleton = () => (
 );
 
 // ─── Podium Card ───────────────────────────────────────────────────────────────
-const PodiumCard = ({
+const PodiumCard = memo(({
     user,
     rank,
     isCurrentUser,
@@ -402,11 +403,11 @@ const PodiumCard = ({
         <div className={cn("relative mb-4", featured ? "h-28 w-28" : "h-20 w-20")}>
             <div className="absolute inset-0 bg-white rounded-[2rem] border-2 border-stone-100 shadow-inner -z-10" />
             <div className={cn(
-                "h-full w-full rounded-[1.75rem] border-2 border-stone-200 overflow-hidden bg-stone-100 shadow-sm group-hover:scale-110 transition-transform",
+                "relative h-full w-full rounded-[1.75rem] border-2 border-stone-200 overflow-hidden bg-stone-100 shadow-sm group-hover:scale-110 transition-transform",
                 isCurrentUser && "border-sky-300"
             )}>
                 {user.userImageSrc ? (
-                    <img src={user.userImageSrc} alt={user.userName} className="h-full w-full object-cover" />
+                    <Image src={user.userImageSrc} alt={user.userName} fill className="object-cover" />
                 ) : (
                     <div className="flex justify-center items-center h-full w-full font-black text-stone-400 text-3xl uppercase">
                         {user.userName[0]}
@@ -440,4 +441,5 @@ const PodiumCard = ({
             </div>
         )}
     </div>
-);
+));
+PodiumCard.displayName = "PodiumCard";

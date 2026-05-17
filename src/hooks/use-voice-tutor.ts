@@ -69,6 +69,17 @@ export function useVoiceTutor(activeLanguage: string) {
                 };
             }
         }
+
+        return () => {
+            if (recognitionRef.current) {
+                isRecordingRef.current = false;
+                try {
+                    recognitionRef.current.stop();
+                } catch (err) {
+                    console.error("Erro ao limpar mic no unmount", err);
+                }
+            }
+        };
     }, [activeLanguage]);
 
     const speak = useCallback((text: string, langCode: string) => {

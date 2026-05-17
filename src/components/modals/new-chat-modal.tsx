@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { UserPlus, Loader2, MessageSquare, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createConversation, getFriendsAction } from "@/actions/messages";
@@ -116,9 +117,9 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
                                     )}
                                 >
                                     <div className="flex items-center gap-4">
-                                        <div className="h-12 w-12 rounded-[14px] border-2 border-stone-200 overflow-hidden bg-stone-100 shadow-sm group-hover:border-[#1CB0F6] transition-colors">
+                                        <div className="relative h-12 w-12 rounded-[14px] border-2 border-stone-200 overflow-hidden bg-stone-100 shadow-sm group-hover:border-[#1CB0F6] transition-colors">
                                             {friend.userImageSrc ? (
-                                                <img src={friend.userImageSrc} alt={friend.userName} className="h-full w-full object-cover" />
+                                                <Image src={friend.userImageSrc} alt={friend.userName} fill className="object-cover" />
                                             ) : (
                                                 <div className="h-full w-full flex items-center justify-center font-black text-stone-400 uppercase">
                                                     {friend.userName[0]}

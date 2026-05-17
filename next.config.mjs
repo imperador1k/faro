@@ -3,6 +3,9 @@ import { withSentryConfig } from "@sentry/nextjs";
 /* CSP (Content Security Policy) - Bloqueia iframes de domínios não confiáveis (Um dia futuro preciso colocar o link aqui)*/
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    experimental: {
+        optimizePackageImports: ['lucide-react', 'framer-motion', 'use-sound'],
+    },
     images: {
         remotePatterns: [
             {

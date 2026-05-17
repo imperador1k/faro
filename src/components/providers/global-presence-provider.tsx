@@ -53,14 +53,14 @@ export const GlobalPresenceProvider = ({ children }: { children: React.ReactNode
                 channel.subscribe(async (status, err) => {
                     const timestamp = new Date().toLocaleTimeString();
                     if (status === 'SUBSCRIBED') {
-                        console.log(`[GlobalPresence] 🟢 [${timestamp}] Conectado ao Presence.`);
+                        if (process.env.NODE_ENV !== "production") console.log(`[GlobalPresence] 🟢 [${timestamp}] Conectado ao Presence.`);
                         await channel.track({ 
                             online_at: new Date().toISOString(),
                             username: user.username || user.firstName 
                         });
                     } else if (status === 'CLOSED') {
                         if (!isStopped) {
-                            console.warn(`[GlobalPresence] 📡 [${timestamp}] Connection CLOSED unexpected.`);
+                            if (process.env.NODE_ENV !== "production") console.warn(`[GlobalPresence] 📡 [${timestamp}] Connection CLOSED unexpected.`);
                             // Attempt to recover channel
                             setTimeout(() => {
                                 if (!isStopped && activeChannel) {
@@ -69,7 +69,7 @@ export const GlobalPresenceProvider = ({ children }: { children: React.ReactNode
                             }, 3000);
                         }
                     } else if (status === 'TIMED_OUT') {
-                        console.error(`[GlobalPresence] ⏱️ [${timestamp}] Timeout ao conectar.`);
+                        if (process.env.NODE_ENV !== "production") console.error(`[GlobalPresence] ⏱️ [${timestamp}] Timeout ao conectar.`);
                     }
                 });
 
@@ -94,7 +94,7 @@ export const GlobalPresenceProvider = ({ children }: { children: React.ReactNode
             isStopped = true;
             document.removeEventListener("visibilitychange", handleVisibilityChange);
             if (activeChannel) {
-                console.log("[GlobalPresence] 🔌 Cleanup: Disconnecting presence");
+                if (process.env.NODE_ENV !== "production") console.log("[GlobalPresence] 🔌 Cleanup: Disconnecting presence");
                 supabase.removeChannel(activeChannel);
             }
         };

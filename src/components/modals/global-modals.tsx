@@ -1,10 +1,12 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useLessonModalStore } from "@/store/use-lesson-modal-store";
 import { useHeartsModalStore } from "@/store/use-hearts-modal-store";
-import { LessonStartModal } from "@/components/modals/lesson-start-modal";
-import { HeartsModal } from "@/components/modals/hearts-modal";
-import { ProModal } from "@/components/modals/pro-modal";
+
+const LessonStartModal = dynamic(() => import("@/components/modals/lesson-start-modal").then(mod => mod.LessonStartModal), { ssr: false });
+const HeartsModal = dynamic(() => import("@/components/modals/hearts-modal").then(mod => mod.HeartsModal), { ssr: false });
+const ProModal = dynamic(() => import("@/components/modals/pro-modal").then(mod => mod.ProModal), { ssr: false });
 
 export const GlobalModals = () => {
     const { isOpen: isLessonOpen, lesson, closeModal: closeLessonModal } = useLessonModalStore();

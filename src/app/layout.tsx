@@ -75,6 +75,8 @@ export const metadata: Metadata = {
 };
 
 
+import { UISoundsProvider } from "@/components/providers/ui-sound-provider";
+
 export const dynamic = "force-dynamic";
 
 export default function RootLayout({
@@ -87,27 +89,28 @@ export default function RootLayout({
       <html lang="pt">
         <body className={`${nunito.className} bg-slate-50`}>
           <CustomToastProvider>
-            <Toaster richColors />
-            <OneSignalProvider />
-            <NativeBridge />
-            <NativeUpdater />
-            
-            <ClerkLoading>
-              <div className="fixed inset-0 z-above-modal bg-white flex items-center justify-center">
-                <LoadingScreen />
-              </div>
-            </ClerkLoading>
+            <UISoundsProvider>
+              <Toaster richColors />
+              <OneSignalProvider />
+              <NativeBridge />
+              <NativeUpdater />
+              
+              <ClerkLoading>
+                <div className="fixed inset-0 z-above-modal bg-white flex items-center justify-center">
+                  <LoadingScreen />
+                </div>
+              </ClerkLoading>
 
-            <ClerkLoaded>
-              <GlobalPresenceProvider>
-                  <OnboardingSync />
-                  <TTSUnlocker />
-                  <ReviewModal />
-                  {children}
-                  <FloatingMarco />
-              </GlobalPresenceProvider>
-            </ClerkLoaded>
-
+              <ClerkLoaded>
+                <GlobalPresenceProvider>
+                    <OnboardingSync />
+                    <TTSUnlocker />
+                    <ReviewModal />
+                    {children}
+                    <FloatingMarco />
+                </GlobalPresenceProvider>
+              </ClerkLoaded>
+            </UISoundsProvider>
           </CustomToastProvider>
         </body>
       </html>

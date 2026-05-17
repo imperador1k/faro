@@ -36,7 +36,16 @@ export async function generateTextWithFallback(
                 generationConfig: generationConfig
             });
 
-            const result = await model.generateContent(prompt);
+            // 15 seconds timeout to prevent hanging UI
+            const timeoutPromise = new Promise<never>((_, reject) => {
+                setTimeout(() => reject(new Error("Timeout: Gemini API took too long to respond.")), 15000);
+            });
+
+            const result = await Promise.race([
+                model.generateContent(prompt),
+                timeoutPromise
+            ]);
+
             return result.response.text();
         } catch (error: any) {
             console.warn(`[AI Manager] Key failed, attempting fallback... Error: ${error?.message || "Unknown error"}`);

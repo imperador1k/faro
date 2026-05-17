@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import QRCode from "react-qr-code";
@@ -206,9 +207,9 @@ export const FriendsClient = ({
     const renderUser = (user: UserData, amFollowingVal: boolean, isFollowerVal: boolean) => (
         <div key={user.userId} className="bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-4 flex items-center justify-between mb-4 hover:-translate-y-1 transition-transform">
             <Link href={`/profile/${user.userId}`} className="flex-1 flex items-center gap-4 min-w-0 hover:opacity-80 transition pr-4">
-                <div className="h-16 w-16 rounded-full border-4 border-amber-400 shrink-0 bg-stone-100 flex items-center justify-center overflow-hidden shadow-sm">
+                <div className="relative h-16 w-16 rounded-full border-4 border-amber-400 shrink-0 bg-stone-100 flex items-center justify-center overflow-hidden shadow-sm">
                     {user.userImageSrc ? (
-                        <img src={user.userImageSrc} alt={user.userName} className="h-full w-full object-cover" />
+                        <Image src={user.userImageSrc} alt={user.userName} fill className="object-cover" />
                     ) : (
                         <span className="text-3xl font-black text-stone-300">{user.userName[0]?.toUpperCase() || "👤"}</span>
                     )}

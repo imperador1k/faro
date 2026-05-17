@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Image from "next/image";
 import { Check, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -162,7 +163,9 @@ export const CoursesList = ({ courses, activeCourseId }: Props) => {
                                             )} />
                                             
                                             {course.imageSrc && course.imageSrc.startsWith("http") ? (
-                                                <img src={course.imageSrc} alt={course.title} className="w-24 h-24 object-cover drop-shadow-xl z-10 group-hover:scale-110 transition-transform duration-300 rounded-[20px] aspect-square" />
+                                                <div className="relative w-24 h-24 z-10 group-hover:scale-110 transition-transform duration-300">
+                                                    <Image src={course.imageSrc} alt={course.title} fill className="object-cover drop-shadow-xl rounded-[20px] aspect-square" />
+                                                </div>
                                             ) : (
                                                 <span className="text-[5rem] drop-shadow-xl z-10 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
                                                     {data.flag}

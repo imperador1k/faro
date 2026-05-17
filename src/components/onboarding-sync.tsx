@@ -60,7 +60,7 @@ export const OnboardingSync = ({ isFullScreen }: OnboardingSyncProps) => {
       if (dataToSync) {
         setIsSyncing(true);
         try {
-          console.log(`[Sync] A iniciar sincronização para ${user.id}...`);
+          if (process.env.NODE_ENV !== "production") console.log(`[Sync] A iniciar sincronização para ${user.id}...`);
           
           await onSelectCourse(
             dataToSync.courseId, 
@@ -81,7 +81,7 @@ export const OnboardingSync = ({ isFullScreen }: OnboardingSyncProps) => {
           document.cookie = `onboarding_data=; ${cookieOptions}`;
           document.cookie = `onboarding_completed=; ${cookieOptions}`;
           
-          console.log("[Sync] Sucesso. A refrescar página...");
+          if (process.env.NODE_ENV !== "production") console.log("[Sync] Sucesso. A refrescar página...");
           
           router.refresh();
         } catch (error) {

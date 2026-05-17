@@ -1,21 +1,11 @@
-import useSound from 'use-sound';
+import { useUISounds as useContextSounds } from "@/components/providers/ui-sound-provider";
 
 /**
  * Centralised sound-effect hook for gamification feedback.
- *
- * Preloads five audio sprites on mount via the `use-sound` library.
- * Components call the returned play functions to trigger non-blocking
- * audio feedback without managing individual `<audio>` elements.
+ * Now uses a global context to prevent redundant audio elements.
  *
  * @returns `{ playClick, playWhoosh, playReward, playStart, playPop, playFahh }`
  */
 export const useUISounds = () => {
-  const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5 });
-  const [playWhoosh] = useSound('/sounds/whoosh.mp3', { volume: 0.4 });
-  const [playReward] = useSound('/sounds/reward.mp3', { volume: 0.6 });
-  const [playStart] = useSound('/sounds/start.mp3', { volume: 0.6 });
-  const [playPop] = useSound('/sounds/pop.mp3', { volume: 0.4 });
-  const [playFahh] = useSound('/sounds/fahh.mp3', { volume: 0.6 });
-
-  return { playClick, playWhoosh, playReward, playStart, playPop, playFahh };
+  return useContextSounds();
 };

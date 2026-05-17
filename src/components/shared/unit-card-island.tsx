@@ -49,7 +49,9 @@ const NODE_POSITIONS = [
 
 const ICONS = [Mic, Pencil, Book, Star];
 
-export function UnitCardIsland({ 
+import { memo } from 'react';
+
+export const UnitCardIsland = memo(function UnitCardIsland({ 
     unitIndex, unitTitle, title, description, lessons, 
     isActive, isCompleted, align, noHearts, onLessonClick 
 }: UnitCardIslandProps) {
@@ -318,4 +320,4 @@ export function UnitCardIsland({
             </div>
         </div>
     );
-}
+});
