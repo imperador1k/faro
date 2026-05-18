@@ -7,21 +7,21 @@ import { revalidatePath } from "next/cache";
 import { checkSubscription } from "@/lib/subscription";
 import { createNotification } from "@/lib/notifications";
 import {
-    getUserProgress,
-    upsertChallengeProgress,
-    reduceHearts,
-    addPoints,
-    createUserProgress,
-    refillHearts,
-    buyOneHeart,
-    updateUserInfo,
-    updateStreak,
-    consumeXpBoost,
-    consumeHeartShield,
-    checkStreakReset,
-    logMistake,
-    resolveMistake,
-    completeClinicLesson
+  getUserProgress,
+  upsertChallengeProgress,
+  reduceHearts,
+  addPoints,
+  createUserProgress,
+  refillHearts,
+  buyOneHeart,
+  updateUserInfo,
+  updateStreak,
+  consumeXpBoost,
+  consumeHeartShield,
+  checkStreakReset,
+  logMistake,
+  resolveMistake,
+  completeClinicLesson,
 } from "@/db/queries";
 import { recordDailyStatsAction } from "@/actions/daily-stats";
 import { z } from "zod";
@@ -35,19 +35,24 @@ import { getDailyQuests, getQuestProgress } from "@/lib/quests";
  * Toggles global notification preferences.
  */
 export const updateNotificationPreference = async (enabled: boolean) => {
-    const parsed = z.boolean().safeParse(enabled);
-    if (!parsed.success) return actionError("INVALID_PAYLOAD", "Payload inválido: enabled tem de ser um boolean");
-    const { userId } = await auth();
-    if (!userId) return actionError("UNAUTHORIZED", "Não estás autenticado");
+  const parsed = z.boolean().safeParse(enabled);
+  if (!parsed.success)
+    return actionError(
+      "INVALID_PAYLOAD",
+      "Payload inválido: enabled tem de ser um boolean",
+    );
+  const { userId } = await auth();
+  if (!userId) return actionError("UNAUTHORIZED", "Não estás autenticado");
 
-    await db.update(userProgress)
-        .set({ notificationsEnabled: enabled })
-        .where(eq(userProgress.userId, userId));
+  await db
+    .update(userProgress)
+    .set({ notificationsEnabled: enabled })
+    .where(eq(userProgress.userId, userId));
 
-    revalidatePath("/settings");
-    revalidatePath("/notifications");
+  revalidatePath("/settings");
+  revalidatePath("/notifications");
 
-    return { success: true, enabled };
+  return { success: true, enabled };
 };
 
 /**
@@ -65,68 +70,78 @@ export const updateNotificationPreference = async (enabled: boolean) => {
  * @throws {Error} If the user is not authenticated.
  */
 export const onChallengeComplete = async (challengeId: number) => {
-    // 🛡️ ANTI-CHEAT: Zod Payload Validation
-    const schema = z.object({ challengeId: z.number().positive() });
-    const parsed = schema.safeParse({ challengeId });
-    if (!parsed.success) return actionError("INVALID_PAYLOAD", "Payload inválido: ID do desafio tem de ser positivo.");
+  // 🛡️ ANTI-CHEAT: Zod Payload Validation
+  const schema = z.object({ challengeId: z.number().positive() });
+  const parsed = schema.safeParse({ challengeId });
+  if (!parsed.success)
+    return actionError(
+      "INVALID_PAYLOAD",
+      "Payload inválido: ID do desafio tem de ser positivo.",
+    );
 
-    const { userId } = await auth();
+  const { userId } = await auth();
 
-    if (!userId) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    // 🛡️ ANTI-CHEAT: Rate Limiting
-    const { success } = await gameplayRateLimit.limit(userId);
-    if (!success) {
-        return actionError("RATE_LIMIT_EXCEEDED", "Estás a ir rápido demais!");
-    }
+  // 🛡️ ANTI-CHEAT: Rate Limiting
+  const { success } = await gameplayRateLimit.limit(userId);
+  if (!success) {
+    return actionError("RATE_LIMIT_EXCEEDED", "Estás a ir rápido demais!");
+  }
 
-    // 🛡️ ANTI-CHEAT: Database Spoofing Guard
-    const challengeExists = await db.query.challenges.findFirst({
-        where: eq(challenges.id, parsed.data.challengeId),
-    });
+  // 🛡️ ANTI-CHEAT: Database Spoofing Guard
+  const challengeExists = await db.query.challenges.findFirst({
+    where: eq(challenges.id, parsed.data.challengeId),
+  });
 
-    if (!challengeExists) {
-        return actionError("SPOOFING_DETECTED", "Desafio inválido: Detetada tentativa de manipulação.");
-    }
+  if (!challengeExists) {
+    return actionError(
+      "SPOOFING_DETECTED",
+      "Desafio inválido: Detetada tentativa de manipulação.",
+    );
+  }
 
-    const userProgressData = await getUserProgress();
+  const userProgressData = await getUserProgress();
 
-    if (!userProgressData) {
-        return actionError("NOT_FOUND", "Progresso de utilizador não encontrado.");
-    }
+  if (!userProgressData) {
+    return actionError("NOT_FOUND", "Progresso de utilizador não encontrado.");
+  }
 
-    // 🛡️ ANTI-CHEAT: Boundary Guard
-    if (userProgressData.hearts === 0 && !userProgressData.heartShields) {
-        return actionError("INSUFFICIENT_FUNDS", "Não podes completar desafios com 0 vidas.");
-    }
+  // 🛡️ ANTI-CHEAT: Boundary Guard
+  if (userProgressData.hearts === 0 && !userProgressData.heartShields) {
+    return actionError(
+      "INSUFFICIENT_FUNDS",
+      "Não podes completar desafios com 0 vidas.",
+    );
+  }
 
-    // Mark challenge as complete
-    await upsertChallengeProgress(parsed.data.challengeId);
+  // Mark challenge as complete
+  await upsertChallengeProgress(parsed.data.challengeId);
 
-    // Resolve from mistakes table (if it was a previous error, they mastered it now)
-    await resolveMistake(parsed.data.challengeId);
+  // Resolve from mistakes table (if it was a previous error, they mastered it now)
+  await resolveMistake(parsed.data.challengeId);
 
-    // Check for XP boost
-    const hasXpBoost = (userProgressData.xpBoostLessons || 0) > 0;
+  // Check for XP boost
+  const hasXpBoost = (userProgressData.xpBoostLessons || 0) > 0;
 
-    // 🛡️ ANTI-CHEAT: Hardcoded Server Rewards
-    const xpAmount = hasXpBoost ? 20 : 10;
-    await addPoints(xpAmount);
+  // 🛡️ ANTI-CHEAT: Hardcoded Server Rewards
+  const xpAmount = hasXpBoost ? 20 : 10;
+  await addPoints(xpAmount);
 
-    // Log XP for daily stats
-    await recordDailyStatsAction(xpAmount, 0);
+  // Log XP for daily stats
+  await recordDailyStatsAction(xpAmount, 0);
 
-    // Update streak (once per day)
-    await updateStreak();
+  // Update streak (once per day)
+  await updateStreak();
 
-    revalidatePath("/learn");
-    revalidatePath("/lesson");
-    revalidatePath("/leaderboard");
-    revalidatePath("/shop");
+  revalidatePath("/learn");
+  revalidatePath("/lesson");
+  revalidatePath("/leaderboard");
+  revalidatePath("/shop");
 
-    return { success: true, xpGained: xpAmount, boosted: hasXpBoost };
+  return { success: true, xpGained: xpAmount, boosted: hasXpBoost };
 };
 
 /**
@@ -140,53 +155,54 @@ export const onChallengeComplete = async (challengeId: number) => {
  * @throws {Error} If the user is not authenticated.
  */
 export const onLessonComplete = async () => {
-    const { userId } = await auth();
+  const { userId } = await auth();
 
-    if (!userId) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    const start = Date.now();
+  const start = Date.now();
 
-    // Check for XP boost
-    const userProgressData = await getUserProgress();
-    const hasXpBoost = userProgressData && (userProgressData.xpBoostLessons || 0) > 0;
+  // Check for XP boost
+  const userProgressData = await getUserProgress();
+  const hasXpBoost =
+    userProgressData && (userProgressData.xpBoostLessons || 0) > 0;
 
-    if (hasXpBoost) {
-        // Consume 1 boost lesson only at the END of the lesson
-        await consumeXpBoost();
-    }
+  if (hasXpBoost) {
+    // Consume 1 boost lesson only at the END of the lesson
+    await consumeXpBoost();
+  }
 
-    // Log lesson completion for daily stats
-    await recordDailyStatsAction(0, 1);
+  // Log lesson completion for daily stats
+  await recordDailyStatsAction(0, 1);
 
-    // Update streak (ensure it counts only if not already updated today)
-    // Actually, onChallengeComplete calls it too? check line 39.
-    // Yes, onChallengeComplete calls updateStreak. 
-    // But we want to return the status to show the modal here.
-    // Calling it again is safe (checks date).
-    const streakResult = await updateStreak();
+  // Update streak (ensure it counts only if not already updated today)
+  // Actually, onChallengeComplete calls it too? check line 39.
+  // Yes, onChallengeComplete calls updateStreak.
+  // But we want to return the status to show the modal here.
+  // Calling it again is safe (checks date).
+  const streakResult = await updateStreak();
 
-    // 🏆 Congratulate user on lesson completion
-    createNotification(
-        userId,
-        "streak",
-        streakResult.streakExtended
-            ? `Incrível! Ofensiva em ${streakResult.streak} dias! 🔥`
-            : `Lição concluída! Continua assim! 💪`,
-        "/leaderboard"
-    ).catch(console.error); // Non-blocking: don't await, just fire-and-forget
+  // 🏆 Congratulate user on lesson completion
+  createNotification(
+    userId,
+    "streak",
+    streakResult.streakExtended
+      ? `Incrível! Ofensiva em ${streakResult.streak} dias! 🔥`
+      : `Lição concluída! Continua assim! 💪`,
+    "/leaderboard",
+  ).catch(console.error); // Non-blocking: don't await, just fire-and-forget
 
-    revalidatePath("/learn");
-    revalidatePath("/shop");
-    revalidatePath("/lesson");
+  revalidatePath("/learn");
+  revalidatePath("/shop");
+  revalidatePath("/lesson");
 
-    return {
-        success: true,
-        boostConsumed: hasXpBoost,
-        streak: streakResult.streak,
-        streakExtended: streakResult.streakExtended
-    };
+  return {
+    success: true,
+    boostConsumed: hasXpBoost,
+    streak: streakResult.streak,
+    streakExtended: streakResult.streakExtended,
+  };
 };
 
 /**
@@ -203,79 +219,86 @@ export const onLessonComplete = async () => {
  * @throws {Error} If the user is not authenticated.
  */
 export const onChallengeWrong = async (challengeId?: number) => {
-    // 🛡️ ANTI-CHEAT: Zod Payload Validation
-    const schema = z.object({ challengeId: z.number().positive().optional() });
-    const parsed = schema.safeParse({ challengeId });
-    if (!parsed.success) return actionError("INVALID_PAYLOAD", "Payload inválido.");
+  // 🛡️ ANTI-CHEAT: Zod Payload Validation
+  const schema = z.object({ challengeId: z.number().positive().optional() });
+  const parsed = schema.safeParse({ challengeId });
+  if (!parsed.success)
+    return actionError("INVALID_PAYLOAD", "Payload inválido.");
 
-    const { userId } = await auth();
+  const { userId } = await auth();
 
-    if (!userId) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    // 🛡️ ANTI-CHEAT: Rate Limiting
-    const { success } = await gameplayRateLimit.limit(userId);
-    if (!success) {
-        return actionError("RATE_LIMIT_EXCEEDED", "Estás a ir rápido demais!");
-    }
+  // 🛡️ ANTI-CHEAT: Rate Limiting
+  const { success } = await gameplayRateLimit.limit(userId);
+  if (!success) {
+    return actionError("RATE_LIMIT_EXCEEDED", "Estás a ir rápido demais!");
+  }
 
+  if (parsed.data.challengeId) {
+    // 🛡️ ANTI-CHEAT: Database Spoofing Guard
+    const challengeExists = await db.query.challenges.findFirst({
+      where: eq(challenges.id, parsed.data.challengeId),
+    });
+    if (!challengeExists)
+      return actionError("SPOOFING_DETECTED", "Desafio inválido.");
+  }
+
+  const userProgressData = await getUserProgress();
+  if (!userProgressData)
+    return actionError("NOT_FOUND", "Progresso de utilizador não encontrado.");
+  if (userProgressData.hearts === 0)
+    return actionError(
+      "INSUFFICIENT_FUNDS",
+      "Os teus corações já estão esgotados.",
+    );
+
+  // Check if the user is PRO (Infinite Hearts)
+  const isPro = await checkSubscription();
+  if (isPro) {
+    // Log the mistake for the Clinic even if it doesn't cost a heart
     if (parsed.data.challengeId) {
-        // 🛡️ ANTI-CHEAT: Database Spoofing Guard
-        const challengeExists = await db.query.challenges.findFirst({
-            where: eq(challenges.id, parsed.data.challengeId),
-        });
-        if (!challengeExists) return actionError("SPOOFING_DETECTED", "Desafio inválido.");
+      await logMistake(parsed.data.challengeId);
     }
+    return {
+      success: true,
+      hearts: userProgressData.hearts, // Return current hearts, frontend knows it's infinity
+      shieldUsed: false,
+      isPro: true,
+    };
+  }
+
+  // Log the mistake for the Heart Clinic
+  if (parsed.data.challengeId) {
+    await logMistake(parsed.data.challengeId);
+  }
+
+  // Check for heart shield first
+  const shieldResult = await consumeHeartShield();
+
+  if (shieldResult.shieldUsed) {
+    // Shield protected the heart!
+    revalidatePath("/learn");
+    revalidatePath("/shop");
 
     const userProgressData = await getUserProgress();
-    if (!userProgressData) return actionError("NOT_FOUND", "Progresso de utilizador não encontrado.");
-    if (userProgressData.hearts === 0) return actionError("INSUFFICIENT_FUNDS", "Os teus corações já estão esgotados.");
+    return {
+      success: true,
+      hearts: userProgressData?.hearts || 0,
+      shieldUsed: true,
+      shieldsRemaining: shieldResult.shieldsRemaining,
+    };
+  }
 
-    // Check if the user is PRO (Infinite Hearts)
-    const isPro = await checkSubscription();
-    if (isPro) {
-        // Log the mistake for the Clinic even if it doesn't cost a heart
-        if (parsed.data.challengeId) {
-            await logMistake(parsed.data.challengeId);
-        }
-        return {
-            success: true,
-            hearts: userProgressData.hearts, // Return current hearts, frontend knows it's infinity
-            shieldUsed: false,
-            isPro: true
-        };
-    }
+  // No shield - lose 1 heart
+  const result = await reduceHearts();
 
-    // Log the mistake for the Heart Clinic
-    if (parsed.data.challengeId) {
-        await logMistake(parsed.data.challengeId);
-    }
+  revalidatePath("/learn");
+  revalidatePath("/lesson");
 
-    // Check for heart shield first
-    const shieldResult = await consumeHeartShield();
-
-    if (shieldResult.shieldUsed) {
-        // Shield protected the heart!
-        revalidatePath("/learn");
-        revalidatePath("/shop");
-
-        const userProgressData = await getUserProgress();
-        return {
-            success: true,
-            hearts: userProgressData?.hearts || 0,
-            shieldUsed: true,
-            shieldsRemaining: shieldResult.shieldsRemaining
-        };
-    }
-
-    // No shield - lose 1 heart
-    const result = await reduceHearts();
-
-    revalidatePath("/learn");
-    revalidatePath("/lesson");
-
-    return { success: true, ...result, shieldUsed: false };
+  return { success: true, ...result, shieldUsed: false };
 };
 
 /**
@@ -289,46 +312,65 @@ export const onChallengeWrong = async (challengeId?: number) => {
  * @param courseId - The ID of the course to activate.
  * @throws {Error} If the user is not authenticated or the course does not exist.
  */
-export const onSelectCourse = async (courseId: number, motivation?: string | null, experienceLevel?: string | null, cefrLevel?: string | null) => {
-    // 🛡️ ANTI-CHEAT: Zod Payload Validation & Sanitization
-    const schema = z.object({
-        courseId: z.number().positive(),
-        motivation: z.string().max(100).nullable().optional(),
-        experienceLevel: z.string().max(20).nullable().optional(),
-        cefrLevel: z.string().max(5).nullable().optional(),
-    });
+export const onSelectCourse = async (
+  courseId: number,
+  motivation?: string | null,
+  experienceLevel?: string | null,
+  cefrLevel?: string | null,
+) => {
+  // 🛡️ ANTI-CHEAT: Zod Payload Validation & Sanitization
+  const schema = z.object({
+    courseId: z.number().positive(),
+    motivation: z.string().max(100).nullable().optional(),
+    experienceLevel: z.string().max(20).nullable().optional(),
+    cefrLevel: z.string().max(5).nullable().optional(),
+  });
 
-    const parsed = schema.safeParse({ courseId, motivation, experienceLevel, cefrLevel });
-    if (!parsed.success) return actionError("INVALID_PAYLOAD", "Dados inválidos.");
-    
-    const { userId } = await auth();
-    const user = await currentUser();
+  const parsed = schema.safeParse({
+    courseId,
+    motivation,
+    experienceLevel,
+    cefrLevel,
+  });
+  if (!parsed.success)
+    return actionError("INVALID_PAYLOAD", "Dados inválidos.");
 
-    if (!userId || !user) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  const { userId } = await auth();
+  const user = await currentUser();
 
-    // 🛡️ ANTI-CHEAT: Rate Limiting
-    const { success } = await gameplayRateLimit.limit(userId);
-    if (!success) {
-        return actionError("RATE_LIMIT_EXCEEDED", "Estás a tentar mudar de curso demasiado rápido!");
-    }
+  if (!userId || !user) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    // Create or update user progress
-    await createUserProgress(parsed.data.courseId, parsed.data.motivation, parsed.data.experienceLevel, parsed.data.cefrLevel);
+  // 🛡️ ANTI-CHEAT: Rate Limiting
+  const { success } = await gameplayRateLimit.limit(userId);
+  if (!success) {
+    return actionError(
+      "RATE_LIMIT_EXCEEDED",
+      "Estás a tentar mudar de curso demasiado rápido!",
+    );
+  }
 
-    // Sync Clerk user data to DB (name and image)
-    const userName = user.firstName
-        ? `${user.firstName}${user.lastName ? ' ' + user.lastName : ''}`
-        : user.username || "Estudante";
+  // Create or update user progress
+  await createUserProgress(
+    parsed.data.courseId,
+    parsed.data.motivation,
+    parsed.data.experienceLevel,
+    parsed.data.cefrLevel,
+  );
 
-    await updateUserInfo(userName, user.imageUrl || "/duo_crying.png");
+  // Sync Clerk user data to DB (name and image)
+  const userName = user.firstName
+    ? `${user.firstName}${user.lastName ? " " + user.lastName : ""}`
+    : user.username || "Estudante";
 
-    revalidatePath("/learn");
-    revalidatePath("/courses");
-    revalidatePath("/leaderboard");
+  await updateUserInfo(userName, user.imageUrl || "/duo_crying.png");
 
-    return { success: true };
+  revalidatePath("/learn");
+  revalidatePath("/courses");
+  revalidatePath("/leaderboard");
+
+  return { success: true };
 };
 
 /**
@@ -338,30 +380,33 @@ export const onSelectCourse = async (courseId: number, motivation?: string | nul
  * @returns `{ hearts, points }` on success, or `{ error }` if insufficient XP or hearts > 0.
  */
 export const onRefillHearts = async () => {
-    const { userId } = await auth();
+  const { userId } = await auth();
 
-    if (!userId) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    const userProgressData = await getUserProgress();
-    if (!userProgressData) return actionError("NOT_FOUND", "Progresso não encontrado.");
+  const userProgressData = await getUserProgress();
+  if (!userProgressData)
+    return actionError("NOT_FOUND", "Progresso não encontrado.");
 
-    // 🛡️ ANTI-CHEAT: Hard boundaries
-    if (userProgressData.hearts === 5) return actionError("CONFLICT", "Os teus corações já estão no máximo.");
-    if (userProgressData.points < 100) return actionError("INSUFFICIENT_FUNDS", "Não tens XP suficiente.");
+  // 🛡️ ANTI-CHEAT: Hard boundaries
+  if (userProgressData.hearts === 5)
+    return actionError("CONFLICT", "Os teus corações já estão no máximo.");
+  if (userProgressData.points < 100)
+    return actionError("INSUFFICIENT_FUNDS", "Não tens XP suficiente.");
 
-    const result = await refillHearts();
+  const result = await refillHearts();
 
-    if ("error" in result) {
-        return actionError("BAD_REQUEST", String(result.error));
-    }
+  if ("error" in result) {
+    return actionError("BAD_REQUEST", String(result.error));
+  }
 
-    revalidatePath("/learn");
-    revalidatePath("/shop");
-    revalidatePath("/profile");
+  revalidatePath("/learn");
+  revalidatePath("/shop");
+  revalidatePath("/profile");
 
-    return { success: true, data: result };
+  return { success: true, data: result };
 };
 
 /**
@@ -371,30 +416,33 @@ export const onRefillHearts = async () => {
  * @returns `{ hearts, points }` on success, or `{ error }` if at max or insufficient XP.
  */
 export const onBuyOneHeart = async () => {
-    const { userId } = await auth();
+  const { userId } = await auth();
 
-    if (!userId) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    const userProgressData = await getUserProgress();
-    if (!userProgressData) return actionError("NOT_FOUND", "Progresso não encontrado.");
+  const userProgressData = await getUserProgress();
+  if (!userProgressData)
+    return actionError("NOT_FOUND", "Progresso não encontrado.");
 
-    // 🛡️ ANTI-CHEAT: Hard boundaries
-    if (userProgressData.hearts >= 5) return actionError("CONFLICT", "Os teus corações já estão no máximo.");
-    if (userProgressData.points < 20) return actionError("INSUFFICIENT_FUNDS", "Não tens XP suficiente.");
+  // 🛡️ ANTI-CHEAT: Hard boundaries
+  if (userProgressData.hearts >= 5)
+    return actionError("CONFLICT", "Os teus corações já estão no máximo.");
+  if (userProgressData.points < 20)
+    return actionError("INSUFFICIENT_FUNDS", "Não tens XP suficiente.");
 
-    const result = await buyOneHeart();
+  const result = await buyOneHeart();
 
-    if ("error" in result) {
-        return actionError("BAD_REQUEST", String(result.error));
-    }
+  if ("error" in result) {
+    return actionError("BAD_REQUEST", String(result.error));
+  }
 
-    revalidatePath("/learn");
-    revalidatePath("/shop");
-    revalidatePath("/profile");
+  revalidatePath("/learn");
+  revalidatePath("/shop");
+  revalidatePath("/profile");
 
-    return { success: true, data: result };
+  return { success: true, data: result };
 };
 
 /**
@@ -403,23 +451,23 @@ export const onBuyOneHeart = async () => {
  * without requiring runtime Clerk API lookups.
  */
 export const onSyncUserInfo = async () => {
-    const { userId } = await auth();
-    const user = await currentUser();
+  const { userId } = await auth();
+  const user = await currentUser();
 
-    if (!userId || !user) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId || !user) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    const userName = user.firstName
-        ? `${user.firstName}${user.lastName ? ' ' + user.lastName : ''}`
-        : user.username || "Estudante";
+  const userName = user.firstName
+    ? `${user.firstName}${user.lastName ? " " + user.lastName : ""}`
+    : user.username || "Estudante";
 
-    await updateUserInfo(userName, user.imageUrl || "/duo_crying.png");
+  await updateUserInfo(userName, user.imageUrl || "/duo_crying.png");
 
-    revalidatePath("/leaderboard");
-    revalidatePath("/profile");
+  revalidatePath("/leaderboard");
+  revalidatePath("/profile");
 
-    return { success: true };
+  return { success: true };
 };
 
 // ============ POWER-UPS ============
@@ -432,24 +480,29 @@ import { buyXpBoost, buyHeartShield, buyStreakFreeze } from "@/db/queries";
  * per lesson inside `onLessonComplete`.
  */
 export const onBuyXpBoost = async () => {
-    const { userId } = await auth();
+  const { userId } = await auth();
 
-    if (!userId) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    const result = await buyXpBoost();
+  const result = await buyXpBoost();
 
-    if ("error" in result) {
-        return actionError("BAD_REQUEST", String(result.error));
-    }
+  if ("error" in result) {
+    return actionError("BAD_REQUEST", String(result.error));
+  }
 
-    createNotification(userId, "system", "Boost de XP ativado! As próximas lições valem o dobro! ⚡", "/learn").catch(console.error);
+  createNotification(
+    userId,
+    "system",
+    "Boost de XP ativado! As próximas lições valem o dobro! ⚡",
+    "/learn",
+  ).catch(console.error);
 
-    revalidatePath("/shop");
-    revalidatePath("/learn");
+  revalidatePath("/shop");
+  revalidatePath("/learn");
 
-    return { success: true, data: result };
+  return { success: true, data: result };
 };
 
 /**
@@ -458,24 +511,29 @@ export const onBuyXpBoost = async () => {
  * before any heart is deducted.
  */
 export const onBuyHeartShield = async () => {
-    const { userId } = await auth();
+  const { userId } = await auth();
 
-    if (!userId) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    const result = await buyHeartShield();
+  const result = await buyHeartShield();
 
-    if ("error" in result) {
-        return actionError("BAD_REQUEST", String(result.error));
-    }
+  if ("error" in result) {
+    return actionError("BAD_REQUEST", String(result.error));
+  }
 
-    createNotification(userId, "system", "Escudo de Corações equipado! A tua próxima resposta errada está protegida. 🛡️", "/learn").catch(console.error);
+  createNotification(
+    userId,
+    "system",
+    "Escudo de Corações equipado! A tua próxima resposta errada está protegida. 🛡️",
+    "/learn",
+  ).catch(console.error);
 
-    revalidatePath("/shop");
-    revalidatePath("/learn");
+  revalidatePath("/shop");
+  revalidatePath("/learn");
 
-    return { success: true, data: result };
+  return { success: true, data: result };
 };
 
 /**
@@ -484,24 +542,29 @@ export const onBuyHeartShield = async () => {
  * exactly one calendar day is missed.
  */
 export const onBuyStreakFreeze = async () => {
-    const { userId } = await auth();
+  const { userId } = await auth();
 
-    if (!userId) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    const result = await buyStreakFreeze();
+  const result = await buyStreakFreeze();
 
-    if ("error" in result) {
-        return actionError("BAD_REQUEST", String(result.error));
-    }
+  if ("error" in result) {
+    return actionError("BAD_REQUEST", String(result.error));
+  }
 
-    createNotification(userId, "system", "Escudo de Ofensiva equipado! A tua ofensiva está protegida por 1 dia. 🛡️", "/learn").catch(console.error);
+  createNotification(
+    userId,
+    "system",
+    "Escudo de Ofensiva equipado! A tua ofensiva está protegida por 1 dia. 🛡️",
+    "/learn",
+  ).catch(console.error);
 
-    revalidatePath("/shop");
-    revalidatePath("/learn");
+  revalidatePath("/shop");
+  revalidatePath("/learn");
 
-    return { success: true, data: result };
+  return { success: true, data: result };
 };
 
 /**
@@ -509,12 +572,12 @@ export const onBuyStreakFreeze = async () => {
  * Called on app load to trigger the streak-loss modal if applicable.
  */
 export const checkStreakStatus = async () => {
-    const { userId } = await auth();
-    if (!userId) return { streakLost: false };
+  const { userId } = await auth();
+  if (!userId) return { streakLost: false };
 
-    // This query will check dates and reset if needed
-    const result = await checkStreakReset();
-    return result;
+  // This query will check dates and reset if needed
+  const result = await checkStreakReset();
+  return result;
 };
 
 // ============ HEART CLINIC ============
@@ -529,23 +592,23 @@ export const checkStreakStatus = async () => {
  * @returns `{ hearts }` — the user's updated heart count.
  */
 export const onClinicComplete = async () => {
-    const { userId } = await auth();
-    if (!userId) return actionError("UNAUTHORIZED", "Não estás autenticado");
+  const { userId } = await auth();
+  if (!userId) return actionError("UNAUTHORIZED", "Não estás autenticado");
 
-    const result = await completeClinicLesson();
+  const result = await completeClinicLesson();
 
-    createNotification(
-        userId,
-        "system",
-        `Clínica concluída! Ganhaste 1 vida. Agora tens ${result.hearts} ❤️`,
-        "/learn"
-    ).catch(console.error);
+  createNotification(
+    userId,
+    "system",
+    `Clínica concluída! Ganhaste 1 vida. Agora tens ${result.hearts} ❤️`,
+    "/learn",
+  ).catch(console.error);
 
-    revalidatePath("/learn");
+  revalidatePath("/learn");
 
-    revalidatePath("/shop");
+  revalidatePath("/shop");
 
-    return result;
+  return result;
 };
 
 // ============ DAILY QUESTS ============
@@ -555,104 +618,113 @@ export const onClinicComplete = async () => {
  * Atribui +50 XP (Pontos) e marca todayStats.chestClaimed = true.
  */
 export const claimDailyChestReward = async () => {
-    const { userId } = await auth();
+  const { userId } = await auth();
 
-    if (!userId) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    // 🛡️ ANTI-CHEAT: Rate Limiting
-    const { success } = await gameplayRateLimit.limit(userId);
-    if (!success) {
-        return actionError("RATE_LIMIT_EXCEEDED", "Estás a ir rápido demais!");
-    }
+  // 🛡️ ANTI-CHEAT: Rate Limiting
+  const { success } = await gameplayRateLimit.limit(userId);
+  if (!success) {
+    return actionError("RATE_LIMIT_EXCEEDED", "Estás a ir rápido demais!");
+  }
 
-    const todayStr = new Date().toISOString().split('T')[0];
+  const todayStr = new Date().toISOString().split("T")[0];
 
-    // Check today stats
-    const todayStats = await db.query.userDailyStats.findFirst({
-        where: and(
-            eq(userDailyStats.userId, userId),
-            eq(userDailyStats.date, todayStr)
-        )
-    });
+  // Check today stats
+  const todayStats = await db.query.userDailyStats.findFirst({
+    where: and(
+      eq(userDailyStats.userId, userId),
+      eq(userDailyStats.date, todayStr),
+    ),
+  });
 
-    if (!todayStats) {
-        return actionError("NOT_FOUND", "Nenhum progresso encontrado para hoje.");
-    }
+  if (!todayStats) {
+    return actionError("NOT_FOUND", "Nenhum progresso encontrado para hoje.");
+  }
 
-    if (todayStats.chestClaimed) {
-        return actionError("CONFLICT", "O Baú Diário já foi aberto hoje.");
-    }
+  if (todayStats.chestClaimed) {
+    return actionError("CONFLICT", "O Baú Diário já foi aberto hoje.");
+  }
 
-    // Verify 3 quests are completed
-    const dailyQuests = getDailyQuests(userId, todayStr).map(quest => {
-        const current = getQuestProgress(quest.type, todayStats);
-        return {
-            ...quest,
-            current
-        };
-    });
+  // Verify 3 quests are completed
+  const dailyQuests = getDailyQuests(userId, todayStr).map((quest) => {
+    const current = getQuestProgress(quest.type, todayStats as any);
+    return {
+      ...quest,
+      current,
+    };
+  });
 
-    const completedQuestsCount = dailyQuests.filter(q => q.current >= q.target).length;
+  const completedQuestsCount = dailyQuests.filter(
+    (q) => q.current >= q.target,
+  ).length;
 
-    if (completedQuestsCount < 3) {
-        return actionError("CONFLICT", "Ainda não completaste as 3 missões necessárias.");
-    }
+  if (completedQuestsCount < 3) {
+    return actionError(
+      "CONFLICT",
+      "Ainda não completaste as 3 missões necessárias.",
+    );
+  }
 
-    // Mark as claimed
-    await db.update(userDailyStats)
-        .set({ chestClaimed: true })
-        .where(eq(userDailyStats.id, todayStats.id));
+  // Mark as claimed
+  await db
+    .update(userDailyStats)
+    .set({ chestClaimed: true })
+    .where(eq(userDailyStats.id, todayStats.id));
 
-    // Award 50 XP
-    await addPoints(50);
+  // Award 50 XP
+  await addPoints(50);
 
-    createNotification(
-        userId,
-        "system",
-        "Abriste o Baú Diário! Parabéns, ganhaste 50 XP extra! 🎁",
-        "/quests"
-    ).catch(console.error);
+  createNotification(
+    userId,
+    "system",
+    "Abriste o Baú Diário! Parabéns, ganhaste 50 XP extra! 🎁",
+    "/quests",
+  ).catch(console.error);
 
-    revalidatePath("/quests");
-    revalidatePath("/learn");
+  revalidatePath("/quests");
+  revalidatePath("/learn");
 
-    return { success: true, reward: 50 };
+  return { success: true, reward: 50 };
 };
 // ============ ARCADE ============
 
 /**
  * Adds points earned in the Arcade.
- * Similar to regular points, but skips the strict challenge rate limit 
+ * Similar to regular points, but skips the strict challenge rate limit
  * because Arcade is fast-paced (e.g. 1 point every 2-3 seconds).
  */
 export const addArcadePoints = async (amount: number) => {
-    const parsed = z.number().int().min(1).max(10).safeParse(amount);
-    if (!parsed.success) {
-        return actionError("SPOOFING_DETECTED", "Quantidade de pontos de Arcade inválida.");
-    }
-    const { userId } = await auth();
+  const parsed = z.number().int().min(1).max(10).safeParse(amount);
+  if (!parsed.success) {
+    return actionError(
+      "SPOOFING_DETECTED",
+      "Quantidade de pontos de Arcade inválida.",
+    );
+  }
+  const { userId } = await auth();
 
-    if (!userId) {
-        return actionError("UNAUTHORIZED", "Não estás autenticado");
-    }
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
 
-    // Must be a small amount to prevent abuse
-    if (amount > 10) {
-        return actionError("SPOOFING_DETECTED", "Quantidade de pontos inválida.");
-    }
+  // Must be a small amount to prevent abuse
+  if (amount > 10) {
+    return actionError("SPOOFING_DETECTED", "Quantidade de pontos inválida.");
+  }
 
-    await addPoints(amount);
+  await addPoints(amount);
 
-    // Log XP for daily stats
-    await recordDailyStatsAction(amount, 0);
+  // Log XP for daily stats
+  await recordDailyStatsAction(amount, 0);
 
-    // We don't strictly revalidate leaderboards on every single point to save server load, 
-    // it will eventually be fresh when they visit the page, but let's revalidate profile/header.
-    // However, revalidating here is fine for now.
-    revalidatePath("/leaderboard");
-    revalidatePath("/profile");
+  // We don't strictly revalidate leaderboards on every single point to save server load,
+  // it will eventually be fresh when they visit the page, but let's revalidate profile/header.
+  // However, revalidating here is fine for now.
+  revalidatePath("/leaderboard");
+  revalidatePath("/profile");
 
-    return { success: true };
+  return { success: true };
 };

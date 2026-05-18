@@ -9,72 +9,83 @@ import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { createVaultToken } from "@/lib/vault-token";
 
-export async function authenticateVault(prevState: any, formData: FormData) {
-    const { userId } = await auth();
-    if (!userId) {
-        return { error: "Acesso Negado (No Auth)" };
-    }
+export async function authenticateVault(
+  prevState: { error?: string } | undefined,
+  formData: FormData,
+) {
+  const { userId } = await auth();
+  if (!userId) {
+    return { error: "Acesso Negado (No Auth)" };
+  }
 
-    await new Promise((resolve) => setTimeout(resolve, 600));
+  await new Promise((resolve) => setTimeout(resolve, 600));
 
-    const [record] = await db.select().from(adminAuthAttempts).where(eq(adminAuthAttempts.userId, userId));
+  const [record] = await db
+    .select()
+    .from(adminAuthAttempts)
+    .where(eq(adminAuthAttempts.userId, userId));
 
-    const now = new Date();
+  const now = new Date();
 
-    if (record && record.lockoutUntil && record.lockoutUntil > now) {
-        const remainingMillis = record.lockoutUntil.getTime() - now.getTime();
-        const remainingMinutes = Math.ceil(remainingMillis / (1000 * 60));
-        return { error: `Cofre Bloqueado. Tenta novamente em ${remainingMinutes} minuto(s).` };
-    }
+  if (record && record.lockoutUntil && record.lockoutUntil > now) {
+    const remainingMillis = record.lockoutUntil.getTime() - now.getTime();
+    const remainingMinutes = Math.ceil(remainingMillis / (1000 * 60));
+    return {
+      error: `Cofre Bloqueado. Tenta novamente em ${remainingMinutes} minuto(s).`,
+    };
+  }
 
-    const password = formData.get("password") as string;
-    const sudoHash = process.env.ADMIN_SUDO_HASH;
+  const password = formData.get("password") as string;
+  const sudoHash = process.env.ADMIN_SUDO_HASH;
 
-    if (!sudoHash) {
-        return { error: "Erro de Configuração do Servidor" };
-    }
+  if (!sudoHash) {
+    return { error: "Erro de Configuração do Servidor" };
+  }
 
-    const isMatch = bcrypt.compareSync(password, sudoHash);
+  const isMatch = bcrypt.compareSync(password, sudoHash);
 
-    if (!isMatch) {
-        const currentAttempts = record ? record.attempts + 1 : 1;
-        let lockout: Date | null = null;
-        let errorMsg = `Acesso Negado. Tentativa ${currentAttempts}/5.`;
+  if (!isMatch) {
+    const currentAttempts = record ? record.attempts + 1 : 1;
+    let lockout: Date | null = null;
+    let errorMsg = `Acesso Negado. Tentativa ${currentAttempts}/5.`;
 
-        if (currentAttempts >= 5) {
-            lockout = new Date(now.getTime() + 30 * 60 * 1000);
-            errorMsg = "Cofre Bloqueado. Tenta novamente em 30 minutos.";
-        }
-
-        if (record) {
-            await db.update(adminAuthAttempts)
-                .set({ attempts: currentAttempts, lockoutUntil: lockout })
-                .where(eq(adminAuthAttempts.id, record.id));
-        } else {
-            await db.insert(adminAuthAttempts)
-                .values({ userId, attempts: currentAttempts, lockoutUntil: lockout });
-        }
-
-        return { error: errorMsg };
+    if (currentAttempts >= 5) {
+      lockout = new Date(now.getTime() + 30 * 60 * 1000);
+      errorMsg = "Cofre Bloqueado. Tenta novamente em 30 minutos.";
     }
 
     if (record) {
-        await db.update(adminAuthAttempts)
-            .set({ attempts: 0, lockoutUntil: null })
-            .where(eq(adminAuthAttempts.id, record.id));
+      await db
+        .update(adminAuthAttempts)
+        .set({ attempts: currentAttempts, lockoutUntil: lockout })
+        .where(eq(adminAuthAttempts.id, record.id));
+    } else {
+      await db
+        .insert(adminAuthAttempts)
+        .values({ userId, attempts: currentAttempts, lockoutUntil: lockout });
     }
 
-    const vaultToken = createVaultToken(userId);
+    return { error: errorMsg };
+  }
 
-    cookies().set("admin_vault_session", vaultToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: COOKIE_MAX_AGE,
-        path: "/",
-        sameSite: "strict",
-    });
+  if (record) {
+    await db
+      .update(adminAuthAttempts)
+      .set({ attempts: 0, lockoutUntil: null })
+      .where(eq(adminAuthAttempts.id, record.id));
+  }
 
-    redirect("/admin");
+  const vaultToken = createVaultToken(userId);
+
+  cookies().set("admin_vault_session", vaultToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: COOKIE_MAX_AGE,
+    path: "/",
+    sameSite: "strict",
+  });
+
+  redirect("/admin");
 }
 
 const COOKIE_MAX_AGE = 3600;

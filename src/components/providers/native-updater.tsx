@@ -2,24 +2,26 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { check } from "@tauri-apps/plugin-updater";
+import {
+  check,
+  type Update,
+  type DownloadEvent,
+} from "@tauri-apps/plugin-updater";
 import { relaunch } from "@tauri-apps/plugin-process";
 
-declare global {
-  interface Window {
-    __TAURI_INTERNALS__?: unknown;
-  }
-}
-
 export function NativeUpdater() {
-  const [updateInfo, setUpdateInfo] = useState<any>(null);
+  const [updateInfo, setUpdateInfo] = useState<Update | null>(null);
   const [currentVersion, setCurrentVersion] = useState<string>("");
-  const [status, setStatus] = useState<"idle" | "checking" | "available" | "downloading" | "ready" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "checking" | "available" | "downloading" | "ready" | "error"
+  >("idle");
   const [downloadProgress, setDownloadProgress] = useState(0);
 
   useEffect(() => {
     // Apenas corre no desktop
-    const isTauri = typeof window !== "undefined" && window.__TAURI_INTERNALS__ !== undefined;
+    const isTauri =
+      typeof window !== "undefined" &&
+      (window as any).__TAURI_INTERNALS__ !== undefined;
     if (!isTauri) return;
 
     // Desativar botão direito para parecer app nativa
@@ -64,7 +66,7 @@ export function NativeUpdater() {
       let downloadedLength = 0;
       let contentLength = 0;
 
-      await updateInfo.downloadAndInstall((event: any) => {
+      await updateInfo.downloadAndInstall((event: DownloadEvent) => {
         switch (event.event) {
           case "Started":
             contentLength = event.data.contentLength || 0;
@@ -72,7 +74,9 @@ export function NativeUpdater() {
           case "Progress":
             downloadedLength += event.data.chunkLength;
             if (contentLength > 0) {
-              setDownloadProgress(Math.round((downloadedLength / contentLength) * 100));
+              setDownloadProgress(
+                Math.round((downloadedLength / contentLength) * 100),
+              );
             }
             break;
           case "Finished":
@@ -112,7 +116,8 @@ export function NativeUpdater() {
     borderRadius: "24px",
     border: "1px solid rgba(255,255,255,0.1)",
     padding: "40px",
-    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255,255,255,0.1)",
+    boxShadow:
+      "0 25px 50px -12px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255,255,255,0.1)",
     display: "flex",
     flexDirection: "column",
     gap: "24px",
@@ -120,12 +125,19 @@ export function NativeUpdater() {
     fontFamily: "Inter, system-ui, sans-serif",
   };
 
-  const buttonStyle = (hovered: boolean, destructive = false): React.CSSProperties => ({
+  const buttonStyle = (
+    hovered: boolean,
+    destructive = false,
+  ): React.CSSProperties => ({
     width: "100%",
     height: "52px",
-    background: destructive 
-      ? (hovered ? "rgba(248, 113, 113, 0.2)" : "rgba(248, 113, 113, 0.1)")
-      : (hovered ? "linear-gradient(135deg, #3291ff 0%, #0070f3 100%)" : "linear-gradient(135deg, #1b7bff 0%, #0c68db 100%)"),
+    background: destructive
+      ? hovered
+        ? "rgba(248, 113, 113, 0.2)"
+        : "rgba(248, 113, 113, 0.1)"
+      : hovered
+        ? "linear-gradient(135deg, #3291ff 0%, #0070f3 100%)"
+        : "linear-gradient(135deg, #1b7bff 0%, #0c68db 100%)",
     border: destructive ? "1px solid rgba(248, 113, 113, 0.3)" : "none",
     borderRadius: "12px",
     color: "#fff",
@@ -133,7 +145,8 @@ export function NativeUpdater() {
     fontWeight: 700,
     cursor: "pointer",
     transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-    boxShadow: !destructive && hovered ? "0 10px 30px rgba(0,112,243,0.4)" : "none",
+    boxShadow:
+      !destructive && hovered ? "0 10px 30px rgba(0,112,243,0.4)" : "none",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -145,43 +158,103 @@ export function NativeUpdater() {
       <div style={cardStyle}>
         {/* Header com Logo */}
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <div style={{ 
-            width: "56px", height: "56px", 
-            background: "linear-gradient(135deg, #22c55e, #16a34a)", 
-            borderRadius: "14px",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 8px 20px rgba(22,163,74,0.3)"
-          }}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <div
+            style={{
+              width: "56px",
+              height: "56px",
+              background: "linear-gradient(135deg, #22c55e, #16a34a)",
+              borderRadius: "14px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 8px 20px rgba(22,163,74,0.3)",
+            }}
+          >
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", fontWeight: 800, letterSpacing: "0.1em" }}>ATUALIZAÇÃO DISPONÍVEL</span>
-            <span style={{ fontSize: "24px", fontWeight: 800 }}>v{currentVersion} → v{updateInfo?.version}</span>
+            <span
+              style={{
+                fontSize: "12px",
+                color: "rgba(255,255,255,0.4)",
+                fontWeight: 800,
+                letterSpacing: "0.1em",
+              }}
+            >
+              ATUALIZAÇÃO DISPONÍVEL
+            </span>
+            <span style={{ fontSize: "24px", fontWeight: 800 }}>
+              v{currentVersion} → v{updateInfo?.version}
+            </span>
           </div>
         </div>
 
         {/* Content */}
         <div style={{ flex: 1 }}>
           {status === "available" && (
-            <p style={{ color: "rgba(255,255,255,0.7)", lineHeight: 1.6, fontSize: "15px" }}>
-              Uma nova versão está pronta para ser instalada. Descarregue agora para obter as funcionalidades mais recentes e melhorias de performance.
+            <p
+              style={{
+                color: "rgba(255,255,255,0.7)",
+                lineHeight: 1.6,
+                fontSize: "15px",
+              }}
+            >
+              Uma nova versão está pronta para ser instalada. Descarregue agora
+              para obter as funcionalidades mais recentes e melhorias de
+              performance.
             </p>
           )}
 
           {(status === "downloading" || status === "ready") && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px", fontWeight: 600 }}>
-                <span>{status === "ready" ? "Download Concluído!" : "A baixar atualização..."}</span>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                }}
+              >
+                <span>
+                  {status === "ready"
+                    ? "Download Concluído!"
+                    : "A baixar atualização..."}
+                </span>
                 <span>{downloadProgress}%</span>
               </div>
-              <div style={{ width: "100%", height: "10px", background: "rgba(255,255,255,0.1)", borderRadius: "20px", overflow: "hidden" }}>
-                <div style={{ 
-                  height: "100%", 
-                  width: `${downloadProgress}%`, 
-                  background: "linear-gradient(90deg, #7c3aed, #3b82f6)",
-                  transition: "width 0.4s ease-out",
-                  boxShadow: "0 0 20px rgba(59,130,246,0.5)"
-                }} />
+              <div
+                style={{
+                  width: "100%",
+                  height: "10px",
+                  background: "rgba(255,255,255,0.1)",
+                  borderRadius: "20px",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    height: "100%",
+                    width: `${downloadProgress}%`,
+                    background: "linear-gradient(90deg, #7c3aed, #3b82f6)",
+                    transition: "width 0.4s ease-out",
+                    boxShadow: "0 0 20px rgba(59,130,246,0.5)",
+                  }}
+                />
               </div>
             </div>
           )}
@@ -191,18 +264,34 @@ export function NativeUpdater() {
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {status === "available" && (
             <>
-              <button style={buttonStyle(false)} onClick={handleUpdate}>Atualizar Agora</button>
-              <button style={buttonStyle(false, true)} onClick={() => setStatus("idle")}>Lembrar mais tarde</button>
+              <button style={buttonStyle(false)} onClick={handleUpdate}>
+                Atualizar Agora
+              </button>
+              <button
+                style={buttonStyle(false, true)}
+                onClick={() => setStatus("idle")}
+              >
+                Lembrar mais tarde
+              </button>
             </>
           )}
 
           {status === "ready" && (
-            <button style={buttonStyle(false)} onClick={() => relaunch()}>Reiniciar para Aplicar</button>
+            <button style={buttonStyle(false)} onClick={() => relaunch()}>
+              Reiniciar para Aplicar
+            </button>
           )}
 
           {status === "error" && (
-            <p style={{ color: "#f87171", fontSize: "13px", textAlign: "center" }}>
-              Ocorreu um erro ao descarregar a atualização. Por favor, tente novamente mais tarde.
+            <p
+              style={{
+                color: "#f87171",
+                fontSize: "13px",
+                textAlign: "center",
+              }}
+            >
+              Ocorreu um erro ao descarregar a atualização. Por favor, tente
+              novamente mais tarde.
             </p>
           )}
         </div>

@@ -1,60 +1,78 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import {
+  useCallback,
+  useRef,
+  useState,
+  MouseEvent as ReactMouseEvent,
+  TouchEvent as ReactTouchEvent,
+} from "react";
+
+type LongPressEvent =
+  | ReactMouseEvent
+  | ReactTouchEvent
+  | MouseEvent
+  | TouchEvent;
+type ClickEvent = ReactMouseEvent | ReactTouchEvent | MouseEvent | TouchEvent;
+
+interface UseLongPressOptions {
+  delay?: number;
+  shouldPreventDefault?: boolean;
+}
 
 export const useLongPress = (
-    onLongPress: (e: any) => void,
-    onClick: (e: any) => void,
-    { delay = 500, shouldPreventDefault = true } = {}
+  onLongPress: (e: LongPressEvent) => void,
+  onClick: (e: ClickEvent) => void,
+  { delay = 500, shouldPreventDefault = true }: UseLongPressOptions = {},
 ) => {
-    const [longPressTriggered, setLongPressTriggered] = useState(false);
-    const timeout = useRef<NodeJS.Timeout>();
-    const target = useRef<any>();
+  const [longPressTriggered, setLongPressTriggered] = useState(false);
+  const timeout = useRef<NodeJS.Timeout>();
+  const target = useRef<EventTarget | null>(null);
 
-    const start = useCallback(
-        (event: any) => {
-            if (shouldPreventDefault && event.target) {
-                event.target.addEventListener("touchend", preventDefault, {
-                    passive: false
-                });
-                target.current = event.target;
-            }
-            timeout.current = setTimeout(() => {
-                onLongPress(event);
-                setLongPressTriggered(true);
-            }, delay);
-        },
-        [onLongPress, delay, shouldPreventDefault]
-    );
+  const start = useCallback(
+    (event: ReactMouseEvent | ReactTouchEvent) => {
+      if (shouldPreventDefault && event.target) {
+        event.target.addEventListener("touchend", preventDefault, {
+          passive: false,
+        });
+        target.current = event.target;
+      }
+      timeout.current = setTimeout(() => {
+        onLongPress(event.nativeEvent || event);
+        setLongPressTriggered(true);
+      }, delay);
+    },
+    [onLongPress, delay, shouldPreventDefault],
+  );
 
-    const clear = useCallback(
-        (event: any, shouldTriggerClick = true) => {
-            if (timeout.current) {
-                clearTimeout(timeout.current);
-            }
-            if (shouldTriggerClick && !longPressTriggered) {
-                onClick(event);
-            }
-            setLongPressTriggered(false);
-            if (shouldPreventDefault && target.current) {
-                target.current.removeEventListener("touchend", preventDefault);
-            }
-        },
-        [onClick, longPressTriggered, shouldPreventDefault]
-    );
+  const clear = useCallback(
+    (event: ReactMouseEvent | ReactTouchEvent, shouldTriggerClick = true) => {
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
+      if (shouldTriggerClick && !longPressTriggered) {
+        onClick(event.nativeEvent || event);
+      }
+      setLongPressTriggered(false);
+      if (shouldPreventDefault && target.current) {
+        target.current.removeEventListener("touchend", preventDefault);
+      }
+    },
+    [onClick, longPressTriggered, shouldPreventDefault],
+  );
 
-    const preventDefault = (event: any) => {
-        if (!event.cancelable) {
-            return;
-        }
-        event.preventDefault();
-    };
+  const preventDefault = (event: Event) => {
+    if (!event.cancelable) {
+      return;
+    }
+    event.preventDefault();
+  };
 
-    return {
-        onMouseDown: (e: any) => start(e),
-        onTouchStart: (e: any) => start(e),
-        onMouseUp: (e: any) => clear(e),
-        onMouseLeave: (e: any) => clear(e, false),
-        onTouchEnd: (e: any) => clear(e)
-    };
+  return {
+    onMouseDown: (e: ReactMouseEvent) => start(e),
+    onTouchStart: (e: ReactTouchEvent) => start(e),
+    onMouseUp: (e: ReactMouseEvent) => clear(e),
+    onMouseLeave: (e: ReactMouseEvent) => clear(e, false),
+    onTouchEnd: (e: ReactTouchEvent) => clear(e),
+  };
 };
