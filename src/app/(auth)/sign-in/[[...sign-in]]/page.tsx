@@ -246,6 +246,124 @@ export default function CustomSignIn() {
         }}
       ></div>
 
+      {/* Dynamic Ambient Background Elements (Desktop only) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 hidden lg:block">
+        {/* Balão de Fala / Speech Bubble */}
+        <motion.div
+          className="absolute left-[8%] top-[15%]"
+          animate={{
+            y: [0, -12, 0],
+            rotate: [0, 6, -6, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <svg
+            className="w-16 h-16 text-green-500/10 fill-current"
+            viewBox="0 0 24 24"
+          >
+            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
+          </svg>
+        </motion.div>
+
+        {/* Estrela / Star */}
+        <motion.div
+          className="absolute left-[10%] bottom-[20%]"
+          animate={{
+            y: [0, 12, 0],
+            rotate: [0, 360],
+          }}
+          transition={{
+            y: {
+              duration: 7,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
+            rotate: {
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear",
+            },
+          }}
+        >
+          <svg
+            className="w-12 h-12 text-yellow-500/10 fill-current"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          </svg>
+        </motion.div>
+
+        {/* Coroa / Crown */}
+        <motion.div
+          className="absolute right-[8%] top-[12%]"
+          animate={{
+            y: [0, -10, 0],
+            rotate: [-5, 5, -5],
+          }}
+          transition={{
+            duration: 5.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.5,
+          }}
+        >
+          <svg
+            className="w-14 h-14 text-amber-500/10 fill-current"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3H5v-2h14v2z" />
+          </svg>
+        </motion.div>
+
+        {/* Brilhos / Sparkles */}
+        <motion.div
+          className="absolute right-[12%] bottom-[22%]"
+          animate={{
+            scale: [0.9, 1.15, 0.9],
+            opacity: [0.3, 0.7, 0.3],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+        >
+          <svg
+            className="w-16 h-16 text-sky-500/10 fill-current"
+            viewBox="0 0 24 24"
+          >
+            <path d="M19 11.5L17.5 8.5L14.5 7L17.5 5.5L19 2.5L20.5 5.5L23.5 7L20.5 8.5L19 11.5ZM11.5 19L10 16L7 14.5L10 13L11.5 10L13 13L16 14.5L13 16L11.5 19ZM6.5 7.5L5.5 5.5L3.5 4.5L5.5 3.5L6.5 1.5L7.5 3.5L9.5 4.5L7.5 5.5L6.5 7.5Z" />
+          </svg>
+        </motion.div>
+
+        {/* Livro e Chapéu de Formatura / Graduation */}
+        <motion.div
+          className="absolute left-[38%] top-[10%]"
+          animate={{
+            x: [0, 8, -8, 0],
+            y: [0, -8, 8, 0],
+          }}
+          transition={{
+            duration: 9,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1.5,
+          }}
+        >
+          <svg
+            className="w-14 h-14 text-emerald-500/10 fill-current"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 18.5c-3.73 0-6.75-2.01-6.75-4.5v-2.29l6.75 3.68 6.75-3.68v2.29c0 2.49-3.02 4.5-6.75 4.5z" />
+          </svg>
+        </motion.div>
+      </div>
+
       {/* Main Console Hub Wrapper */}
       <div className="relative w-[92%] sm:w-full max-w-[440px] z-10 flex flex-col items-center justify-center">
         {/* Ambient Game Satellites (Desktop only) */}
