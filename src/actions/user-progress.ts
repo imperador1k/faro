@@ -470,6 +470,30 @@ export const onSyncUserInfo = async () => {
   return { success: true };
 };
 
+/**
+ * Atualiza o fundo personalizado do utilizador.
+ */
+export const updateUserBanner = async (bannerUrl: string) => {
+  const parsed = z.string().url().safeParse(bannerUrl);
+  if (!parsed.success) {
+    return actionError("INVALID_PAYLOAD", "URL de banner inválido");
+  }
+
+  const { userId } = await auth();
+  if (!userId) {
+    return actionError("UNAUTHORIZED", "Não estás autenticado");
+  }
+
+  await db
+    .update(userProgress)
+    .set({ userBannerSrc: parsed.data })
+    .where(eq(userProgress.userId, userId));
+
+  revalidatePath("/profile");
+
+  return { success: true };
+};
+
 // ============ POWER-UPS ============
 
 import { buyXpBoost, buyHeartShield, buyStreakFreeze } from "@/db/queries";

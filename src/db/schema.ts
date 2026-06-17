@@ -1,123 +1,150 @@
-import { pgTable, serial, text, integer, boolean, pgEnum, date, timestamp, jsonb, unique, uuid, index } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  serial,
+  text,
+  integer,
+  boolean,
+  pgEnum,
+  date,
+  timestamp,
+  jsonb,
+  unique,
+  uuid,
+  index,
+} from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 // Enum for challenge types
-export const challengeTypeEnum = pgEnum("type", ["SELECT", "ASSIST", "INSERT", "MATCH", "DICTATION"]);
+export const challengeTypeEnum = pgEnum("type", [
+  "SELECT",
+  "ASSIST",
+  "INSERT",
+  "MATCH",
+  "DICTATION",
+]);
 
 // ===== COURSES =====
 export const courses = pgTable("courses", {
-    id: serial("id").primaryKey(),
-    title: text("title").notNull(),
-    imageSrc: text("image_src").notNull(),
-    languageCode: text("language_code").notNull().default("en"),
-    language: text("language").notNull().default("English"),
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  imageSrc: text("image_src").notNull(),
+  languageCode: text("language_code").notNull().default("en"),
+  language: text("language").notNull().default("English"),
 });
 
 export const coursesRelations = relations(courses, ({ many }) => ({
-    units: many(units),
-    userProgress: many(userProgress),
+  units: many(units),
+  userProgress: many(userProgress),
 }));
 
 // ===== UNITS =====
 export const units = pgTable("units", {
-    id: serial("id").primaryKey(),
-    title: text("title").notNull(),
-    description: text("description").notNull(),
-    order: integer("order").notNull(),
-    courseId: integer("course_id")
-        .references(() => courses.id, { onDelete: "cascade" })
-        .notNull(),
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  order: integer("order").notNull(),
+  courseId: integer("course_id")
+    .references(() => courses.id, { onDelete: "cascade" })
+    .notNull(),
 });
 
 export const unitsRelations = relations(units, ({ one, many }) => ({
-    course: one(courses, {
-        fields: [units.courseId],
-        references: [courses.id],
-    }),
-    lessons: many(lessons),
+  course: one(courses, {
+    fields: [units.courseId],
+    references: [courses.id],
+  }),
+  lessons: many(lessons),
 }));
 
 // ===== LESSONS =====
 export const lessons = pgTable("lessons", {
-    id: serial("id").primaryKey(),
-    title: text("title").notNull(),
-    order: integer("order").notNull(),
-    unitId: integer("unit_id")
-        .references(() => units.id, { onDelete: "cascade" })
-        .notNull(),
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  order: integer("order").notNull(),
+  unitId: integer("unit_id")
+    .references(() => units.id, { onDelete: "cascade" })
+    .notNull(),
 });
 
 export const lessonsRelations = relations(lessons, ({ one, many }) => ({
-    unit: one(units, {
-        fields: [lessons.unitId],
-        references: [units.id],
-    }),
-    challenges: many(challenges),
+  unit: one(units, {
+    fields: [lessons.unitId],
+    references: [units.id],
+  }),
+  challenges: many(challenges),
 }));
 
 // ===== CHALLENGES =====
 export const challenges = pgTable("challenges", {
-    id: serial("id").primaryKey(),
-    question: text("question").notNull(),
-    type: challengeTypeEnum("type").notNull(),
-    order: integer("order").notNull(),
-    lessonId: integer("lesson_id")
-        .references(() => lessons.id, { onDelete: "cascade" })
-        .notNull(),
-    context: text("context"), // Scenario or dialogue snippet
-    explanation: text("explanation"), // Reasoning for the answer
-    questionAudioLang: text("question_audio_lang"),
-    contextAudioLang: text("context_audio_lang"),
+  id: serial("id").primaryKey(),
+  question: text("question").notNull(),
+  type: challengeTypeEnum("type").notNull(),
+  order: integer("order").notNull(),
+  lessonId: integer("lesson_id")
+    .references(() => lessons.id, { onDelete: "cascade" })
+    .notNull(),
+  context: text("context"), // Scenario or dialogue snippet
+  explanation: text("explanation"), // Reasoning for the answer
+  questionAudioLang: text("question_audio_lang"),
+  contextAudioLang: text("context_audio_lang"),
 });
 
 export const challengesRelations = relations(challenges, ({ one, many }) => ({
-    lesson: one(lessons, {
-        fields: [challenges.lessonId],
-        references: [lessons.id],
-    }),
-    challengeOptions: many(challengeOptions),
-    challengeProgress: many(challengeProgress),
+  lesson: one(lessons, {
+    fields: [challenges.lessonId],
+    references: [lessons.id],
+  }),
+  challengeOptions: many(challengeOptions),
+  challengeProgress: many(challengeProgress),
 }));
 
 // ===== CHALLENGE OPTIONS =====
 export const challengeOptions = pgTable("challenge_options", {
-    id: serial("id").primaryKey(),
-    text: text("text").notNull(),
-    correct: boolean("correct").notNull(),
-    imageSrc: text("image_src"),
-    audioSrc: text("audio_src"),
-    audioLang: text("audio_lang"),
-    challengeId: integer("challenge_id")
-        .references(() => challenges.id, { onDelete: "cascade" })
-        .notNull(),
+  id: serial("id").primaryKey(),
+  text: text("text").notNull(),
+  correct: boolean("correct").notNull(),
+  imageSrc: text("image_src"),
+  audioSrc: text("audio_src"),
+  audioLang: text("audio_lang"),
+  challengeId: integer("challenge_id")
+    .references(() => challenges.id, { onDelete: "cascade" })
+    .notNull(),
 });
 
-export const challengeOptionsRelations = relations(challengeOptions, ({ one }) => ({
+export const challengeOptionsRelations = relations(
+  challengeOptions,
+  ({ one }) => ({
     challenge: one(challenges, {
-        fields: [challengeOptions.challengeId],
-        references: [challenges.id],
+      fields: [challengeOptions.challengeId],
+      references: [challenges.id],
     }),
-}));
+  }),
+);
 
 // ===== CHALLENGE PROGRESS =====
 export const challengeProgress = pgTable("challenge_progress", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id").notNull(),
-    completed: boolean("completed").notNull().default(false),
-    challengeId: integer("challenge_id")
-        .references(() => challenges.id, { onDelete: "cascade" })
-        .notNull(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  completed: boolean("completed").notNull().default(false),
+  challengeId: integer("challenge_id")
+    .references(() => challenges.id, { onDelete: "cascade" })
+    .notNull(),
 });
 
-export const challengeProgressRelations = relations(challengeProgress, ({ one }) => ({
+export const challengeProgressRelations = relations(
+  challengeProgress,
+  ({ one }) => ({
     challenge: one(challenges, {
-        fields: [challengeProgress.challengeId],
-        references: [challenges.id],
+      fields: [challengeProgress.challengeId],
+      references: [challenges.id],
     }),
-}));
+  }),
+);
 
 // ===== USER PROGRESS =====
-export const userProgress = pgTable("user_progress", {
+export const userProgress = pgTable(
+  "user_progress",
+  {
     id: serial("id").primaryKey(),
     userId: text("user_id").notNull().unique(),
     userName: text("user_name").notNull().default("User"),
@@ -126,7 +153,7 @@ export const userProgress = pgTable("user_progress", {
     points: integer("points").notNull().default(0),
     totalXpEarned: integer("total_xp_earned").notNull().default(0),
     activeCourseId: integer("active_course_id").references(() => courses.id, {
-        onDelete: "cascade",
+      onDelete: "cascade",
     }),
     activeLanguage: text("active_language").notNull().default("English"),
     // Streak system
@@ -142,400 +169,448 @@ export const userProgress = pgTable("user_progress", {
     // Heart regeneration — timestamp of last heart loss
     lastHeartChange: timestamp("last_heart_change").defaultNow(),
     // Opt-out toggles
-    notificationsEnabled: boolean("notifications_enabled").default(true).notNull(),
+    notificationsEnabled: boolean("notifications_enabled")
+      .default(true)
+      .notNull(),
     // Onboarding data
     motivation: text("motivation"),
     experienceLevel: text("experience_level"),
     // League system — promoted/demoted weekly (BRONZE | SILVER | GOLD | PLATINUM | DIAMOND)
     league: text("league").notNull().default("BRONZE"),
     lastWeekResult: jsonb("last_week_result"),
-}, (t) => ({
+    // Customization
+    userBannerSrc: text("user_banner_src"),
+  },
+  (t) => ({
     leagueIdx: index("user_progress_league_idx").on(t.league),
     pointsIdx: index("user_progress_points_idx").on(t.points),
     totalXpIdx: index("user_progress_total_xp_idx").on(t.totalXpEarned),
-}));
-
+  }),
+);
 
 // ===== PLACEMENT TEST HISTORY =====
 export const placementTestHistory = pgTable("placement_test_history", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id").notNull(),
-    languageTested: text("language_tested").notNull(),
-    finalLevel: text("final_level").notNull(),
-    createdAt: timestamp("created_at").defaultNow(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  languageTested: text("language_tested").notNull(),
+  finalLevel: text("final_level").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 // ===== PRACTICE SESSIONS =====
 export const practiceSessions = pgTable("practice_sessions", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id").notNull(),
-    type: text("type", { enum: ["writing", "speaking", "reading", "listening"] }).notNull(),
-    language: text("language").notNull().default("English"),
-    cefrLevel: text("cefr_level").notNull().default("B1"),
-    prompt: text("prompt").notNull(),
-    // Store JSON data as text for simplicity in this setup
-    promptData: text("prompt_data"),
-    userInput: text("user_input"),
-    audioUrl: text("audio_url"),
-    feedback: text("feedback"), // JSON string
-    score: integer("score"),
-    createdAt: timestamp("created_at").defaultNow(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  type: text("type", {
+    enum: ["writing", "speaking", "reading", "listening"],
+  }).notNull(),
+  language: text("language").notNull().default("English"),
+  cefrLevel: text("cefr_level").notNull().default("B1"),
+  prompt: text("prompt").notNull(),
+  // Store JSON data as text for simplicity in this setup
+  promptData: text("prompt_data"),
+  userInput: text("user_input"),
+  audioUrl: text("audio_url"),
+  feedback: text("feedback"), // JSON string
+  score: integer("score"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const practiceSessionsRelations = relations(practiceSessions, ({ one }) => ({
+export const practiceSessionsRelations = relations(
+  practiceSessions,
+  ({ one }) => ({
     user: one(userProgress, {
-        fields: [practiceSessions.userId],
-        references: [userProgress.userId],
+      fields: [practiceSessions.userId],
+      references: [userProgress.userId],
     }),
-}));
+  }),
+);
 
 // ===== CHALLENGE MISTAKES (Heart Clinic) =====
 export const challengeMistakes = pgTable("challenge_mistakes", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id").notNull(),
-    challengeId: integer("challenge_id")
-        .references(() => challenges.id, { onDelete: "cascade" })
-        .notNull(),
-    createdAt: timestamp("created_at").defaultNow(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  challengeId: integer("challenge_id")
+    .references(() => challenges.id, { onDelete: "cascade" })
+    .notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const challengeMistakesRelations = relations(challengeMistakes, ({ one }) => ({
+export const challengeMistakesRelations = relations(
+  challengeMistakes,
+  ({ one }) => ({
     challenge: one(challenges, {
-        fields: [challengeMistakes.challengeId],
-        references: [challenges.id],
+      fields: [challengeMistakes.challengeId],
+      references: [challenges.id],
     }),
-}));
+  }),
+);
 
 // ===== USER VOCABULARY (Vault/Cofre) =====
 export const userVocabulary = pgTable("user_vocabulary", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id").notNull(),
-    word: text("word").notNull(),
-    translation: text("translation").notNull(),
-    explanation: text("explanation").notNull().default(""),
-    contextSentence: text("context_sentence").notNull(),
-    language: text("language").notNull().default("English"),
-    strength: integer("strength").notNull().default(1), // Gamification: 1=Seed, 4=Mastered
-    createdAt: timestamp("created_at").defaultNow(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  word: text("word").notNull(),
+  translation: text("translation").notNull(),
+  explanation: text("explanation").notNull().default(""),
+  contextSentence: text("context_sentence").notNull(),
+  language: text("language").notNull().default("English"),
+  strength: integer("strength").notNull().default(1), // Gamification: 1=Seed, 4=Mastered
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const userVocabularyRelations = relations(userVocabulary, ({ one }) => ({
-    user: one(userProgress, {
-        fields: [userVocabulary.userId],
-        references: [userProgress.userId],
-    }),
+  user: one(userProgress, {
+    fields: [userVocabulary.userId],
+    references: [userProgress.userId],
+  }),
 }));
 
 // ===== USER DAILY STATS (Analytics) =====
-export const userDailyStats = pgTable("user_daily_stats", {
+export const userDailyStats = pgTable(
+  "user_daily_stats",
+  {
     id: serial("id").primaryKey(),
     userId: text("user_id").notNull(),
     date: text("date").notNull(), // Format YYYY-MM-DD
     xpGained: integer("xp_gained").notNull().default(0),
     lessonsCompleted: integer("lessons_completed").notNull().default(0),
     chestClaimed: boolean("chest_claimed").notNull().default(false),
-}, (t) => ({
+  },
+  (t) => ({
     userDateUnq: unique("user_id_date_unique").on(t.userId, t.date),
     dateIdx: index("user_daily_stats_date_idx").on(t.date),
-}));
+  }),
+);
 
 export const userDailyStatsRelations = relations(userDailyStats, ({ one }) => ({
-    user: one(userProgress, {
-        fields: [userDailyStats.userId],
-        references: [userProgress.userId],
-    }),
+  user: one(userProgress, {
+    fields: [userDailyStats.userId],
+    references: [userProgress.userId],
+  }),
 }));
 
 export const adminAuthAttempts = pgTable("admin_auth_attempts", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id").notNull().unique(),
-    attempts: integer("attempts").notNull().default(0),
-    lockoutUntil: timestamp("lockout_until"),
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().unique(),
+  attempts: integer("attempts").notNull().default(0),
+  lockoutUntil: timestamp("lockout_until"),
 });
 
 // ===== FEED & HIGH FIVES (Social) =====
 
 export const feedActivities = pgTable("feed_activities", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id").notNull(),
-    type: text("type").notNull(), // e.g., "STREAK", "LEAGUE", "PERFECT_LESSON", "NEW_FOLLOWER"
-    metadata: text("metadata").notNull(), // Extra info e.g., "10", "Rubi", "5"
-    createdAt: timestamp("created_at").defaultNow(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  type: text("type").notNull(), // e.g., "STREAK", "LEAGUE", "PERFECT_LESSON", "NEW_FOLLOWER"
+  metadata: text("metadata").notNull(), // Extra info e.g., "10", "Rubi", "5"
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const feedActivitiesRelations = relations(feedActivities, ({ one, many }) => ({
+export const feedActivitiesRelations = relations(
+  feedActivities,
+  ({ one, many }) => ({
     user: one(userProgress, {
-        fields: [feedActivities.userId],
-        references: [userProgress.userId],
+      fields: [feedActivities.userId],
+      references: [userProgress.userId],
     }),
     highFives: many(highFives),
-}));
+  }),
+);
 
-export const highFives = pgTable("high_fives", {
+export const highFives = pgTable(
+  "high_fives",
+  {
     id: serial("id").primaryKey(),
     senderId: text("sender_id").notNull(),
     receiverId: text("receiver_id").notNull(),
     activityId: integer("activity_id")
-        .references(() => feedActivities.id, { onDelete: "cascade" })
-        .notNull(),
+      .references(() => feedActivities.id, { onDelete: "cascade" })
+      .notNull(),
     createdAt: timestamp("created_at").defaultNow(),
-}, (t) => ({
+  },
+  (t) => ({
     // A user can only high-five a specific activity once
     unq: unique("high_five_unique").on(t.senderId, t.activityId),
-}));
+  }),
+);
 
 export const highFivesRelations = relations(highFives, ({ one }) => ({
-    sender: one(userProgress, {
-        fields: [highFives.senderId],
-        references: [userProgress.userId],
-        relationName: "highFiveSender",
-    }),
-    receiver: one(userProgress, {
-        fields: [highFives.receiverId],
-        references: [userProgress.userId],
-        relationName: "highFiveReceiver",
-    }),
-    activity: one(feedActivities, {
-        fields: [highFives.activityId],
-        references: [feedActivities.id],
-    }),
+  sender: one(userProgress, {
+    fields: [highFives.senderId],
+    references: [userProgress.userId],
+    relationName: "highFiveSender",
+  }),
+  receiver: one(userProgress, {
+    fields: [highFives.receiverId],
+    references: [userProgress.userId],
+    relationName: "highFiveReceiver",
+  }),
+  activity: one(feedActivities, {
+    fields: [highFives.activityId],
+    references: [feedActivities.id],
+  }),
 }));
 
 // ===== ADMIN AUDIT LOGS =====
 export const adminAuditLogs = pgTable("admin_audit_logs", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id")
-        .references(() => userProgress.userId, { onDelete: "cascade" })
-        .notNull(),
-    action: text("action").notNull(),
-    entityId: text("entity_id"),
-    metadata: text("metadata"), // Stringified JSON info
-    createdAt: timestamp("created_at").defaultNow(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id")
+    .references(() => userProgress.userId, { onDelete: "cascade" })
+    .notNull(),
+  action: text("action").notNull(),
+  entityId: text("entity_id"),
+  metadata: text("metadata"), // Stringified JSON info
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const adminAuditLogsRelations = relations(adminAuditLogs, ({ one }) => ({
-    user: one(userProgress, {
-        fields: [adminAuditLogs.userId],
-        references: [userProgress.userId],
-    }),
+  user: one(userProgress, {
+    fields: [adminAuditLogs.userId],
+    references: [userProgress.userId],
+  }),
 }));
 
 // ===== USER REVIEWS (Wall of Love) =====
 export const userReviews = pgTable("user_reviews", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id")
-        .references(() => userProgress.userId, { onDelete: "cascade" })
-        .notNull()
-        .unique(),
-    userName: text("user_name").notNull(),
-    userImageSrc: text("user_image_src").notNull(),
-    rating: integer("rating").notNull(), // 1 to 5
-    comment: text("comment").notNull(),
-    read: boolean("read").notNull().default(false),
-    createdAt: timestamp("created_at").defaultNow(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id")
+    .references(() => userProgress.userId, { onDelete: "cascade" })
+    .notNull()
+    .unique(),
+  userName: text("user_name").notNull(),
+  userImageSrc: text("user_image_src").notNull(),
+  rating: integer("rating").notNull(), // 1 to 5
+  comment: text("comment").notNull(),
+  read: boolean("read").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const userReviewsRelations = relations(userReviews, ({ one }) => ({
-    user: one(userProgress, {
-        fields: [userReviews.userId],
-        references: [userProgress.userId],
-    }),
+  user: one(userProgress, {
+    fields: [userReviews.userId],
+    references: [userProgress.userId],
+  }),
 }));
 
 // ===== SUPPORT TICKETS =====
 export const supportTickets = pgTable("support_tickets", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id")
-        .references(() => userProgress.userId, { onDelete: "cascade" })
-        .notNull(),
-    userName: text("user_name").notNull(),
-    userEmail: text("user_email").notNull(),
-    subject: text("subject").notNull(),
-    message: text("message").notNull(),
-    status: text("status", { enum: ["open", "resolved", "ignored"] }).notNull().default("open"),
-    createdAt: timestamp("created_at").defaultNow(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id")
+    .references(() => userProgress.userId, { onDelete: "cascade" })
+    .notNull(),
+  userName: text("user_name").notNull(),
+  userEmail: text("user_email").notNull(),
+  subject: text("subject").notNull(),
+  message: text("message").notNull(),
+  status: text("status", { enum: ["open", "resolved", "ignored"] })
+    .notNull()
+    .default("open"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const supportTicketsRelations = relations(supportTickets, ({ one }) => ({
-    user: one(userProgress, {
-        fields: [supportTickets.userId],
-        references: [userProgress.userId],
-    }),
+  user: one(userProgress, {
+    fields: [supportTickets.userId],
+    references: [userProgress.userId],
+  }),
 }));
 
 // ===== MESSAGING (Conversations & Group Chat) =====
 
 export const conversations = pgTable("conversations", {
-    id: uuid("id").primaryKey().defaultRandom(),
-    name: text("name"), // Only used for group chats
-    isGroup: boolean("is_group").default(false).notNull(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name"), // Only used for group chats
+  isGroup: boolean("is_group").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const conversationsRelations = relations(conversations, ({ many }) => ({
-    participants: many(conversationParticipants),
-    messages: many(messages),
+  participants: many(conversationParticipants),
+  messages: many(messages),
 }));
 
-export const conversationParticipants = pgTable("conversation_participants", {
+export const conversationParticipants = pgTable(
+  "conversation_participants",
+  {
     id: uuid("id").primaryKey().defaultRandom(),
     conversationId: uuid("conversation_id")
-        .references(() => conversations.id, { onDelete: "cascade" })
-        .notNull(),
+      .references(() => conversations.id, { onDelete: "cascade" })
+      .notNull(),
     userId: text("user_id")
-        .references(() => userProgress.userId, { onDelete: "cascade" })
-        .notNull(),
+      .references(() => userProgress.userId, { onDelete: "cascade" })
+      .notNull(),
     joinedAt: timestamp("joined_at").defaultNow().notNull(),
-}, (t) => ({
-    unq: unique("conversation_participant_unique").on(t.conversationId, t.userId),
-}));
+  },
+  (t) => ({
+    unq: unique("conversation_participant_unique").on(
+      t.conversationId,
+      t.userId,
+    ),
+  }),
+);
 
-export const conversationParticipantsRelations = relations(conversationParticipants, ({ one }) => ({
+export const conversationParticipantsRelations = relations(
+  conversationParticipants,
+  ({ one }) => ({
     conversation: one(conversations, {
-        fields: [conversationParticipants.conversationId],
-        references: [conversations.id],
+      fields: [conversationParticipants.conversationId],
+      references: [conversations.id],
     }),
     user: one(userProgress, {
-        fields: [conversationParticipants.userId],
-        references: [userProgress.userId],
+      fields: [conversationParticipants.userId],
+      references: [userProgress.userId],
     }),
-}));
+  }),
+);
 
 export const messages = pgTable("messages", {
-    id: serial("id").primaryKey(),
-    conversationId: uuid("conversation_id")
-        .references(() => conversations.id, { onDelete: "cascade" })
-        .notNull(),
-    senderId: text("sender_id")
-        .references(() => userProgress.userId, { onDelete: "cascade" })
-        .notNull(),
-    content: text("content").notNull(),
-    imageUrl: text("image_url"),
-    type: text("type").default("text").notNull(),
-    fileName: text("file_name"),
-    read: boolean("read").default(false).notNull(),
-    parentMessageId: integer("parent_message_id"),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+  id: serial("id").primaryKey(),
+  conversationId: uuid("conversation_id")
+    .references(() => conversations.id, { onDelete: "cascade" })
+    .notNull(),
+  senderId: text("sender_id")
+    .references(() => userProgress.userId, { onDelete: "cascade" })
+    .notNull(),
+  content: text("content").notNull(),
+  imageUrl: text("image_url"),
+  type: text("type").default("text").notNull(),
+  fileName: text("file_name"),
+  read: boolean("read").default(false).notNull(),
+  parentMessageId: integer("parent_message_id"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const messagesRelations = relations(messages, ({ one, many }) => ({
-    conversation: one(conversations, {
-        fields: [messages.conversationId],
-        references: [conversations.id],
-    }),
-    sender: one(userProgress, {
-        fields: [messages.senderId],
-        references: [userProgress.userId],
-    }),
-    parent: one(messages, {
-        fields: [messages.parentMessageId],
-        references: [messages.id],
-        relationName: "replies",
-    }),
-    replies: many(messages, {
-        relationName: "replies",
-    }),
-    reactions: many(messageReactions),
+  conversation: one(conversations, {
+    fields: [messages.conversationId],
+    references: [conversations.id],
+  }),
+  sender: one(userProgress, {
+    fields: [messages.senderId],
+    references: [userProgress.userId],
+  }),
+  parent: one(messages, {
+    fields: [messages.parentMessageId],
+    references: [messages.id],
+    relationName: "replies",
+  }),
+  replies: many(messages, {
+    relationName: "replies",
+  }),
+  reactions: many(messageReactions),
 }));
 
 export const messageReactions = pgTable("message_reactions", {
-    id: serial("id").primaryKey(),
-    messageId: integer("message_id")
-        .references(() => messages.id, { onDelete: "cascade" })
-        .notNull(),
-    userId: text("user_id")
-        .references(() => userProgress.userId, { onDelete: "cascade" })
-        .notNull(),
-    emoji: text("emoji").notNull(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+  id: serial("id").primaryKey(),
+  messageId: integer("message_id")
+    .references(() => messages.id, { onDelete: "cascade" })
+    .notNull(),
+  userId: text("user_id")
+    .references(() => userProgress.userId, { onDelete: "cascade" })
+    .notNull(),
+  emoji: text("emoji").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const messageReactionsRelations = relations(messageReactions, ({ one }) => ({
+export const messageReactionsRelations = relations(
+  messageReactions,
+  ({ one }) => ({
     message: one(messages, {
-        fields: [messageReactions.messageId],
-        references: [messages.id],
+      fields: [messageReactions.messageId],
+      references: [messages.id],
     }),
     user: one(userProgress, {
-        fields: [messageReactions.userId],
-        references: [userProgress.userId],
+      fields: [messageReactions.userId],
+      references: [userProgress.userId],
     }),
-}));
+  }),
+);
 
 // ===== FOLLOWS (Social Graph) =====
 
-export const follows = pgTable("follows", {
+export const follows = pgTable(
+  "follows",
+  {
     id: serial("id").primaryKey(),
     followerId: text("follower_id")
-        .references(() => userProgress.userId, { onDelete: "cascade" })
-        .notNull(),
+      .references(() => userProgress.userId, { onDelete: "cascade" })
+      .notNull(),
     followingId: text("following_id")
-        .references(() => userProgress.userId, { onDelete: "cascade" })
-        .notNull(),
+      .references(() => userProgress.userId, { onDelete: "cascade" })
+      .notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
-}, (t) => ({
+  },
+  (t) => ({
     unq: unique("follow_unique").on(t.followerId, t.followingId),
-}));
+  }),
+);
 
 export const followsRelations = relations(follows, ({ one }) => ({
-    follower: one(userProgress, {
-        fields: [follows.followerId],
-        references: [userProgress.userId],
-        relationName: "follower",
-    }),
-    following: one(userProgress, {
-        fields: [follows.followingId],
-        references: [userProgress.userId],
-        relationName: "following",
-    }),
+  follower: one(userProgress, {
+    fields: [follows.followerId],
+    references: [userProgress.userId],
+    relationName: "follower",
+  }),
+  following: one(userProgress, {
+    fields: [follows.followingId],
+    references: [userProgress.userId],
+    relationName: "following",
+  }),
 }));
 
 // ===== NOTIFICATIONS =====
 
 export const notifications = pgTable("notifications", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id")
-        .references(() => userProgress.userId, { onDelete: "cascade" })
-        .notNull(),
-    type: text("type").notNull(), // e.g., "follow", "message", "high_five"
-    message: text("message").notNull(),
-    read: boolean("read").default(false).notNull(),
-    link: text("link"), // Link to redirect when clicked
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+  id: serial("id").primaryKey(),
+  userId: text("user_id")
+    .references(() => userProgress.userId, { onDelete: "cascade" })
+    .notNull(),
+  type: text("type").notNull(), // e.g., "follow", "message", "high_five"
+  message: text("message").notNull(),
+  read: boolean("read").default(false).notNull(),
+  link: text("link"), // Link to redirect when clicked
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const notificationsRelations = relations(notifications, ({ one }) => ({
-    user: one(userProgress, {
-        fields: [notifications.userId],
-        references: [userProgress.userId],
-    }),
+  user: one(userProgress, {
+    fields: [notifications.userId],
+    references: [userProgress.userId],
+  }),
 }));
 
 // ===== USER SUBSCRIPTIONS (Stripe PRO) =====
 
 export const userSubscriptions = pgTable("user_subscriptions", {
-    id: serial("id").primaryKey(),
-    userId: text("user_id")
-        .references(() => userProgress.userId, { onDelete: "cascade" })
-        .notNull()
-        .unique(),
-    stripeCustomerId: text("stripe_customer_id").notNull().unique(),
-    stripeSubscriptionId: text("stripe_subscription_id").unique(),
-    stripePriceId: text("stripe_price_id"),
-    stripeCurrentPeriodEnd: timestamp("stripe_current_period_end"),
+  id: serial("id").primaryKey(),
+  userId: text("user_id")
+    .references(() => userProgress.userId, { onDelete: "cascade" })
+    .notNull()
+    .unique(),
+  stripeCustomerId: text("stripe_customer_id").notNull().unique(),
+  stripeSubscriptionId: text("stripe_subscription_id").unique(),
+  stripePriceId: text("stripe_price_id"),
+  stripeCurrentPeriodEnd: timestamp("stripe_current_period_end"),
 });
 
-export const userSubscriptionsRelations = relations(userSubscriptions, ({ one }) => ({
+export const userSubscriptionsRelations = relations(
+  userSubscriptions,
+  ({ one }) => ({
     user: one(userProgress, {
-        fields: [userSubscriptions.userId],
-        references: [userProgress.userId],
+      fields: [userSubscriptions.userId],
+      references: [userProgress.userId],
     }),
-}));
+  }),
+);
 
 // Update UserProgress with all relations
-export const userProgressRelations = relations(userProgress, ({ one, many }) => ({
+export const userProgressRelations = relations(
+  userProgress,
+  ({ one, many }) => ({
     activeCourse: one(courses, {
-        fields: [userProgress.activeCourseId],
-        references: [courses.id],
+      fields: [userProgress.activeCourseId],
+      references: [courses.id],
     }),
     subscription: one(userSubscriptions),
     placementTests: many(placementTestHistory),
@@ -545,4 +620,5 @@ export const userProgressRelations = relations(userProgress, ({ one, many }) => 
     followers: many(follows, { relationName: "following" }),
     following: many(follows, { relationName: "follower" }),
     notifications: many(notifications),
-}));
+  }),
+);
