@@ -41,9 +41,17 @@ export default async function Home() {
       */}
       <header className="absolute top-0 left-0 right-0 z-50 w-full bg-transparent">
         <div className="mx-auto flex w-full max-w-[1024px] items-center justify-between px-6 py-8 lg:px-8">
-          <Link href="/" className="flex items-center gap-3 active:scale-95 transition-transform cursor-pointer">
+          <Link
+            href="/"
+            className="flex items-center gap-3 active:scale-95 transition-transform cursor-pointer"
+          >
             <div className="relative h-11 w-11 overflow-hidden rounded-xl shadow-sm border-2 border-stone-100 shadow-stone-200">
-              <Image src="/icon.png" alt="MyDuolingo Logo" fill className="object-cover" />
+              <Image
+                src="/icon.png"
+                alt="MyDuolingo Logo"
+                fill
+                className="object-cover"
+              />
             </div>
             <span className="text-3xl font-black tracking-tight text-green-500 drop-shadow-sm">
               duolingo
@@ -54,7 +62,6 @@ export default async function Home() {
 
       {/* Main Content */}
       <main className="relative z-10 flex flex-1 flex-col items-center justify-center gap-12 px-6 py-12 mx-auto w-full max-w-[1024px] lg:flex-row lg:gap-20 lg:py-20 lg:px-8">
-        
         {/* Left side - Lottie Hero Animation */}
         <div className="relative flex h-[320px] w-[320px] shrink-0 items-center justify-center lg:h-[480px] lg:w-[480px]">
           {/* Subtle glowing ring behind lottie */}
@@ -72,11 +79,13 @@ export default async function Home() {
             but specific enough to rank for the primary use case.
           */}
           <h1 className="animate-in slide-in-from-bottom-8 fade-in duration-700 delay-100 fill-mode-both text-4xl font-extrabold tracking-tight text-slate-800 lg:text-5xl lg:leading-[1.15]">
-            O jeito <span className="text-green-500 font-black">grátis</span>, divertido e eficaz de aprender um idioma!
+            O jeito <span className="text-green-500 font-black">grátis</span>,
+            divertido e eficaz de aprender um idioma!
           </h1>
 
-          <p className="animate-in slide-in-from-bottom-6 fade-in duration-700 delay-200 fill-mode-both text-lg font-medium text-slate-500 lg:text-xl">
-            Junta-te a nós e começa a aprender hoje mesmo com lições curtas e viciantes.
+          <p className="hidden md:block animate-in slide-in-from-bottom-6 fade-in duration-700 delay-200 fill-mode-both text-lg font-medium text-slate-500 lg:text-xl">
+            Junta-te a nós e começa a aprender hoje mesmo com lições curtas e
+            viciantes.
           </p>
 
           <div className="w-full mt-2 animate-in slide-in-from-bottom-6 fade-in duration-700 delay-300 fill-mode-both">
@@ -84,7 +93,6 @@ export default async function Home() {
           </div>
         </div>
       </main>
-
     </div>
   );
 }
