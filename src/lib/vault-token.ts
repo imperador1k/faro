@@ -1,50 +1,90 @@
-import { createHmac, timingSafeEqual } from "crypto";
-
 const COOKIE_MAX_AGE = 3600; // 1 hour
+
+async function getHmacKey(secret: string) {
+  const enc = new TextEncoder();
+  return await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign", "verify"],
+  );
+}
+
+function bufferToHex(buffer: ArrayBuffer) {
+  return Array.from(new Uint8Array(buffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
 
 /**
  * Creates a signed admin vault token.
  * Format: userId:expiry:signature
- * Signature = HMAC-SHA256(userId:expiry, ADMIN_SUDO_HASH)
  */
-export function createVaultToken(userId: string): string {
-    const expiry = Math.floor(Date.now() / 1000) + COOKIE_MAX_AGE;
-    const payload = `${userId}:${expiry}`;
-    const secret = process.env.ADMIN_SUDO_HASH || "fallback-secret-do-not-use-in-production";
-    const signature = createHmac("sha256", secret).update(payload).digest("hex");
-    return `${payload}:${signature}`;
+export async function createVaultToken(userId: string): Promise<string> {
+  const expiry = Math.floor(Date.now() / 1000) + COOKIE_MAX_AGE;
+  const payload = `${userId}:${expiry}`;
+
+  const rawSecret =
+    process.env.CLERK_SECRET_KEY ||
+    process.env.ADMIN_SUDO_HASH ||
+    "fallback-secret-do-not-use-in-production";
+  const secret = rawSecret.replace(/\\/g, "");
+
+  const key = await getHmacKey(secret);
+  const signatureBuffer = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    new TextEncoder().encode(payload),
+  );
+  const signature = bufferToHex(signatureBuffer);
+
+  return `${payload}:${signature}`;
 }
 
 /**
  * Validates a signed admin vault token.
  * Returns the userId if valid, null otherwise.
- * Uses timing-safe comparison to prevent timing attacks.
  */
-export function validateVaultToken(token: string): string | null {
-    try {
-        const parts = token.split(":");
-        if (parts.length !== 3) return null;
+export async function validateVaultToken(
+  token: string,
+): Promise<string | null> {
+  try {
+    const parts = token.split(":");
+    if (parts.length !== 3) return null;
 
-        const [userId, expiryStr, signature] = parts;
-        const expiry = parseInt(expiryStr, 10);
+    const [userId, expiryStr, signature] = parts;
+    const expiry = parseInt(expiryStr, 10);
 
-        if (isNaN(expiry) || Date.now() / 1000 > expiry) {
-            return null;
-        }
-
-        const secret = process.env.ADMIN_SUDO_HASH || "fallback-secret-do-not-use-in-production";
-        const expectedPayload = `${userId}:${expiry}`;
-        const expectedSignature = createHmac("sha256", secret).update(expectedPayload).digest("hex");
-
-        const a = Buffer.from(signature);
-        const b = Buffer.from(expectedSignature);
-
-        if (a.length !== b.length || !timingSafeEqual(a, b)) {
-            return null;
-        }
-
-        return userId;
-    } catch {
-        return null;
+    if (isNaN(expiry) || Date.now() / 1000 > expiry) {
+      return null;
     }
+
+    const rawSecret =
+      process.env.CLERK_SECRET_KEY ||
+      process.env.ADMIN_SUDO_HASH ||
+      "fallback-secret-do-not-use-in-production";
+    const secret = rawSecret.replace(/\\/g, "");
+
+    const key = await getHmacKey(secret);
+    const expectedPayload = `${userId}:${expiry}`;
+
+    const signatureBytes = new Uint8Array(
+      signature.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16)),
+    );
+
+    const isValid = await crypto.subtle.verify(
+      "HMAC",
+      key,
+      signatureBytes,
+      new TextEncoder().encode(expectedPayload),
+    );
+
+    if (!isValid) return null;
+
+    return userId;
+  } catch (error) {
+    console.error("[validateVaultToken] Error during validation:", error);
+    return null;
+  }
 }

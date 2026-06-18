@@ -75,7 +75,7 @@ export async function authenticateVault(
       .where(eq(adminAuthAttempts.id, record.id));
   }
 
-  const vaultToken = createVaultToken(userId);
+  const vaultToken = await createVaultToken(userId);
 
   cookies().set("admin_vault_session", vaultToken, {
     httpOnly: true,

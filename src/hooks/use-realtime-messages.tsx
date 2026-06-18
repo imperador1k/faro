@@ -49,8 +49,32 @@ export const useRealtimeMessages = (
   const { playPop } = useUISounds();
   const { getToken } = useAuth();
 
+  // Sync server messages when they update (e.g. after a router.refresh() or mutation)
   useEffect(() => {
-    setMessages(initialMessages);
+    setMessages((prev) => {
+      // Keep any optimistic temporary messages that are currently in flight
+      const tempMessages = prev.filter((m) =>
+        m.id?.toString().startsWith("temp-"),
+      );
+
+      // Combine server messages with temp messages, avoiding duplicates by ID
+      const newMessages = [...initialMessages];
+
+      tempMessages.forEach((temp) => {
+        if (
+          !newMessages.some(
+            (m) => m.id === temp.id || m.content === temp.content,
+          )
+        ) {
+          newMessages.push(temp); // temp messages are newest, add to bottom (since order is asc)
+        }
+      });
+
+      return newMessages.sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      );
+    });
   }, [initialMessages]);
 
   useEffect(() => {
@@ -70,16 +94,21 @@ export const useRealtimeMessages = (
         const token = await getToken({ template: "supabase" });
         if (!token || isStopped) return;
 
-        await setSupabaseAuth(token);
-        supabase.realtime.setAuth(token);
+        // Use a transient client to prevent TIMED_OUT errors with Clerk singleton issues
+        const client = createClerkSupabaseClient(token);
 
-        const channel = supabase.channel(`chat_${conversationId}`, {
+        const channel = client.channel(`chat_${conversationId}`, {
           config: { presence: { key: userId } },
         });
 
         channel.on(
           "postgres_changes",
-          { event: "*", schema: "public", table: "messages" },
+          {
+            event: "*",
+            schema: "public",
+            table: "messages",
+            filter: `conversation_id=eq.${conversationId}`,
+          },
           (payload) => {
             if (process.env.NODE_ENV !== "production")
               console.log(
@@ -96,40 +125,100 @@ export const useRealtimeMessages = (
               return;
             }
 
-            const msgConvId = String(
-              newMsg.conversation_id || "",
-            ).toLowerCase();
-            const currentConvId = String(conversationId).toLowerCase();
+            if (process.env.NODE_ENV !== "production")
+              console.log("[RealtimeChat] ✅ Mensagem válida! Atualizando...");
 
-            if (msgConvId === currentConvId) {
-              if (process.env.NODE_ENV !== "production")
-                console.log(
-                  "[RealtimeChat] ✅ Mensagem válida! Atualizando...",
-                );
-              setMessages((prev) => {
-                if (prev.some((m) => m.id === newMsg.id)) return prev;
-                if (newMsg.sender_id !== userId) playPop();
-                return [
-                  ...prev.filter((m) => !m.id?.toString().startsWith("temp-")),
-                  {
-                    id: newMsg.id as number,
-                    senderId: newMsg.sender_id as string,
-                    conversationId: Number(newMsg.conversation_id),
-                    content: newMsg.content as string,
-                    type: newMsg.type as string | undefined,
-                    createdAt: new Date(
-                      (newMsg.created_at as string) || Date.now(),
-                    ),
-                    read: newMsg.read as boolean | undefined,
-                  },
-                ];
-              });
-            } else {
-              if (process.env.NODE_ENV !== "production")
-                console.log(
-                  `[RealtimeChat] ⏭️ Ignorada: Conv ${msgConvId} != ${currentConvId}`,
-                );
+            // Check if it's an update (like marking as read)
+            if (payload.eventType === "UPDATE") {
+              setMessages((prev) =>
+                prev.map((m) =>
+                  m.id === newMsg.id
+                    ? { ...m, read: newMsg.read as boolean }
+                    : m,
+                ),
+              );
+              return;
             }
+
+            setMessages((prev) => {
+              if (prev.some((m) => m.id === newMsg.id)) return prev;
+              if (newMsg.sender_id !== userId) playPop();
+              return [
+                ...prev.filter((m) => !m.id?.toString().startsWith("temp-")),
+                {
+                  id: newMsg.id as number,
+                  senderId: newMsg.sender_id as string,
+                  conversationId: newMsg.conversation_id as number, // UUID is sent back correctly via filter
+                  content: newMsg.content as string,
+                  type: newMsg.type as string | undefined,
+                  createdAt: new Date(
+                    (newMsg.created_at as string) || Date.now(),
+                  ),
+                  read: newMsg.read as boolean | undefined,
+                },
+              ];
+            });
+          },
+        );
+
+        channel.on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "message_reactions",
+          },
+          (payload) => {
+            console.log("[RealtimeChat] Reação recebida!", payload);
+
+            if (payload.eventType === "DELETE") {
+              const oldReaction = payload.old as Record<string, unknown>;
+              if (!oldReaction || !oldReaction.message_id) return;
+              setMessages((prev) =>
+                prev.map((m) =>
+                  Number(m.id) === Number(oldReaction.message_id)
+                    ? {
+                        ...m,
+                        reactions: m.reactions?.filter(
+                          (r) =>
+                            r.emoji !== oldReaction.emoji ||
+                            r.userId !== oldReaction.user_id,
+                        ),
+                      }
+                    : m,
+                ),
+              );
+              return;
+            }
+
+            const reaction = payload.new as Record<string, unknown>;
+            if (!reaction || !reaction.message_id) return;
+
+            setMessages((prev) =>
+              prev.map((m) => {
+                if (Number(m.id) === Number(reaction.message_id)) {
+                  const existing = m.reactions || [];
+                  const filtered = existing.filter(
+                    (r) =>
+                      !(
+                        r.emoji === reaction.emoji &&
+                        r.userId === reaction.user_id
+                      ),
+                  );
+                  return {
+                    ...m,
+                    reactions: [
+                      ...filtered,
+                      {
+                        emoji: reaction.emoji as string,
+                        userId: reaction.user_id as string,
+                      },
+                    ],
+                  };
+                }
+                return m;
+              }),
+            );
           },
         );
 
@@ -160,11 +249,12 @@ export const useRealtimeMessages = (
       if (channelRef.current) {
         if (process.env.NODE_ENV !== "production")
           console.log(`[RealtimeChat] 🔴 Fechando canal ${conversationId}`);
-        supabase.removeChannel(channelRef.current);
+        // We use the singleton's method or the channel's method to unsubscribe
+        channelRef.current.unsubscribe();
         channelRef.current = null;
       }
     };
-  }, [conversationId, userId, playPop]);
+  }, [conversationId, userId, playPop, getToken]);
 
   const trackTyping = useCallback((isTyping: boolean) => {
     if (channelRef.current && channelRef.current.state === "joined") {

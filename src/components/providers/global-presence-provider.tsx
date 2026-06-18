@@ -8,6 +8,7 @@ import React, {
   useRef,
 } from "react";
 import { useAuth, useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import {
   supabase,
   setSupabaseAuth,
@@ -34,6 +35,7 @@ export const GlobalPresenceProvider = ({
 }) => {
   const { userId, getToken, isLoaded: isAuthLoaded } = useAuth();
   const { user } = useUser();
+  const router = useRouter();
   const [onlineUserIds, setOnlineUserIds] = useState<string[]>([]);
   const channelRef = useRef<RealtimeChannel | null>(null);
 
@@ -49,11 +51,10 @@ export const GlobalPresenceProvider = ({
         const token = await getToken({ template: "supabase" });
         if (!token || isStopped) return;
 
-        // Sync global auth
-        await setSupabaseAuth(token);
+        // Use a transient client to prevent TIMED_OUT errors with Clerk
+        const client = createClerkSupabaseClient(token);
 
-        // Use the global multiplexed supabase client
-        const channel = supabase.channel("global_presence", {
+        const channel = client.channel("global_presence", {
           config: {
             presence: { key: userId },
           },
@@ -64,6 +65,32 @@ export const GlobalPresenceProvider = ({
           const onlineIds = Object.keys(state);
           setOnlineUserIds(onlineIds);
         });
+
+        // 🔔 Listen for background messages/notifications to update global layout badges (Sidebar)
+        channel.on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "messages" },
+          (payload) => {
+            console.log(
+              "[GlobalPresence] Mensagem detectada no fundo! Atualizando sidebar...",
+              payload,
+            );
+            // Let Next.js re-fetch the layout props like getUnreadMessageCount()
+            if (!isStopped) router.refresh();
+          },
+        );
+
+        channel.on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "notifications" },
+          (payload) => {
+            console.log(
+              "[GlobalPresence] Notificação detectada no fundo! Atualizando sidebar...",
+              payload,
+            );
+            if (!isStopped) router.refresh();
+          },
+        );
 
         channel.subscribe(async (status, err) => {
           const timestamp = new Date().toLocaleTimeString();
@@ -123,7 +150,7 @@ export const GlobalPresenceProvider = ({
       if (activeChannel) {
         if (process.env.NODE_ENV !== "production")
           console.log("[GlobalPresence] 🔌 Cleanup: Disconnecting presence");
-        supabase.removeChannel(activeChannel);
+        activeChannel.unsubscribe();
       }
     };
   }, [isAuthLoaded, userId, user]); // Removed volatile getToken and isInternalAuthReady

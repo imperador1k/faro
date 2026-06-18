@@ -75,9 +75,9 @@ export const FriendsClient = ({
   following,
   feedActivities,
 }: Props) => {
-  const [activeTab, setActiveTab] = useState<
-    "feed" | "following" | "followers" | "search"
-  >(query ? "search" : "feed");
+  const [activeTab, setActiveTab] = useState<"feed" | "friends" | "search">(
+    query ? "search" : "feed",
+  );
   const [friendCode, setFriendCode] = useState("");
   const [isSubmittingCode, setIsSubmittingCode] = useState(false);
   const [openScannerId, setOpenScannerId] = useState<number | null>(null); // To manage high-five loading state
@@ -130,6 +130,15 @@ export const FriendsClient = ({
 
   const isMutual = (id: string) => followingSet.has(id) && followerSet.has(id);
   const amIFollowing = (id: string) => followingSet.has(id);
+
+  const uniqueFriendsMap = new Map<string, UserData>();
+  following.forEach((f) => {
+    if (f.following) uniqueFriendsMap.set(f.following.userId, f.following);
+  });
+  followers.forEach((f) => {
+    if (f.follower) uniqueFriendsMap.set(f.follower.userId, f.follower);
+  });
+  const allFriends = Array.from(uniqueFriendsMap.values());
 
   const handleFollowByCode = () => {
     if (!friendCode || friendCode.length < 4) {
@@ -247,13 +256,13 @@ export const FriendsClient = ({
   ) => (
     <div
       key={user.userId}
-      className="bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-4 flex items-center justify-between mb-4 hover:-translate-y-1 transition-transform"
+      className="bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-3 sm:p-4 flex items-center justify-between mb-4 hover:-translate-y-1 transition-transform"
     >
       <Link
         href={`/profile/${user.userId}`}
-        className="flex-1 flex items-center gap-4 min-w-0 hover:opacity-80 transition pr-4"
+        className="flex-1 flex items-center gap-3 sm:gap-4 min-w-0 hover:opacity-80 transition pr-2 sm:pr-4"
       >
-        <div className="relative h-16 w-16 rounded-full border-4 border-amber-400 shrink-0 bg-stone-100 flex items-center justify-center overflow-hidden shadow-sm">
+        <div className="relative h-12 w-12 sm:h-16 sm:w-16 rounded-full border-4 border-amber-400 shrink-0 bg-stone-100 flex items-center justify-center overflow-hidden shadow-sm">
           {user.userImageSrc ? (
             <Image
               src={user.userImageSrc}
@@ -262,18 +271,33 @@ export const FriendsClient = ({
               className="object-cover"
             />
           ) : (
-            <span className="text-3xl font-black text-stone-300">
+            <span className="text-2xl sm:text-3xl font-black text-stone-300">
               {user.userName[0]?.toUpperCase() || "👤"}
             </span>
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-black text-stone-700 text-[1.1rem] truncate">
+          <p className="font-black text-stone-700 text-[1rem] sm:text-[1.1rem] line-clamp-2 leading-tight">
             {user.userName}
           </p>
-          <p className="font-bold text-stone-400 text-sm truncate">
-            @{user.userName.toLowerCase().replace(/\s/g, "")}
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-0.5 sm:mt-1">
+            <p className="font-bold text-stone-400 text-xs sm:text-sm truncate">
+              @{user.userName.toLowerCase().replace(/\s/g, "")}
+            </p>
+            {amFollowingVal && isFollowerVal ? (
+              <span className="text-[10px] font-black bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full w-fit">
+                Amigos
+              </span>
+            ) : isFollowerVal ? (
+              <span className="text-[10px] font-black bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full w-fit">
+                Segue-te
+              </span>
+            ) : amFollowingVal ? (
+              <span className="text-[10px] font-black bg-stone-100 text-stone-500 px-2 py-0.5 rounded-full w-fit">
+                A Seguir
+              </span>
+            ) : null}
+          </div>
         </div>
       </Link>
       <div className="shrink-0 flex items-center justify-end">
@@ -281,13 +305,6 @@ export const FriendsClient = ({
       </div>
     </div>
   );
-
-  const followingUsers = following
-    .filter((f) => f.following)
-    .map((f) => f.following!);
-  const followerUsers = followers
-    .filter((f) => f.follower)
-    .map((f) => f.follower!);
 
   return (
     <div className="max-w-4xl mx-auto w-full p-4 sm:p-8 pb-24">
@@ -354,16 +371,13 @@ export const FriendsClient = ({
       <div className="bg-stone-200 p-1.5 rounded-2xl flex items-center max-w-3xl w-full mx-auto mb-10 overflow-x-auto no-scrollbar shadow-inner">
         {[
           { id: "feed", label: "FEED" },
-          { id: "following", label: "A SEGUIR" },
-          { id: "followers", label: "SEGUIDORES" },
-          { id: "search", label: "ENCONTRAR" },
+          { id: "friends", label: "AMIGOS" },
+          { id: "search", label: "ADICIONAR" },
         ].map((tab) => (
           <button
             key={tab.id}
             onClick={() =>
-              setActiveTab(
-                tab.id as "feed" | "following" | "followers" | "search",
-              )
+              setActiveTab(tab.id as "feed" | "friends" | "search")
             }
             className={cn(
               "flex-1 text-center py-2 px-4 whitespace-nowrap transition-all rounded-xl",
@@ -382,8 +396,8 @@ export const FriendsClient = ({
         <div className="space-y-4 max-w-3xl mx-auto">
           {localActivities.length === 0 ? (
             <EmptyState
-              title="A vila está muito silenciosa..."
-              description="Aprender é melhor com companhia! Convida os teus amigos para competir nas ligas e vê as suas vitórias aqui."
+              title="O teu feed está vazio!"
+              description="Aprender é melhor com companhia! Aqui aparecerão as conquistas épicas (como dias de ofensiva e subidas de liga) das pessoas que segues."
               actionText="Encontrar Amigos"
               onAction={() => setActiveTab("search")}
             />
@@ -459,40 +473,18 @@ export const FriendsClient = ({
         </div>
       )}
 
-      {/* ── Following Tab ── */}
-      {activeTab === "following" && (
+      {/* ── Friends Tab (Combined) ── */}
+      {activeTab === "friends" && (
         <div className="max-w-2xl mx-auto">
-          {followingUsers.length === 0 ? (
+          {allFriends.length === 0 ? (
             <EmptyState
-              title="Não estás a seguir ninguém"
-              description="Encontra os teus amigos para veres as atualizações deles no teu feed!"
-              actionText="Encontrar Amigos"
+              title="Ainda não tens amigos aqui"
+              description="Partilha o teu código ou encontra outros estudantes para iniciarem a jornada contigo!"
+              actionText="Adicionar Amigos"
               onAction={() => setActiveTab("search")}
             />
           ) : (
-            followingUsers.map((user) =>
-              renderUser(
-                user,
-                amIFollowing(user.userId),
-                followerSet.has(user.userId),
-              ),
-            )
-          )}
-        </div>
-      )}
-
-      {/* ── Followers Tab ── */}
-      {activeTab === "followers" && (
-        <div className="max-w-2xl mx-auto">
-          {followerUsers.length === 0 ? (
-            <EmptyState
-              title="Ainda não tens seguidores"
-              description="Partilha o teu código ou convida amigos para iniciarem a jornada contigo!"
-              actionText="Partilhar Código"
-              onAction={handleShare}
-            />
-          ) : (
-            followerUsers.map((user) =>
+            allFriends.map((user) =>
               renderUser(
                 user,
                 amIFollowing(user.userId),
