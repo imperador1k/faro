@@ -41,8 +41,12 @@ export async function generateTextWithFallback(
       const timeoutPromise = new Promise<never>((_, reject) => {
         setTimeout(
           () =>
-            reject(new Error("Timeout: Gemini API took too long to respond.")),
-          15000,
+            reject(
+              new Error(
+                "Timeout: A IA demorou muito tempo a responder. Tenta novamente.",
+              ),
+            ),
+          60000,
         );
       });
 

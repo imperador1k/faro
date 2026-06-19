@@ -140,179 +140,190 @@ export async function generateCourseContent(
   topicId: number,
   level: string,
 ) {
-  const user = await assertAdmin();
+  try {
+    const user = await assertAdmin();
 
-  // Rate Limiting (Protects Gemini Quota)
-  const { success } = await aiRateLimit.limit(user.id);
-  if (!success) {
-    throw new Error(
-      "Rate limit exceeded. Por favor, aguarda um minuto antes de gerar mais conteúdo.",
+    // Rate Limiting (Protects Gemini Quota)
+    const { success } = await aiRateLimit.limit(user.id);
+    if (!success) {
+      return {
+        error:
+          "Rate limit excedido. Por favor, aguarda um minuto antes de gerar mais conteúdo.",
+      };
+    }
+
+    const topic = AI_TOPICS.find((t) => t.id === topicId);
+    if (!topic) return { error: `Topic ID ${topicId} not found.` };
+
+    const style =
+      GENERATION_STYLES[Math.floor(Math.random() * GENERATION_STYLES.length)];
+    const seed = Math.floor(Math.random() * 9000) + 1000;
+
+    const promptText = buildPrompt(
+      topic.name,
+      topic.focus,
+      targetLang,
+      level,
+      style,
+      seed,
     );
-  }
 
-  const topic = AI_TOPICS.find((t) => t.id === topicId);
-  if (!topic) throw new Error(`Topic ID ${topicId} not found.`);
+    // ── Call Gemini ──
 
-  const style =
-    GENERATION_STYLES[Math.floor(Math.random() * GENERATION_STYLES.length)];
-  const seed = Math.floor(Math.random() * 9000) + 1000;
+    let rawJson = await generateTextWithFallback(promptText, undefined, {
+      temperature: 0.7,
+      responseMimeType: "application/json",
+    });
 
-  const promptText = buildPrompt(
-    topic.name,
-    topic.focus,
-    targetLang,
-    level,
-    style,
-    seed,
-  );
+    // Clean possible markdown artifacts
+    rawJson = rawJson
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
 
-  // ── Call Gemini ──
-
-  let rawJson = await generateTextWithFallback(promptText, undefined, {
-    temperature: 0.7,
-    responseMimeType: "application/json",
-  });
-
-  // Clean possible markdown artifacts
-  rawJson = rawJson
-    .replace(/```json/g, "")
-    .replace(/```/g, "")
-    .trim();
-
-  interface AIData {
-    unit_title?: string;
-    unit_description?: string;
-    lessons?: Array<{
-      title?: string;
-      challenges?: Array<{
-        type?: string;
-        question?: string;
-        context?: string;
-        explanation?: string;
-        question_audio_lang?: string;
-        context_audio_lang?: string;
-        options?: Array<{
-          text?: string;
-          correct?: boolean;
-          audio_lang?: string;
+    interface AIData {
+      unit_title?: string;
+      unit_description?: string;
+      lessons?: Array<{
+        title?: string;
+        challenges?: Array<{
+          type?: string;
+          question?: string;
+          context?: string;
+          explanation?: string;
+          question_audio_lang?: string;
+          context_audio_lang?: string;
+          options?: Array<{
+            text?: string;
+            correct?: boolean;
+            audio_lang?: string;
+          }>;
         }>;
       }>;
-    }>;
-  }
-  let data: AIData;
-  try {
-    data = JSON.parse(rawJson);
-  } catch (e) {
-    console.error(
-      "[AI_GENERATOR] Failed to parse JSON:",
-      rawJson.substring(0, 500),
-    );
-    throw new Error("A IA gerou uma resposta inválida. Tenta novamente.");
-  }
+    }
+    let data: AIData;
+    try {
+      data = JSON.parse(rawJson);
+    } catch (e) {
+      console.error(
+        "[AI_GENERATOR] Failed to parse JSON:",
+        rawJson.substring(0, 500),
+      );
+      return { error: "A IA gerou uma resposta inválida. Tenta novamente." };
+    }
 
-  // ── Insert into DB with Drizzle Transaction ──
-  await db.transaction(async (tx) => {
-    // 1. Get current unit count for ordering
-    const [unitCountResult] = await tx
-      .select({ value: count() })
-      .from(units)
-      .where(eq(units.courseId, courseId));
-    const unitOrder = (unitCountResult?.value ?? 0) + 1;
+    // ── Insert into DB with Drizzle Transaction ──
+    await db.transaction(async (tx) => {
+      // 1. Get current unit count for ordering
+      const [unitCountResult] = await tx
+        .select({ value: count() })
+        .from(units)
+        .where(eq(units.courseId, courseId));
+      const unitOrder = (unitCountResult?.value ?? 0) + 1;
 
-    // 2. Insert Unit
-    const unitTitle = cleanText(data.unit_title || "Untitled Unit");
-    const unitDescription = cleanText(data.unit_description || "");
+      // 2. Insert Unit
+      const unitTitle = cleanText(data.unit_title || "Untitled Unit");
+      const unitDescription = cleanText(data.unit_description || "");
 
-    const [insertedUnit] = await tx
-      .insert(units)
-      .values({
-        title: unitTitle,
-        description: unitDescription,
-        order: unitOrder,
-        courseId: courseId,
-      })
-      .returning({ id: units.id });
-
-    const unitId = insertedUnit.id;
-
-    // 3. Loop Lessons
-    const lessonsData = data.lessons || [];
-    for (let idxL = 0; idxL < lessonsData.length; idxL++) {
-      const lesson = lessonsData[idxL];
-      const lessonTitle = cleanText(lesson.title || `Lesson ${idxL + 1}`);
-
-      const [insertedLesson] = await tx
-        .insert(lessons)
+      const [insertedUnit] = await tx
+        .insert(units)
         .values({
-          title: lessonTitle,
-          order: idxL + 1,
-          unitId: unitId,
+          title: unitTitle,
+          description: unitDescription,
+          order: unitOrder,
+          courseId: courseId,
         })
-        .returning({ id: lessons.id });
+        .returning({ id: units.id });
 
-      const lessonId = insertedLesson.id;
+      const unitId = insertedUnit.id;
 
-      // 4. Loop Challenges
-      const challengesData = lesson.challenges || [];
-      for (let idxC = 0; idxC < challengesData.length; idxC++) {
-        const chall = challengesData[idxC];
+      // 3. Loop Lessons
+      const lessonsData = data.lessons || [];
+      for (let idxL = 0; idxL < lessonsData.length; idxL++) {
+        const lesson = lessonsData[idxL];
+        const lessonTitle = cleanText(lesson.title || `Lesson ${idxL + 1}`);
 
-        let challengeType = cleanText(chall.type || "SELECT") as ChallengeType;
-        if (!VALID_TYPES.includes(challengeType)) {
-          challengeType = "SELECT";
-        }
-
-        const [insertedChallenge] = await tx
-          .insert(challenges)
+        const [insertedLesson] = await tx
+          .insert(lessons)
           .values({
-            question: cleanText(chall.question),
-            type: challengeType,
-            order: idxC + 1,
-            lessonId: lessonId,
-            context: cleanText(chall.context) || null,
-            explanation: cleanText(chall.explanation) || null,
-            questionAudioLang: cleanText(chall.question_audio_lang) || null,
-            contextAudioLang: cleanText(chall.context_audio_lang) || null,
+            title: lessonTitle,
+            order: idxL + 1,
+            unitId: unitId,
           })
-          .returning({ id: challenges.id });
+          .returning({ id: lessons.id });
 
-        const challengeId = insertedChallenge.id;
+        const lessonId = insertedLesson.id;
 
-        // 5. Loop Options
-        const optionsData = chall.options || [];
-        for (const opt of optionsData) {
-          await tx.insert(challengeOptions).values({
-            text: cleanText(opt.text),
-            correct: Boolean(opt.correct),
-            audioLang: cleanText(opt.audio_lang) || null,
-            challengeId: challengeId,
-          });
+        // 4. Loop Challenges
+        const challengesData = lesson.challenges || [];
+        for (let idxC = 0; idxC < challengesData.length; idxC++) {
+          const chall = challengesData[idxC];
+
+          let challengeType = cleanText(
+            chall.type || "SELECT",
+          ) as ChallengeType;
+          if (!VALID_TYPES.includes(challengeType)) {
+            challengeType = "SELECT";
+          }
+
+          const [insertedChallenge] = await tx
+            .insert(challenges)
+            .values({
+              question: cleanText(chall.question),
+              type: challengeType,
+              order: idxC + 1,
+              lessonId: lessonId,
+              context: cleanText(chall.context) || null,
+              explanation: cleanText(chall.explanation) || null,
+              questionAudioLang: cleanText(chall.question_audio_lang) || null,
+              contextAudioLang: cleanText(chall.context_audio_lang) || null,
+            })
+            .returning({ id: challenges.id });
+
+          const challengeId = insertedChallenge.id;
+
+          // 5. Loop Options
+          const optionsData = chall.options || [];
+          for (const opt of optionsData) {
+            await tx.insert(challengeOptions).values({
+              text: cleanText(opt.text),
+              correct: Boolean(opt.correct),
+              audioLang: cleanText(opt.audio_lang) || null,
+              challengeId: challengeId,
+            });
+          }
         }
       }
-    }
-  });
+    });
 
-  await logAdminAction(
-    "AI_GENERATE_UNIT",
-    courseId.toString(),
-    JSON.stringify({
-      topicId,
-      level,
-      targetLang,
+    await logAdminAction(
+      "AI_GENERATE_UNIT",
+      courseId.toString(),
+      JSON.stringify({
+        topicId,
+        level,
+        targetLang,
+        unitTitle: cleanText(data.unit_title),
+      }),
+    );
+
+    // ── Revalidate Paths ──
+    revalidatePath("/admin/courses");
+    revalidatePath("/admin");
+    revalidatePath("/admin/lessons");
+    revalidatePath(`/lesson`);
+    revalidatePath("/learn");
+
+    return {
+      success: true,
       unitTitle: cleanText(data.unit_title),
-    }),
-  );
-
-  // ── Revalidate Paths ──
-  revalidatePath("/admin/courses");
-  revalidatePath("/admin");
-  revalidatePath("/admin/lessons");
-  revalidatePath(`/lesson`);
-  revalidatePath("/learn");
-
-  return {
-    success: true,
-    unitTitle: cleanText(data.unit_title),
-    lessonsCount: (data.lessons || []).length,
-  };
+      lessonsCount: (data.lessons || []).length,
+    };
+  } catch (error: any) {
+    console.error("[AI_GENERATOR] Server Error:", error);
+    return {
+      error:
+        error.message || "Ocorreu um erro interno ao tentar gerar o conteúdo.",
+    };
+  }
 }

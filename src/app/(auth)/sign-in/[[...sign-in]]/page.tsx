@@ -145,11 +145,32 @@ export default function CustomSignIn() {
     if (!isLoaded) return;
     setIsLoading(true);
     try {
-      await signIn.authenticateWithRedirect({
-        strategy: "oauth_google",
-        redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/learn",
-      });
+      const isTauriEnv =
+        typeof window !== "undefined" &&
+        navigator.userAgent.includes("TauriDesktop");
+
+      if (
+        typeof window !== "undefined" &&
+        ((window as any).Capacitor?.isNativePlatform() || isTauriEnv)
+      ) {
+        const authUrl = `${window.location.origin}/mobile-auth?mode=sign-in${isTauriEnv ? "&desktop=true" : ""}`;
+
+        if ((window as any).Capacitor?.isNativePlatform()) {
+          const { Browser } = await import("@capacitor/browser");
+          await Browser.open({ url: authUrl, windowName: "_system" });
+          setTimeout(() => setIsLoading(false), 3000);
+        } else if (isTauriEnv) {
+          const { openUrl } = await import("@tauri-apps/plugin-opener");
+          await openUrl(authUrl);
+          setTimeout(() => setIsLoading(false), 3000);
+        }
+      } else {
+        await signIn.authenticateWithRedirect({
+          strategy: "oauth_google",
+          redirectUrl: "/sso-callback",
+          redirectUrlComplete: "/learn",
+        });
+      }
     } catch (err) {
       console.error("Erro na autenticação com Google:", err);
       setIsLoading(false);
