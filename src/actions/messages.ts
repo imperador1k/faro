@@ -9,6 +9,7 @@ import {
   messages,
   userProgress,
   messageReactions,
+  conversationKeys,
 } from "@/db/schema";
 import { createNotification } from "@/lib/notifications";
 import { eq, and, desc, ne, sql, inArray, gte } from "drizzle-orm";
@@ -102,6 +103,7 @@ export const getConversations = async () => {
       reactions: [],
       name: conv.name,
       isGroup: conv.isGroup,
+      groupImageUrl: conv.imageUrl || null,
       partner: partner
         ? {
             userId: partner.userId,
@@ -115,6 +117,7 @@ export const getConversations = async () => {
         userName: p.user?.userName,
         userImageSrc: p.user?.userImageSrc,
         isPro: calculateIsPro(p.user?.subscription),
+        role: p.role,
       })),
       lastMessage: lastMsg
         ? {
@@ -197,6 +200,7 @@ export const createConversation = async (
       uniqueParticipants.map((uid) => ({
         conversationId: conv.id,
         userId: uid,
+        role: isGroup && uid === userId ? "admin" : "member",
       })),
     );
 
@@ -389,4 +393,294 @@ export const clearHistory = async (conversationId: string) => {
 export const getFriendsAction = async () => {
   const { getFollowing } = await import("@/db/queries/social");
   return await getFollowing();
+};
+
+/**
+ * Updates the name or image of a group conversation. Must be an admin.
+ */
+export const updateGroupInfo = async (
+  conversationId: string,
+  name?: string | null,
+  imageUrl?: string | null,
+) => {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  // Check if user is admin
+  const [participant] = await db
+    .select({ role: conversationParticipants.role })
+    .from(conversationParticipants)
+    .where(
+      and(
+        eq(conversationParticipants.conversationId, conversationId),
+        eq(conversationParticipants.userId, userId),
+      ),
+    );
+
+  if (!participant || participant.role !== "admin") {
+    throw new Error("Must be an admin to update group info");
+  }
+
+  await db
+    .update(conversations)
+    .set({
+      ...(name !== undefined ? { name } : {}),
+      ...(imageUrl !== undefined ? { imageUrl } : {}),
+    })
+    .where(eq(conversations.id, conversationId));
+
+  revalidatePath("/messages");
+  return { success: true };
+};
+
+/**
+ * Kicks a user from a group conversation. Must be an admin.
+ */
+export const kickParticipant = async (
+  conversationId: string,
+  targetUserId: string,
+  newKeys?: { userId: string; encryptedRoomKey: string }[],
+) => {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  // Check if user is admin
+  const [participant] = await db
+    .select({ role: conversationParticipants.role })
+    .from(conversationParticipants)
+    .where(
+      and(
+        eq(conversationParticipants.conversationId, conversationId),
+        eq(conversationParticipants.userId, userId),
+      ),
+    );
+
+  if (!participant || participant.role !== "admin") {
+    throw new Error("Must be an admin to kick members");
+  }
+
+  // Ensure target is not an admin
+  const [targetParticipant] = await db
+    .select({ role: conversationParticipants.role })
+    .from(conversationParticipants)
+    .where(
+      and(
+        eq(conversationParticipants.conversationId, conversationId),
+        eq(conversationParticipants.userId, targetUserId),
+      ),
+    );
+
+  if (targetParticipant?.role === "admin") {
+    throw new Error("Cannot kick an admin");
+  }
+
+  await db.transaction(async (tx) => {
+    // 1. Remove the user from the group
+    await tx
+      .delete(conversationParticipants)
+      .where(
+        and(
+          eq(conversationParticipants.conversationId, conversationId),
+          eq(conversationParticipants.userId, targetUserId),
+        ),
+      );
+
+    // 2. If new E2EE keys are provided, rotate them
+    if (newKeys && newKeys.length > 0) {
+      await tx
+        .delete(conversationKeys)
+        .where(eq(conversationKeys.conversationId, conversationId));
+
+      const values = newKeys.map((k) => ({
+        conversationId,
+        userId: k.userId,
+        encryptedRoomKey: k.encryptedRoomKey,
+      }));
+
+      await tx.insert(conversationKeys).values(values);
+
+      // Optional: Add a system message notifying about the key rotation
+      await tx.insert(messages).values({
+        conversationId,
+        senderId: userId,
+        content: "[e2ee-system]: A chave de segurança do grupo foi atualizada.",
+        type: "text",
+        read: true,
+      });
+    }
+  });
+
+  revalidatePath("/messages");
+  return { success: true };
+};
+
+/**
+ * Leaves a group conversation. If the user is the last admin, promotes the oldest member.
+ * If the user is the last member, deletes the conversation.
+ */
+export const leaveGroup = async (conversationId: string) => {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const participantsData = await db
+    .select()
+    .from(conversationParticipants)
+    .where(eq(conversationParticipants.conversationId, conversationId));
+
+  const participant = participantsData.find((p) => p.userId === userId);
+
+  if (!participant) {
+    throw new Error("User not found or is the only member");
+  }
+
+  const isLeavingAdmin = participant.role === "admin";
+  const remainingParticipants = participantsData.filter(
+    (p) => p.userId !== userId,
+  );
+
+  await db.transaction(async (tx) => {
+    // 1. Remove the user from participants
+    await tx
+      .delete(conversationParticipants)
+      .where(
+        and(
+          eq(conversationParticipants.conversationId, conversationId),
+          eq(conversationParticipants.userId, userId),
+        ),
+      );
+
+    // 2. Remove their E2EE keys for this conversation
+    await tx
+      .delete(conversationKeys)
+      .where(
+        and(
+          eq(conversationKeys.conversationId, conversationId),
+          eq(conversationKeys.userId, userId),
+        ),
+      );
+
+    // 3. Promote oldest member if leaving user was the only admin
+    if (isLeavingAdmin && remainingParticipants.length > 0) {
+      const remainingAdmins = remainingParticipants.filter(
+        (p) => p.role === "admin",
+      );
+      if (remainingAdmins.length === 0) {
+        // Promote the one who joined earliest
+        const oldestMember = remainingParticipants.reduce((prev, current) => {
+          return new Date(prev.joinedAt) < new Date(current.joinedAt)
+            ? prev
+            : current;
+        });
+
+        await tx
+          .update(conversationParticipants)
+          .set({ role: "admin" })
+          .where(
+            and(
+              eq(conversationParticipants.conversationId, conversationId),
+              eq(conversationParticipants.userId, oldestMember.userId),
+            ),
+          );
+      }
+    } else if (remainingParticipants.length === 0) {
+      // Delete the conversation if no one is left
+      await tx
+        .delete(conversations)
+        .where(eq(conversations.id, conversationId));
+    }
+  });
+
+  revalidatePath("/messages");
+  return { success: true };
+};
+
+/**
+ * Promotes a participant to admin. Must be an admin.
+ */
+export const promoteToAdmin = async (
+  conversationId: string,
+  targetUserId: string,
+) => {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  // Check if current user is admin
+  const [participant] = await db
+    .select({ role: conversationParticipants.role })
+    .from(conversationParticipants)
+    .where(
+      and(
+        eq(conversationParticipants.conversationId, conversationId),
+        eq(conversationParticipants.userId, userId),
+      ),
+    );
+
+  if (!participant || participant.role !== "admin") {
+    throw new Error("Must be an admin to promote members");
+  }
+
+  // Update target user's role to admin
+  await db
+    .update(conversationParticipants)
+    .set({ role: "admin" })
+    .where(
+      and(
+        eq(conversationParticipants.conversationId, conversationId),
+        eq(conversationParticipants.userId, targetUserId),
+      ),
+    );
+
+  revalidatePath("/messages");
+  return { success: true };
+};
+
+/**
+ * Adds new participants to an existing group. Must be an admin.
+ */
+export const addParticipants = async (
+  conversationId: string,
+  newParticipants: { userId: string; encryptedRoomKey: string }[],
+) => {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  // Check if current user is admin
+  const [me] = await db
+    .select({ role: conversationParticipants.role })
+    .from(conversationParticipants)
+    .where(
+      and(
+        eq(conversationParticipants.conversationId, conversationId),
+        eq(conversationParticipants.userId, userId),
+      ),
+    );
+
+  if (!me || me.role !== "admin") {
+    throw new Error("Must be an admin to add members");
+  }
+
+  await db.transaction(async (tx) => {
+    // 1. Insert new participants
+    if (newParticipants.length > 0) {
+      await tx.insert(conversationParticipants).values(
+        newParticipants.map((p) => ({
+          conversationId,
+          userId: p.userId,
+          role: "member",
+        })),
+      );
+
+      // 2. Insert their keys
+      await tx.insert(conversationKeys).values(
+        newParticipants.map((p) => ({
+          conversationId,
+          userId: p.userId,
+          encryptedRoomKey: p.encryptedRoomKey,
+        })),
+      );
+    }
+  });
+
+  revalidatePath("/messages");
+  return { success: true };
 };

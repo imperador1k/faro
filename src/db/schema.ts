@@ -428,6 +428,7 @@ export const supportTicketsRelations = relations(supportTickets, ({ one }) => ({
 export const conversations = pgTable("conversations", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name"), // Only used for group chats
+  imageUrl: text("image_url"), // Optional custom group image
   isGroup: boolean("is_group").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
@@ -447,6 +448,7 @@ export const conversationParticipants = pgTable(
     userId: text("user_id")
       .references(() => userProgress.userId, { onDelete: "cascade" })
       .notNull(),
+    role: text("role").default("member").notNull(), // 'admin' or 'member'
     joinedAt: timestamp("joined_at").defaultNow().notNull(),
     clearedAt: timestamp("cleared_at"),
   },

@@ -85,6 +85,7 @@ async function MessagesData({ searchParams }: Props) {
             participants={activeConversation.participants}
             isGroup={activeConversation.isGroup}
             groupName={activeConversation.name}
+            groupImageUrl={activeConversation.groupImageUrl}
             initialMessages={initialMessages.reverse()}
           />
         ) : (

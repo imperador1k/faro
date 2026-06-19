@@ -20,6 +20,7 @@ type Conversation = {
   id: string;
   name: string | null;
   isGroup: boolean;
+  groupImageUrl?: string | null;
   partner: {
     userId: string;
     userName: string;
@@ -433,35 +434,44 @@ export const ChatSidebar = ({ conversations }: Props) => {
                 )}
               >
                 {conv.isGroup ? (
-                  <div className="flex -space-x-4 items-center h-full w-full justify-center">
-                    {conv.participants.slice(0, 2).map((p, idx) => (
-                      <div
-                        key={p.userId}
-                        className={cn(
-                          "h-10 w-10 rounded-full border-2 border-white overflow-hidden bg-stone-100 shadow-sm relative shrink-0",
-                          idx === 1 && "z-10",
-                        )}
-                      >
-                        {p.userImageSrc ? (
-                          <Image
-                            src={p.userImageSrc}
-                            alt={p.userName || ""}
-                            fill
-                            className="object-cover"
-                          />
-                        ) : (
-                          <div className="flex h-full w-full items-center justify-center text-[10px] font-black text-stone-400">
-                            {p.userName?.[0] || "?"}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                    {conv.participants.length > 2 && (
-                      <div className="h-10 w-10 rounded-full border-2 border-white bg-stone-50 flex items-center justify-center text-[10px] font-black text-stone-500 z-20 shadow-sm shrink-0">
-                        +{conv.participants.length - 2}
-                      </div>
-                    )}
-                  </div>
+                  conv.groupImageUrl ? (
+                    <Image
+                      src={conv.groupImageUrl}
+                      alt={conv.name || "Group"}
+                      fill
+                      className="object-cover rounded-full border-2 border-white"
+                    />
+                  ) : (
+                    <div className="flex -space-x-4 items-center h-full w-full justify-center">
+                      {conv.participants.slice(0, 2).map((p, idx) => (
+                        <div
+                          key={p.userId}
+                          className={cn(
+                            "h-10 w-10 rounded-full border-2 border-white overflow-hidden bg-stone-100 shadow-sm relative shrink-0",
+                            idx === 1 && "z-10",
+                          )}
+                        >
+                          {p.userImageSrc ? (
+                            <Image
+                              src={p.userImageSrc}
+                              alt={p.userName || ""}
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <div className="flex h-full w-full items-center justify-center text-[10px] font-black text-stone-400">
+                              {p.userName?.[0] || "?"}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      {conv.participants.length > 2 && (
+                        <div className="h-10 w-10 rounded-full border-2 border-white bg-stone-50 flex items-center justify-center text-[10px] font-black text-stone-500 z-20 shadow-sm shrink-0">
+                          +{conv.participants.length - 2}
+                        </div>
+                      )}
+                    </div>
+                  )
                 ) : (
                   <div
                     className={cn(

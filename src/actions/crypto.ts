@@ -2,7 +2,7 @@
 
 import { db } from "@/db/drizzle";
 import { userProgress, conversationKeys } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, inArray } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 
 export async function getE2EPublicKey(targetUserId: string) {
@@ -14,6 +14,22 @@ export async function getE2EPublicKey(targetUserId: string) {
   });
 
   return user?.e2ePublicKey || null;
+}
+
+export async function getE2EPublicKeys(userIds: string[]) {
+  if (userIds.length === 0) return [];
+  const users = await db.query.userProgress.findMany({
+    where: inArray(userProgress.userId, userIds),
+    columns: {
+      userId: true,
+      e2ePublicKey: true,
+    },
+  });
+
+  return users.map((u) => ({
+    userId: u.userId,
+    e2ePublicKey: u.e2ePublicKey,
+  }));
 }
 
 export async function getConversationKey(conversationId: string) {
