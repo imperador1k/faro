@@ -16,28 +16,28 @@ export default function MobileAuthPage() {
       const isSignUp = searchParams.get("mode") === "sign-up";
       const isDesktop = searchParams.get("desktop") === "true";
 
-      // If user is already signed in (in Chrome) and this is a desktop flow,
-      // go directly to sso-callback so Tauri gets the deep link bounce.
+      // If already signed in (Chrome has an active session), skip OAuth and get token
       if (isSignedIn && isDesktop) {
-        window.location.href = `${window.location.origin}/sso-callback?desktop=true`;
+        window.location.href = `${window.location.origin}/mobile-auth-complete?desktop=true`;
         return;
       }
 
-      const redirectUrl = `${window.location.origin}/sso-callback${isDesktop ? "?desktop=true" : ""}`;
-      // Both paths (redirect and complete) must hit sso-callback so the bounce fires
-      const completeUrl = redirectUrl;
+      // Chrome will process the OAuth normally at /sso-callback (NO desktop param).
+      // After auth, Clerk sends Chrome to /mobile-auth-complete where we get the ticket.
+      const redirectUrl = `${window.location.origin}/sso-callback`;
+      const completeUrl = `${window.location.origin}/mobile-auth-complete${isDesktop ? "?desktop=true" : ""}`;
 
       try {
         if (isSignUp) {
           await signUp.authenticateWithRedirect({
             strategy: "oauth_google",
-            redirectUrl: redirectUrl,
+            redirectUrl,
             redirectUrlComplete: completeUrl,
           });
         } else {
           await signIn.authenticateWithRedirect({
             strategy: "oauth_google",
-            redirectUrl: redirectUrl,
+            redirectUrl,
             redirectUrlComplete: completeUrl,
           });
         }

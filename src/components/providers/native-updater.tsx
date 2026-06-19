@@ -18,10 +18,10 @@ export function NativeUpdater() {
   const [downloadProgress, setDownloadProgress] = useState(0);
 
   useEffect(() => {
-    // Apenas corre no desktop
+    // Use UserAgent detection — same strategy as all other files
     const isTauri =
       typeof window !== "undefined" &&
-      (window as any).__TAURI_INTERNALS__ !== undefined;
+      navigator.userAgent.includes("TauriDesktop");
     if (!isTauri) return;
 
     // Desativar botão direito para parecer app nativa
@@ -90,7 +90,8 @@ export function NativeUpdater() {
     }
   };
 
-  if (status === "idle") return null;
+  // Don't render anything when idle or still checking (avoids the 1-second flash)
+  if (status === "idle" || status === "checking") return null;
 
   // ─── Estilos Extraídos do Instalador ─────────────────────────────────────
   const overlayStyle: React.CSSProperties = {
