@@ -22,9 +22,9 @@ export default function MobileAuthPage() {
         return;
       }
 
-      // Chrome will process the OAuth normally at /sso-callback (NO desktop param).
-      // After auth, Clerk sends Chrome to /mobile-auth-complete where we get the ticket.
-      const redirectUrl = `${window.location.origin}/sso-callback`;
+      // Chrome will process the OAuth normally at /sso-callback.
+      // We pass ?desktop=true so sso-callback knows to route to mobile-auth-complete.
+      const redirectUrl = `${window.location.origin}/sso-callback${isDesktop ? "?desktop=true" : ""}`;
       const completeUrl = `${window.location.origin}/mobile-auth-complete${isDesktop ? "?desktop=true" : ""}`;
 
       try {

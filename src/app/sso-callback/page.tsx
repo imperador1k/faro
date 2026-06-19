@@ -5,71 +5,21 @@ import { Capacitor } from "@capacitor/core";
 import { LottieAnimation } from "@/components/ui/lottie-animation";
 
 /**
- * SSO Callback Page — handles two scenarios:
+ * SSO Callback Page
  *
- * 1. Opened INSIDE the Capacitor WebView (after deep link bounce):
- *    AuthenticateWithRedirectCallback processes the Clerk token and activates the session.
- *
- * 2. Opened in Chrome (external browser during OAuth redirect chain):
- *    We MUST NOT render AuthenticateWithRedirectCallback here (it would consume the params).
- *    Instead, we immediately bounce back to the app via deep link with the OAuth params.
+ * In a desktop (Tauri) flow, this page runs in Chrome, processes the OAuth,
+ * and then redirects to /mobile-auth-complete?desktop=true which handles the deep link.
  */
 export default function SSOCallbackPage() {
-  const [isNative, setIsNative] = useState(true);
-  const [isWebEnv, setIsWebEnv] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isDesktopBounce, setIsDesktopBounce] = useState(false);
 
   useEffect(() => {
-    const _isCapacitor = Capacitor.isNativePlatform();
-    const _isTauri =
-      typeof navigator !== "undefined" &&
-      navigator.userAgent.includes("TauriDesktop");
-    const _isNative = _isCapacitor || _isTauri;
-
-    setIsNative(_isNative);
-
     const search = window.location.search;
-    const isDesktopBounce = search.includes("desktop=true");
-
-    setIsWebEnv(
-      !_isNative &&
-        !isDesktopBounce &&
-        (window.location.hostname === "localhost" ||
-          window.location.hostname === "myduolingo.vercel.app"),
-    );
-
+    setIsDesktopBounce(search.includes("desktop=true"));
     setMounted(true);
   }, []);
 
-  // In Chrome: bounce the full URL back to the native Tauri app via deep link
-  useEffect(() => {
-    if (!mounted) return;
-    // Never bounce if we're already inside the native app
-    if (isNative) return;
-
-    const search = window.location.search;
-    const hash = window.location.hash;
-    const isDesktopBounce = search.includes("desktop=true");
-
-    // If this is a desktop (Tauri) OAuth flow, always bounce back.
-    // Clerk params may arrive in many formats — we pass the full URL as-is.
-    if (!isDesktopBounce) return;
-
-    console.log(
-      "[SSO Callback] In Chrome — bouncing to native app via deep link",
-    );
-    window.location.href = `myduolingo://sso-callback${search}${hash}`;
-
-    // Fallback message if deep link doesn't open the app in 3s
-    const timeout = setTimeout(() => {
-      const el = document.getElementById("fallback-msg");
-      if (el) el.style.display = "block";
-    }, 3000);
-
-    return () => clearTimeout(timeout);
-  }, [mounted, isNative]);
-
-  // Show a loading screen while determining environment
   if (!mounted) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white flex-col gap-4">
@@ -79,28 +29,19 @@ export default function SSOCallbackPage() {
     );
   }
 
-  // If we are in Chrome (not native) AND it's not the web app environment,
-  // show the bounce loading screen and DO NOT render Clerk callback.
-  if (!isNative && !isWebEnv) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-white flex-col gap-4">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-green-500 border-t-transparent" />
-        <p className="text-slate-500 font-bold">A voltar para a App...</p>
-        <p
-          id="fallback-msg"
-          className="text-xs text-slate-400 hidden mt-4 text-center px-6"
-        >
-          Se a aplicação não abrir automaticamente, fecha esta janela e volta à
-          aplicação.
-        </p>
-      </div>
-    );
-  }
+  // If this was initiated from Tauri, we must go to mobile-auth-complete to get the ticket.
+  // Otherwise, it's a normal web or mobile login, so we go to /learn.
+  const targetUrl = isDesktopBounce
+    ? "/mobile-auth-complete?desktop=true"
+    : "/learn";
 
-  // Native WebView: let Clerk process the OAuth token
   return (
     <div className="flex h-full w-full min-h-screen flex-col items-center justify-center bg-white z-50 fixed inset-0">
-      <AuthenticateWithRedirectCallback transferable={true} />
+      <AuthenticateWithRedirectCallback
+        signInForceRedirectUrl={targetUrl}
+        signUpForceRedirectUrl={targetUrl}
+        transferable={true}
+      />
 
       <div className="relative flex flex-col items-center justify-center w-full max-w-md p-8 text-center animate-in fade-in duration-500">
         <div className="mb-6 relative">
