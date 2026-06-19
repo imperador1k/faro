@@ -14,9 +14,9 @@ import {
   CheckCheck,
   Users,
   Loader2,
-  Reply,
   Smile,
   BadgeCheck,
+  MoreHorizontal,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -39,6 +39,7 @@ import { useLongPress } from "@/hooks/use-long-press";
 import dynamic from "next/dynamic";
 import { MessageItem } from "./message-item";
 import { SignalOnboarding } from "./signal-onboarding";
+import { ChatSettingsModal } from "./chat-settings-modal";
 import {
   getConversationKey,
   saveConversationKeys,
@@ -99,6 +100,7 @@ export const ChatWindow = ({
     null,
   );
   const [mounted, setMounted] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [highlightedId, setHighlightedId] = useState<string | number | null>(
     null,
   );
@@ -445,7 +447,10 @@ export const ChatWindow = ({
             </Button>
           </Link>
 
-          <div className="flex items-center gap-x-4 group">
+          <div
+            className="flex items-center gap-x-4 group cursor-pointer hover:bg-stone-50 p-2 -ml-2 rounded-2xl transition-colors active:bg-stone-100"
+            onClick={() => setIsSettingsOpen(true)}
+          >
             <div className="relative h-12 w-12 shrink-0 flex items-center justify-center rounded-[18px] border-2 border-stone-200 bg-stone-50 overflow-visible shadow-sm transition-all group-hover:border-[#1CB0F6]">
               {isGroup ? (
                 <div className="flex -space-x-3 items-center h-full w-full justify-center">
@@ -517,16 +522,34 @@ export const ChatWindow = ({
                     ? "Online"
                     : "Offline"}
               </span>
-              {!isGroup && (
-                <div className="flex items-center gap-1 mt-1 text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-medium border border-emerald-100 max-w-max">
-                  <span className="leading-none text-emerald-500">🔒</span>
-                  Protegido com E2EE
-                </div>
-              )}
             </div>
           </div>
         </div>
+
+        <div className="flex items-center">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsSettingsOpen(true)}
+            className="h-10 w-10 rounded-xl hover:bg-stone-100 text-stone-400 hover:text-stone-600 transition-colors"
+          >
+            <MoreHorizontal className="h-6 w-6" />
+          </Button>
+        </div>
       </div>
+
+      {/* Settings Modal */}
+      <ChatSettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        isGroup={isGroup}
+        groupName={groupName}
+        partner={partner}
+        participants={participants}
+        messages={messages}
+        conversationId={conversationId}
+        isPartnerOnline={isPartnerOnline}
+      />
 
       {/* Signal Onboarding flow for DMs */}
       {!isGroup && <SignalOnboarding />}

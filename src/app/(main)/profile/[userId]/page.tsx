@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import {
   getUserProgressById,
   isFollowingUser,
@@ -24,6 +25,8 @@ export default async function PublicProfilePage({ params }: Props) {
   const userProgress = await getUserProgressById(params.userId);
   const completedLessons = await getCompletedLessonsCount(params.userId);
   const isFollowing = await isFollowingUser(params.userId);
+  const { userId: currentUserId } = await auth();
+  const isOwnProfile = currentUserId === params.userId;
 
   if (!userProgress) {
     redirect("/leaderboard");
@@ -78,31 +81,33 @@ export default async function PublicProfilePage({ params }: Props) {
         bannerColorTo="from-emerald-500"
         isPro={userProgress.isPro}
         actions={
-          <>
-            <div className="w-full sm:w-auto sm:min-w-[160px] flex-1 h-12 sm:h-14">
-              <FollowButton
-                userId={params.userId}
-                isFollowing={isFollowing}
-                className="w-full h-full text-[12px] sm:text-sm font-black uppercase tracking-widest rounded-[1.2rem] sm:rounded-[1.5rem] px-4 sm:px-6"
-              />
-            </div>
-            <div className="w-full sm:w-auto sm:min-w-[160px] flex-1 h-12 sm:h-14">
-              <Link
-                href={`/messages?userId=${params.userId}`}
-                className="w-full block h-full"
-              >
-                <Button
-                  variant="secondary"
-                  className="w-full h-full gap-2 rounded-[1.2rem] sm:rounded-[1.5rem] px-4 sm:px-6 border-b-4 border-stone-300 active:border-b-0 active:translate-y-1 transition-all"
+          !isOwnProfile ? (
+            <>
+              <div className="w-full sm:w-auto sm:min-w-[160px] flex-1 h-12 sm:h-14">
+                <FollowButton
+                  userId={params.userId}
+                  isFollowing={isFollowing}
+                  className="w-full h-full text-[12px] sm:text-sm font-black uppercase tracking-widest rounded-[1.2rem] sm:rounded-[1.5rem] px-4 sm:px-6"
+                />
+              </div>
+              <div className="w-full sm:w-auto sm:min-w-[160px] flex-1 h-12 sm:h-14">
+                <Link
+                  href={`/messages?userId=${params.userId}`}
+                  className="w-full block h-full"
                 >
-                  <MessageSquareText className="h-5 w-5 sm:h-6 sm:w-6 text-stone-500" />
-                  <span className="font-black uppercase tracking-widest text-[12px] sm:text-sm">
-                    Mensagem
-                  </span>
-                </Button>
-              </Link>
-            </div>
-          </>
+                  <Button
+                    variant="secondary"
+                    className="w-full h-full gap-2 rounded-[1.2rem] sm:rounded-[1.5rem] px-4 sm:px-6 border-b-4 border-stone-300 active:border-b-0 active:translate-y-1 transition-all"
+                  >
+                    <MessageSquareText className="h-5 w-5 sm:h-6 sm:w-6 text-stone-500" />
+                    <span className="font-black uppercase tracking-widest text-[12px] sm:text-sm">
+                      Mensagem
+                    </span>
+                  </Button>
+                </Link>
+              </div>
+            </>
+          ) : null
         }
       />
 

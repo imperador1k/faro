@@ -448,6 +448,7 @@ export const conversationParticipants = pgTable(
       .references(() => userProgress.userId, { onDelete: "cascade" })
       .notNull(),
     joinedAt: timestamp("joined_at").defaultNow().notNull(),
+    clearedAt: timestamp("cleared_at"),
   },
   (t) => ({
     unq: unique("conversation_participant_unique").on(

@@ -218,6 +218,9 @@ export async function encryptConversationKeyForUser(
   return arrayBufferToBase64(encryptedKey);
 }
 
+// Cache to prevent decrypting the same conversation key multiple times per chat session
+const conversationKeyCache = new Map<string, Promise<CryptoKey>>();
+
 /**
  * Decrypts a Conversation Key using the user's own RSA Private Key.
  */
@@ -225,21 +228,30 @@ export async function decryptConversationKey(
   encryptedConversationKeyBase64: string,
   myPrivateKey: CryptoKey,
 ): Promise<CryptoKey> {
-  const encryptedBuffer = base64ToArrayBuffer(encryptedConversationKeyBase64);
+  if (conversationKeyCache.has(encryptedConversationKeyBase64)) {
+    return conversationKeyCache.get(encryptedConversationKeyBase64)!;
+  }
 
-  const rawKey = await window.crypto.subtle.decrypt(
-    { name: "RSA-OAEP" },
-    myPrivateKey,
-    encryptedBuffer,
-  );
+  const promise = (async () => {
+    const encryptedBuffer = base64ToArrayBuffer(encryptedConversationKeyBase64);
 
-  return window.crypto.subtle.importKey(
-    "raw",
-    rawKey,
-    { name: "AES-GCM" },
-    true,
-    ["encrypt", "decrypt"],
-  );
+    const rawKey = await window.crypto.subtle.decrypt(
+      { name: "RSA-OAEP" },
+      myPrivateKey,
+      encryptedBuffer,
+    );
+
+    return window.crypto.subtle.importKey(
+      "raw",
+      rawKey,
+      { name: "AES-GCM" },
+      true,
+      ["encrypt", "decrypt"],
+    );
+  })();
+
+  conversationKeyCache.set(encryptedConversationKeyBase64, promise);
+  return promise;
 }
 
 // ---------------------------------------------------------------------------

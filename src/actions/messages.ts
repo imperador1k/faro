@@ -11,7 +11,7 @@ import {
   messageReactions,
 } from "@/db/schema";
 import { createNotification } from "@/lib/notifications";
-import { eq, and, desc, ne, sql, inArray } from "drizzle-orm";
+import { eq, and, desc, ne, sql, inArray, gte } from "drizzle-orm";
 import { calculateIsPro } from "@/lib/subscription";
 import type {
   DBConversationParticipant,
@@ -331,8 +331,13 @@ export const getMessages = async (conversationId: string) => {
 
   if (!participation) throw new Error("Forbidden");
 
+  const conditions = [eq(messages.conversationId, conversationId)];
+  if (participation.clearedAt) {
+    conditions.push(gte(messages.createdAt, participation.clearedAt));
+  }
+
   const data = await db.query.messages.findMany({
-    where: eq(messages.conversationId, conversationId),
+    where: and(...conditions),
     orderBy: [desc(messages.createdAt)],
     limit: 100,
     with: {
@@ -346,13 +351,36 @@ export const getMessages = async (conversationId: string) => {
     },
   });
 
-  return data.map((msg) => ({
-    ...msg,
-    sender: {
-      ...msg.sender,
-      isPro: calculateIsPro(msg.sender?.subscription),
-    },
-  }));
+  return data
+    .map((msg) => ({
+      ...msg,
+      sender: {
+        ...msg.sender,
+        isPro: calculateIsPro(msg.sender?.subscription),
+      },
+    }))
+    .reverse(); // Reverse because we fetched desc to get latest, but UI expects ascending
+};
+
+/**
+ * Clears the chat history for the current user (soft delete).
+ */
+export const clearHistory = async (conversationId: string) => {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  await db
+    .update(conversationParticipants)
+    .set({ clearedAt: new Date() })
+    .where(
+      and(
+        eq(conversationParticipants.conversationId, conversationId),
+        eq(conversationParticipants.userId, userId),
+      ),
+    );
+
+  revalidatePath("/messages");
+  return { success: true };
 };
 
 /**
