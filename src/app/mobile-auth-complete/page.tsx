@@ -1,7 +1,7 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { Loader2 } from "lucide-react";
+import { Loader2, Check } from "lucide-react";
 
 /**
  * MobileAuthComplete — Landing page after successful Google OAuth in Chrome (desktop flow).
@@ -15,6 +15,7 @@ import { Loader2 } from "lucide-react";
  */
 export default function MobileAuthCompletePage() {
   const { isSignedIn, isLoaded } = useUser();
+  const [bounced, setBounced] = useState(false);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -46,6 +47,9 @@ export default function MobileAuthCompletePage() {
         const { token } = await res.json();
         // Deep link to Tauri with the ticket
         window.location.href = `myduolingo://desktop-auth?token=${token}`;
+
+        // Show success UI to the user
+        setBounced(true);
       } catch (err) {
         console.error("[MobileAuthComplete] Token error:", err);
         window.location.href = "/sign-in";
@@ -55,9 +59,25 @@ export default function MobileAuthCompletePage() {
     getDesktopToken();
   }, [isLoaded, isSignedIn]);
 
+  if (bounced) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-white flex-col gap-4 p-6 text-center">
+        <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center mb-2">
+          <Check className="h-8 w-8 text-[#58CC02]" strokeWidth={3} />
+        </div>
+        <h1 className="text-2xl font-black text-slate-800 tracking-tight">
+          Login Efetuado!
+        </h1>
+        <p className="text-slate-500 font-bold max-w-xs">
+          A aplicação já foi iniciada. Pode fechar esta janela com segurança.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white flex-col gap-4">
-      <Loader2 className="h-8 w-8 animate-spin text-green-500" />
+    <div className="flex min-h-screen items-center justify-center bg-white flex-col gap-4 p-6 text-center">
+      <Loader2 className="h-8 w-8 animate-spin text-[#58CC02]" />
       <p className="text-slate-500 font-bold">
         A finalizar a ligação com a App...
       </p>
