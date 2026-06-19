@@ -12,6 +12,8 @@ const isPublicRoute = createRouteMatcher([
   "/auth-success(.*)",
   "/sso-callback(.*)",
   "/mobile-auth(.*)",
+  "/mobile-auth-complete(.*)",
+  "/desktop-auth(.*)",
   "/native-callback(.*)",
   "/api/webhooks(.*)",
   "/api/auth/native-google",
