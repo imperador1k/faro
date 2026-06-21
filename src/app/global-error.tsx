@@ -20,8 +20,8 @@ export default function GlobalError({
   return (
     <html lang="pt">
       <body className="antialiased">
-        <div className="flex h-screen w-full flex-col items-center justify-center bg-slate-100 px-6">
-          <div className="flex max-w-md flex-col items-center text-center space-y-6 bg-white p-8 rounded-2xl shadow-sm border-2 border-slate-200">
+        <div className="flex h-screen w-full flex-col items-center justify-center bg-slate-100 dark:bg-slate-800 px-6">
+          <div className="flex max-w-md flex-col items-center text-center space-y-6 bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border-2 border-slate-200 dark:border-slate-800">
             <div className="relative h-32 w-32 grayscale opacity-80">
               <Image
                 src="/mascot_sad.svg"
@@ -39,8 +39,9 @@ export default function GlobalError({
               <h1 className="text-2xl font-extrabold text-slate-800 tracking-tight">
                 Oops! O sistema tropeçou.
               </h1>
-              <p className="text-slate-500 font-medium">
-                Algo inesperado aconteceu do nosso lado. A nossa equipa mecânica (e o Sentry) já foi notificada desta anomalia.
+              <p className="text-slate-500 dark:text-slate-400 font-medium">
+                Algo inesperado aconteceu do nosso lado. A nossa equipa mecânica
+                (e o Sentry) já foi notificada desta anomalia.
               </p>
             </div>
 

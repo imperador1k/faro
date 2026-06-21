@@ -61,14 +61,14 @@ export default function MobileAuthCompletePage() {
 
   if (bounced) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-white flex-col gap-4 p-6 text-center">
+      <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-900 flex-col gap-4 p-6 text-center">
         <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center mb-2">
           <Check className="h-8 w-8 text-[#58CC02]" strokeWidth={3} />
         </div>
         <h1 className="text-2xl font-black text-slate-800 tracking-tight">
           Login feito com sucesso!
         </h1>
-        <p className="text-slate-500 font-bold max-w-xs">
+        <p className="text-slate-500 dark:text-slate-400 font-bold max-w-xs">
           Pode fechar esta aba.
         </p>
       </div>
@@ -76,9 +76,9 @@ export default function MobileAuthCompletePage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white flex-col gap-4 p-6 text-center">
+    <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-900 flex-col gap-4 p-6 text-center">
       <Loader2 className="h-8 w-8 animate-spin text-[#58CC02]" />
-      <p className="text-slate-500 font-bold">
+      <p className="text-slate-500 dark:text-slate-400 font-bold">
         Login feito com sucesso, pode fechar esta aba.
       </p>
     </div>

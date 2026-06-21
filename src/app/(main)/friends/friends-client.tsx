@@ -256,13 +256,13 @@ export const FriendsClient = ({
   ) => (
     <div
       key={user.userId}
-      className="bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-3 sm:p-4 flex items-center justify-between mb-4 hover:-translate-y-1 transition-transform"
+      className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-6 rounded-2xl p-3 sm:p-4 flex items-center justify-between mb-4 hover:-translate-y-1 transition-transform"
     >
       <Link
         href={`/profile/${user.userId}`}
         className="flex-1 flex items-center gap-3 sm:gap-4 min-w-0 hover:opacity-80 transition pr-2 sm:pr-4"
       >
-        <div className="relative h-12 w-12 sm:h-16 sm:w-16 rounded-full border-4 border-amber-400 shrink-0 bg-stone-100 flex items-center justify-center overflow-hidden shadow-sm">
+        <div className="relative h-12 w-12 sm:h-16 sm:w-16 rounded-full border-4 border-amber-400 shrink-0 bg-stone-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden shadow-sm">
           {user.userImageSrc ? (
             <Image
               src={user.userImageSrc}
@@ -277,11 +277,11 @@ export const FriendsClient = ({
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-black text-stone-700 text-[1rem] sm:text-[1.1rem] line-clamp-2 leading-tight">
+          <p className="font-black text-stone-700 dark:text-slate-200 text-[1rem] sm:text-[1.1rem] line-clamp-2 leading-tight">
             {user.userName}
           </p>
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-0.5 sm:mt-1">
-            <p className="font-bold text-stone-400 text-xs sm:text-sm truncate">
+            <p className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 text-xs sm:text-sm truncate">
               @{user.userName.toLowerCase().replace(/\s/g, "")}
             </p>
             {amFollowingVal && isFollowerVal ? (
@@ -293,7 +293,7 @@ export const FriendsClient = ({
                 Segue-te
               </span>
             ) : amFollowingVal ? (
-              <span className="text-[10px] font-black bg-stone-100 text-stone-500 px-2 py-0.5 rounded-full w-fit">
+              <span className="text-[10px] font-black bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 px-2 py-0.5 rounded-full w-fit">
                 A Seguir
               </span>
             ) : null}
@@ -328,19 +328,19 @@ export const FriendsClient = ({
             onClick={() => setIsQrModalOpen(false)}
           >
             <div
-              className="bg-white rounded-3xl p-8 max-w-sm w-full flex flex-col items-center relative animate-in zoom-in-95 fade-in duration-300 shadow-2xl"
+              className="bg-white dark:bg-slate-900 rounded-3xl p-8 max-w-sm w-full flex flex-col items-center relative animate-in zoom-in-95 fade-in duration-300 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setIsQrModalOpen(false)}
-                className="absolute top-4 right-4 p-2 bg-stone-100 text-stone-500 hover:bg-stone-200 rounded-full transition-colors"
+                className="absolute top-4 right-4 p-2 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 rounded-full transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
-              <h2 className="text-2xl font-black text-stone-800 mb-6 mt-2 text-center">
+              <h2 className="text-2xl font-black text-stone-800 dark:text-slate-100 mb-6 mt-2 text-center">
                 O teu ID Secreto
               </h2>
-              <div className="bg-white p-2 rounded-2xl border-4 border-stone-100 w-full aspect-square flex items-center justify-center">
+              <div className="bg-white dark:bg-slate-900 p-2 rounded-2xl border-4 border-stone-100 w-full aspect-square flex items-center justify-center">
                 <QRCode
                   value={profileLink}
                   size={280}
@@ -348,12 +348,12 @@ export const FriendsClient = ({
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                 />
               </div>
-              <p className="text-stone-500 font-bold text-center mt-6 leading-relaxed">
+              <p className="text-stone-500 dark:text-slate-400 font-bold text-center mt-6 leading-relaxed">
                 Mostra este código para um amigo te adicionar instantaneamente!
               </p>
               <button
                 onClick={() => setIsQrModalOpen(false)}
-                className="mt-6 w-full py-4 bg-stone-100 text-stone-600 font-black rounded-xl border-b-4 border-stone-200 active:translate-y-1 active:border-b-0 transition-all uppercase tracking-wide"
+                className="mt-6 w-full py-4 bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-black rounded-xl border-b-4 border-stone-200 dark:border-slate-800 active:translate-y-1 active:border-b-0 transition-all uppercase tracking-wide"
               >
                 Fechar
               </button>
@@ -364,11 +364,13 @@ export const FriendsClient = ({
 
       {/* ── Header ── */}
       <div className="flex items-center gap-4 mb-8">
-        <h1 className="text-4xl font-extrabold text-stone-800">Amigos</h1>
+        <h1 className="text-4xl font-extrabold text-stone-800 dark:text-slate-100">
+          Amigos
+        </h1>
       </div>
 
       {/* ── Tactile Tab Switcher (Segmented Control) ── */}
-      <div className="bg-stone-200 p-1.5 rounded-2xl flex items-center max-w-3xl w-full mx-auto mb-10 overflow-x-auto no-scrollbar shadow-inner">
+      <div className="bg-stone-200 dark:bg-slate-700 p-1.5 rounded-2xl flex items-center max-w-3xl w-full mx-auto mb-10 overflow-x-auto no-scrollbar shadow-inner">
         {[
           { id: "feed", label: "FEED" },
           { id: "friends", label: "AMIGOS" },
@@ -382,8 +384,8 @@ export const FriendsClient = ({
             className={cn(
               "flex-1 text-center py-2 px-4 whitespace-nowrap transition-all rounded-xl",
               activeTab === tab.id
-                ? "bg-white shadow-[0_2px_10px_rgba(0,0,0,0.1)] font-black text-[#1CB0F6]"
-                : "font-bold text-stone-500 hover:text-stone-700 cursor-pointer",
+                ? "bg-white dark:bg-slate-900 shadow-[0_2px_10px_rgba(0,0,0,0.1)] font-black text-[#1CB0F6]"
+                : "font-bold text-stone-500 dark:text-slate-400 hover:text-stone-700 dark:text-slate-200 cursor-pointer",
             )}
           >
             {tab.label}
@@ -410,7 +412,7 @@ export const FriendsClient = ({
               return (
                 <div
                   key={activity.id}
-                  className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative overflow-hidden transition-all hover:border-stone-300 shadow-sm group"
+                  className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative overflow-hidden transition-all hover:border-stone-300 dark:border-slate-700 shadow-sm group"
                 >
                   <div className="flex items-center gap-5">
                     <div
@@ -422,7 +424,7 @@ export const FriendsClient = ({
                       {visual.icon}
                     </div>
                     <div>
-                      <p className="text-lg text-stone-700 font-bold leading-tight flex items-center gap-1.5 flex-wrap">
+                      <p className="text-lg text-stone-700 dark:text-slate-200 font-bold leading-tight flex items-center gap-1.5 flex-wrap">
                         <strong className="font-black text-stone-900">
                           {activity.user.userName}
                         </strong>
@@ -432,7 +434,7 @@ export const FriendsClient = ({
                         {text}
                       </p>
                       <div className="flex items-center gap-2 mt-1">
-                        <p className="text-stone-400 font-bold text-sm uppercase tracking-wider">
+                        <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm uppercase tracking-wider">
                           {timeAgo(activity.createdAt)}
                         </p>
                         {activity.highFiveCount > 0 && (
@@ -450,7 +452,7 @@ export const FriendsClient = ({
                       "shrink-0 w-full sm:w-auto border-2 border-b-4 rounded-xl px-5 py-3 font-extrabold transition-all flex gap-2 items-center justify-center cursor-pointer",
                       activity.hasHighFived
                         ? "bg-green-100 text-green-500 border-green-200 border-b-2 translate-y-0.5"
-                        : "bg-stone-100 text-stone-400 border-stone-200 hover:bg-stone-200 hover:text-stone-500 active:translate-y-1 active:border-b-2",
+                        : "bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-stone-200 dark:border-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-500 dark:text-slate-400 active:translate-y-1 active:border-b-2",
                     )}
                   >
                     {isPending ? (
@@ -466,7 +468,7 @@ export const FriendsClient = ({
           )}
 
           <div className="text-center pt-8 pb-4">
-            <p className="text-stone-400 font-bold text-sm">
+            <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
               Mostrando as atividades mais recentes.
             </p>
           </div>
@@ -500,14 +502,14 @@ export const FriendsClient = ({
         <div className="max-w-3xl mx-auto space-y-8">
           {/* Box 1: Input Friend Code & My Code */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-blue-50 border-2 border-blue-200 border-b-8 rounded-3xl p-8 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden">
+            <div className="bg-blue-50 dark:bg-sky-950 border-2 border-blue-200 dark:border-sky-900 border-b-8 rounded-3xl p-8 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 opacity-10">
-                <Sparkles className="w-24 h-24 text-blue-500" />
+                <Sparkles className="w-24 h-24 text-blue-500 dark:text-sky-500/20" />
               </div>
-              <h2 className="text-2xl font-black text-blue-950 mb-2 relative z-10">
+              <h2 className="text-2xl font-black text-blue-950 dark:text-sky-100 mb-2 relative z-10">
                 Tens o código de <br /> um amigo?
               </h2>
-              <p className="text-blue-800/80 font-bold text-sm mb-6 relative z-10">
+              <p className="text-blue-800/80 dark:text-sky-300/80 font-bold text-sm mb-6 relative z-10">
                 Introduz o ID para segui-lo no momento!
               </p>
 
@@ -517,7 +519,7 @@ export const FriendsClient = ({
                   placeholder="ABCD-1234"
                   value={friendCode}
                   onChange={(e) => setFriendCode(e.target.value.toUpperCase())}
-                  className="w-full bg-white border-2 border-blue-200 border-b-6 rounded-2xl p-4 text-center font-black text-2xl tracking-[0.2em] uppercase placeholder:text-blue-200 text-blue-900 focus:outline-none focus:border-[#1CB0F6] focus:border-b-[#1899D6] transition-all mb-4"
+                  className="w-full bg-white dark:bg-slate-900 border-2 border-blue-200 dark:border-sky-900 border-b-6 rounded-2xl p-4 text-center font-black text-2xl tracking-[0.2em] uppercase placeholder:text-blue-200 dark:placeholder:text-sky-800 text-blue-900 dark:text-sky-100 focus:outline-none focus:border-[#1CB0F6] focus:border-b-[#1899D6] transition-all mb-4"
                   maxLength={9}
                 />
                 <div className="flex gap-2">
@@ -535,7 +537,7 @@ export const FriendsClient = ({
                   {/* Action button to open Scanner */}
                   <button
                     onClick={() => setIsScannerOpen(true)}
-                    className="bg-white text-[#1CB0F6] shrink-0 font-black px-4 sm:px-6 py-4 rounded-xl border-2 border-blue-200 border-b-4 active:translate-y-1 active:border-b-2 hover:bg-blue-50 transition-all shadow-sm flex items-center justify-center"
+                    className="bg-white dark:bg-slate-900 text-[#1CB0F6] shrink-0 font-black px-4 sm:px-6 py-4 rounded-xl border-2 border-blue-200 dark:border-sky-900 border-b-4 active:translate-y-1 active:border-b-2 hover:bg-blue-50 dark:hover:bg-sky-900 transition-all shadow-sm flex items-center justify-center"
                     aria-label="Abrir câmara"
                   >
                     <Camera className="w-6 h-6" />
@@ -544,17 +546,17 @@ export const FriendsClient = ({
               </div>
             </div>
 
-            <div className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-8 flex flex-col items-center justify-center text-center shadow-sm">
-              <h2 className="text-xl font-black text-stone-800 mb-2">
+            <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-8 flex flex-col items-center justify-center text-center shadow-sm">
+              <h2 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-2">
                 O teu ID Secreto
               </h2>
-              <p className="text-stone-500 font-bold text-sm mb-6">
+              <p className="text-stone-500 dark:text-slate-400 font-bold text-sm mb-6">
                 Dá isto a um amigo para te adicionar!
               </p>
 
               <div
                 onClick={() => setIsQrModalOpen(true)}
-                className="bg-stone-50 p-4 flex items-center justify-center rounded-2xl border-2 border-stone-100 mb-6 w-full max-w-[200px] hover:scale-105 transition-transform cursor-pointer relative group"
+                className="bg-stone-50 dark:bg-slate-950 p-4 flex items-center justify-center rounded-2xl border-2 border-stone-100 mb-6 w-full max-w-[200px] hover:scale-105 transition-transform cursor-pointer relative group"
               >
                 <QRCode
                   value={profileLink}
@@ -567,7 +569,7 @@ export const FriendsClient = ({
               <div className="flex gap-3 w-full">
                 <button
                   onClick={handleCopy}
-                  className="flex-1 flex items-center justify-center gap-2 bg-stone-100 text-stone-500 font-extrabold uppercase rounded-xl border-2 border-stone-200 border-b-4 py-3 active:translate-y-1 active:border-b-2 hover:bg-stone-200 hover:text-stone-600 transition-all text-sm"
+                  className="flex-1 flex items-center justify-center gap-2 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-extrabold uppercase rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-4 py-3 active:translate-y-1 active:border-b-2 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-600 dark:text-slate-300 transition-all text-sm"
                 >
                   <Copy className="w-4 h-4" /> Copiar
                 </button>
@@ -582,16 +584,16 @@ export const FriendsClient = ({
           </div>
 
           {/* Box 2: Global Search & Suggestions */}
-          <div className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-6 sm:p-8 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 sm:p-8 shadow-sm">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-stone-100 rounded-xl flex items-center justify-center text-stone-500">
+              <div className="w-12 h-12 bg-stone-100 dark:bg-slate-800 rounded-xl flex items-center justify-center text-stone-500 dark:text-slate-400">
                 <Send className="w-6 h-6" />
               </div>
               <div>
-                <h2 className="text-xl font-black text-stone-800">
+                <h2 className="text-xl font-black text-stone-800 dark:text-slate-100">
                   Procurar na Comunidade
                 </h2>
-                <p className="text-stone-500 font-bold text-sm">
+                <p className="text-stone-500 dark:text-slate-400 font-bold text-sm">
                   Procura pelo nome exato ou ign.
                 </p>
               </div>
@@ -602,11 +604,11 @@ export const FriendsClient = ({
             <div className="mt-8 border-t-2 border-stone-100 pt-8">
               {query ? (
                 <div>
-                  <h2 className="text-lg font-black text-stone-600 mb-4 uppercase tracking-widest">
+                  <h2 className="text-lg font-black text-stone-600 dark:text-slate-300 mb-4 uppercase tracking-widest">
                     Resultados
                   </h2>
                   {searchResults.length === 0 ? (
-                    <p className="text-stone-400 font-bold text-center py-6">
+                    <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-center py-6">
                       Ninguém encontrado com esse nome.
                     </p>
                   ) : (
@@ -622,7 +624,7 @@ export const FriendsClient = ({
               ) : (
                 suggestions.length > 0 && (
                   <div>
-                    <h2 className="text-lg font-black text-stone-400 mb-6 uppercase tracking-widest flex items-center gap-2">
+                    <h2 className="text-lg font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 mb-6 uppercase tracking-widest flex items-center gap-2">
                       <Sparkles className="w-5 h-5" /> Sugestões para Seguir
                     </h2>
                     {suggestions

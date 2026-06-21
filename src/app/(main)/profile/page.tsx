@@ -54,25 +54,28 @@ async function ProfileData() {
       icon: <Flame className="h-8 w-8 text-orange-500" />,
       value: streak,
       label: "Streak",
-      color: "bg-orange-50 border-orange-200",
+      color:
+        "bg-orange-50 dark:bg-orange-950 border-orange-200 dark:border-orange-900",
     },
     {
       icon: <Zap className="h-8 w-8 text-amber-500" />,
       value: totalXpEarned.toLocaleString(),
       label: "XP Total",
-      color: "bg-amber-50 border-amber-200",
+      color:
+        "bg-amber-50 dark:bg-amber-950 border-amber-200 dark:border-amber-900",
     },
     {
       icon: <Target className="h-8 w-8 text-green-500" />,
       value: completedLessons,
       label: "Lições",
-      color: "bg-green-50 border-green-200",
+      color:
+        "bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-900",
     },
     {
       icon: <Heart className="h-8 w-8 text-rose-500" />,
       value: userProgress.hearts,
       label: "Corações",
-      color: "bg-rose-50 border-rose-200",
+      color: "bg-rose-50 dark:bg-rose-950 border-rose-200 dark:border-rose-900",
     },
   ];
 
@@ -100,7 +103,7 @@ async function ProfileData() {
               <div className="w-full sm:w-auto h-11 sm:h-12">
                 <Button
                   variant="sidebarOutline"
-                  className="w-full h-full gap-2 rounded-xl sm:rounded-2xl px-4 sm:px-5 border-2 hover:bg-slate-100 hover:text-slate-700 hover:border-slate-300 bg-white text-slate-600 border-slate-200 transition-all"
+                  className="w-full h-full gap-2 rounded-xl sm:rounded-2xl px-4 sm:px-5 border-2 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-700 dark:text-slate-200 hover:border-slate-300 bg-white dark:bg-slate-900 text-slate-600 border-slate-200 dark:border-slate-800 transition-all"
                 >
                   <Share2 className="h-4 w-4 md:h-5 md:w-5" />
                   <span className="uppercase tracking-widest font-black text-[11px] sm:text-[12px]">
@@ -128,7 +131,7 @@ async function ProfileData() {
                 <Button
                   type="button"
                   variant="sidebarOutline"
-                  className="w-full h-full gap-2 rounded-xl sm:rounded-2xl px-4 sm:px-5 border-2 hover:bg-rose-50 hover:text-rose-500 hover:border-rose-300 bg-white text-rose-400 border-rose-200 transition-all"
+                  className="w-full h-full gap-2 rounded-xl sm:rounded-2xl px-4 sm:px-5 border-2 hover:bg-rose-50 hover:text-rose-500 hover:border-rose-300 bg-white dark:bg-slate-900 text-rose-400 border-rose-200 transition-all"
                 >
                   <LogOut className="h-4 w-4 md:h-5 md:w-5" />
                   <span className="uppercase tracking-widest font-black text-[11px] sm:text-[12px]">
@@ -154,10 +157,10 @@ async function ProfileData() {
             <div className="group-hover:bounce transition-transform duration-300">
               {stat.icon}
             </div>
-            <p className="mt-3 text-2xl font-black text-slate-700 drop-shadow-sm">
+            <p className="mt-3 text-2xl font-black text-slate-700 dark:text-slate-200 drop-shadow-sm">
               {stat.value}
             </p>
-            <p className="text-sm font-extrabold text-slate-500 uppercase tracking-widest">
+            <p className="text-sm font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
               {stat.label}
             </p>
           </div>
@@ -165,15 +168,15 @@ async function ProfileData() {
       </div>
 
       {/* XP Balance Context Banner */}
-      <div className="mb-12 relative flex flex-col sm:flex-row items-center justify-between overflow-hidden rounded-[2rem] border-b-4 border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 p-6 sm:px-8 sm:py-6 shadow-sm hover:shadow-md transition-shadow gap-6 sm:gap-0">
+      <div className="mb-12 relative flex flex-col sm:flex-row items-center justify-between overflow-hidden rounded-[2rem] border-b-4 border-amber-200 dark:border-amber-800 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 p-6 sm:px-8 sm:py-6 shadow-sm hover:shadow-md transition-shadow gap-6 sm:gap-0">
         <div className="absolute right-[-10%] top-[-50%] w-48 h-48 bg-amber-200 rounded-full blur-3xl opacity-50" />
         <div className="relative z-10 flex flex-col items-center sm:items-start gap-1">
-          <p className="text-sm font-black uppercase tracking-widest text-amber-600">
+          <p className="text-sm font-black uppercase tracking-widest text-amber-600 dark:text-amber-500">
             O Teu Cofre
           </p>
           <div className="flex items-center gap-3">
             <Zap className="w-8 h-8 text-amber-500 fill-amber-500 animate-pulse" />
-            <p className="text-4xl font-black text-amber-700 drop-shadow-sm">
+            <p className="text-4xl font-black text-amber-700 dark:text-amber-400 drop-shadow-sm">
               {userProgress.points}
             </p>
           </div>
@@ -206,16 +209,16 @@ const ProfileSkeleton = () => {
   return (
     <div className="animate-in fade-in duration-500 w-full">
       {/* Profile Hero Skeleton */}
-      <div className="w-full bg-stone-100 rounded-[2rem] border-2 border-stone-200 p-6 pt-12 md:p-10 md:pt-16 mb-8 flex flex-col md:flex-row items-center md:items-start gap-6 relative overflow-hidden shadow-sm">
-        <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md bg-stone-200 shrink-0 z-10 animate-pulse" />
+      <div className="w-full bg-stone-100 dark:bg-slate-800 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 p-6 pt-12 md:p-10 md:pt-16 mb-8 flex flex-col md:flex-row items-center md:items-start gap-6 relative overflow-hidden shadow-sm">
+        <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md bg-stone-200 dark:bg-slate-700 shrink-0 z-10 animate-pulse" />
         <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left z-10 gap-3">
-          <div className="h-8 w-48 bg-stone-200 rounded-lg animate-pulse" />
-          <div className="h-4 w-32 bg-stone-200 rounded-md animate-pulse" />
-          <div className="h-3 w-24 bg-stone-200 rounded-md animate-pulse mt-2" />
+          <div className="h-8 w-48 bg-stone-200 dark:bg-slate-700 rounded-lg animate-pulse" />
+          <div className="h-4 w-32 bg-stone-200 dark:bg-slate-700 rounded-md animate-pulse" />
+          <div className="h-3 w-24 bg-stone-200 dark:bg-slate-700 rounded-md animate-pulse mt-2" />
         </div>
         <div className="w-full md:w-auto shrink-0 flex flex-col sm:flex-row md:flex-col gap-3 z-10">
-          <div className="w-full sm:w-[160px] h-12 sm:h-14 bg-stone-200 rounded-[1.5rem] animate-pulse" />
-          <div className="w-full sm:w-[160px] h-12 sm:h-14 bg-stone-200 rounded-[1.5rem] animate-pulse" />
+          <div className="w-full sm:w-[160px] h-12 sm:h-14 bg-stone-200 dark:bg-slate-700 rounded-[1.5rem] animate-pulse" />
+          <div className="w-full sm:w-[160px] h-12 sm:h-14 bg-stone-200 dark:bg-slate-700 rounded-[1.5rem] animate-pulse" />
         </div>
       </div>
 
@@ -224,44 +227,44 @@ const ProfileSkeleton = () => {
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="flex flex-col items-center justify-center rounded-3xl border-b-4 border-2 border-stone-200 bg-stone-50 p-6 h-[140px] animate-pulse"
+            className="flex flex-col items-center justify-center rounded-3xl border-b-4 border-2 border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950 p-6 h-[140px] animate-pulse"
           >
-            <div className="h-8 w-8 bg-stone-200 rounded-full mb-3" />
-            <div className="h-8 w-16 bg-stone-200 rounded-lg mb-2" />
-            <div className="h-4 w-20 bg-stone-200 rounded-md" />
+            <div className="h-8 w-8 bg-stone-200 dark:bg-slate-700 rounded-full mb-3" />
+            <div className="h-8 w-16 bg-stone-200 dark:bg-slate-700 rounded-lg mb-2" />
+            <div className="h-4 w-20 bg-stone-200 dark:bg-slate-700 rounded-md" />
           </div>
         ))}
       </div>
 
       {/* XP Balance Context Banner Skeleton */}
-      <div className="mb-12 flex flex-col sm:flex-row items-center justify-between rounded-[2rem] border-b-4 border-stone-200 bg-stone-50 p-6 sm:px-8 sm:py-6 shadow-sm gap-6 sm:gap-0 animate-pulse">
+      <div className="mb-12 flex flex-col sm:flex-row items-center justify-between rounded-[2rem] border-b-4 border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950 p-6 sm:px-8 sm:py-6 shadow-sm gap-6 sm:gap-0 animate-pulse">
         <div className="flex flex-col items-center sm:items-start gap-2">
-          <div className="h-4 w-24 bg-stone-200 rounded-md" />
+          <div className="h-4 w-24 bg-stone-200 dark:bg-slate-700 rounded-md" />
           <div className="flex items-center gap-3 mt-1">
-            <div className="w-8 h-8 bg-stone-200 rounded-full" />
-            <div className="h-10 w-24 bg-stone-200 rounded-xl" />
+            <div className="w-8 h-8 bg-stone-200 dark:bg-slate-700 rounded-full" />
+            <div className="h-10 w-24 bg-stone-200 dark:bg-slate-700 rounded-xl" />
           </div>
         </div>
-        <div className="w-full sm:w-[160px] h-[52px] bg-stone-200 rounded-2xl" />
+        <div className="w-full sm:w-[160px] h-[52px] bg-stone-200 dark:bg-slate-700 rounded-2xl" />
       </div>
 
       {/* Achievements List Skeleton */}
       <div className="space-y-6">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 bg-stone-200 rounded-full animate-pulse" />
-          <div className="h-8 w-48 bg-stone-200 rounded-lg animate-pulse" />
+          <div className="h-8 w-8 bg-stone-200 dark:bg-slate-700 rounded-full animate-pulse" />
+          <div className="h-8 w-48 bg-stone-200 dark:bg-slate-700 rounded-lg animate-pulse" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className="bg-stone-50 border-2 border-stone-200 border-b-4 rounded-2xl p-5 flex items-center gap-4 animate-pulse"
+              className="bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-5 flex items-center gap-4 animate-pulse"
             >
-              <div className="w-16 h-16 bg-stone-200 rounded-2xl shrink-0" />
+              <div className="w-16 h-16 bg-stone-200 dark:bg-slate-700 rounded-2xl shrink-0" />
               <div className="flex-1 space-y-2">
-                <div className="h-5 w-32 bg-stone-200 rounded-md" />
-                <div className="h-3 w-full bg-stone-200 rounded-md" />
-                <div className="w-full h-4 bg-stone-200 rounded-full mt-2" />
+                <div className="h-5 w-32 bg-stone-200 dark:bg-slate-700 rounded-md" />
+                <div className="h-3 w-full bg-stone-200 dark:bg-slate-700 rounded-md" />
+                <div className="w-full h-4 bg-stone-200 dark:bg-slate-700 rounded-full mt-2" />
               </div>
             </div>
           ))}

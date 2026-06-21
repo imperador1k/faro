@@ -20,7 +20,7 @@ export default function MessagesPage({ searchParams }: Props) {
   const activeConversationId = searchParams.conversationId;
 
   return (
-    <div className="flex h-[max(100vh-64px,100dvh-64px)] md:h-[calc(100vh-100px)] w-full gap-0 bg-white md:border-2 border-stone-200 md:border-b-[10px] md:rounded-[2.5rem] max-w-[1056px] overflow-hidden md:shadow-2xl mx-auto md:my-6 relative">
+    <div className="flex h-[max(100vh-64px,100dvh-64px)] md:h-[calc(100vh-100px)] w-full gap-0 bg-white dark:bg-slate-900 md:border-2 border-stone-200 dark:border-slate-800 md:border-b-[10px] md:rounded-[2.5rem] max-w-[1056px] overflow-hidden md:shadow-2xl mx-auto md:my-6 relative">
       <Suspense
         fallback={
           <MessagesSkeleton activeConversationId={activeConversationId} />
@@ -61,7 +61,7 @@ async function MessagesData({ searchParams }: Props) {
       {/* Sidebar Container */}
       <div
         className={cn(
-          "w-full md:w-[380px] flex-shrink-0 md:border-r-2 border-stone-100 bg-stone-50/50 z-10 animate-in fade-in duration-500",
+          "w-full md:w-[380px] flex-shrink-0 md:border-r-2 border-stone-100 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 z-10 animate-in fade-in duration-500",
           activeConversationId ? "hidden md:flex" : "flex",
         )}
       >
@@ -71,10 +71,10 @@ async function MessagesData({ searchParams }: Props) {
       {/* Window Container */}
       <div
         className={cn(
-          "flex-1 flex flex-col bg-[#f8fafc] relative animate-in fade-in duration-500",
+          "flex-1 flex flex-col bg-[#f8fafc] dark:bg-slate-900 relative animate-in fade-in duration-500",
           !activeConversationId
             ? "hidden md:flex"
-            : "fixed inset-0 z-modal bg-[#f8fafc] md:static md:z-auto h-[100dvh] md:h-auto",
+            : "fixed inset-0 z-modal bg-[#f8fafc] dark:bg-slate-900 md:static md:z-auto h-[100dvh] md:h-auto",
         )}
       >
         {activeConversationId && activeConversation ? (
@@ -89,15 +89,15 @@ async function MessagesData({ searchParams }: Props) {
             initialMessages={initialMessages.reverse()}
           />
         ) : (
-          <div className="flex flex-col items-center justify-center h-full text-stone-400 gap-6 p-12">
+          <div className="flex flex-col items-center justify-center h-full text-stone-400 dark:text-slate-500 dark:text-slate-400 gap-6 p-12">
             <div className="w-72 h-72 mb-4 drop-shadow-xl animate-in fade-in zoom-in duration-700">
               <EmptyLottie />
             </div>
             <div className="text-center space-y-2">
-              <p className="font-black text-3xl text-stone-800 uppercase tracking-tighter">
+              <p className="font-black text-3xl text-stone-800 dark:text-slate-100 uppercase tracking-tighter">
                 As Tuas Conversas
               </p>
-              <p className="text-lg font-bold text-stone-400 max-w-sm">
+              <p className="text-lg font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 max-w-sm">
                 Seleciona um amigo ou grupo para começares a interagir no Vault.
               </p>
             </div>
@@ -119,28 +119,28 @@ const MessagesSkeleton = ({
       {/* Sidebar Skeleton */}
       <div
         className={cn(
-          "w-full md:w-[380px] flex-shrink-0 md:border-r-2 border-stone-100 bg-stone-50/50 z-10 p-4",
+          "w-full md:w-[380px] flex-shrink-0 md:border-r-2 border-stone-100 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 z-10 p-4",
           activeConversationId ? "hidden md:flex" : "flex",
         )}
       >
         <div className="w-full flex flex-col gap-4 animate-pulse">
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
-            <div className="h-8 w-32 bg-stone-200 rounded-xl" />
-            <div className="h-10 w-10 bg-stone-200 rounded-full" />
+            <div className="h-8 w-32 bg-stone-200 dark:bg-slate-700 rounded-xl" />
+            <div className="h-10 w-10 bg-stone-200 dark:bg-slate-700 rounded-full" />
           </div>
           {/* Search */}
-          <div className="h-12 w-full bg-stone-200 rounded-2xl mb-4" />
+          <div className="h-12 w-full bg-stone-200 dark:bg-slate-700 rounded-2xl mb-4" />
           {/* Chat Items */}
           {[1, 2, 3, 4, 5].map((i) => (
             <div
               key={i}
-              className="flex items-center gap-3 p-3 bg-white border-2 border-stone-100 rounded-2xl"
+              className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900 border-2 border-stone-100 dark:border-slate-800 rounded-2xl"
             >
-              <div className="w-12 h-12 rounded-full bg-stone-200 shrink-0" />
+              <div className="w-12 h-12 rounded-full bg-stone-200 dark:bg-slate-700 shrink-0" />
               <div className="flex-1 flex flex-col gap-2">
-                <div className="h-4 w-24 bg-stone-200 rounded-md" />
-                <div className="h-3 w-full bg-stone-200 rounded-md" />
+                <div className="h-4 w-24 bg-stone-200 dark:bg-slate-700 rounded-md" />
+                <div className="h-3 w-full bg-stone-200 dark:bg-slate-700 rounded-md" />
               </div>
             </div>
           ))}
@@ -150,35 +150,35 @@ const MessagesSkeleton = ({
       {/* Window Skeleton */}
       <div
         className={cn(
-          "flex-1 flex flex-col bg-[#f8fafc] relative",
+          "flex-1 flex flex-col bg-[#f8fafc] dark:bg-slate-900 relative",
           !activeConversationId
             ? "hidden md:flex"
-            : "fixed inset-0 z-modal bg-[#f8fafc] md:static md:z-auto h-[100dvh] md:h-auto",
+            : "fixed inset-0 z-modal bg-[#f8fafc] dark:bg-slate-900 md:static md:z-auto h-[100dvh] md:h-auto",
         )}
       >
         {activeConversationId ? (
           <div className="w-full h-full flex flex-col animate-pulse">
             {/* Header */}
-            <div className="h-20 w-full bg-white border-b-2 border-stone-200 px-6 flex items-center gap-4 shrink-0">
-              <div className="w-10 h-10 rounded-full bg-stone-200" />
-              <div className="h-5 w-32 bg-stone-200 rounded-md" />
+            <div className="h-20 w-full bg-white dark:bg-slate-900 border-b-2 border-stone-200 dark:border-slate-800 px-6 flex items-center gap-4 shrink-0">
+              <div className="w-10 h-10 rounded-full bg-stone-200 dark:bg-slate-700" />
+              <div className="h-5 w-32 bg-stone-200 dark:bg-slate-700 rounded-md" />
             </div>
             {/* Messages Area */}
             <div className="flex-1 p-6 flex flex-col gap-6 justify-end">
-              <div className="w-3/4 h-16 bg-stone-200 rounded-2xl self-start" />
-              <div className="w-1/2 h-16 bg-stone-200 rounded-2xl self-start" />
-              <div className="w-2/3 h-20 bg-sky-100 rounded-2xl self-end" />
+              <div className="w-3/4 h-16 bg-stone-200 dark:bg-slate-700 rounded-2xl self-start" />
+              <div className="w-1/2 h-16 bg-stone-200 dark:bg-slate-700 rounded-2xl self-start" />
+              <div className="w-2/3 h-20 bg-sky-100 dark:bg-sky-900 rounded-2xl self-end" />
             </div>
             {/* Input */}
-            <div className="h-24 w-full bg-white border-t-2 border-stone-200 p-4 shrink-0">
-              <div className="w-full h-full bg-stone-100 rounded-2xl" />
+            <div className="h-24 w-full bg-white dark:bg-slate-900 border-t-2 border-stone-200 dark:border-slate-800 p-4 shrink-0">
+              <div className="w-full h-full bg-stone-100 dark:bg-slate-800 rounded-2xl" />
             </div>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-stone-200 gap-6 p-12 animate-pulse">
-            <div className="w-72 h-72 rounded-full bg-stone-100 mb-4" />
-            <div className="h-8 w-64 bg-stone-100 rounded-xl" />
-            <div className="h-4 w-48 bg-stone-100 rounded-md" />
+            <div className="w-72 h-72 rounded-full bg-stone-100 dark:bg-slate-800 mb-4" />
+            <div className="h-8 w-64 bg-stone-100 dark:bg-slate-800 rounded-xl" />
+            <div className="h-4 w-48 bg-stone-100 dark:bg-slate-800 rounded-md" />
           </div>
         )}
       </div>

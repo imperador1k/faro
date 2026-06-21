@@ -9,7 +9,8 @@ const LEVELS = [
   {
     id: "beginner",
     title: "Estou a começar do zero",
-    description: "Vais aprender as bases, desde os primeiros sons até frases simples.",
+    description:
+      "Vais aprender as bases, desde os primeiros sons até frases simples.",
     icon: "/duo_happy.png",
     color: "bg-green-100",
     borderColor: "border-green-200",
@@ -18,7 +19,8 @@ const LEVELS = [
   {
     id: "basic",
     title: "Sei algumas palavras",
-    description: "Já conheces o básico? Vamos focar em expandir o teu vocabulário diário.",
+    description:
+      "Já conheces o básico? Vamos focar em expandir o teu vocabulário diário.",
     icon: "/duo_thinking.png",
     color: "bg-blue-100",
     borderColor: "border-blue-200",
@@ -36,7 +38,8 @@ const LEVELS = [
   {
     id: "advanced",
     title: "Nível Avançado",
-    description: "Já dominas a língua mas queres polir a tua pronúncia e gramática complexa.",
+    description:
+      "Já dominas a língua mas queres polir a tua pronúncia e gramática complexa.",
     icon: "/duo_detective.png",
     color: "bg-purple-100",
     borderColor: "border-purple-200",
@@ -56,14 +59,14 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const item = {
     hidden: { y: 20, opacity: 0 },
-    show: { y: 0, opacity: 1 }
+    show: { y: 0, opacity: 1 },
   };
 
   return (
@@ -76,20 +79,27 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
           className="w-28 h-28 relative"
         >
           <div className="absolute inset-0 bg-yellow-100 rounded-full blur-2xl opacity-50 animate-pulse" />
-          <Image src="/marco.png" alt="Mascote" fill className="object-contain relative z-10" />
+          <Image
+            src="/marco.png"
+            alt="Mascote"
+            fill
+            className="object-contain relative z-10"
+          />
         </motion.div>
-        
+
         <div className="space-y-2">
           <h1 className="text-3xl font-black md:text-4xl tracking-tight text-[#042c60]">
-            Quanto sabes de <span className="text-[#58cc02] relative inline-block">
+            Quanto sabes de{" "}
+            <span className="text-[#58cc02] relative inline-block">
               {courseTitle}
-              <motion.span 
+              <motion.span
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ delay: 0.5, duration: 0.8 }}
                 className="absolute bottom-1 left-0 h-1 bg-[#58cc02]/20 rounded-full"
               />
-            </span>?
+            </span>
+            ?
           </h1>
           <p className="text-gray-500 font-bold text-lg md:text-xl">
             O Marco vai desenhar o teu plano de estudos personalizado.
@@ -97,7 +107,7 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
         </div>
       </div>
 
-      <motion.div 
+      <motion.div
         variants={container}
         initial="hidden"
         animate="show"
@@ -111,23 +121,39 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
             whileTap={{ scale: 0.98 }}
             onClick={() => setExperienceLevel(level.id)}
             className={`flex flex-col p-6 rounded-3xl border-2 border-b-8 transition-all text-left relative overflow-hidden group
-              ${experienceLevel === level.id 
-                ? "border-[#1cb0f6] bg-[#ddf4ff] shadow-[0_4px_0_#1cb0f6]" 
-                : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50 active:border-b-2 active:translate-y-1 shadow-[0_4px_0_#e5e5e5]"
+              ${
+                experienceLevel === level.id
+                  ? "border-[#1cb0f6] bg-[#ddf4ff] shadow-[0_4px_0_#1cb0f6]"
+                  : "border-gray-200 bg-white dark:bg-slate-900 hover:border-gray-300 hover:bg-gray-50 active:border-b-2 active:translate-y-1 shadow-[0_4px_0_#e5e5e5]"
               }`}
           >
             {/* Background Accent */}
-            <div className={`absolute -top-4 -right-4 w-20 h-20 rounded-full opacity-10 transition-transform group-hover:scale-150 ${level.color}`} />
-            
+            <div
+              className={`absolute -top-4 -right-4 w-20 h-20 rounded-full opacity-10 transition-transform group-hover:scale-150 ${level.color}`}
+            />
+
             <div className="flex items-center gap-4 mb-4 relative z-10">
-              <div className={`w-16 h-16 relative flex-shrink-0 rounded-2xl p-2 bg-white shadow-sm border border-gray-100`}>
-                <Image src={level.icon} alt={level.title} fill className="object-contain p-1" />
+              <div
+                className={`w-16 h-16 relative flex-shrink-0 rounded-2xl p-2 bg-white dark:bg-slate-900 shadow-sm border border-gray-100`}
+              >
+                <Image
+                  src={level.icon}
+                  alt={level.title}
+                  fill
+                  className="object-contain p-1"
+                />
               </div>
               <div className="flex-1">
-                <h3 className="font-black text-xl text-[#042c60] leading-none mb-1">{level.title}</h3>
-                <div className={`flex items-center gap-1 text-[10px] font-black uppercase tracking-widest ${level.accent}`}>
+                <h3 className="font-black text-xl text-[#042c60] leading-none mb-1">
+                  {level.title}
+                </h3>
+                <div
+                  className={`flex items-center gap-1 text-[10px] font-black uppercase tracking-widest ${level.accent}`}
+                >
                   <Sparkles size={10} />
-                  {level.id === "beginner" ? "Recomendado" : "Nivelamento Ativo"}
+                  {level.id === "beginner"
+                    ? "Recomendado"
+                    : "Nivelamento Ativo"}
                 </div>
               </div>
             </div>
@@ -137,7 +163,7 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
             </p>
 
             {experienceLevel === level.id && (
-              <motion.div 
+              <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 className="absolute right-4 bottom-4 bg-[#1cb0f6] p-1.5 rounded-full text-white shadow-lg"

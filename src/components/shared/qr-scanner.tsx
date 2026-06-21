@@ -23,7 +23,7 @@ export const QrScanner = ({ onScan, onError }: Props) => {
   };
 
   return (
-    <div className="relative w-full aspect-square max-w-sm mx-auto overflow-hidden rounded-[2rem] bg-black border-4 border-stone-200">
+    <div className="relative w-full aspect-square max-w-sm mx-auto overflow-hidden rounded-[2rem] bg-black border-4 border-stone-200 dark:border-slate-800">
       <Scanner
         onScan={handleScan}
         onError={(err) => {

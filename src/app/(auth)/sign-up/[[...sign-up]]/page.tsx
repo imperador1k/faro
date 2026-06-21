@@ -181,7 +181,7 @@ export default function CustomSignUp() {
 
   if (showLoading) {
     return (
-      <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center bg-white overflow-hidden">
+      <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center bg-white dark:bg-slate-900 overflow-hidden">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -357,7 +357,7 @@ export default function CustomSignUp() {
               <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider leading-none">
                 Ofensiva
               </p>
-              <p className="text-slate-700 text-xs font-black truncate mt-1">
+              <p className="text-slate-700 dark:text-slate-200 text-xs font-black truncate mt-1">
                 30 Dias 🔥
               </p>
             </div>
@@ -381,7 +381,7 @@ export default function CustomSignUp() {
               <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider leading-none">
                 Liga
               </p>
-              <p className="text-slate-700 text-xs font-black truncate mt-1">
+              <p className="text-slate-700 dark:text-slate-200 text-xs font-black truncate mt-1">
                 Diamante 👑
               </p>
             </div>
@@ -405,7 +405,7 @@ export default function CustomSignUp() {
               <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider leading-none">
                 Bónus XP
               </p>
-              <p className="text-slate-700 text-xs font-black truncate mt-1">
+              <p className="text-slate-700 dark:text-slate-200 text-xs font-black truncate mt-1">
                 2.0x Ativo ⚡
               </p>
             </div>
@@ -429,7 +429,7 @@ export default function CustomSignUp() {
               <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider leading-none">
                 Progresso
               </p>
-              <p className="text-slate-700 text-xs font-black truncate mt-1">
+              <p className="text-slate-700 dark:text-slate-200 text-xs font-black truncate mt-1">
                 Inglês: 94% 🚀
               </p>
             </div>
@@ -441,7 +441,7 @@ export default function CustomSignUp() {
           variants={cardVariants}
           initial="hidden"
           animate={isShaking ? { x: [-10, 10, -10, 10, -5, 5, 0] } : "visible"}
-          className="w-full bg-white border-2 border-slate-200 border-b-[8px] rounded-[2rem] p-8 lg:p-8 relative z-20 shadow-xl shadow-slate-200/40"
+          className="w-full bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 border-b-[8px] rounded-[2rem] p-8 lg:p-8 relative z-20 shadow-xl shadow-slate-200/40"
         >
           {/* Mascot (Marco) Overlapping Card top */}
           <motion.div
@@ -503,7 +503,7 @@ export default function CustomSignUp() {
                 whileTap={{ scale: 0.97 }}
                 onClick={handleGoogleSignUp}
                 disabled={isLoading}
-                className="w-full h-14 lg:h-12 bg-white border-2 border-slate-200 border-b-[6px] active:border-b-2 active:translate-y-[4px] transition-all rounded-2xl flex items-center justify-center gap-3 text-slate-700 font-black hover:bg-slate-50 disabled:opacity-70 text-sm sm:text-base lg:text-sm outline-none cursor-pointer"
+                className="w-full h-14 lg:h-12 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 border-b-[6px] active:border-b-2 active:translate-y-[4px] transition-all rounded-2xl flex items-center justify-center gap-3 text-slate-700 dark:text-slate-200 font-black hover:bg-slate-50 dark:bg-slate-950 disabled:opacity-70 text-sm sm:text-base lg:text-sm outline-none cursor-pointer"
               >
                 {isLoading ? (
                   <div className="w-5 h-5 border-3 border-sky-400/30 border-t-sky-400 rounded-full animate-spin" />
@@ -534,11 +534,11 @@ export default function CustomSignUp() {
 
               {/* Separator line */}
               <div className="flex items-center gap-3">
-                <div className="h-[2px] flex-1 bg-slate-100" />
+                <div className="h-[2px] flex-1 bg-slate-100 dark:bg-slate-800" />
                 <span className="text-slate-300 font-black text-xs sm:text-sm uppercase tracking-widest">
                   ou
                 </span>
-                <div className="h-[2px] flex-1 bg-slate-100" />
+                <div className="h-[2px] flex-1 bg-slate-100 dark:bg-slate-800" />
               </div>
 
               {/* E-mail / Password Form */}
@@ -550,7 +550,7 @@ export default function CustomSignUp() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full h-14 lg:h-12 px-5 bg-slate-50 border-2 border-slate-200 focus:bg-white focus:border-[#1cb0f6] rounded-2xl font-black text-slate-700 text-sm sm:text-base lg:text-sm focus:ring-0 outline-none transition-all"
+                    className="w-full h-14 lg:h-12 px-5 bg-slate-50 dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800 focus:bg-white dark:bg-slate-900 focus:border-[#1cb0f6] rounded-2xl font-black text-slate-700 dark:text-slate-200 text-sm sm:text-base lg:text-sm focus:ring-0 outline-none transition-all"
                   />
                   <div className="relative">
                     <input
@@ -559,7 +559,7 @@ export default function CustomSignUp() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="w-full h-14 lg:h-12 px-5 bg-slate-50 border-2 border-slate-200 focus:bg-white focus:border-[#1cb0f6] rounded-2xl font-black text-slate-700 text-sm sm:text-base lg:text-sm focus:ring-0 outline-none transition-all pr-12"
+                      className="w-full h-14 lg:h-12 px-5 bg-slate-50 dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800 focus:bg-white dark:bg-slate-900 focus:border-[#1cb0f6] rounded-2xl font-black text-slate-700 dark:text-slate-200 text-sm sm:text-base lg:text-sm focus:ring-0 outline-none transition-all pr-12"
                     />
                     <button
                       type="button"

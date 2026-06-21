@@ -95,7 +95,7 @@ export default function NativeGoogleLoginButton({
       <button
         onClick={handleLogin}
         disabled={loading}
-        className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-slate-200 rounded-xl font-bold text-slate-700 hover:bg-slate-50 transition-all active:scale-[0.98] disabled:opacity-70"
+        className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-slate-200 dark:border-slate-800 rounded-xl font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-950 transition-all active:scale-[0.98] disabled:opacity-70"
       >
         {loading ? (
           <Loader2 className="h-5 w-5 animate-spin" />

@@ -82,21 +82,21 @@ export const EditProfileButton = () => {
     <>
       <button
         onClick={handleOpen}
-        className="bg-stone-100 text-stone-600 font-bold px-5 py-3 rounded-xl border-2 border-stone-200 border-b-4 hover:bg-stone-200 active:translate-y-1 active:border-b-0 transition-all uppercase tracking-wide"
+        className="bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-bold px-5 py-3 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 active:translate-y-1 active:border-b-0 transition-all uppercase tracking-wide"
       >
         Editar Perfil
       </button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="z-modal max-w-md p-0 overflow-hidden border-none bg-transparent shadow-none [&>button]:hidden">
-          <div className="relative bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col p-6 md:p-8">
+          <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col p-6 md:p-8">
             {/* Custom Close Button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute right-6 top-6 h-10 w-10 flex items-center justify-center rounded-xl bg-white border-2 border-stone-200 border-b-4 hover:bg-stone-50 active:translate-y-1 active:border-b-0 transition-all z-50 group disabled:opacity-50"
+              className="absolute right-6 top-6 h-10 w-10 flex items-center justify-center rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-1 active:border-b-0 transition-all z-50 group disabled:opacity-50"
               disabled={isSaving}
             >
-              <X className="w-5 h-5 text-stone-400 group-hover:text-stone-600 transition-colors" />
+              <X className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-stone-600 dark:text-slate-300 transition-colors" />
             </button>
 
             {/* Header */}
@@ -105,7 +105,7 @@ export const EditProfileButton = () => {
                 <User className="w-6 h-6 text-[#1CB0F6]" />
               </div>
               <DialogHeader>
-                <DialogTitle className="text-2xl font-black text-stone-800 tracking-tight">
+                <DialogTitle className="text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight">
                   O teu Perfil
                 </DialogTitle>
               </DialogHeader>
@@ -118,7 +118,7 @@ export const EditProfileButton = () => {
                   className="relative group cursor-pointer"
                   onClick={() => !isSaving && fileInputRef.current?.click()}
                 >
-                  <div className="relative h-28 w-28 rounded-[2rem] border-4 border-stone-200 overflow-hidden bg-stone-100 group-hover:border-[#1CB0F6] transition-colors shadow-sm">
+                  <div className="relative h-28 w-28 rounded-[2rem] border-4 border-stone-200 dark:border-slate-800 overflow-hidden bg-stone-100 dark:bg-slate-800 group-hover:border-[#1CB0F6] transition-colors shadow-sm">
                     <Image
                       src={previewImage || user?.imageUrl || ""}
                       alt="Avatar"
@@ -137,7 +137,7 @@ export const EditProfileButton = () => {
                   ref={fileInputRef}
                   onChange={handleImageChange}
                 />
-                <span className="text-xs font-bold text-stone-400 uppercase tracking-widest">
+                <span className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                   Alterar Foto
                 </span>
               </div>
@@ -145,7 +145,7 @@ export const EditProfileButton = () => {
               {/* Form Fields */}
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-stone-400 uppercase tracking-widest ml-1">
+                  <label className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1">
                     Nome
                   </label>
                   <input
@@ -153,13 +153,13 @@ export const EditProfileButton = () => {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     disabled={isSaving}
-                    className="w-full bg-stone-50 border-2 border-stone-200 rounded-2xl px-4 py-4 text-base font-bold text-stone-700 outline-none focus:border-[#1CB0F6] focus:bg-white transition-all"
+                    className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 rounded-2xl px-4 py-4 text-base font-bold text-stone-700 dark:text-slate-200 outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 transition-all"
                     placeholder="O teu nome principal"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-stone-400 uppercase tracking-widest ml-1">
+                  <label className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1">
                     Apelido (Opcional)
                   </label>
                   <input
@@ -167,13 +167,13 @@ export const EditProfileButton = () => {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     disabled={isSaving}
-                    className="w-full bg-stone-50 border-2 border-stone-200 rounded-2xl px-4 py-4 text-base font-bold text-stone-700 outline-none focus:border-[#1CB0F6] focus:bg-white transition-all"
+                    className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 rounded-2xl px-4 py-4 text-base font-bold text-stone-700 dark:text-slate-200 outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 transition-all"
                     placeholder="Opcional"
                   />
                 </div>
 
                 <div className="space-y-2 opacity-60">
-                  <label className="text-xs font-black text-stone-400 uppercase tracking-widest ml-1 flex justify-between">
+                  <label className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1 flex justify-between">
                     <span>Email</span>
                     <span className="text-[#1CB0F6]">Principal</span>
                   </label>
@@ -181,7 +181,7 @@ export const EditProfileButton = () => {
                     type="text"
                     disabled
                     value={user?.primaryEmailAddress?.emailAddress || ""}
-                    className="w-full bg-stone-100 border-2 border-stone-200 rounded-2xl px-4 py-4 text-base font-bold text-stone-500 outline-none cursor-not-allowed"
+                    className="w-full bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 rounded-2xl px-4 py-4 text-base font-bold text-stone-500 dark:text-slate-400 outline-none cursor-not-allowed"
                   />
                 </div>
               </div>

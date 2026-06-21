@@ -395,7 +395,7 @@ export const ChatWindow = ({
     lastMyMessageIndex !== -1 ? messages.length - 1 - lastMyMessageIndex : -1;
 
   return (
-    <div className="flex flex-col h-full w-full bg-white relative">
+    <div className="flex flex-col h-full w-full bg-white dark:bg-slate-900 relative">
       {/* Image Modal */}
       <Dialog
         open={!!selectedImage}
@@ -437,23 +437,23 @@ export const ChatWindow = ({
       </Dialog>
 
       {/* Arcade Header */}
-      <div className="h-20 flex items-center justify-between px-6 bg-white z-20 w-full border-b-2 border-stone-100 relative shrink-0">
+      <div className="h-20 flex items-center justify-between px-6 bg-white dark:bg-slate-900 z-20 w-full border-b-2 border-stone-100 dark:border-slate-800 relative shrink-0">
         <div className="flex items-center gap-4">
           <Link href="/messages" className="md:hidden">
             <Button
               variant="ghost"
               size="icon"
-              className="h-10 w-10 rounded-xl border-2 border-transparent hover:bg-stone-100 active:translate-y-1"
+              className="h-10 w-10 rounded-xl border-2 border-transparent hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 active:translate-y-1"
             >
-              <ChevronLeft className="h-6 w-6 text-stone-400" />
+              <ChevronLeft className="h-6 w-6 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
             </Button>
           </Link>
 
           <div
-            className="flex items-center gap-x-4 group cursor-pointer hover:bg-stone-50 p-2 -ml-2 rounded-2xl transition-colors active:bg-stone-100"
+            className="flex items-center gap-x-4 group cursor-pointer hover:bg-stone-50 dark:bg-slate-950 p-2 -ml-2 rounded-2xl transition-colors active:bg-stone-100 dark:bg-slate-800"
             onClick={() => setIsSettingsOpen(true)}
           >
-            <div className="relative h-12 w-12 shrink-0 flex items-center justify-center rounded-[18px] border-2 border-stone-200 bg-stone-50 overflow-visible shadow-sm transition-all group-hover:border-[#1CB0F6]">
+            <div className="relative h-12 w-12 shrink-0 flex items-center justify-center rounded-[18px] border-2 border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950 overflow-visible shadow-sm transition-all group-hover:border-[#1CB0F6]">
               {isGroup ? (
                 groupImageUrl ? (
                   <Image
@@ -468,7 +468,7 @@ export const ChatWindow = ({
                       <div
                         key={p.userId}
                         className={cn(
-                          "h-8 w-8 rounded-full border-2 border-white overflow-hidden bg-stone-100 shadow-sm relative shrink-0",
+                          "h-8 w-8 rounded-full border-2 border-white overflow-hidden bg-stone-100 dark:bg-slate-800 shadow-sm relative shrink-0",
                           idx === 1 && "z-10",
                         )}
                       >
@@ -480,14 +480,14 @@ export const ChatWindow = ({
                             className="object-cover"
                           />
                         ) : (
-                          <div className="flex h-full w-full items-center justify-center text-[10px] font-black text-stone-400">
+                          <div className="flex h-full w-full items-center justify-center text-[10px] font-black text-stone-400 dark:text-slate-500 dark:text-slate-400">
                             {p.userName?.[0] || "?"}
                           </div>
                         )}
                       </div>
                     ))}
                     {(participants || []).length > 2 && (
-                      <div className="h-8 w-8 rounded-full border-2 border-white bg-stone-50 flex items-center justify-center text-[8px] font-black text-stone-500 z-20 shadow-sm shrink-0">
+                      <div className="h-8 w-8 rounded-full border-2 border-white bg-stone-50 dark:bg-slate-950 flex items-center justify-center text-[8px] font-black text-stone-500 dark:text-slate-400 z-20 shadow-sm shrink-0">
                         +{(participants || []).length - 2}
                       </div>
                     )}
@@ -501,7 +501,7 @@ export const ChatWindow = ({
                   className="object-cover rounded-[16px]"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center text-xl font-black text-stone-400 uppercase">
+                <div className="flex h-full w-full items-center justify-center text-xl font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase">
                   {partner?.userName?.[0] || "?"}
                 </div>
               )}
@@ -510,7 +510,7 @@ export const ChatWindow = ({
               )}
             </div>
             <div className="flex flex-col">
-              <h2 className="font-black text-stone-800 text-lg tracking-tight leading-none flex items-center">
+              <h2 className="font-black text-stone-800 dark:text-slate-100 text-lg tracking-tight leading-none flex items-center">
                 {isGroup ? groupName : partner?.userName}
                 {!isGroup && partner?.isPro && (
                   <BadgeCheck
@@ -542,7 +542,7 @@ export const ChatWindow = ({
             variant="ghost"
             size="icon"
             onClick={() => setIsSettingsOpen(true)}
-            className="h-10 w-10 rounded-xl hover:bg-stone-100 text-stone-400 hover:text-stone-600 transition-colors"
+            className="h-10 w-10 rounded-xl hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 transition-colors"
           >
             <MoreHorizontal className="h-6 w-6" />
           </Button>
@@ -569,12 +569,14 @@ export const ChatWindow = ({
       {/* Message Canvas */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-6 flex flex-col gap-4 bg-[#f8fafc] min-h-0 scrollbar-hide"
+        className="flex-1 overflow-y-auto p-6 flex flex-col gap-4 bg-[#f8fafc] dark:bg-slate-900 min-h-0 scrollbar-hide"
       >
         {messages.length === 0 && (
-          <div className="flex-1 flex flex-col items-center justify-center text-stone-400 gap-4 mt-8 opacity-60">
+          <div className="flex-1 flex flex-col items-center justify-center text-stone-400 dark:text-slate-500 dark:text-slate-400 gap-4 mt-8 opacity-60">
             <div className="text-6xl animate-bounce">👋</div>
-            <p className="font-black text-xl text-stone-600">Diz olá!</p>
+            <p className="font-black text-xl text-stone-600 dark:text-slate-300">
+              Diz olá!
+            </p>
           </div>
         )}
         {messages.map((msg, i) => (
@@ -598,18 +600,18 @@ export const ChatWindow = ({
         ))}
 
         {isPartnerTyping && (
-          <div className="self-start flex items-center px-4 py-3 bg-white border-2 border-stone-200 border-b-4 rounded-tl-md rounded-[1.2rem] shadow-sm animate-pulse mt-2">
+          <div className="self-start flex items-center px-4 py-3 bg-white dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-700 border-b-4 rounded-tl-md rounded-[1.2rem] shadow-sm animate-pulse mt-2">
             <div className="flex gap-1.5 items-center">
               <span
-                className="w-2 h-2 bg-stone-300 rounded-full animate-bounce"
+                className="w-2 h-2 bg-stone-300 dark:bg-slate-600 rounded-full animate-bounce"
                 style={{ animationDelay: "0ms" }}
               ></span>
               <span
-                className="w-2 h-2 bg-stone-300 rounded-full animate-bounce"
+                className="w-2 h-2 bg-stone-300 dark:bg-slate-600 rounded-full animate-bounce"
                 style={{ animationDelay: "150ms" }}
               ></span>
               <span
-                className="w-2 h-2 bg-stone-300 rounded-full animate-bounce"
+                className="w-2 h-2 bg-stone-300 dark:bg-slate-600 rounded-full animate-bounce"
                 style={{ animationDelay: "300ms" }}
               ></span>
             </div>
@@ -620,7 +622,7 @@ export const ChatWindow = ({
       </div>
 
       {/* Input Console (Action Bar) */}
-      <div className="bg-white border-t-2 border-stone-100 p-4 md:p-6 pb-[calc(1rem+env(safe-area-inset-bottom))] shrink-0 relative z-20">
+      <div className="bg-white dark:bg-slate-900 border-t-2 border-stone-100 dark:border-slate-800 p-4 md:p-6 pb-[calc(1rem+env(safe-area-inset-bottom))] shrink-0 relative z-20">
         {/* Reply Banner */}
         <AnimatePresence>
           {replyingTo && (
@@ -630,23 +632,23 @@ export const ChatWindow = ({
               exit={{ height: 0, opacity: 0 }}
               className="max-w-5xl mx-auto mb-4 overflow-hidden"
             >
-              <div className="bg-stone-50 border-2 border-stone-200 rounded-2xl flex items-center justify-between p-3 gap-3">
+              <div className="bg-stone-50 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-700 rounded-2xl flex items-center justify-between p-3 gap-3">
                 <div className="flex items-center gap-3 overflow-hidden">
                   <div className="w-1 h-8 bg-[#1CB0F6] rounded-full shrink-0" />
                   <div className="flex flex-col min-w-0">
                     <span className="text-[10px] font-black uppercase tracking-[0.1em] text-[#1CB0F6]">
                       A responder a uma mensagem
                     </span>
-                    <p className="text-sm font-bold text-stone-600 truncate">
+                    <p className="text-sm font-bold text-stone-600 dark:text-slate-300 truncate">
                       {truncate(replyingTo.content)}
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => setReplyingTo(null)}
-                  className="h-10 w-10 bg-stone-100 rounded-xl flex items-center justify-center hover:bg-stone-200 transition-all shrink-0"
+                  className="h-10 w-10 bg-stone-100 dark:bg-slate-800 rounded-xl flex items-center justify-center hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-all shrink-0"
                 >
-                  <X className="h-4 w-4 text-stone-500" />
+                  <X className="h-4 w-4 text-stone-500 dark:text-slate-400" />
                 </button>
               </div>
             </motion.div>
@@ -654,16 +656,16 @@ export const ChatWindow = ({
         </AnimatePresence>
 
         {showGifPicker && (
-          <div className="absolute bottom-24 left-6 right-6 sm:right-auto sm:left-6 z-[200] bg-white p-4 rounded-[2.5rem] shadow-2xl border-2 border-stone-200 border-b-[8px] h-[400px] w-auto sm:w-[320px] overflow-hidden flex flex-col">
+          <div className="absolute bottom-24 left-6 right-6 sm:right-auto sm:left-6 z-[200] bg-white dark:bg-slate-900 p-4 rounded-[2.5rem] shadow-2xl border-2 border-stone-200 dark:border-slate-800 border-b-[8px] h-[400px] w-auto sm:w-[320px] overflow-hidden flex flex-col">
             <div className="flex justify-between items-center mb-4 shrink-0">
-              <span className="font-black text-xs text-stone-400 uppercase tracking-[0.2em] pl-2">
+              <span className="font-black text-xs text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] pl-2">
                 GIPHY VAULT
               </span>
               <button
                 onClick={() => setShowGifPicker(false)}
-                className="h-8 w-8 bg-stone-50 rounded-full flex items-center justify-center hover:bg-stone-100 transition-all"
+                className="h-8 w-8 bg-stone-50 dark:bg-slate-950 rounded-full flex items-center justify-center hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 transition-all"
               >
-                <X className="h-4 w-4 text-stone-400" />
+                <X className="h-4 w-4 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
               </button>
             </div>
             <div className="flex-1 min-h-0">
@@ -677,12 +679,12 @@ export const ChatWindow = ({
           ref={formRef}
           className="flex gap-4 items-center w-full max-w-5xl mx-auto"
         >
-          <div className="flex-1 flex items-center gap-3 bg-stone-100 border-2 border-stone-200 border-b-4 rounded-[2rem] px-4 py-3 focus-within:border-[#1CB0F6] focus-within:bg-blue-50/50 transition-all group">
+          <div className="flex-1 flex items-center gap-3 bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-700 border-b-4 rounded-[2rem] px-4 py-3 focus-within:border-[#1CB0F6] focus-within:bg-blue-50/50 dark:focus-within:bg-slate-800 transition-all group">
             <UploadButton onUploadComplete={handleUploadComplete} />
             <button
               type="button"
               onClick={() => setShowGifPicker(!showGifPicker)}
-              className="bg-transparent rounded-full h-10 w-10 flex items-center justify-center transition-all shrink-0 text-stone-400 hover:bg-stone-50 hover:text-[#1CB0F6]"
+              className="bg-transparent rounded-full h-10 w-10 flex items-center justify-center transition-all shrink-0 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:bg-stone-50 dark:bg-slate-950 hover:text-[#1CB0F6]"
             >
               <ImageIcon className="h-6 w-6" />
             </button>
@@ -692,7 +694,7 @@ export const ChatWindow = ({
               disabled={isSending}
               placeholder="Escrever mensagem..."
               onChange={handleInputChange}
-              className="flex-1 bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-[15px] font-bold text-stone-700 placeholder:text-stone-400 h-10 w-full disabled:opacity-50"
+              className="flex-1 bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-[15px] font-bold text-stone-700 dark:text-slate-200 placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 h-10 w-full disabled:opacity-50"
               autoComplete="off"
             />
           </div>
@@ -700,7 +702,7 @@ export const ChatWindow = ({
           <button
             type="submit"
             disabled={isSending}
-            className="h-14 px-8 rounded-[1.5rem] bg-[#58CC02] hover:bg-[#4eb801] active:translate-y-1 active:border-b-0 text-white font-black text-sm uppercase tracking-widest border-b-4 border-[#46a302] transition-all flex items-center justify-center gap-3 shadow-xl shrink-0 disabled:bg-stone-200 disabled:border-stone-300 disabled:text-stone-400"
+            className="h-14 px-8 rounded-[1.5rem] bg-[#58CC02] hover:bg-[#4eb801] active:translate-y-1 active:border-b-0 text-white font-black text-sm uppercase tracking-widest border-b-4 border-[#46a302] transition-all flex items-center justify-center gap-3 shadow-xl shrink-0 disabled:bg-stone-200 dark:bg-slate-700 disabled:border-stone-300 dark:border-slate-700 disabled:text-stone-400 dark:text-slate-500 dark:text-slate-400"
           >
             {isSending ? (
               <Loader2 className="h-5 w-5 animate-spin" />

@@ -267,26 +267,26 @@ export default function ListeningPracticePage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-stone-50 w-full overflow-x-hidden pb-10">
+    <div className="flex flex-col min-h-screen bg-stone-50 dark:bg-slate-950 w-full overflow-x-hidden pb-10">
       {/* ── Top Progress Header ── */}
-      <header className="w-full sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b-2 border-stone-200 px-4 py-4 flex items-center justify-between">
+      <header className="w-full sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b-2 border-stone-200 dark:border-slate-800 px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full text-stone-400 hover:text-stone-600 hover:bg-stone-100 transition-colors"
+            className="rounded-full text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors"
             onClick={() => setIsSetupComplete(false)}
           >
             <X className="w-7 h-7" strokeWidth={3} />
           </Button>
-          <div className="hidden sm:block h-4 w-48 md:w-64 bg-stone-100 rounded-full overflow-hidden border-2 border-stone-200">
+          <div className="hidden sm:block h-4 w-48 md:w-64 bg-stone-100 dark:bg-slate-800 rounded-full overflow-hidden border-2 border-stone-200 dark:border-slate-800">
             {/* Fake progress for Dojo feel */}
             <div className="h-full bg-indigo-500 w-[60%] rounded-full opacity-50 relative overflow-hidden">
               <div className="absolute inset-0 bg-white/20 w-full rounded-full animate-pulse"></div>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2 font-black text-stone-400 uppercase tracking-widest text-xs md:text-sm bg-stone-100 px-4 py-2 rounded-2xl border-2 border-stone-200">
+        <div className="flex items-center gap-2 font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-xs md:text-sm bg-stone-100 dark:bg-slate-800 px-4 py-2 rounded-2xl border-2 border-stone-200 dark:border-slate-800">
           <span className="text-indigo-500">{config?.language}</span>
           <span className="text-stone-300">•</span>
           <span className="text-fuchsia-500">{config?.level}</span>
@@ -298,16 +298,16 @@ export default function ListeningPracticePage() {
         <div className="lg:col-span-8 flex flex-col gap-6 md:gap-8">
           {/* Audio Player Card */}
           {scriptData && (
-            <section className="bg-white rounded-[2rem] border-2 border-stone-200 border-b-8 p-6 md:p-8 flex flex-col items-center justify-center gap-6 relative z-10 transition-all hover:-translate-y-1 hover:border-b-[10px] hover:mb-[-2px]">
+            <section className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col items-center justify-center gap-6 relative z-10 transition-all hover:-translate-y-1 hover:border-b-[10px] hover:mb-[-2px]">
               <div className="absolute -top-4 left-6 bg-indigo-500 text-white text-xs font-black uppercase tracking-widest px-4 py-1 rounded-xl shadow border-2 border-indigo-600 z-10 flex items-center gap-2">
                 <Headphones className="w-3.5 h-3.5" /> ÁUDIO NATIVO
               </div>
 
-              <h2 className="text-xl md:text-3xl font-black text-stone-700 tracking-tight leading-tight text-center mt-2">
+              <h2 className="text-xl md:text-3xl font-black text-stone-700 dark:text-slate-200 tracking-tight leading-tight text-center mt-2">
                 {hasAudioFinished ? (
                   scriptData.topic
                 ) : (
-                  <span className="blur-sm select-none text-stone-400">
+                  <span className="blur-sm select-none text-stone-400 dark:text-slate-500 dark:text-slate-400">
                     Tópico Oculto (Ouve Primeiro)
                   </span>
                 )}
@@ -339,7 +339,7 @@ export default function ListeningPracticePage() {
                 {(isPlaying || isPaused) && (
                   <button
                     onClick={stopAudio}
-                    className="h-16 w-16 md:h-20 md:w-20 rounded-3xl bg-stone-100 border-2 border-stone-200 border-b-8 border-b-stone-300 text-stone-400 hover:text-red-500 hover:bg-red-50 transition-all active:border-b-0 active:mt-2 active:mb-[-8px] flex items-center justify-center shrink-0"
+                    className="h-16 w-16 md:h-20 md:w-20 rounded-3xl bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 border-b-8 border-b-stone-300 dark:border-b-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all active:border-b-0 active:mt-2 active:mb-[-8px] flex items-center justify-center shrink-0"
                     title="Parar Áudio"
                   >
                     <Square className="h-6 w-6 fill-current" />
@@ -355,7 +355,7 @@ export default function ListeningPracticePage() {
                       "opacity-50 blur-[2px] select-none grayscale",
                   )}
                 >
-                  <p className="font-bold text-stone-400 text-xs md:text-sm uppercase tracking-wide flex items-center justify-center gap-2">
+                  <p className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 text-xs md:text-sm uppercase tracking-wide flex items-center justify-center gap-2">
                     <AlertCircle className="h-4 w-4 text-indigo-400" />
                     {hasAudioFinished
                       ? "Responde às questões baseadas no áudio!"
@@ -367,21 +367,21 @@ export default function ListeningPracticePage() {
           )}
 
           {/* Questions & Inputs Form */}
-          <section className="bg-stone-100/50 rounded-[2rem] border-2 border-stone-200 p-6 md:p-8 flex flex-col gap-6">
+          <section className="bg-stone-100/50 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 p-6 md:p-8 flex flex-col gap-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <h3 className="text-xl font-black text-stone-700 uppercase tracking-widest flex items-center gap-2">
+              <h3 className="text-xl font-black text-stone-700 dark:text-slate-200 uppercase tracking-widest flex items-center gap-2">
                 <Target className="w-6 h-6 text-indigo-500" />A TUA ANÁLISE
               </h3>
 
               {/* Input Mode Toggle */}
-              <div className="flex p-1 bg-stone-200/50 rounded-2xl border-2 border-stone-200">
+              <div className="flex p-1 bg-stone-200/50 rounded-2xl border-2 border-stone-200 dark:border-slate-800">
                 <button
                   onClick={() => setInputMode("text")}
                   className={cn(
                     "px-4 py-2 h-10 rounded-xl text-sm font-black uppercase tracking-widest transition-all flex items-center gap-2",
                     inputMode === "text"
-                      ? "bg-white shadow-sm text-indigo-500 border-2 border-stone-200"
-                      : "text-stone-400 hover:text-stone-600 border-2 border-transparent",
+                      ? "bg-white dark:bg-slate-900 shadow-sm text-indigo-500 border-2 border-stone-200 dark:border-slate-800"
+                      : "text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 border-2 border-transparent",
                   )}
                 >
                   <Keyboard className="h-4 w-4" /> TEXTO
@@ -391,8 +391,8 @@ export default function ListeningPracticePage() {
                   className={cn(
                     "px-4 py-2 h-10 rounded-xl text-sm font-black uppercase tracking-widest transition-all flex items-center gap-2",
                     inputMode === "voice"
-                      ? "bg-white shadow-sm text-indigo-500 border-2 border-stone-200"
-                      : "text-stone-400 hover:text-stone-600 border-2 border-transparent",
+                      ? "bg-white dark:bg-slate-900 shadow-sm text-indigo-500 border-2 border-stone-200 dark:border-slate-800"
+                      : "text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 border-2 border-transparent",
                   )}
                 >
                   <Mic className="h-4 w-4" /> VOZ
@@ -405,13 +405,13 @@ export default function ListeningPracticePage() {
                 <div
                   key={idx}
                   className={cn(
-                    "bg-white p-6 rounded-[2rem] border-2 transition-all flex flex-col gap-4",
+                    "bg-white dark:bg-slate-900 p-6 rounded-[2rem] border-2 transition-all flex flex-col gap-4",
                     hasAudioFinished
-                      ? "border-stone-200 shadow-sm border-b-[6px]"
+                      ? "border-stone-200 dark:border-slate-800 shadow-sm border-b-[6px]"
                       : "border-stone-100 opacity-50 select-none grayscale",
                   )}
                 >
-                  <h4 className="font-bold text-stone-700 text-lg flex items-start gap-3">
+                  <h4 className="font-bold text-stone-700 dark:text-slate-200 text-lg flex items-start gap-3">
                     <span className="flex items-center justify-center min-w-8 min-h-8 rounded-full bg-indigo-100 text-indigo-600 font-black shrink-0 border-2 border-indigo-200">
                       {idx + 1}
                     </span>
@@ -450,10 +450,10 @@ export default function ListeningPracticePage() {
                           <Mic className="h-7 w-7" />
                         )}
                       </button>
-                      <div className="flex-1 w-full min-h-[64px] p-4 bg-stone-50 rounded-2xl border-2 border-stone-200 text-base md:text-lg font-medium text-stone-700 shadow-inner flex items-center">
+                      <div className="flex-1 w-full min-h-[64px] p-4 bg-stone-50 dark:bg-slate-950 rounded-2xl border-2 border-stone-200 dark:border-slate-800 text-base md:text-lg font-medium text-stone-700 dark:text-slate-200 shadow-inner flex items-center">
                         {userAnswers[idx] ||
                           (isRecording && activeQuestionIndex === idx ? (
-                            <span className="italic text-stone-400 flex items-center gap-2">
+                            <span className="italic text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center gap-2">
                               <Mic className="w-5 h-5 animate-pulse text-rose-500" />{" "}
                               A ouvir...
                             </span>
@@ -467,7 +467,7 @@ export default function ListeningPracticePage() {
                   ) : (
                     <Textarea
                       placeholder="Escreve a tua resposta aqui..."
-                      className="min-h-[120px] resize-none border-2 border-stone-200 bg-stone-50 rounded-2xl p-4 text-base md:text-lg font-medium text-stone-700 focus-visible:ring-indigo-500 shadow-inner placeholder:text-stone-300 placeholder:italic transition-shadow mt-2"
+                      className="min-h-[120px] resize-none border-2 border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950 rounded-2xl p-4 text-base md:text-lg font-medium text-stone-700 dark:text-slate-200 focus-visible:ring-indigo-500 shadow-inner placeholder:text-stone-300 placeholder:italic transition-shadow mt-2"
                       value={userAnswers[idx] || ""}
                       onChange={(e) => handleTextChange(idx, e.target.value)}
                       disabled={
@@ -532,7 +532,7 @@ export default function ListeningPracticePage() {
                   </div>
                 </div>
 
-                <p className="text-stone-700 font-medium text-lg leading-relaxed mb-8 bg-white/50 p-6 rounded-2xl border border-stone-200/50">
+                <p className="text-stone-700 dark:text-slate-200 font-medium text-lg leading-relaxed mb-8 bg-white/50 p-6 rounded-2xl border border-stone-200/50">
                   {feedback.feedback}
                 </p>
 
@@ -563,9 +563,9 @@ export default function ListeningPracticePage() {
         {/* ── Right Column: Toolbelt & Submit (Spans 4 cols) ── */}
         <aside className="lg:col-span-4 flex flex-col gap-6 lg:sticky lg:top-24">
           {/* Script Revealer */}
-          <div className="bg-white rounded-[2rem] border-2 border-stone-200 border-b-8 p-6 md:p-8 flex flex-col gap-4 transition-all hover:border-b-[10px] hover:mb-[-2px]">
+          <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col gap-4 transition-all hover:border-b-[10px] hover:mb-[-2px]">
             <div className="flex items-center justify-between w-full">
-              <h3 className="text-sm font-black uppercase tracking-widest text-stone-400 flex items-center gap-3">
+              <h3 className="text-sm font-black uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center gap-3">
                 <div className="p-2 bg-indigo-50 text-indigo-500 rounded-xl">
                   <Eye className="w-5 h-5" />
                 </div>
@@ -574,7 +574,7 @@ export default function ListeningPracticePage() {
               <button
                 onClick={() => setShowScript(!showScript)}
                 disabled={!scriptData}
-                className="px-3 py-1.5 bg-stone-100 text-stone-500 font-bold text-xs rounded-lg border-2 border-stone-200 hover:bg-stone-200 active:scale-95 transition-all uppercase tracking-widest flex items-center gap-2 disabled:opacity-50"
+                className="px-3 py-1.5 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-bold text-xs rounded-lg border-2 border-stone-200 dark:border-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 active:scale-95 transition-all uppercase tracking-widest flex items-center gap-2 disabled:opacity-50"
               >
                 {showScript ? (
                   <>
@@ -590,19 +590,19 @@ export default function ListeningPracticePage() {
               className={cn(
                 "w-full rounded-2xl border-2 p-5 overflow-y-auto max-h-[300px] transition-all duration-300",
                 showScript
-                  ? "bg-stone-50 border-stone-200 shadow-inner"
-                  : "bg-stone-100 border-stone-200 flex flex-col items-center justify-center min-h-[150px]",
+                  ? "bg-stone-50 dark:bg-slate-950 border-stone-200 dark:border-slate-800 shadow-inner"
+                  : "bg-stone-100 dark:bg-slate-800 border-stone-200 dark:border-slate-800 flex flex-col items-center justify-center min-h-[150px]",
               )}
             >
               {showScript && scriptData ? (
-                <div className="text-sm md:text-base font-medium leading-relaxed text-stone-700 whitespace-pre-wrap">
+                <div className="text-sm md:text-base font-medium leading-relaxed text-stone-700 dark:text-slate-200 whitespace-pre-wrap">
                   <InteractiveText
                     text={scriptData.script}
                     language={config?.language}
                   />
                 </div>
               ) : (
-                <div className="text-center text-stone-400 flex flex-col items-center gap-2">
+                <div className="text-center text-stone-400 dark:text-slate-500 dark:text-slate-400 flex flex-col items-center gap-2">
                   <EyeOff className="h-8 w-8 opacity-50" />
                   <p className="text-xs font-bold uppercase tracking-widest">
                     Oculta para treinares o ouvido.
@@ -642,7 +642,7 @@ export default function ListeningPracticePage() {
               </button>
             )}
 
-            <p className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-stone-400 flex items-center justify-center gap-2 mt-2">
+            <p className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2 mt-2">
               A AI interpreta as tuas respostas
             </p>
           </div>

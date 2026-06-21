@@ -94,7 +94,7 @@ export function CustomToastProvider({ children }: { children: ReactNode }) {
       >
         <div
           className={cn(
-            "pointer-events-auto flex items-center gap-3 bg-white px-5 py-4 rounded-3xl shadow-lg border-2 border-slate-100 border-b-4 min-w-[320px]",
+            "pointer-events-auto flex items-center gap-3 bg-white dark:bg-slate-900 px-5 py-4 rounded-3xl shadow-lg border-2 border-slate-100 border-b-4 min-w-[320px]",
             state.variant === "error"
               ? "border-b-red-200"
               : "border-b-slate-200",
@@ -108,7 +108,9 @@ export function CustomToastProvider({ children }: { children: ReactNode }) {
           >
             {getIcon()}
           </div>
-          <p className="flex-1 font-bold text-slate-700">{state.message}</p>
+          <p className="flex-1 font-bold text-slate-700 dark:text-slate-200">
+            {state.message}
+          </p>
           <button
             onClick={() => setState((prev) => ({ ...prev, isOpen: false }))}
             className="p-1 -mr-2 text-slate-400 hover:text-rose-500 transition-colors"

@@ -27,7 +27,7 @@ export const QuestsInfoModal = ({ isOpen, onOpenChange }: Props) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md p-0 border-0 bg-transparent shadow-none [&>button]:hidden z-[100]">
-        <div className="relative bg-white border-2 border-stone-200 border-b-8 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col items-center">
+        <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col items-center">
           {/* Custom Close Button */}
           <DialogClose className="absolute right-4 top-4 h-10 w-10 flex items-center justify-center rounded-2xl bg-white/20 text-white hover:bg-white/30 hover:scale-105 transition-all active:scale-95 z-50">
             <X className="w-5 h-5 font-black" />
@@ -47,8 +47,8 @@ export const QuestsInfoModal = ({ isOpen, onOpenChange }: Props) => {
           </DialogHeader>
 
           {/* Content Area */}
-          <div className="flex flex-col items-center justify-center gap-6 p-8 w-full -mt-6 bg-white rounded-t-[2.5rem] relative z-20">
-            <p className="text-[15px] font-bold text-stone-500 text-center leading-relaxed">
+          <div className="flex flex-col items-center justify-center gap-6 p-8 w-full -mt-6 bg-white dark:bg-slate-900 rounded-t-[2.5rem] relative z-20">
+            <p className="text-[15px] font-bold text-stone-500 dark:text-slate-400 text-center leading-relaxed">
               Aqui podes acompanhar o teu progresso diário e as tuas conquistas
               a longo prazo.
             </p>
@@ -56,7 +56,7 @@ export const QuestsInfoModal = ({ isOpen, onOpenChange }: Props) => {
             <div className="flex flex-col gap-3 w-full">
               {/* Daily Quests */}
               <div className="flex items-center gap-4 bg-sky-50 p-4 rounded-2xl border-2 border-sky-100">
-                <div className="h-12 w-12 bg-white rounded-xl border-2 border-sky-200 flex items-center justify-center shrink-0">
+                <div className="h-12 w-12 bg-white dark:bg-slate-900 rounded-xl border-2 border-sky-200 flex items-center justify-center shrink-0">
                   <Target className="w-6 h-6 text-sky-500" />
                 </div>
                 <div className="flex flex-col">
@@ -71,7 +71,7 @@ export const QuestsInfoModal = ({ isOpen, onOpenChange }: Props) => {
 
               {/* Trophies */}
               <div className="flex items-center gap-4 bg-amber-50 p-4 rounded-2xl border-2 border-amber-100">
-                <div className="h-12 w-12 bg-white rounded-xl border-2 border-amber-200 flex items-center justify-center shrink-0">
+                <div className="h-12 w-12 bg-white dark:bg-slate-900 rounded-xl border-2 border-amber-200 flex items-center justify-center shrink-0">
                   <Star className="w-6 h-6 text-amber-500 fill-amber-500" />
                 </div>
                 <div className="flex flex-col">

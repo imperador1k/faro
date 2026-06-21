@@ -152,22 +152,22 @@ export const ShopItems = ({
         typeof document !== "undefined" &&
         createPortal(
           <div className="fixed inset-0 z-above-modal flex items-center justify-center bg-stone-900/60 backdrop-blur-md animate-in fade-in duration-300 px-4">
-            <div className="w-full max-w-[420px] rounded-[2.5rem] bg-white p-8 md:p-10 shadow-2xl animate-in zoom-in-95 duration-300 border-2 border-stone-200 border-b-8 relative overflow-hidden">
+            <div className="w-full max-w-[420px] rounded-[2.5rem] bg-white dark:bg-slate-900 p-8 md:p-10 shadow-2xl animate-in zoom-in-95 duration-300 border-2 border-stone-200 dark:border-slate-800 border-b-8 relative overflow-hidden">
               {/* Decorative background element */}
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-50 rounded-full blur-3xl opacity-50" />
 
               <div className="relative z-10">
-                <h2 className="mb-4 text-3xl font-black text-stone-700 tracking-tight text-center leading-tight">
+                <h2 className="mb-4 text-3xl font-black text-stone-700 dark:text-slate-200 tracking-tight text-center leading-tight">
                   Confirmar Compra
                 </h2>
-                <p className="mb-10 text-stone-500 font-bold text-center text-lg md:text-xl leading-relaxed">
+                <p className="mb-10 text-stone-500 dark:text-slate-400 font-bold text-center text-lg md:text-xl leading-relaxed">
                   Queres gastar{" "}
                   <span className="font-black text-amber-500 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200 shadow-sm">
                     {confirmModal.cost} XP
                   </span>{" "}
                   para comprar
                   <br />
-                  <span className="font-black text-stone-700 block mt-2 text-2xl uppercase tracking-tight">
+                  <span className="font-black text-stone-700 dark:text-slate-200 block mt-2 text-2xl uppercase tracking-tight">
                     {confirmModal.itemName}
                   </span>
                   ?
@@ -183,7 +183,7 @@ export const ShopItems = ({
                   </button>
                   <button
                     onClick={() => setConfirmModal(null)}
-                    className="w-full h-14 md:h-16 bg-white text-stone-400 text-lg font-black rounded-2xl border-2 border-stone-200 border-b-6 hover:bg-stone-50 hover:text-stone-600 active:border-b-0 active:translate-y-1 active:mb-[-4px] transition-all uppercase tracking-widest flex items-center justify-center shadow-sm"
+                    className="w-full h-14 md:h-16 bg-white dark:bg-slate-900 text-stone-400 dark:text-slate-500 dark:text-slate-400 text-lg font-black rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-6 hover:bg-stone-50 dark:bg-slate-950 hover:text-stone-600 dark:text-slate-300 active:border-b-0 active:translate-y-1 active:mb-[-4px] transition-all uppercase tracking-widest flex items-center justify-center shadow-sm"
                   >
                     Cancelar
                   </button>
@@ -218,16 +218,16 @@ export const ShopItems = ({
         <div className="flex flex-col w-full">
           {/* Buy 1 Heart */}
           {!isPro && hearts < 5 && (
-            <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 last:border-b-0 group">
+            <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 dark:border-slate-800 last:border-b-0 group">
               <div className="flex items-center gap-6">
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.2rem] border-2 border-b-4 border-rose-200 bg-rose-50 shadow-inner group-hover:-translate-y-1 transition-transform">
                   <Heart className="h-10 w-10 fill-rose-500 text-rose-500 drop-shadow-sm" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl font-bold text-stone-700">
+                  <span className="text-xl font-bold text-stone-700 dark:text-slate-200">
                     +1 Coração
                   </span>
-                  <span className="text-sm text-stone-500 font-medium mt-1 leading-snug md:max-w-xs">
+                  <span className="text-sm text-stone-500 dark:text-slate-400 font-medium mt-1 leading-snug md:max-w-xs">
                     Recupera uma vida para continuar a aprender e jogar.
                   </span>
                 </div>
@@ -253,7 +253,7 @@ export const ShopItems = ({
                   "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-base uppercase tracking-widest transition-all flex items-center justify-center gap-2",
                   canBuyOneHeart
                     ? "bg-[#58cc02] text-white border-2 border-transparent border-b-4 border-b-[#46a302] hover:bg-[#61da02] active:border-b-0 active:translate-y-1 active:mb-[-4px] shadow-sm"
-                    : "bg-stone-200 text-stone-400 border-2 border-transparent border-b-4 border-b-stone-300 pointer-events-none",
+                    : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
                 )}
               >
                 <span className={cn(canBuyOneHeart ? "drop-shadow-sm" : "")}>
@@ -275,16 +275,16 @@ export const ShopItems = ({
 
           {/* Refill All Hearts */}
           {!isPro && hearts === 0 && (
-            <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 last:border-b-0 group">
+            <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 dark:border-slate-800 last:border-b-0 group">
               <div className="flex items-center gap-6">
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.2rem] border-2 border-b-4 border-amber-200 bg-amber-50 shadow-inner group-hover:-translate-y-1 transition-transform">
                   <Heart className="h-10 w-10 text-amber-500 fill-amber-500 drop-shadow-sm" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl font-bold text-stone-700">
+                  <span className="text-xl font-bold text-stone-700 dark:text-slate-200">
                     Recarga Total
                   </span>
-                  <span className="text-sm text-stone-500 font-medium mt-1 leading-snug md:max-w-xs">
+                  <span className="text-sm text-stone-500 dark:text-slate-400 font-medium mt-1 leading-snug md:max-w-xs">
                     Enche os teus 5 corações de uma só vez!
                   </span>
                 </div>
@@ -310,7 +310,7 @@ export const ShopItems = ({
                   "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-base uppercase tracking-widest transition-all flex items-center justify-center gap-2",
                   canRefill
                     ? "bg-amber-500 text-white border-2 border-transparent border-b-4 border-b-amber-600 hover:bg-amber-400 active:border-b-0 active:translate-y-1 active:mb-[-4px] shadow-sm"
-                    : "bg-stone-200 text-stone-400 border-2 border-transparent border-b-4 border-b-stone-300 pointer-events-none",
+                    : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
                 )}
               >
                 <span className={cn(canRefill ? "drop-shadow-sm" : "")}>
@@ -330,22 +330,22 @@ export const ShopItems = ({
 
           {/* Max Hearts Reached State */}
           {!isPro && hearts === 5 && (
-            <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 last:border-b-0 opacity-70 grayscale-[20%]">
+            <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 dark:border-slate-800 last:border-b-0 opacity-70 grayscale-[20%]">
               <div className="flex items-center gap-6">
-                <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.2rem] border-2 border-b-4 border-stone-200 bg-stone-50 shadow-inner">
+                <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.2rem] border-2 border-b-4 border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950 shadow-inner">
                   <Heart className="h-10 w-10 fill-rose-300 text-rose-300" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl font-bold text-stone-700">
+                  <span className="text-xl font-bold text-stone-700 dark:text-slate-200">
                     Corações Cheios
                   </span>
-                  <span className="text-sm text-stone-500 font-medium mt-1 leading-snug md:max-w-xs">
+                  <span className="text-sm text-stone-500 dark:text-slate-400 font-medium mt-1 leading-snug md:max-w-xs">
                     Estás no máximo de energia. Vai aprender!
                   </span>
                 </div>
               </div>
 
-              <div className="w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-sm uppercase tracking-widest flex items-center justify-center bg-stone-200 text-stone-400 border-2 border-transparent border-b-4 border-b-stone-300 cursor-not-allowed">
+              <div className="w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-sm uppercase tracking-widest flex items-center justify-center bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 cursor-not-allowed">
                 NO MÁXIMO
               </div>
             </div>
@@ -353,16 +353,16 @@ export const ShopItems = ({
 
           {/* PRO Hearts State */}
           {isPro && (
-            <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 last:border-b-0">
+            <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 dark:border-slate-800 last:border-b-0">
               <div className="flex items-center gap-6">
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.2rem] border-2 border-b-4 border-rose-200 bg-rose-50 shadow-inner">
                   <Infinity className="h-10 w-10 text-rose-500 stroke-[3]" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl font-bold text-stone-700">
+                  <span className="text-xl font-bold text-stone-700 dark:text-slate-200">
                     Vidas Infinitas
                   </span>
-                  <span className="text-sm text-stone-500 font-medium mt-1 leading-snug md:max-w-xs">
+                  <span className="text-sm text-stone-500 dark:text-slate-400 font-medium mt-1 leading-snug md:max-w-xs">
                     És PRO. Tens tentativas ilimitadas.
                   </span>
                 </div>
@@ -375,16 +375,16 @@ export const ShopItems = ({
           )}
 
           {/* XP Boost */}
-          <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 last:border-b-0 group">
+          <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 dark:border-slate-800 last:border-b-0 group">
             <div className="flex items-center gap-6">
               <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.2rem] border-2 border-b-4 border-purple-200 bg-purple-50 shadow-inner group-hover:-translate-y-1 transition-transform">
                 <Zap className="h-10 w-10 text-purple-500 fill-purple-300 drop-shadow-sm" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-bold text-stone-700">
+                <span className="text-xl font-bold text-stone-700 dark:text-slate-200">
                   XP Duplo
                 </span>
-                <span className="text-sm text-stone-500 font-medium mt-1 leading-snug md:max-w-xs">
+                <span className="text-sm text-stone-500 dark:text-slate-400 font-medium mt-1 leading-snug md:max-w-xs">
                   Ganha XP a dobrar nas próximas 5 lições consecutivas.
                 </span>
               </div>
@@ -410,7 +410,7 @@ export const ShopItems = ({
                 "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-base uppercase tracking-widest transition-all flex items-center justify-center gap-2",
                 canBuyXpBoost
                   ? "bg-purple-500 text-white border-2 border-transparent border-b-4 border-b-purple-700 hover:bg-purple-400 active:border-b-0 active:translate-y-1 active:mb-[-4px] shadow-sm"
-                  : "bg-stone-200 text-stone-400 border-2 border-transparent border-b-4 border-b-stone-300 pointer-events-none",
+                  : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
               )}
             >
               <span className={cn(canBuyXpBoost ? "drop-shadow-sm" : "")}>
@@ -428,16 +428,16 @@ export const ShopItems = ({
           </div>
 
           {/* Heart Shield */}
-          <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 last:border-b-0 group">
+          <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 dark:border-slate-800 last:border-b-0 group">
             <div className="flex items-center gap-6">
               <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.2rem] border-2 border-b-4 border-sky-200 bg-sky-50 shadow-inner group-hover:-translate-y-1 transition-transform">
                 <Shield className="h-10 w-10 text-sky-500 fill-sky-300 drop-shadow-sm" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-bold text-stone-700">
+                <span className="text-xl font-bold text-stone-700 dark:text-slate-200">
                   Escudo Protetor
                 </span>
-                <span className="text-sm text-stone-500 font-medium mt-1 leading-snug md:max-w-xs">
+                <span className="text-sm text-stone-500 dark:text-slate-400 font-medium mt-1 leading-snug md:max-w-xs">
                   Se errares uma questão na lição, não perdes uma vida.
                 </span>
               </div>
@@ -464,7 +464,7 @@ export const ShopItems = ({
                 "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-base uppercase tracking-widest transition-all flex items-center justify-center gap-2",
                 canBuyHeartShield
                   ? "bg-sky-500 text-white border-2 border-transparent border-b-4 border-b-sky-600 hover:bg-sky-400 active:border-b-0 active:translate-y-1 active:mb-[-4px] shadow-sm"
-                  : "bg-stone-200 text-stone-400 border-2 border-transparent border-b-4 border-b-stone-300 pointer-events-none",
+                  : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
               )}
             >
               <span className={cn(canBuyHeartShield ? "drop-shadow-sm" : "")}>
@@ -484,16 +484,16 @@ export const ShopItems = ({
           </div>
 
           {/* Streak Freeze */}
-          <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 last:border-b-0 group">
+          <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 dark:border-slate-800 last:border-b-0 group">
             <div className="flex items-center gap-6">
               <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.2rem] border-2 border-b-4 border-cyan-200 bg-cyan-50 shadow-inner group-hover:-translate-y-1 transition-transform">
                 <Snowflake className="h-10 w-10 text-cyan-500 fill-cyan-300 drop-shadow-sm" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-bold text-stone-700">
+                <span className="text-xl font-bold text-stone-700 dark:text-slate-200">
                   Congelação
                 </span>
-                <span className="text-sm text-stone-500 font-medium mt-1 leading-snug md:max-w-xs">
+                <span className="text-sm text-stone-500 dark:text-slate-400 font-medium mt-1 leading-snug md:max-w-xs">
                   Protege o teu streak num dia em que te esqueças de praticar.
                 </span>
               </div>
@@ -520,7 +520,7 @@ export const ShopItems = ({
                 "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-base uppercase tracking-widest transition-all flex items-center justify-center gap-2",
                 canBuyStreakFreeze
                   ? "bg-cyan-500 text-white border-2 border-transparent border-b-4 border-b-cyan-600 hover:bg-cyan-400 active:border-b-0 active:translate-y-1 active:mb-[-4px] shadow-sm"
-                  : "bg-stone-200 text-stone-400 border-2 border-transparent border-b-4 border-b-stone-300 pointer-events-none",
+                  : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
               )}
             >
               <span className={cn(canBuyStreakFreeze ? "drop-shadow-sm" : "")}>
@@ -547,8 +547,8 @@ export const ShopItems = ({
             className={cn(
               "relative flex w-full cursor-pointer flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden rounded-[2rem] border-2 border-b-[6px] p-6 md:p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md active:scale-95 group",
               isPro
-                ? "border-rose-200 bg-rose-50"
-                : "border-amber-200 bg-amber-50",
+                ? "border-rose-200 bg-rose-50 dark:bg-rose-950/30 dark:border-rose-900"
+                : "border-amber-200 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-900",
             )}
           >
             <div className="relative z-10 flex items-center gap-6">
@@ -556,8 +556,8 @@ export const ShopItems = ({
                 className={cn(
                   "flex h-16 w-16 shrink-0 items-center justify-center rounded-[1rem] border-2 border-b-4",
                   isPro
-                    ? "bg-rose-100 border-rose-200"
-                    : "bg-amber-100 border-amber-200",
+                    ? "bg-rose-100 border-rose-200 dark:bg-rose-900/30 dark:border-rose-800"
+                    : "bg-amber-100 border-amber-200 dark:bg-amber-900/30 dark:border-amber-800",
                 )}
               >
                 <Sparkles
@@ -570,12 +570,12 @@ export const ShopItems = ({
                 />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl md:text-2xl font-black text-stone-800 tracking-tight">
+                <span className="text-xl md:text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight">
                   {isPro
                     ? "A tua subscrição MyDuolingo PRO"
                     : "Queres saltar os anúncios?"}
                 </span>
-                <span className="text-sm font-bold leading-snug mt-1 text-stone-500">
+                <span className="text-sm font-bold leading-snug mt-1 text-stone-500 dark:text-slate-400">
                   {isPro
                     ? "Obrigado por apoiares a plataforma!"
                     : "Adere ao PRO para Vidas Ilimitadas e XP Boost infinito."}

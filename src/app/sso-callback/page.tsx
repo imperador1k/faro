@@ -22,9 +22,11 @@ export default function SSOCallbackPage() {
 
   if (!mounted) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-white flex-col gap-4">
+      <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-900 flex-col gap-4">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-green-500 border-t-transparent" />
-        <p className="text-slate-500 font-bold">A carregar...</p>
+        <p className="text-slate-500 dark:text-slate-400 font-bold">
+          A carregar...
+        </p>
       </div>
     );
   }
@@ -36,7 +38,7 @@ export default function SSOCallbackPage() {
     : "/learn";
 
   return (
-    <div className="flex h-full w-full min-h-screen flex-col items-center justify-center bg-white z-50 fixed inset-0">
+    <div className="flex h-full w-full min-h-screen flex-col items-center justify-center bg-white dark:bg-slate-900 z-50 fixed inset-0">
       <AuthenticateWithRedirectCallback
         signInForceRedirectUrl={targetUrl}
         signUpForceRedirectUrl={targetUrl}
@@ -57,7 +59,7 @@ export default function SSOCallbackPage() {
           <div className="h-full bg-[#58CC02] rounded-full w-full origin-left animate-[progress_1s_ease-in-out_infinite]"></div>
         </div>
 
-        <p className="text-slate-500 font-bold max-w-xs mx-auto">
+        <p className="text-slate-500 dark:text-slate-400 font-bold max-w-xs mx-auto">
           A garantir a segurança da tua conta.
         </p>
 

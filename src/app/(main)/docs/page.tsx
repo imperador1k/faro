@@ -60,10 +60,10 @@ const CATEGORY_THEMES: Record<
     iconBg: "bg-rose-100",
   },
   "Conta & Configurações": {
-    bg: "bg-stone-100",
-    border: "border-stone-300",
-    text: "text-stone-700",
-    iconBg: "bg-stone-200",
+    bg: "bg-stone-100 dark:bg-slate-800",
+    border: "border-stone-300 dark:border-slate-700",
+    text: "text-stone-700 dark:text-slate-200",
+    iconBg: "bg-stone-200 dark:bg-slate-700",
   },
 };
 
@@ -99,7 +99,7 @@ export default function DocsHubPage() {
       : [];
 
   return (
-    <div className="min-h-screen bg-stone-50/50 pb-32">
+    <div className="min-h-screen bg-stone-50/50 dark:bg-transparent pb-32">
       {/* ── Ultra Premium Hub Hero (Full Bleed) ── */}
       {/* Break out of standard layout padding and create a massive rounded bottom header */}
       <div className="relative bg-gradient-to-br from-[#58cc02] to-[#46a302] -mt-6 -mx-4 md:-max-6 lg:-mx-8 xl:-mx-12 px-6 py-16 md:px-10 md:pt-20 md:pb-32 mb-8 flex flex-col items-center text-center overflow-visible rounded-b-[3.5rem] border-b-8 border-[#3e8e02]/50 shadow-lg">
@@ -125,7 +125,7 @@ export default function DocsHubPage() {
 
           <h1 className="text-5xl md:text-7xl font-[1000] text-white tracking-tighter leading-none mb-8 drop-shadow-sm flex flex-col items-center">
             <div>Pesquisa, Aprende e</div>
-            <span className="inline-block mt-3 px-6 py-2 bg-white text-[#58cc02] rounded-3xl rotate-[-2deg] hover:rotate-0 transition-transform shadow-xl">
+            <span className="inline-block mt-3 px-6 py-2 bg-white dark:bg-slate-900 text-[#58cc02] rounded-3xl rotate-[-2deg] hover:rotate-0 transition-transform shadow-xl">
               Domina o Jogo.
             </span>
           </h1>
@@ -138,25 +138,25 @@ export default function DocsHubPage() {
           {/* Dedicated Inner Search Bar */}
           <div className="w-full max-w-3xl relative group">
             <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none z-20">
-              <Search className="w-7 h-7 text-stone-400 group-focus-within:text-blue-500 transition-colors" />
+              <Search className="w-7 h-7 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-focus-within:text-blue-500 transition-colors" />
             </div>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Pesquisa por 'Freezes', 'XP', 'Avaliações'..."
-              className="relative z-10 w-full bg-white text-stone-800 font-bold text-xl rounded-full py-6 pl-16 pr-6 shadow-[0_20px_60px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-[6px] focus:ring-[#58cc02]/50 transition-all border-none placeholder:text-stone-300"
+              className="relative z-10 w-full bg-white dark:bg-slate-900 text-stone-800 dark:text-slate-100 font-bold text-xl rounded-full py-6 pl-16 pr-6 shadow-[0_20px_60px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-[6px] focus:ring-[#58cc02]/50 transition-all border-none placeholder:text-stone-300"
             />
 
             {/* Search Dropdown Local */}
             {searchQuery.trim().length > 1 && (
-              <div className="absolute top-full left-0 right-0 mt-4 bg-white rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.15)] border-2 border-stone-200 overflow-hidden z-[100] flex flex-col text-left animate-in slide-in-from-top-4">
+              <div className="absolute top-full left-0 right-0 mt-4 bg-white dark:bg-slate-900 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.15)] border-2 border-stone-200 dark:border-slate-800 overflow-hidden z-[100] flex flex-col text-left animate-in slide-in-from-top-4">
                 {filteredDocs.length > 0 ? (
                   filteredDocs.map((doc) => (
                     <Link
                       key={doc.id}
                       href={`/docs/${doc.slug}`}
-                      className="p-5 hover:bg-stone-50 border-b-2 border-stone-100 last:border-0 group/doc flex items-center gap-4"
+                      className="p-5 hover:bg-stone-50 dark:bg-slate-950 border-b-2 border-stone-100 last:border-0 group/doc flex items-center gap-4"
                     >
                       <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center shrink-0 group-hover/doc:bg-emerald-100 transition-colors">
                         <DynamicIcon
@@ -165,10 +165,10 @@ export default function DocsHubPage() {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <span className="font-black text-lg text-stone-800 group-hover/doc:text-[#58cc02] transition-colors">
+                        <span className="font-black text-lg text-stone-800 dark:text-slate-100 group-hover/doc:text-[#58cc02] transition-colors">
                           {doc.title}
                         </span>
-                        <span className="font-medium text-stone-500 text-sm line-clamp-1">
+                        <span className="font-medium text-stone-500 dark:text-slate-400 text-sm line-clamp-1">
                           {doc.summary}
                         </span>
                       </div>
@@ -176,7 +176,7 @@ export default function DocsHubPage() {
                   ))
                 ) : (
                   <div className="p-8 text-center">
-                    <p className="text-stone-500 font-bold text-lg">
+                    <p className="text-stone-500 dark:text-slate-400 font-bold text-lg">
                       Não encontrámos nada para "{searchQuery}"
                     </p>
                   </div>
@@ -196,7 +196,7 @@ export default function DocsHubPage() {
               <Link
                 key={doc.id}
                 href={`/docs/${doc.slug}`}
-                className="bg-white rounded-[2rem] border-2 border-stone-200 border-b-8 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:border-blue-400 group transition-all flex flex-col"
+                className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:border-blue-400 group transition-all flex flex-col"
               >
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-2xl bg-amber-100 border-b-4 border-amber-200 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -205,14 +205,14 @@ export default function DocsHubPage() {
                       className="w-6 h-6 text-amber-600"
                     />
                   </div>
-                  <span className="bg-stone-100 text-stone-500 font-bold text-[10px] uppercase tracking-widest px-2 py-1 rounded-lg">
+                  <span className="bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-bold text-[10px] uppercase tracking-widest px-2 py-1 rounded-lg">
                     Popular
                   </span>
                 </div>
-                <h3 className="font-black text-xl text-stone-800 mb-2 leading-tight group-hover:text-blue-600 transition-colors">
+                <h3 className="font-black text-xl text-stone-800 dark:text-slate-100 mb-2 leading-tight group-hover:text-blue-600 transition-colors">
                   {doc.title}
                 </h3>
-                <p className="text-stone-500 font-medium text-sm line-clamp-2 leading-relaxed">
+                <p className="text-stone-500 dark:text-slate-400 font-medium text-sm line-clamp-2 leading-relaxed">
                   {doc.summary}
                 </p>
               </Link>
@@ -225,15 +225,15 @@ export default function DocsHubPage() {
           {/* LEFT COLUMN (Span 2): The Main Encyclopedia */}
           <div className="lg:col-span-2 flex flex-col">
             {/* ── New Section: Caminho do Iniciante (Getting Started) ── */}
-            <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2.5rem] p-8 mb-12 shadow-sm flex flex-col md:flex-row items-center gap-8 group">
+            <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] p-8 mb-12 shadow-sm flex flex-col md:flex-row items-center gap-8 group">
               <div className="w-24 h-24 bg-[#d7ffb8] text-[#46a302] rounded-[1.5rem] flex items-center justify-center shrink-0 border-b-4 border-[#b3ffc7] rotate-[-5deg] group-hover:rotate-0 transition-transform shadow-sm">
                 <Target className="w-12 h-12" />
               </div>
               <div className="flex-1 text-center md:text-left">
-                <h2 className="text-2xl md:text-3xl font-[1000] text-stone-800 tracking-tight mb-2">
+                <h2 className="text-2xl md:text-3xl font-[1000] text-stone-800 dark:text-slate-100 tracking-tight mb-2">
                   O Caminho do Iniciante
                 </h2>
-                <p className="text-stone-500 font-bold mb-6 text-lg">
+                <p className="text-stone-500 dark:text-slate-400 font-bold mb-6 text-lg">
                   Acabaste de chegar? Segue este guia simples de 3 passos para
                   dominares a plataforma em 5 minutos mágicos.
                 </p>
@@ -241,27 +241,27 @@ export default function DocsHubPage() {
                 <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center md:justify-start">
                   <Link
                     href="/docs/o-que-e-xp"
-                    className="bg-stone-100 hover:bg-[#d7ffb8] text-stone-600 hover:text-[#46a302] font-black text-[15px] px-5 py-3 border-2 border-stone-200 hover:border-[#b3ffc7] border-b-[6px] rounded-2xl transition-all active:translate-y-1 active:border-b-2 flex items-center gap-3 shadow-sm"
+                    className="bg-stone-100 dark:bg-slate-800 hover:bg-[#d7ffb8] text-stone-600 dark:text-slate-300 hover:text-[#46a302] font-black text-[15px] px-5 py-3 border-2 border-stone-200 dark:border-slate-800 hover:border-[#b3ffc7] border-b-[6px] rounded-2xl transition-all active:translate-y-1 active:border-b-2 flex items-center gap-3 shadow-sm"
                   >
-                    <span className="w-6 h-6 bg-stone-200 text-stone-600 rounded-full flex items-center justify-center text-xs">
+                    <span className="w-6 h-6 bg-stone-200 dark:bg-slate-700 text-stone-600 dark:text-slate-300 rounded-full flex items-center justify-center text-xs">
                       1
                     </span>
                     Entender o XP
                   </Link>
                   <Link
                     href="/docs/sistema-de-divisoes"
-                    className="bg-stone-100 hover:bg-amber-100 text-stone-600 hover:text-amber-600 font-black text-[15px] px-5 py-3 border-2 border-stone-200 hover:border-amber-200 border-b-[6px] rounded-2xl transition-all active:translate-y-1 active:border-b-2 flex items-center gap-3 shadow-sm"
+                    className="bg-stone-100 dark:bg-slate-800 hover:bg-amber-100 text-stone-600 dark:text-slate-300 hover:text-amber-600 font-black text-[15px] px-5 py-3 border-2 border-stone-200 dark:border-slate-800 hover:border-amber-200 border-b-[6px] rounded-2xl transition-all active:translate-y-1 active:border-b-2 flex items-center gap-3 shadow-sm"
                   >
-                    <span className="w-6 h-6 bg-stone-200 text-stone-600 rounded-full flex items-center justify-center text-xs">
+                    <span className="w-6 h-6 bg-stone-200 dark:bg-slate-700 text-stone-600 dark:text-slate-300 rounded-full flex items-center justify-center text-xs">
                       2
                     </span>
                     As Ligas
                   </Link>
                   <Link
                     href="/docs/alterar-nome-avatar"
-                    className="bg-stone-100 hover:bg-blue-100 text-stone-600 hover:text-blue-600 font-black text-[15px] px-5 py-3 border-2 border-stone-200 hover:border-blue-200 border-b-[6px] rounded-2xl transition-all active:translate-y-1 active:border-b-2 flex items-center gap-3 shadow-sm"
+                    className="bg-stone-100 dark:bg-slate-800 hover:bg-blue-100 text-stone-600 dark:text-slate-300 hover:text-blue-600 font-black text-[15px] px-5 py-3 border-2 border-stone-200 dark:border-slate-800 hover:border-blue-200 border-b-[6px] rounded-2xl transition-all active:translate-y-1 active:border-b-2 flex items-center gap-3 shadow-sm"
                   >
-                    <span className="w-6 h-6 bg-stone-200 text-stone-600 rounded-full flex items-center justify-center text-xs">
+                    <span className="w-6 h-6 bg-stone-200 dark:bg-slate-700 text-stone-600 dark:text-slate-300 rounded-full flex items-center justify-center text-xs">
                       3
                     </span>
                     Configurar Perfil
@@ -272,11 +272,11 @@ export default function DocsHubPage() {
 
             {/* ── Divider ── */}
             <div className="flex items-center gap-4 mb-8 opacity-50">
-              <div className="h-0.5 bg-stone-300 flex-1 rounded-full"></div>
-              <span className="text-stone-500 font-black uppercase tracking-widest">
+              <div className="h-0.5 bg-stone-300 dark:bg-slate-600 flex-1 rounded-full"></div>
+              <span className="text-stone-500 dark:text-slate-400 font-black uppercase tracking-widest">
                 Biblioteca Enciclopédica
               </span>
-              <div className="h-0.5 bg-stone-300 flex-1 rounded-full"></div>
+              <div className="h-0.5 bg-stone-300 dark:bg-slate-600 flex-1 rounded-full"></div>
             </div>
 
             {/* ── Category Bento Grid (Thematic) ── */}
@@ -288,7 +288,7 @@ export default function DocsHubPage() {
                 return (
                   <div
                     key={category}
-                    className={`bg-white border-2 border-stone-200 border-b-[8px] rounded-[2.5rem] p-8 shadow-sm flex flex-col overflow-hidden relative group/card`}
+                    className={`bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-[8px] rounded-[2.5rem] p-8 shadow-sm flex flex-col overflow-hidden relative group/card`}
                   >
                     <div
                       className={`absolute -right-20 -top-20 w-64 h-64 ${theme.bg} rounded-full blur-3xl opacity-50 group-hover/card:opacity-100 transition-opacity`}
@@ -297,7 +297,7 @@ export default function DocsHubPage() {
                     <div className="relative z-10">
                       <div className="flex items-center gap-3 mb-6">
                         <h2
-                          className={`text-2xl font-[1000] text-stone-800 tracking-tight`}
+                          className={`text-2xl font-[1000] text-stone-800 dark:text-slate-100 tracking-tight`}
                         >
                           {category}
                         </h2>
@@ -308,7 +308,7 @@ export default function DocsHubPage() {
                           <Link
                             key={article.id}
                             href={`/docs/${article.slug}`}
-                            className="flex items-center gap-4 p-3 border-2 border-transparent hover:bg-stone-50 hover:border-stone-200 hover:shadow-sm transition-all rounded-2xl group/link"
+                            className="flex items-center gap-4 p-3 border-2 border-transparent hover:bg-stone-50 dark:bg-slate-950 hover:border-stone-200 dark:border-slate-800 hover:shadow-sm transition-all rounded-2xl group/link"
                           >
                             <div
                               className={`w-10 h-10 ${theme.iconBg} rounded-xl flex items-center justify-center shrink-0 border border-transparent group-hover/link:${theme.border} transition-colors`}
@@ -318,10 +318,10 @@ export default function DocsHubPage() {
                                 className={`w-5 h-5 ${theme.text}`}
                               />
                             </div>
-                            <span className="text-stone-600 font-bold text-[17px] group-hover/link:text-stone-900 transition-colors leading-snug flex-1">
+                            <span className="text-stone-600 dark:text-slate-300 font-bold text-[17px] group-hover/link:text-stone-900 transition-colors leading-snug flex-1">
                               {article.title}
                             </span>
-                            <ArrowRight className="w-5 h-5 text-stone-300 group-hover/link:text-stone-500 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" />
+                            <ArrowRight className="w-5 h-5 text-stone-300 group-hover/link:text-stone-500 dark:text-slate-400 opacity-0 group-hover/link:opacity-100 -translate-x-2 group-hover/link:translate-x-0 transition-all" />
                           </Link>
                         ))}
                       </div>
@@ -356,7 +356,7 @@ export default function DocsHubPage() {
                   </Link>
                   <Link
                     href="/reviews"
-                    className="bg-white text-blue-600 font-[1000] uppercase tracking-widest border-2 border-stone-200 border-b-[6px] hover:bg-stone-50 hover:border-blue-200 active:border-b-2 active:translate-y-[4px] rounded-2xl px-6 py-4 transition-all w-full sm:w-auto text-center shadow-sm text-sm"
+                    className="bg-white dark:bg-slate-900 text-blue-600 font-[1000] uppercase tracking-widest border-2 border-stone-200 dark:border-slate-800 border-b-[6px] hover:bg-stone-50 dark:bg-slate-950 hover:border-blue-200 active:border-b-2 active:translate-y-[4px] rounded-2xl px-6 py-4 transition-all w-full sm:w-auto text-center shadow-sm text-sm"
                   >
                     Ler Comunidade
                   </Link>
@@ -368,80 +368,80 @@ export default function DocsHubPage() {
           {/* RIGHT COLUMN (Span 1): Changelog Module */}
           <div className="lg:col-span-1 relative mt-12 lg:mt-0">
             <div className="sticky top-6 flex flex-col">
-              <h2 className="text-2xl font-[1000] text-stone-800 mb-6 flex items-center gap-3 drop-shadow-sm">
+              <h2 className="text-2xl font-[1000] text-stone-800 dark:text-slate-100 mb-6 flex items-center gap-3 drop-shadow-sm">
                 Últimas Novidades{" "}
                 <span className="animate-bounce inline-block">🚀</span>
               </h2>
 
               <div className="flex flex-col gap-5 relative">
                 {/* Timeline Line behind cards */}
-                <div className="absolute left-[20px] top-4 bottom-4 w-1 bg-stone-200 rounded-full z-0 opacity-50"></div>
+                <div className="absolute left-[20px] top-4 bottom-4 w-1 bg-stone-200 dark:bg-slate-700 rounded-full z-0 opacity-50"></div>
 
                 {/* Changelog Card: PRO Subscription */}
-                <div className="bg-white border-2 border-emerald-200 border-b-[6px] rounded-[1.5rem] p-6 shadow-sm hover:border-emerald-400 hover:shadow-md transition-all relative z-10 group">
+                <div className="bg-white dark:bg-slate-900 border-2 border-emerald-200 border-b-[6px] rounded-[1.5rem] p-6 shadow-sm hover:border-emerald-400 hover:shadow-md transition-all relative z-10 group">
                   <div className="absolute -left-3 top-[-10px] rotate-[-10deg] group-hover:rotate-0 transition-transform bg-emerald-500 text-white font-black text-[10px] tracking-widest uppercase px-3 py-1 rounded-full border-2 border-white shadow-sm shadow-emerald-500/30">
                     V 1.5.0
                   </div>
-                  <h3 className="text-stone-800 font-[1000] text-xl mt-3 mb-2 leading-tight">
+                  <h3 className="text-stone-800 dark:text-slate-100 font-[1000] text-xl mt-3 mb-2 leading-tight">
                     Chegou o MyDuolingo PRO! 👑
                   </h3>
-                  <p className="text-stone-500 font-bold text-sm leading-relaxed mb-4">
+                  <p className="text-stone-500 dark:text-slate-400 font-bold text-sm leading-relaxed mb-4">
                     Desbloqueia corações infinitos e a Área de Prática AI com a
                     nossa nova subscrição premium via Stripe. Pratica sem
                     limites!
                   </p>
-                  <span className="text-stone-400 font-black text-[11px] uppercase tracking-wider">
+                  <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-black text-[11px] uppercase tracking-wider">
                     Acabado de Sair
                   </span>
                 </div>
 
                 {/* Changelog Card 1 */}
-                <div className="bg-white border-2 border-stone-200 border-b-[6px] rounded-[1.5rem] p-6 shadow-sm hover:border-blue-300 hover:shadow-md transition-all relative z-10 group opacity-80 hover:opacity-100">
+                <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-[6px] rounded-[1.5rem] p-6 shadow-sm hover:border-blue-300 hover:shadow-md transition-all relative z-10 group opacity-80 hover:opacity-100">
                   <div className="absolute -left-3 top-[-10px] rotate-[-10deg] group-hover:rotate-0 transition-transform bg-[#1CB0F6] text-white font-black text-[10px] tracking-widest uppercase px-3 py-1 rounded-full border-2 border-white shadow-sm shadow-[#1CB0F6]/30">
                     V 1.3.0
                   </div>
-                  <h3 className="text-stone-800 font-[1000] text-xl mt-3 mb-2 leading-tight">
+                  <h3 className="text-stone-800 dark:text-slate-100 font-[1000] text-xl mt-3 mb-2 leading-tight">
                     O Mural do Amor Nasceu!
                   </h3>
-                  <p className="text-stone-500 font-bold text-sm leading-relaxed mb-4">
+                  <p className="text-stone-500 dark:text-slate-400 font-bold text-sm leading-relaxed mb-4">
                     Lançámos o sistema de reviews onde a comunidade pode deixar
                     o seu feedback tátil na plataforma. Já foste dar 5 estrelas?
                   </p>
-                  <span className="text-stone-400 font-black text-[11px] uppercase tracking-wider">
+                  <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-black text-[11px] uppercase tracking-wider">
                     Há 2 dias
                   </span>
                 </div>
 
                 {/* Changelog Card 2 */}
-                <div className="bg-white border-2 border-stone-200 border-b-[6px] rounded-[1.5rem] p-6 shadow-sm hover:border-amber-300 hover:shadow-md transition-all relative z-10 group">
+                <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-[6px] rounded-[1.5rem] p-6 shadow-sm hover:border-amber-300 hover:shadow-md transition-all relative z-10 group">
                   <div className="absolute -left-3 top-[-10px] rotate-[-10deg] group-hover:rotate-0 transition-transform bg-amber-500 text-white font-black text-[10px] tracking-widest uppercase px-3 py-1 rounded-full border-2 border-white shadow-sm shadow-amber-500/30">
                     V 1.2.0
                   </div>
-                  <h3 className="text-stone-800 font-[1000] text-xl mt-3 mb-2 leading-tight">
+                  <h3 className="text-stone-800 dark:text-slate-100 font-[1000] text-xl mt-3 mb-2 leading-tight">
                     O Modo Arcade Chegou!
                   </h3>
-                  <p className="text-stone-500 font-bold text-sm leading-relaxed mb-4">
+                  <p className="text-stone-500 dark:text-slate-400 font-bold text-sm leading-relaxed mb-4">
                     Experimenta o novo Sprint de Vocabulário e os desafios
                     táticos da Chuva de Meteoros para testares os reflexos.
                   </p>
-                  <span className="text-stone-400 font-black text-[11px] uppercase tracking-wider">
+                  <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-black text-[11px] uppercase tracking-wider">
                     Há 1 semana
                   </span>
                 </div>
 
                 {/* Changelog Card 3 */}
-                <div className="bg-white border-2 border-stone-200 border-b-[6px] rounded-[1.5rem] p-6 shadow-sm hover:border-purple-300 transition-all relative z-10 group opacity-80 hover:opacity-100">
+                <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-[6px] rounded-[1.5rem] p-6 shadow-sm hover:border-purple-300 transition-all relative z-10 group opacity-80 hover:opacity-100">
                   <div className="absolute -left-3 top-[-10px] rotate-[-10deg] group-hover:rotate-0 transition-transform bg-purple-500 text-white font-black text-[10px] tracking-widest uppercase px-3 py-1 rounded-full border-2 border-white shadow-sm shadow-purple-500/30">
                     V 1.1.5
                   </div>
-                  <h3 className="text-stone-700 font-[1000] text-xl mt-3 mb-2 leading-tight">
+                  <h3 className="text-stone-700 dark:text-slate-200 font-[1000] text-xl mt-3 mb-2 leading-tight">
                     Reformulação das Ligas
                   </h3>
-                  <p className="text-stone-500 font-bold text-sm leading-relaxed mb-4">
+                  <p className="text-stone-500 dark:text-slate-400 font-bold text-sm leading-relaxed mb-4">
                     A Zona Vermelha de despromoção está implacável. Tira o
                     pêndulo das costas ao fim-de-semana porque a queda é real!
                   </p>
-                  <span className="text-stone-400 font-black text-[11px] uppercase tracking-wider">
+                  <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-black text-[11px] uppercase tracking-wider">
                     Há 3 semanas
                   </span>
                 </div>

@@ -81,7 +81,7 @@ export const AIGeneratorForm = ({ courseId, targetLang }: Props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden"
+      className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden"
     >
       <div className="p-8 flex flex-col gap-6">
         {/* Topic */}
@@ -96,7 +96,7 @@ export const AIGeneratorForm = ({ courseId, targetLang }: Props) => {
             id="topic"
             value={topicId}
             onChange={(e) => setTopicId(Number(e.target.value))}
-            className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition-all cursor-pointer"
+            className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold text-slate-700 dark:text-slate-200 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition-all cursor-pointer"
           >
             {AI_TOPICS.map((topic) => (
               <option key={topic.id} value={topic.id}>
@@ -121,7 +121,7 @@ export const AIGeneratorForm = ({ courseId, targetLang }: Props) => {
             id="level"
             value={level}
             onChange={(e) => setLevel(e.target.value)}
-            className="w-full max-w-[320px] px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition-all cursor-pointer"
+            className="w-full max-w-[320px] px-4 py-3 bg-slate-50 dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold text-slate-700 dark:text-slate-200 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition-all cursor-pointer"
           >
             {CEFR_LEVELS.map((lvl) => (
               <option key={lvl.value} value={lvl.value}>
@@ -166,11 +166,11 @@ export const AIGeneratorForm = ({ courseId, targetLang }: Props) => {
       </div>
 
       {/* Footer */}
-      <div className="px-8 py-5 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+      <div className="px-8 py-5 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-5 py-2.5 text-slate-500 hover:text-slate-700 font-bold text-sm transition-colors"
+          className="px-5 py-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 font-bold text-sm transition-colors"
         >
           Cancelar
         </button>

@@ -161,7 +161,7 @@ export default function ForgotPasswordPage() {
         initial={{ opacity: 0, scale: 0.9, y: 40 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className="relative w-full max-w-xl bg-white rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-12 lg:p-14 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] border-b-[8px] border-slate-200 z-10 mt-24"
+        className="relative w-full max-w-xl bg-white dark:bg-slate-900 rounded-[2.5rem] lg:rounded-[3rem] p-6 sm:p-12 lg:p-14 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] border-b-[8px] border-slate-200 dark:border-slate-800 z-10 mt-24"
       >
         {/* Floating Mascot */}
         <motion.div
@@ -179,7 +179,7 @@ export default function ForgotPasswordPage() {
             else setStep(step - 1);
             setError("");
           }}
-          className="absolute top-6 left-6 p-3 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-2xl transition-colors group z-20"
+          className="absolute top-6 left-6 p-3 text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 rounded-2xl transition-colors group z-20"
         >
           <ArrowLeft
             size={24}
@@ -221,7 +221,7 @@ export default function ForgotPasswordPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full h-16 px-6 bg-slate-100 border-2 border-transparent rounded-2xl font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-[#1cb0f6] focus:bg-white transition-all text-lg"
+                      className="w-full h-16 px-6 bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:border-[#1cb0f6] focus:bg-white dark:bg-slate-900 transition-all text-lg"
                     />
                   </motion.div>
 
@@ -290,7 +290,7 @@ export default function ForgotPasswordPage() {
                       }
                       required
                       maxLength={6}
-                      className="w-full h-24 text-center text-5xl tracking-[0.5em] font-black bg-slate-100 border-2 border-transparent rounded-2xl focus:bg-white focus:ring-0 outline-none transition-all text-slate-700 focus:border-amber-400"
+                      className="w-full h-24 text-center text-5xl tracking-[0.5em] font-black bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl focus:bg-white dark:bg-slate-900 focus:ring-0 outline-none transition-all text-slate-700 dark:text-slate-200 focus:border-amber-400"
                     />
                   </motion.div>
 
@@ -381,7 +381,7 @@ export default function ForgotPasswordPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                         autoFocus
-                        className="w-full h-16 px-6 bg-slate-100 border-2 border-transparent rounded-2xl font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-[#58cc02] focus:bg-white transition-all text-lg pr-14"
+                        className="w-full h-16 px-6 bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:border-[#58cc02] focus:bg-white dark:bg-slate-900 transition-all text-lg pr-14"
                       />
                       <button
                         type="button"
@@ -402,7 +402,7 @@ export default function ForgotPasswordPage() {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
-                      className="w-full h-16 px-6 bg-slate-100 border-2 border-transparent rounded-2xl font-bold text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-[#58cc02] focus:bg-white transition-all text-lg"
+                      className="w-full h-16 px-6 bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:border-[#58cc02] focus:bg-white dark:bg-slate-900 transition-all text-lg"
                     />
                   </motion.div>
 

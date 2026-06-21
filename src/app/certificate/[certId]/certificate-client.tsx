@@ -26,7 +26,7 @@ export const CertificateClient = ({ certUrl }: Props) => {
       <Button
         onClick={handlePrint}
         variant="sidebarOutline"
-        className="text-stone-600 bg-white hover:bg-stone-100 font-bold border-2 border-stone-200 border-b-4 active:border-b-2 active:translate-y-[2px] transition-all rounded-xl px-6"
+        className="text-stone-600 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 font-bold border-2 border-stone-200 dark:border-slate-800 border-b-4 active:border-b-2 active:translate-y-[2px] transition-all rounded-xl px-6"
       >
         <Download className="w-4 h-4 mr-2" />
         Guardar PDF

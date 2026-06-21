@@ -44,11 +44,13 @@ export const SubscriptionCard = ({ isPro }: Props) => {
 
   return (
     <div>
-      <h3 className="text-xl font-black text-stone-800 mb-4">Subscrição</h3>
+      <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-4">
+        Subscrição
+      </h3>
 
       {isPro ? (
         // PRO CARD
-        <div className="bg-white border-2 border-amber-300 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden transition-all">
+        <div className="bg-white dark:bg-slate-900 border-2 border-amber-300 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden transition-all">
           {/* Shimmer background hint */}
           <div className="absolute inset-0 bg-gradient-to-r from-amber-50 to-yellow-50/50 -z-10" />
 
@@ -57,11 +59,11 @@ export const SubscriptionCard = ({ isPro }: Props) => {
               MyDuolingo PRO
               <Crown className="h-5 w-5 fill-amber-400 text-amber-500" />
             </h4>
-            <p className="mt-2 text-sm font-bold text-stone-500 max-w-md leading-relaxed">
+            <p className="mt-2 text-sm font-bold text-stone-500 dark:text-slate-400 max-w-md leading-relaxed">
               Estás atualmente no plano PRO. Aproveita as tuas vantagens
               exclusivas:
             </p>
-            <ul className="mt-3 space-y-2 text-sm font-bold text-stone-600">
+            <ul className="mt-3 space-y-2 text-sm font-bold text-stone-600 dark:text-slate-300">
               <li className="flex items-center gap-2">
                 <Infinity className="h-4 w-4 text-rose-500" /> Corações
                 Ilimitados
@@ -81,26 +83,28 @@ export const SubscriptionCard = ({ isPro }: Props) => {
             onClick={onClick}
             disabled={isPending}
             className={cn(
-              "group relative flex shrink-0 items-center justify-center gap-2 rounded-2xl border-2 border-stone-200 border-b-6 bg-stone-100 px-6 py-4 font-black uppercase tracking-widest text-stone-600 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-stone-200 hover:shadow-md active:translate-y-1 active:border-b-2 active:shadow-none disabled:pointer-events-none disabled:opacity-70",
+              "group relative flex shrink-0 items-center justify-center gap-2 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-6 bg-stone-100 dark:bg-slate-800 px-6 py-4 font-black uppercase tracking-widest text-stone-600 dark:text-slate-300 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:shadow-md active:translate-y-1 active:border-b-2 active:shadow-none disabled:pointer-events-none disabled:opacity-70",
             )}
           >
             {isPending ? (
               <Loader2 className="h-5 w-5 animate-spin" />
             ) : (
-              <Settings className="h-5 w-5 text-stone-500 transition-transform group-hover:rotate-45" />
+              <Settings className="h-5 w-5 text-stone-500 dark:text-slate-400 transition-transform group-hover:rotate-45" />
             )}
             {isPending ? "A CARREGAR..." : "GERIR SUBSCRIÇÃO"}
           </button>
         </div>
       ) : (
         // FREE CARD
-        <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:border-stone-300">
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:border-stone-300 dark:border-slate-700">
           <div className="flex flex-col">
-            <h4 className="text-xl font-black text-stone-700">Plano Grátis</h4>
-            <p className="mt-2 text-sm font-bold text-stone-500 max-w-md leading-relaxed">
+            <h4 className="text-xl font-black text-stone-700 dark:text-slate-200">
+              Plano Grátis
+            </h4>
+            <p className="mt-2 text-sm font-bold text-stone-500 dark:text-slate-400 max-w-md leading-relaxed">
               Faz upgrade para o PRO para desbloqueares:
             </p>
-            <ul className="mt-3 space-y-2 text-sm font-bold text-stone-600">
+            <ul className="mt-3 space-y-2 text-sm font-bold text-stone-600 dark:text-slate-300">
               <li className="flex items-center gap-2">
                 <Infinity className="h-4 w-4 text-rose-500" /> Corações
                 Ilimitados

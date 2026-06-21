@@ -25,14 +25,14 @@ export default function LearnPage() {
       </div>
 
       {/* Atmospheric Bottom Fade Overlay (Synchronous) */}
-      <div className="fixed bottom-0 left-0 lg:left-[88px] right-0 h-48 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-40 flex items-end justify-center pb-6">
-        <div className="bg-white/60 backdrop-blur-md px-4 py-2 rounded-2xl border-2 border-white/50 shadow-sm flex items-center gap-2">
+      <div className="fixed bottom-0 left-0 lg:left-[88px] right-0 h-48 bg-gradient-to-t from-white dark:from-slate-950 via-white/80 dark:via-slate-950/80 to-transparent pointer-events-none z-40 flex items-end justify-center pb-6">
+        <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md px-4 py-2 rounded-2xl border-2 border-white/50 dark:border-slate-800/50 shadow-sm flex items-center gap-2">
           <span className="text-xs font-bold text-slate-400">Pressiona</span>
-          <kbd className="px-2 py-1 bg-white border-2 border-slate-200 border-b-4 rounded-lg text-xs font-black text-slate-500">
+          <kbd className="px-2 py-1 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 border-b-4 rounded-lg text-xs font-black text-slate-500 dark:text-slate-400">
             CTRL
           </kbd>
           <span className="text-xs font-bold text-slate-400">+</span>
-          <kbd className="px-2 py-1 bg-white border-2 border-slate-200 border-b-4 rounded-lg text-xs font-black text-slate-500">
+          <kbd className="px-2 py-1 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 border-b-4 rounded-lg text-xs font-black text-slate-500 dark:text-slate-400">
             M
           </kbd>
           <span className="text-xs font-bold text-slate-400 ml-1">
@@ -57,7 +57,7 @@ async function LearnData() {
   if (!userProgress || !userProgress.activeCourseId) {
     if (onboardingCookie) {
       return (
-        <div className="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center p-6">
+        <div className="fixed inset-0 bg-white dark:bg-slate-900 z-[100] flex flex-col items-center justify-center p-6">
           <OnboardingSync isFullScreen />
           <div className="flex flex-col items-center gap-6 animate-in fade-in zoom-in duration-500">
             <div className="w-48 h-48 relative">
@@ -69,10 +69,10 @@ async function LearnData() {
               />
             </div>
             <div className="space-y-2 text-center">
-              <h2 className="text-2xl font-black text-slate-700 uppercase tracking-tight">
+              <h2 className="text-2xl font-black text-slate-700 dark:text-slate-200 uppercase tracking-tight">
                 A Preparar o teu Mundo...
               </h2>
-              <p className="text-slate-500 font-bold">
+              <p className="text-slate-500 dark:text-slate-400 font-bold">
                 Estamos a configurar o teu curso épico. Só um momento! 🦉
               </p>
             </div>
@@ -160,10 +160,10 @@ async function LearnData() {
           {processedUnits.length === 0 && (
             <div className="flex flex-col items-center justify-center py-16 text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
               <span className="text-5xl mb-4">📚</span>
-              <h2 className="text-xl font-bold text-slate-700 mb-2">
+              <h2 className="text-xl font-bold text-slate-700 dark:text-slate-200 mb-2">
                 Ainda não há lições
               </h2>
-              <p className="text-slate-500 mb-6 text-sm">
+              <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">
                 Seleciona um curso para começar!
               </p>
               <Link href="/courses">
@@ -204,12 +204,12 @@ const LearnSkeleton = () => {
 
             {/* Nodes Skeleton - Winding path */}
             <div className="flex flex-col items-center gap-8 mt-6">
-              <div className="w-[72px] h-[72px] rounded-full bg-stone-200 animate-pulse border-b-[8px] border-stone-300 relative left-0"></div>
-              <div className="w-[72px] h-[72px] rounded-full bg-stone-200 animate-pulse border-b-[8px] border-stone-300 relative left-10"></div>
+              <div className="w-[72px] h-[72px] rounded-full bg-stone-200 dark:bg-slate-700 animate-pulse border-b-[8px] border-stone-300 dark:border-slate-700 relative left-0"></div>
+              <div className="w-[72px] h-[72px] rounded-full bg-stone-200 dark:bg-slate-700 animate-pulse border-b-[8px] border-stone-300 dark:border-slate-700 relative left-10"></div>
               {/* Current Active Node (Larger, Crown) */}
               <div className="w-[90px] h-[90px] rounded-full bg-emerald-200 animate-pulse border-b-[10px] border-emerald-300 relative left-16"></div>
-              <div className="w-[72px] h-[72px] rounded-full bg-stone-200 animate-pulse border-b-[8px] border-stone-300 relative left-10"></div>
-              <div className="w-[72px] h-[72px] rounded-full bg-stone-200 animate-pulse border-b-[8px] border-stone-300 relative left-0"></div>
+              <div className="w-[72px] h-[72px] rounded-full bg-stone-200 dark:bg-slate-700 animate-pulse border-b-[8px] border-stone-300 dark:border-slate-700 relative left-10"></div>
+              <div className="w-[72px] h-[72px] rounded-full bg-stone-200 dark:bg-slate-700 animate-pulse border-b-[8px] border-stone-300 dark:border-slate-700 relative left-0"></div>
             </div>
 
             {/* Next Unit Banner Skeleton */}
@@ -220,7 +220,7 @@ const LearnSkeleton = () => {
 
       {/* Sidebar Skeleton */}
       <div className="w-full lg:w-[368px] relative lg:sticky lg:top-6 lg:self-start z-10 font-sans animate-in fade-in duration-500">
-        <div className="bg-white/80 backdrop-blur-xl rounded-[32px] border-2 border-slate-200 border-b-[8px] p-6 shadow-xl flex flex-col gap-6 w-full relative overflow-hidden">
+        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-[32px] border-2 border-slate-200 dark:border-slate-800 border-b-[8px] p-6 shadow-xl flex flex-col gap-6 w-full relative overflow-hidden">
           {/* Header */}
           <div className="h-4 w-32 bg-slate-200 rounded-full animate-pulse mb-2"></div>
 
@@ -239,7 +239,7 @@ const LearnSkeleton = () => {
           </div>
 
           {/* Active Course Module Skeleton */}
-          <div className="bg-slate-50 rounded-[24px] border-2 border-slate-200 border-b-[6px] h-24 animate-pulse flex items-center gap-4 p-4">
+          <div className="bg-slate-50 dark:bg-slate-950 rounded-[24px] border-2 border-slate-200 dark:border-slate-800 border-b-[6px] h-24 animate-pulse flex items-center gap-4 p-4">
             <div className="w-14 h-14 bg-slate-200 rounded-[18px] shrink-0"></div>
             <div className="flex-1 flex flex-col gap-2">
               <div className="h-3 w-16 bg-slate-200 rounded-full"></div>

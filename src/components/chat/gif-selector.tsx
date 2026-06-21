@@ -25,12 +25,12 @@ export const GifSelector = ({ onSelect }: Props) => {
   return (
     <div className="flex flex-col gap-3 w-full h-full min-h-0">
       <input
-        className="p-3 border-2 border-slate-200 border-b-4 rounded-xl w-full bg-slate-100 focus:bg-white transition outline-none focus:border-sky-400 font-bold text-slate-700 placeholder:text-slate-400 text-sm shrink-0"
+        className="p-3 border-2 border-slate-200 dark:border-slate-800 border-b-4 rounded-xl w-full bg-slate-100 dark:bg-slate-800 focus:bg-white dark:bg-slate-900 transition outline-none focus:border-sky-400 font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 text-sm shrink-0"
         placeholder="Pesquisar GIF..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar bg-slate-50 rounded-xl border-2 border-slate-200 relative">
+      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden custom-scrollbar bg-slate-50 dark:bg-slate-950 rounded-xl border-2 border-slate-200 dark:border-slate-800 relative">
         <Grid
           width={
             typeof window !== "undefined"

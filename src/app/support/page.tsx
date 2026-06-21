@@ -52,7 +52,7 @@ function SubmitButton() {
       className={cn(
         "w-full py-5 rounded-2xl font-black text-xl tracking-widest text-white transition-all flex items-center justify-center outline-none uppercase shadow-sm mt-4",
         pending
-          ? "bg-stone-300 border-stone-300 border-b-4 cursor-not-allowed translate-y-2 opacity-70 animate-pulse"
+          ? "bg-stone-300 dark:bg-slate-600 border-stone-300 dark:border-slate-700 border-b-4 cursor-not-allowed translate-y-2 opacity-70 animate-pulse"
           : "bg-[#58CC02] border-[#46a302] border-b-8 active:border-b-0 active:translate-y-2 hover:bg-[#61da02]",
       )}
     >
@@ -136,23 +136,23 @@ export default function SupportPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 py-10 px-4 pb-24 font-sans">
+    <div className="min-h-screen bg-stone-50 dark:bg-slate-950 py-10 px-4 pb-24 font-sans">
       <div className="max-w-[1200px] mx-auto space-y-10">
         {/* ── Global Top Header ── */}
         <div className="flex items-center justify-between">
           <Link
             href="/learn"
-            className="inline-flex items-center gap-3 text-stone-400 hover:text-stone-600 font-extrabold uppercase tracking-widest text-sm transition-all group active:scale-95"
+            className="inline-flex items-center gap-3 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 font-extrabold uppercase tracking-widest text-sm transition-all group active:scale-95"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-stone-200 border-b-4 bg-white group-hover:bg-stone-50 transition-all shadow-sm">
-              <ArrowLeft className="w-6 h-6 text-stone-400 group-hover:text-stone-600" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-4 bg-white dark:bg-slate-900 group-hover:bg-stone-50 dark:bg-slate-950 transition-all shadow-sm">
+              <ArrowLeft className="w-6 h-6 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-stone-600 dark:text-slate-300" />
             </div>
             Menu
           </Link>
 
           {/* System Status Indicator */}
           <div
-            className="hidden sm:flex items-center gap-3 bg-white border-2 border-stone-200 border-b-4 rounded-2xl px-5 py-3 shadow-sm font-bold text-sm text-stone-600 cursor-help hover:-translate-y-1 transition-transform"
+            className="hidden sm:flex items-center gap-3 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl px-5 py-3 shadow-sm font-bold text-sm text-stone-600 dark:text-slate-300 cursor-help hover:-translate-y-1 transition-transform"
             title="Última verificação há 2 minutos"
           >
             <span className="relative flex h-3.5 w-3.5">
@@ -188,14 +188,14 @@ export default function SupportPage() {
             <div className="w-full max-w-2xl relative mt-4">
               <div className="relative transition-transform group-hover:scale-[1.02] duration-500 z-30">
                 <div className="absolute inset-y-0 left-5 sm:left-6 flex items-center pointer-events-none">
-                  <Search className="w-6 h-6 sm:w-7 sm:h-7 text-stone-400" />
+                  <Search className="w-6 h-6 sm:w-7 sm:h-7 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
                 </div>
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={handleSearch}
                   placeholder={placeholderText}
-                  className="w-full bg-white text-stone-800 font-bold text-lg sm:text-xl rounded-full py-5 sm:py-6 pl-14 sm:pl-16 pr-14 sm:pr-40 shadow-[0_0_40px_rgba(0,0,0,0.15)] focus:outline-none focus:ring-8 focus:ring-white/20 transition-all border-none placeholder:text-stone-400 placeholder:text-base sm:placeholder:text-lg"
+                  className="w-full bg-white dark:bg-slate-900 text-stone-800 dark:text-slate-100 font-bold text-lg sm:text-xl rounded-full py-5 sm:py-6 pl-14 sm:pl-16 pr-14 sm:pr-40 shadow-[0_0_40px_rgba(0,0,0,0.15)] focus:outline-none focus:ring-8 focus:ring-white/20 transition-all border-none placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 placeholder:text-base sm:placeholder:text-lg"
                 />
                 <div className="absolute inset-y-2.5 right-2.5">
                   <Link
@@ -210,17 +210,17 @@ export default function SupportPage() {
 
               {/* Dropdown Results */}
               {searchQuery.trim().length > 1 && searchResults.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-4 w-full bg-white border-2 border-stone-200 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-[100] overflow-hidden flex flex-col text-left animate-in slide-in-from-top-4 fade-in duration-200">
+                <div className="absolute top-full left-0 right-0 mt-4 w-full bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-[100] overflow-hidden flex flex-col text-left animate-in slide-in-from-top-4 fade-in duration-200">
                   {searchResults.map((result) => (
                     <Link
                       key={result.id}
                       href={"/docs/" + result.slug}
-                      className="flex flex-col p-5 hover:bg-stone-50 border-b-2 border-stone-100 last:border-0 transition-colors group/item"
+                      className="flex flex-col p-5 hover:bg-stone-50 dark:bg-slate-950 border-b-2 border-stone-100 last:border-0 transition-colors group/item"
                     >
-                      <span className="font-black text-stone-700 text-lg group-hover/item:text-[#1CB0F6] transition-colors">
+                      <span className="font-black text-stone-700 dark:text-slate-200 text-lg group-hover/item:text-[#1CB0F6] transition-colors">
                         {result.title}
                       </span>
-                      <span className="text-sm font-medium text-stone-500 mt-1 line-clamp-2 leading-relaxed">
+                      <span className="text-sm font-medium text-stone-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
                         {result.summary}
                       </span>
                     </Link>
@@ -230,11 +230,11 @@ export default function SupportPage() {
 
               {/* No Results Fallback */}
               {searchQuery.trim().length > 1 && searchResults.length === 0 && (
-                <div className="absolute top-full left-0 right-0 mt-4 w-full bg-white border-2 border-stone-200 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-[100] p-8 text-center animate-in slide-in-from-top-4 fade-in duration-200">
-                  <p className="text-stone-500 font-bold text-lg">
+                <div className="absolute top-full left-0 right-0 mt-4 w-full bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-[100] p-8 text-center animate-in slide-in-from-top-4 fade-in duration-200">
+                  <p className="text-stone-500 dark:text-slate-400 font-bold text-lg">
                     Nenhum resultado encontrado para "{searchQuery}"
                   </p>
-                  <p className="text-stone-400 font-medium text-sm mt-1">
+                  <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-medium text-sm mt-1">
                     Tenta usar termos como "XP", "Ligas", ou navega pelo Mural
                     Central.
                   </p>
@@ -268,7 +268,7 @@ export default function SupportPage() {
                 muito mais.
               </p>
             </div>
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center shrink-0 border-b-4 border-stone-200 group-hover:bg-[#d7ffb8] group-hover:border-[#b3ffc7] transition-colors shadow-sm cursor-pointer">
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-white dark:bg-slate-900 rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center shrink-0 border-b-4 border-stone-200 dark:border-slate-800 group-hover:bg-[#d7ffb8] group-hover:border-[#b3ffc7] transition-colors shadow-sm cursor-pointer">
               <ArrowRight
                 className="w-8 h-8 md:w-10 md:h-10 text-[#58cc02]"
                 strokeWidth={3}
@@ -303,21 +303,21 @@ export default function SupportPage() {
           </div>
 
           {/* 2. Direct Email Contact Card */}
-          <div className="lg:col-span-1 xl:col-span-1 bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-8 flex flex-col h-full hover:border-[#1CB0F6] group transition-colors relative">
+          <div className="lg:col-span-1 xl:col-span-1 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-8 flex flex-col h-full hover:border-[#1CB0F6] group transition-colors relative">
             <div className="w-14 h-14 bg-[#1CB0F6]/10 rounded-2xl flex items-center justify-center mb-6 border-b-4 border-[#1CB0F6]/20">
               <Mail className="w-7 h-7 text-[#1CB0F6]" />
             </div>
-            <h3 className="text-xl font-black text-stone-800 mb-2">
+            <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-2">
               Email Direto
             </h3>
-            <p className="text-stone-500 font-medium text-sm mb-6 flex-grow">
+            <p className="text-stone-500 dark:text-slate-400 font-medium text-sm mb-6 flex-grow">
               Problemas complexos? Fala diretamente com os engenheiros humanos
               da plataforma.
             </p>
 
             <button
               onClick={copyContactEmail}
-              className="w-full bg-stone-100 hover:bg-stone-200 text-stone-600 font-bold border-2 border-stone-200 border-b-4 active:border-b-2 active:translate-y-[2px] rounded-xl py-3 px-4 flex items-center justify-center gap-2 transition-all outline-none"
+              className="w-full bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 text-stone-600 dark:text-slate-300 font-bold border-2 border-stone-200 dark:border-slate-800 border-b-4 active:border-b-2 active:translate-y-[2px] rounded-xl py-3 px-4 flex items-center justify-center gap-2 transition-all outline-none"
             >
               <Copy className="w-4 h-4" /> Copiar Email
             </button>
@@ -328,18 +328,18 @@ export default function SupportPage() {
             href="/reviews"
             className="lg:col-span-2 md:col-span-2 xl:col-span-1 group relative outline-none"
           >
-            <div className="h-full bg-white border-2 border-stone-200 border-b-[10px] rounded-[2.5rem] p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:border-amber-400 group-hover:shadow-[0_20px_40px_rgba(251,191,36,0.15)] group-active:translate-y-1 group-active:border-b-4">
+            <div className="h-full bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-[10px] rounded-[2.5rem] p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:border-amber-400 group-hover:shadow-[0_20px_40px_rgba(251,191,36,0.15)] group-active:translate-y-1 group-active:border-b-4">
               {/* Animated Holographic Glow */}
               <div className="absolute top-0 right-0 w-40 h-40 bg-amber-400/20 rounded-full blur-[60px] group-hover:bg-amber-400/40 transition-colors animate-pulse"></div>
               <div className="absolute -left-10 -bottom-10 w-32 h-32 bg-orange-400/10 rounded-full blur-[40px]"></div>
 
               <div className="relative z-10 flex justify-between items-start">
                 <div className="space-y-1">
-                  <h3 className="text-2xl font-[1000] text-stone-800 leading-tight tracking-tight">
+                  <h3 className="text-2xl font-[1000] text-stone-800 dark:text-slate-100 leading-tight tracking-tight">
                     Mural da <br />
                     <span className="text-amber-600">Comunidade</span>
                   </h3>
-                  <p className="text-stone-400 font-bold text-xs uppercase tracking-[0.2em]">
+                  <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-[0.2em]">
                     Hall of Fame
                   </p>
                 </div>
@@ -372,7 +372,7 @@ export default function SupportPage() {
                       realReviews.slice(0, 3).map((rev, i) => (
                         <div
                           key={rev.id}
-                          className="w-9 h-9 rounded-full border-2 border-white bg-stone-100 flex items-center justify-center overflow-hidden shrink-0 shadow-sm"
+                          className="w-9 h-9 rounded-full border-2 border-white bg-stone-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 shadow-sm"
                         >
                           {rev.userImageSrc ? (
                             <Image
@@ -388,7 +388,7 @@ export default function SupportPage() {
                         </div>
                       ))
                     ) : (
-                      <div className="w-9 h-9 rounded-full border-2 border-white bg-stone-100 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+                      <div className="w-9 h-9 rounded-full border-2 border-white bg-stone-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
                         <UserCircle className="w-7 h-7 text-stone-300" />
                       </div>
                     )}
@@ -398,7 +398,7 @@ export default function SupportPage() {
                       </div>
                     )}
                   </div>
-                  <span className="text-stone-500 font-bold text-xs mt-1 truncate">
+                  <span className="text-stone-500 dark:text-slate-400 font-bold text-xs mt-1 truncate">
                     {realReviews.length === 1
                       ? "1 Aluno Avaliou"
                       : `${realReviews.length || 0} Alunos Avaliaram`}
@@ -407,13 +407,13 @@ export default function SupportPage() {
               </div>
 
               <div className="relative z-10 mt-auto">
-                <div className="flex items-center justify-between bg-stone-50 group-hover:bg-amber-50 p-4 rounded-2xl border-2 border-stone-100 group-hover:border-amber-200 transition-colors">
-                  <span className="text-stone-600 group-hover:text-amber-700 font-black text-xs uppercase tracking-widest">
+                <div className="flex items-center justify-between bg-stone-50 dark:bg-slate-950 group-hover:bg-amber-50 p-4 rounded-2xl border-2 border-stone-100 group-hover:border-amber-200 transition-colors">
+                  <span className="text-stone-600 dark:text-slate-300 group-hover:text-amber-700 font-black text-xs uppercase tracking-widest">
                     {realReviews.length > 0
                       ? "Ver Avaliações"
                       : "Dar Primeira Review"}
                   </span>
-                  <ArrowLeft className="w-5 h-5 text-stone-400 group-hover:text-amber-500 rotate-180 group-hover:translate-x-1 transition-transform" />
+                  <ArrowLeft className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-amber-500 rotate-180 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </div>
@@ -424,8 +424,8 @@ export default function SupportPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[250px_1.5fr_1.2fr] gap-8">
           {/* Left Column: Resources & Tech Specs */}
           <div className="flex flex-col gap-6">
-            <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-6">
-              <h3 className="text-base font-black uppercase text-stone-400 tracking-widest mb-4 flex items-center gap-2">
+            <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6">
+              <h3 className="text-base font-black uppercase text-stone-400 dark:text-slate-500 dark:text-slate-400 tracking-widest mb-4 flex items-center gap-2">
                 <FolderKey /> Recursos Oficiais
               </h3>
               <div className="flex flex-col gap-2">
@@ -482,7 +482,7 @@ export default function SupportPage() {
           </div>
 
           {/* Middle Column: The Support Ticket Form */}
-          <div className="bg-white border-2 border-stone-200 border-b-[10px] rounded-[2.5rem] p-8 shadow-sm h-fit">
+          <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-[10px] rounded-[2.5rem] p-8 shadow-sm h-fit">
             {state?.success ? (
               <div className="flex flex-col items-center justify-center text-center animate-in fade-in zoom-in-95 duration-500 bg-green-50 border-2 border-green-200 border-b-8 rounded-3xl p-10 h-full">
                 <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 border-4 border-white shadow-sm ring-8 ring-green-500/10">
@@ -511,10 +511,10 @@ export default function SupportPage() {
                       Portal Seguro
                     </span>
                   </div>
-                  <h2 className="text-3xl font-black text-stone-800 mb-2 leading-tight">
+                  <h2 className="text-3xl font-black text-stone-800 dark:text-slate-100 mb-2 leading-tight">
                     Submeter Ticket
                   </h2>
-                  <p className="text-stone-500 font-medium text-lg">
+                  <p className="text-stone-500 dark:text-slate-400 font-medium text-lg">
                     Reporta bugs graves ou sugere melhorias profundas
                     preenchendo os dados abaixo.
                   </p>
@@ -559,7 +559,7 @@ export default function SupportPage() {
                   <div className="space-y-2">
                     <label
                       htmlFor="subject"
-                      className="text-xs font-black uppercase text-stone-500 block tracking-widest ml-1 bg-white w-fit px-1"
+                      className="text-xs font-black uppercase text-stone-500 dark:text-slate-400 block tracking-widest ml-1 bg-white dark:bg-slate-900 w-fit px-1"
                     >
                       Título do Problema
                     </label>
@@ -569,7 +569,7 @@ export default function SupportPage() {
                         id="subject"
                         name="subject"
                         placeholder="Resumo em 5 palavras..."
-                        className="w-full bg-stone-50 border-2 border-stone-200 border-b-4 rounded-2xl p-5 pl-12 text-stone-800 font-bold placeholder:text-stone-400 focus:outline-none focus:border-[#1CB0F6] focus:bg-white transition-all text-lg"
+                        className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-5 pl-12 text-stone-800 dark:text-slate-100 font-bold placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 focus:outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 transition-all text-lg"
                       />
                       <Activity className="absolute top-1/2 -translate-y-1/2 left-4 w-5 h-5 text-stone-300 pointer-events-none" />
                     </div>
@@ -584,7 +584,7 @@ export default function SupportPage() {
                   <div className="space-y-2">
                     <label
                       htmlFor="message"
-                      className="text-xs font-black uppercase text-stone-500 block tracking-widest ml-1 bg-white w-fit px-1"
+                      className="text-xs font-black uppercase text-stone-500 dark:text-slate-400 block tracking-widest ml-1 bg-white dark:bg-slate-900 w-fit px-1"
                     >
                       Descrição Técnica / Passo a Passo
                     </label>
@@ -593,7 +593,7 @@ export default function SupportPage() {
                       name="message"
                       rows={5}
                       placeholder="O que esperavas que acontecesse e o que realmente aconteceu?"
-                      className="w-full bg-stone-50 border-2 border-stone-200 border-b-4 rounded-2xl p-5 text-stone-700 font-medium placeholder:text-stone-400 focus:outline-none focus:border-[#1CB0F6] focus:bg-white resize-none text-base leading-relaxed transition-all"
+                      className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-5 text-stone-700 dark:text-slate-200 font-medium placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 focus:outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 resize-none text-base leading-relaxed transition-all"
                     />
                     {state?.errors?.message && (
                       <p className="text-red-500 font-bold text-sm ml-2 mt-1 flex items-center gap-1">
@@ -611,11 +611,11 @@ export default function SupportPage() {
 
           {/* Right Column: Premium Interactive FAQs */}
           <div className="flex flex-col">
-            <div className="flex items-center justify-between mb-6 border-b-2 border-stone-200 pb-4">
-              <h2 className="text-2xl font-black text-stone-800 flex items-center gap-2">
+            <div className="flex items-center justify-between mb-6 border-b-2 border-stone-200 dark:border-slate-800 pb-4">
+              <h2 className="text-2xl font-black text-stone-800 dark:text-slate-100 flex items-center gap-2">
                 <HeartHandshake className="w-6 h-6 text-rose-500" /> Autoajuda
               </h2>
-              <span className="text-xs font-bold text-stone-400 bg-stone-200 px-2 py-1 rounded-md">
+              <span className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 bg-stone-200 dark:bg-slate-700 px-2 py-1 rounded-md">
                 FAQ's TOP 5
               </span>
             </div>
@@ -648,10 +648,10 @@ export default function SupportPage() {
             <div className="mt-8 rounded-[2rem] bg-[#1CB0F6]/10 border-2 border-[#1CB0F6]/20 p-6 flex items-start gap-4">
               <PhoneCall className="w-8 h-8 text-[#1CB0F6] shrink-0" />
               <div>
-                <h4 className="font-black text-stone-800 text-lg">
+                <h4 className="font-black text-stone-800 dark:text-slate-100 text-lg">
                   Suporte Prioritário
                 </h4>
-                <p className="text-stone-600 font-medium text-sm mt-1">
+                <p className="text-stone-600 dark:text-slate-300 font-medium text-sm mt-1">
                   Garantimos resposta em até 2 horas úteis caso reportes bugs de
                   bloqueios totais de conta.
                 </p>
@@ -698,15 +698,15 @@ function LegalLink({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 bg-stone-50 rounded-xl p-3 border-2 border-transparent hover:border-stone-200 transition-colors group outline-none focus:border-[#1CB0F6]"
+      className="flex items-center gap-3 bg-stone-50 dark:bg-slate-950 rounded-xl p-3 border-2 border-transparent hover:border-stone-200 dark:border-slate-800 transition-colors group outline-none focus:border-[#1CB0F6]"
     >
-      <span className="text-stone-400 group-hover:text-[#1CB0F6] transition-colors [&>svg]:w-5 [&>svg]:h-5">
+      <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6] transition-colors [&>svg]:w-5 [&>svg]:h-5">
         {icon}
       </span>
-      <span className="font-bold text-stone-600 group-hover:text-stone-800 transition-colors text-sm flex-grow">
+      <span className="font-bold text-stone-600 dark:text-slate-300 group-hover:text-stone-800 dark:text-slate-100 transition-colors text-sm flex-grow">
         {text}
       </span>
-      <ExternalLink className="w-4 h-4 text-stone-300 group-hover:text-stone-400 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
+      <ExternalLink className="w-4 h-4 text-stone-300 group-hover:text-stone-400 dark:text-slate-500 dark:text-slate-400 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
     </Link>
   );
 }
@@ -721,21 +721,21 @@ function FaqItem({
   icon: React.ReactNode;
 }) {
   return (
-    <details className="group bg-white border-2 border-stone-200 border-b-[6px] rounded-2xl cursor-pointer hover:border-stone-300 transition-all [&_summary::-webkit-details-marker]:hidden shadow-sm overflow-hidden outline-none">
-      <summary className="p-5 font-bold text-stone-800 text-lg flex items-center justify-between outline-none select-none">
+    <details className="group bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-[6px] rounded-2xl cursor-pointer hover:border-stone-300 dark:border-slate-700 transition-all [&_summary::-webkit-details-marker]:hidden shadow-sm overflow-hidden outline-none">
+      <summary className="p-5 font-bold text-stone-800 dark:text-slate-100 text-lg flex items-center justify-between outline-none select-none">
         <span className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-stone-50 border border-stone-100 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-full bg-stone-50 dark:bg-slate-950 border border-stone-100 flex items-center justify-center shrink-0">
             {icon}
           </div>
           {question}
         </span>
-        <div className="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center group-open:rotate-45 transition-transform shrink-0 border border-stone-200">
-          <span className="text-stone-400 font-black text-xl leading-none">
+        <div className="w-8 h-8 rounded-full bg-stone-100 dark:bg-slate-800 flex items-center justify-center group-open:rotate-45 transition-transform shrink-0 border border-stone-200 dark:border-slate-800">
+          <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-black text-xl leading-none">
             +
           </span>
         </div>
       </summary>
-      <div className="px-6 pb-6 text-stone-500 font-medium leading-relaxed bg-stone-50 border-t border-stone-100 italic text-base">
+      <div className="px-6 pb-6 text-stone-500 dark:text-slate-400 font-medium leading-relaxed bg-stone-50 dark:bg-slate-950 border-t border-stone-100 italic text-base">
         {answer}
       </div>
     </details>

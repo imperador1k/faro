@@ -55,14 +55,14 @@ export const DashboardClient = ({ data }: Props) => {
   return (
     <div className="flex flex-col gap-6 w-full">
       {/* Tabs Switcher */}
-      <div className="flex w-full sm:w-fit gap-2 bg-stone-100 p-2 rounded-2xl border-2 border-stone-200 border-b-4 mb-2 mx-auto sm:mx-0">
+      <div className="flex w-full sm:w-fit gap-2 bg-stone-100 dark:bg-slate-800 p-2 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-4 mb-2 mx-auto sm:mx-0">
         <button
           onClick={() => setActiveTab("overview")}
           className={cn(
             "transition-all flex-1 sm:flex-none text-center",
             activeTab === "overview"
-              ? "bg-white border-2 border-stone-200 border-b-4 rounded-xl px-2 sm:px-6 py-2.5 sm:py-2 font-bold text-[#1CB0F6] shadow-sm text-sm sm:text-base whitespace-nowrap"
-              : "px-2 sm:px-6 py-2.5 sm:py-2 font-bold text-stone-400 hover:text-stone-600 cursor-pointer text-sm sm:text-base whitespace-nowrap",
+              ? "bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-xl px-2 sm:px-6 py-2.5 sm:py-2 font-bold text-[#1CB0F6] shadow-sm text-sm sm:text-base whitespace-nowrap"
+              : "px-2 sm:px-6 py-2.5 sm:py-2 font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 cursor-pointer text-sm sm:text-base whitespace-nowrap",
           )}
         >
           Visão Geral
@@ -72,8 +72,8 @@ export const DashboardClient = ({ data }: Props) => {
           className={cn(
             "transition-all flex-1 sm:flex-none text-center",
             activeTab === "heatmap"
-              ? "bg-white border-2 border-stone-200 border-b-4 rounded-xl px-2 sm:px-6 py-2.5 sm:py-2 font-bold text-[#1CB0F6] shadow-sm text-sm sm:text-base whitespace-nowrap"
-              : "px-2 sm:px-6 py-2.5 sm:py-2 font-bold text-stone-400 hover:text-stone-600 cursor-pointer text-sm sm:text-base whitespace-nowrap",
+              ? "bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-xl px-2 sm:px-6 py-2.5 sm:py-2 font-bold text-[#1CB0F6] shadow-sm text-sm sm:text-base whitespace-nowrap"
+              : "px-2 sm:px-6 py-2.5 sm:py-2 font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 cursor-pointer text-sm sm:text-base whitespace-nowrap",
           )}
         >
           Consistência
@@ -83,10 +83,10 @@ export const DashboardClient = ({ data }: Props) => {
       {activeTab === "overview" && (
         <>
           {/* Component 1: "Dias de Foco" Bento Box */}
-          <div className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-6 md:p-8 flex flex-col items-center gap-6 animate-in fade-in slide-in-from-bottom-2">
+          <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 md:p-8 flex flex-col items-center gap-6 animate-in fade-in slide-in-from-bottom-2">
             <div className="flex items-center gap-2">
               <Flame className="h-8 w-8 text-orange-500 fill-orange-500" />
-              <h2 className="font-black text-2xl text-stone-700">
+              <h2 className="font-black text-2xl text-stone-700 dark:text-slate-200">
                 Dias de Foco
               </h2>
             </div>
@@ -99,8 +99,8 @@ export const DashboardClient = ({ data }: Props) => {
                       <Flame className="h-5 w-5 sm:h-8 sm:w-8 fill-white text-white" />
                     </div>
                   ) : (
-                    <div className="h-11 w-11 sm:h-16 sm:w-16 rounded-full bg-stone-100 border-t-4 border-stone-200 flex items-center justify-center">
-                      <span className="font-bold text-stone-400 text-sm sm:text-lg">
+                    <div className="h-11 w-11 sm:h-16 sm:w-16 rounded-full bg-stone-100 dark:bg-slate-800 border-t-4 border-stone-200 dark:border-slate-800 flex items-center justify-center">
+                      <span className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 text-sm sm:text-lg">
                         {d.dayName.charAt(0)}
                       </span>
                     </div>
@@ -115,18 +115,20 @@ export const DashboardClient = ({ data }: Props) => {
               </span>
             </div>
 
-            <p className="text-stone-400 font-bold text-sm">
+            <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
               Consegues fazer melhor, volta amanhã! ⏰
             </p>
           </div>
 
           {/* Gamified Bar Chart: XP Semanal */}
-          <div className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-6 md:p-8 flex flex-col w-full relative group/chart animate-in fade-in slide-in-from-bottom-2 duration-300">
+          <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 md:p-8 flex flex-col w-full relative group/chart animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="flex items-center gap-2 mb-2">
               <Activity className="h-8 w-8 text-sky-500" />
-              <h2 className="font-black text-2xl text-stone-700">XP Semanal</h2>
+              <h2 className="font-black text-2xl text-stone-700 dark:text-slate-200">
+                XP Semanal
+              </h2>
             </div>
-            <p className="text-stone-400 font-bold text-sm mb-8">
+            <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm mb-8">
               O teu desempenho ao longo da semana.
             </p>
 
@@ -149,7 +151,7 @@ export const DashboardClient = ({ data }: Props) => {
                       {/* Bar */}
                       <div className="w-full relative flex items-end justify-center h-full">
                         {d.xp === 0 ? (
-                          <div className="w-full h-4 bg-stone-100 border-2 border-stone-200 border-b-0 rounded-t-[10px] rounded-b-none" />
+                          <div className="w-full h-4 bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 border-b-0 rounded-t-[10px] rounded-b-none" />
                         ) : (
                           <div
                             className="w-full bg-[#1CB0F6] border-x-2 border-t-2 border-[#1899D6] border-b-[8px] border-b-[#0092d6] rounded-t-[14px] rounded-b-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:brightness-110"
@@ -161,7 +163,9 @@ export const DashboardClient = ({ data }: Props) => {
                     <span
                       className={cn(
                         "text-xs md:text-sm font-black uppercase tracking-widest",
-                        d.xp > 0 ? "text-stone-500" : "text-stone-300",
+                        d.xp > 0
+                          ? "text-stone-500 dark:text-slate-400"
+                          : "text-stone-300",
                       )}
                     >
                       {d.dayName}
@@ -175,7 +179,7 @@ export const DashboardClient = ({ data }: Props) => {
           {/* Component 2: "Other Analytics" */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full animate-in fade-in slide-in-from-bottom-2 duration-500">
             {/* Card A (Total XP) */}
-            <div className="col-span-1 md:col-span-2 lg:col-span-1 bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-6 flex items-center gap-6">
+            <div className="col-span-1 md:col-span-2 lg:col-span-1 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 flex items-center gap-6">
               <div className="relative flex items-center justify-center h-16 w-16 shrink-0">
                 <svg className="absolute inset-0 h-full w-full -rotate-90">
                   <circle
@@ -201,33 +205,33 @@ export const DashboardClient = ({ data }: Props) => {
                 <Zap className="h-10 w-10 text-amber-500 fill-amber-500 z-10" />
               </div>
               <div className="flex flex-col">
-                <h3 className="font-black text-4xl text-stone-700">
+                <h3 className="font-black text-4xl text-stone-700 dark:text-slate-200">
                   {data.totalXp}
                 </h3>
-                <p className="font-bold text-stone-400 uppercase tracking-widest text-sm">
+                <p className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-sm">
                   Total XP
                 </p>
               </div>
             </div>
 
             {/* Card B (Precisão) */}
-            <div className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-6 flex flex-col justify-center items-start gap-2">
+            <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 flex flex-col justify-center items-start gap-2">
               <Target className="h-8 w-8 text-green-500" />
               <span className="font-black text-4xl text-green-500">
                 {data.accuracy}%
               </span>
-              <p className="font-bold text-stone-400 uppercase tracking-widest text-sm">
+              <p className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-sm">
                 Precisão
               </p>
             </div>
 
             {/* Card C (Words Mastered) */}
-            <div className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-6 flex flex-col justify-center items-start gap-2">
+            <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 flex flex-col justify-center items-start gap-2">
               <Crown className="h-8 w-8 text-yellow-500" />
-              <span className="font-black text-4xl text-stone-700">
+              <span className="font-black text-4xl text-stone-700 dark:text-slate-200">
                 {data.wordsMastered}
               </span>
-              <p className="font-bold text-stone-400 uppercase tracking-widest text-sm">
+              <p className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-sm">
                 Palavras Dominadas
               </p>
             </div>
@@ -236,14 +240,14 @@ export const DashboardClient = ({ data }: Props) => {
       )}
 
       {activeTab === "heatmap" && (
-        <div className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-6 md:p-8 w-full animate-in fade-in slide-in-from-bottom-2">
-          <h2 className="text-xl font-black text-stone-700 mb-6 flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 md:p-8 w-full animate-in fade-in slide-in-from-bottom-2">
+          <h2 className="text-xl font-black text-stone-700 dark:text-slate-200 mb-6 flex items-center gap-2">
             <Activity className="h-6 w-6 text-emerald-500" />A Tua Consistência
           </h2>
 
           <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-stone-200 scrollbar-track-transparent">
             {/* Day labels */}
-            <div className="flex flex-col gap-[3px] text-[10px] font-bold text-stone-400 uppercase leading-[16px] xl:leading-[18px] pr-2 mt-1">
+            <div className="flex flex-col gap-[3px] text-[10px] font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase leading-[16px] xl:leading-[18px] pr-2 mt-1">
               <span>S</span>
               <span>M</span>
               <span>T</span>
@@ -256,7 +260,7 @@ export const DashboardClient = ({ data }: Props) => {
             {/* Heatmap Grid */}
             <div className="grid grid-rows-7 grid-flow-col gap-1.5">
               {data.heatmapData.map((d, i) => {
-                let bgColor = "bg-stone-100"; // Empty / 0 XP
+                let bgColor = "bg-stone-100 dark:bg-slate-800"; // Empty / 0 XP
                 if (d.xp >= 50)
                   bgColor = "bg-[#46a302]"; // Verde Escuro
                 else if (d.xp >= 21)
@@ -291,9 +295,9 @@ export const DashboardClient = ({ data }: Props) => {
           </div>
 
           {/* Legend */}
-          <div className="flex items-center justify-end gap-2 mt-4 text-xs font-bold text-stone-400 pb-8 border-b-2 border-stone-100">
+          <div className="flex items-center justify-end gap-2 mt-4 text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 pb-8 border-b-2 border-stone-100">
             Menos
-            <div className="w-[14px] h-[14px] rounded-[3px] bg-stone-100" />
+            <div className="w-[14px] h-[14px] rounded-[3px] bg-stone-100 dark:bg-slate-800" />
             <div className="w-[14px] h-[14px] rounded-[3px] bg-[#d7ffb8]" />
             <div className="w-[14px] h-[14px] rounded-[3px] bg-[#58CC02]" />
             <div className="w-[14px] h-[14px] rounded-[3px] bg-[#46a302]" />
@@ -302,32 +306,32 @@ export const DashboardClient = ({ data }: Props) => {
 
           {/* Consistency Summary Stats */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-            <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 border-2 border-stone-100">
-              <span className="text-stone-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
+            <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 dark:bg-slate-950 border-2 border-stone-100">
+              <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
                 Série Atual
               </span>
               <span className="text-2xl font-black text-orange-500 drop-shadow-sm">
                 {data.streak}
               </span>
             </div>
-            <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 border-2 border-stone-100">
-              <span className="text-stone-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
+            <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 dark:bg-slate-950 border-2 border-stone-100">
+              <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
                 Série Máxima
               </span>
-              <span className="text-2xl font-black text-stone-700 drop-shadow-sm">
+              <span className="text-2xl font-black text-stone-700 dark:text-slate-200 drop-shadow-sm">
                 {data.longestStreak}
               </span>
             </div>
-            <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 border-2 border-stone-100">
-              <span className="text-stone-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
+            <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 dark:bg-slate-950 border-2 border-stone-100">
+              <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
                 Este Mês
               </span>
               <span className="text-2xl font-black text-sky-500 drop-shadow-sm">
                 {data.heatmapData.slice(-30).filter((d) => d.xp > 0).length}
               </span>
             </div>
-            <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 border-2 border-stone-100">
-              <span className="text-stone-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
+            <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 dark:bg-slate-950 border-2 border-stone-100">
+              <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
                 Total XP
               </span>
               <span className="text-2xl font-black text-amber-500 drop-shadow-sm">

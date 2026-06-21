@@ -521,22 +521,22 @@ export default function EvaluationPage() {
   // ============================================================
 
   return (
-    <div className="min-h-screen bg-white relative flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-slate-900 relative flex flex-col font-sans overflow-x-hidden">
       {/* ── Background Layer: dot pattern ── */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(#e5e7eb_2px,transparent_2px)] [background-size:24px_24px] opacity-40"
+        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(#e5e7eb_2px,transparent_2px)] dark:bg-[radial-gradient(#1e293b_2px,transparent_2px)] [background-size:24px_24px] opacity-40 dark:opacity-60"
       />
 
       {/* SUPER ADVANCED GAMIFIED HEADER (HD PLAY) */}
       {phase !== "results" && (
-        <div className="sticky top-0 z-50 bg-white/70 backdrop-blur-2xl border-b-[3px] border-slate-200/80 pt-4 sm:pt-6 pb-4 px-4 md:px-8 w-full shadow-[0_20px_50px_-20px_rgba(0,0,0,0.08)] transition-all">
+        <div className="sticky top-0 z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border-b-[3px] border-slate-200/80 dark:border-slate-800 pt-4 sm:pt-6 pb-4 px-4 md:px-8 w-full shadow-[0_20px_50px_-20px_rgba(0,0,0,0.08)] transition-all">
           <div className="max-w-5xl mx-auto w-full flex items-center gap-4 sm:gap-8">
             <div className="flex items-center gap-2 shrink-0">
               {/* Tactile Close Button */}
               <Link
                 href="/learn"
-                className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-2xl border-2 border-slate-200 border-b-[6px] text-slate-400 hover:text-slate-600 hover:bg-slate-50 active:translate-y-1 active:border-b-[2px] transition-all flex items-center justify-center shadow-lg group relative overflow-hidden"
+                className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-800 border-b-[6px] text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 active:translate-y-1 active:border-b-[2px] transition-all flex items-center justify-center shadow-lg group relative overflow-hidden"
               >
                 <XCircle className="h-7 w-7 sm:h-8 sm:w-8 stroke-[2.5] group-hover:text-red-500 transition-colors relative z-10" />
                 <div className="absolute inset-0 bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -545,7 +545,7 @@ export default function EvaluationPage() {
               {/* Info Button in Sticky Header */}
               <button
                 onClick={() => setIsInfoModalOpen(true)}
-                className="w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-2xl border-2 border-slate-200 border-b-[6px] text-slate-400 hover:text-[#1CB0F6] hover:bg-slate-50 active:translate-y-1 active:border-b-[2px] transition-all flex items-center justify-center shadow-lg group"
+                className="w-12 h-12 sm:w-14 sm:h-14 bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-800 border-b-[6px] text-slate-400 dark:text-slate-500 hover:text-[#1CB0F6] hover:bg-slate-50 dark:hover:bg-slate-800 active:translate-y-1 active:border-b-[2px] transition-all flex items-center justify-center shadow-lg group"
               >
                 <Info className="h-6 w-6 sm:h-7 sm:w-7 stroke-[2.5]" />
               </button>
@@ -555,7 +555,7 @@ export default function EvaluationPage() {
             {phase !== "welcome" ? (
               <div className="flex-1 relative flex items-center gap-4 sm:gap-6">
                 {/* Floating Phase Icon (Enhanced) */}
-                <div className="hidden md:flex shrink-0 w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-[1.25rem] border-2 border-slate-200 border-b-[6px] items-center justify-center shadow-xl z-10 relative group">
+                <div className="hidden md:flex shrink-0 w-14 h-14 sm:w-16 sm:h-16 bg-white dark:bg-slate-900 rounded-[1.25rem] border-2 border-slate-200 dark:border-slate-800 border-b-[6px] items-center justify-center shadow-xl z-10 relative group">
                   <div
                     className={cn(
                       "absolute inset-1 rounded-lg opacity-10 transition-opacity group-hover:opacity-20",
@@ -580,7 +580,7 @@ export default function EvaluationPage() {
                 </div>
 
                 {/* Main Bar Wrapper (HD Play) */}
-                <div className="flex-1 h-7 sm:h-9 bg-slate-100 rounded-2xl relative overflow-hidden border-2 border-slate-200/80 shadow-[inset_0_2px_10px_rgba(0,0,0,0.05)]">
+                <div className="flex-1 h-7 sm:h-9 bg-slate-100 dark:bg-slate-800 rounded-2xl relative overflow-hidden border-2 border-slate-200/80 shadow-[inset_0_2px_10px_rgba(0,0,0,0.05)]">
                   {/* Background Track Glow */}
                   <div
                     className={cn(
@@ -613,17 +613,17 @@ export default function EvaluationPage() {
                 </div>
 
                 {/* Tactical Percentage Pill */}
-                <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-white rounded-2xl border-2 border-slate-200 border-b-[6px] font-black text-slate-600 text-base sm:text-lg shadow-xl shrink-0 tabular-nums min-w-[4.5rem] sm:min-w-[6rem] text-center active:translate-y-1 active:border-b-[2px] transition-all">
+                <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-800 border-b-[6px] font-black text-slate-600 text-base sm:text-lg shadow-xl shrink-0 tabular-nums min-w-[4.5rem] sm:min-w-[6rem] text-center active:translate-y-1 active:border-b-[2px] transition-all">
                   {Math.round(progress)}%
                 </div>
               </div>
             ) : (
               <div className="flex-1 flex items-center justify-between">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1CB0F6]">
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1CB0F6] dark:text-[#39c4ff]">
                     Portal de Acesso
                   </span>
-                  <span className="text-xl font-black text-slate-800 tracking-tight">
+                  <span className="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
                     Avaliação de Proficiência
                   </span>
                 </div>
@@ -632,7 +632,7 @@ export default function EvaluationPage() {
                     {[1, 2, 3].map((i) => (
                       <div
                         key={i}
-                        className="w-8 h-8 rounded-full border-2 border-white bg-slate-100 shadow-sm overflow-hidden flex items-center justify-center"
+                        className="w-8 h-8 rounded-full border-2 border-white bg-slate-100 dark:bg-slate-800 shadow-sm overflow-hidden flex items-center justify-center"
                       >
                         <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
                       </div>
@@ -694,13 +694,13 @@ export default function EvaluationPage() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.05 }}
-                className="relative w-full rounded-[2.5rem] overflow-hidden bg-white border-2 border-slate-200 border-b-[8px] shadow-[0_15px_40px_-10px_rgba(0,0,0,0.05)] p-8 md:p-10"
+                className="relative w-full rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 border-b-[8px] shadow-[0_15px_40px_-10px_rgba(0,0,0,0.05)] dark:shadow-none p-8 md:p-10"
               >
                 {/* Inner glow blobs - softened for light theme */}
                 <div className="pointer-events-none absolute -top-20 -left-20 w-72 h-72 bg-[#58CC02]/10 rounded-full blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-20 -right-20 w-72 h-72 bg-[#1CB0F6]/10 rounded-full blur-3xl" />
                 {/* Dot overlay - darker for white background */}
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px]" />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:20px_20px]" />
 
                 <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                   {/* Left: title + badge */}
@@ -710,14 +710,14 @@ export default function EvaluationPage() {
                         <Sparkles className="w-3 h-3" /> Avaliação CEFR
                       </span>
                     </div>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-800 tracking-tight leading-tight">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-800 dark:text-slate-100 tracking-tight leading-tight">
                       Avaliação de
                       <br />
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58CC02] to-[#1CB0F6]">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58CC02] to-[#1CB0F6] dark:from-[#7cf022] dark:to-[#39c4ff]">
                         Nível
                       </span>
                     </h1>
-                    <p className="text-slate-500 font-medium text-base md:text-lg max-w-md leading-relaxed">
+                    <p className="text-slate-500 dark:text-slate-300 font-medium text-base md:text-lg max-w-md leading-relaxed">
                       Descobre a tua fluência em 4 fases interativas. Um teste
                       inteligente em tempo real.
                     </p>
@@ -742,7 +742,7 @@ export default function EvaluationPage() {
                     {/* Settings gear */}
                     <button
                       onClick={() => setIsInfoModalOpen(true)}
-                      className="w-12 h-12 bg-slate-50 hover:bg-slate-100 border-2 border-slate-200 border-b-4 rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-600 transition-all hover:scale-110 active:scale-95 active:border-b-0 active:translate-y-1"
+                      className="w-12 h-12 bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-800 border-b-4 rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-600 transition-all hover:scale-110 active:scale-95 active:border-b-0 active:translate-y-1"
                     >
                       <Info className="w-5 h-5" />
                     </button>
@@ -820,7 +820,7 @@ export default function EvaluationPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
                         className={cn(
-                          "group bg-white rounded-[1.75rem] border-2 border-slate-200 border-b-[6px] p-5 flex flex-col gap-4 cursor-default transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1 shadow-sm",
+                          "group bg-white dark:bg-slate-900 rounded-[1.75rem] border-2 border-slate-200 dark:border-slate-800 border-b-[6px] p-5 flex flex-col gap-4 cursor-default transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1 shadow-sm",
                           glow,
                           ring,
                         )}
@@ -837,17 +837,17 @@ export default function EvaluationPage() {
                         </div>
                         {/* Text */}
                         <div className="flex flex-col gap-1">
-                          <span className="text-base font-black text-slate-800 leading-tight">
+                          <span className="text-base font-black text-slate-800 dark:text-slate-100 leading-tight">
                             {label}
                           </span>
-                          <span className="text-xs font-medium text-slate-500 leading-snug">
+                          <span className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-snug">
                             {desc}
                           </span>
                         </div>
                         {/* Footer pill */}
-                        <div className="mt-auto flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 w-fit">
-                          <Zap className="w-3 h-3 text-slate-400" />
-                          <span className="text-[11px] font-black text-slate-400 uppercase tracking-wider">
+                        <div className="mt-auto flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 w-fit">
+                          <Zap className="w-3 h-3 text-slate-400 dark:text-slate-400" />
+                          <span className="text-[11px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-wider">
                             {time}
                           </span>
                         </div>
@@ -866,7 +866,7 @@ export default function EvaluationPage() {
                     damping: 18,
                     delay: 0.2,
                   }}
-                  className="hidden lg:flex flex-col items-center justify-center bg-white rounded-[2rem] border-2 border-b-[6px] border-slate-200 shadow-sm p-6 relative overflow-hidden"
+                  className="hidden lg:flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-b-[6px] border-slate-200 dark:border-slate-800 shadow-sm p-6 relative overflow-hidden"
                 >
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#58CC02]/5 to-transparent" />
                   <motion.div
@@ -881,10 +881,10 @@ export default function EvaluationPage() {
                     <LottieAnimation className="w-full h-full drop-shadow-xl" />
                   </motion.div>
                   <div className="relative z-10 mt-4 text-center">
-                    <span className="text-slate-700 font-black text-sm">
+                    <span className="text-slate-700 dark:text-slate-100 font-black text-sm">
                       Marco diz:
                     </span>
-                    <p className="text-slate-500 text-xs font-medium mt-1 leading-relaxed">
+                    <p className="text-slate-500 dark:text-slate-300 text-xs font-medium mt-1 leading-relaxed">
                       «Estás pronto para descobrires o teu nível?»
                     </p>
                   </div>
@@ -896,7 +896,7 @@ export default function EvaluationPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.45 }}
-                className="relative bg-white rounded-[2.5rem] border-2 border-b-[8px] border-slate-200 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] p-8 overflow-hidden group"
+                className="relative bg-white dark:bg-slate-900 rounded-[2.5rem] border-2 border-b-[8px] border-slate-200 dark:border-slate-800 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] p-8 overflow-hidden group"
               >
                 {/* Decorative Background Grid */}
                 <div
@@ -910,19 +910,19 @@ export default function EvaluationPage() {
 
                 <div className="relative z-10 flex items-center justify-between mb-8">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center border-2 border-slate-100 shadow-sm group-hover:scale-110 transition-transform">
-                      <Target className="w-6 h-6 text-[#1CB0F6]" />
+                    <div className="w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center border-2 border-slate-100 dark:border-slate-700 shadow-sm group-hover:scale-110 transition-transform">
+                      <Target className="w-6 h-6 text-[#1CB0F6] dark:text-[#39c4ff]" />
                     </div>
                     <div>
                       <span className="text-[10px] font-black text-[#1CB0F6] uppercase tracking-[0.2em]">
                         Framework Europeu
                       </span>
-                      <h3 className="text-xl font-black text-slate-800 tracking-tight">
+                      <h3 className="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
                         Progressão CEFR
                       </h3>
                     </div>
                   </div>
-                  <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-full border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-950 rounded-full border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#58CC02] animate-pulse" />
                     Tempo Real
                   </div>
@@ -1039,7 +1039,7 @@ export default function EvaluationPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.55 }}
-                className="bg-white rounded-3xl border-2 border-b-[6px] border-slate-200 p-3 pl-5 flex items-center justify-between gap-4 transition-all focus-within:border-sky-300 focus-within:ring-4 ring-sky-300/30 shadow-sm group hover:border-sky-200"
+                className="bg-white dark:bg-slate-900 rounded-3xl border-2 border-b-[6px] border-slate-200 dark:border-slate-800 p-3 pl-5 flex items-center justify-between gap-4 transition-all focus-within:border-sky-300 focus-within:ring-4 ring-sky-300/30 shadow-sm group hover:border-sky-200"
               >
                 <div className="flex items-center gap-4 shrink-0">
                   <div className="w-12 h-12 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-500 border-2 border-sky-200 group-hover:border-sky-300 transition-colors">
@@ -1049,7 +1049,7 @@ export default function EvaluationPage() {
                     <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-0.5">
                       Língua Alvo
                     </p>
-                    <p className="text-sm font-bold text-slate-700 leading-none">
+                    <p className="text-sm font-bold text-slate-700 dark:text-slate-200 leading-none">
                       O teu Idioma
                     </p>
                   </div>
@@ -1059,7 +1059,7 @@ export default function EvaluationPage() {
                     <select
                       value={selectedLanguage}
                       onChange={(e) => setSelectedLanguage(e.target.value)}
-                      className="w-full h-14 bg-slate-50 hover:bg-slate-100 px-5 rounded-[1.25rem] text-lg font-black text-slate-700 cursor-pointer outline-none border-2 border-slate-200 hover:border-slate-300 transition-all appearance-none"
+                      className="w-full h-14 bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 px-5 rounded-[1.25rem] text-lg font-black text-slate-700 dark:text-slate-200 cursor-pointer outline-none border-2 border-slate-200 dark:border-slate-800 hover:border-slate-300 transition-all appearance-none"
                     >
                       {SUPPORTED_LANGUAGES.map((lang) => (
                         <option key={lang.value} value={lang.value}>
@@ -1083,7 +1083,7 @@ export default function EvaluationPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex-1 h-14 rounded-[1.25rem] bg-slate-100 border-2 border-slate-200 animate-pulse" />
+                  <div className="flex-1 h-14 rounded-[1.25rem] bg-slate-100 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-800 animate-pulse" />
                 )}
               </motion.div>
 
@@ -1134,7 +1134,7 @@ export default function EvaluationPage() {
                     <GraduationCap className="h-5 w-5 text-emerald-600" />
                   </div>
                   <div>
-                    <h2 className="border-2 border-slate-200 rounded-full px-3 py-1 font-semibold text-xs text-slate-600 tracking-wide uppercase">
+                    <h2 className="border-2 border-slate-200 dark:border-slate-800 rounded-full px-3 py-1 font-semibold text-xs text-slate-600 tracking-wide uppercase">
                       Fase 1: Gramática / Vocabulário
                     </h2>
                     <p className="text-xs text-slate-400">
@@ -1172,7 +1172,7 @@ export default function EvaluationPage() {
                 ))}
               </div>
 
-              <div className="bg-white rounded-3xl border-2 border-b-8 border-slate-200 p-8 shadow-sm mb-6">
+              <div className="bg-white dark:bg-slate-900 rounded-3xl border-2 border-b-8 border-slate-200 dark:border-slate-800 p-8 shadow-sm mb-6">
                 <div className="text-xl font-bold text-slate-800 text-center leading-relaxed">
                   <InteractiveText
                     text={activeQuestion.question}
@@ -1187,7 +1187,7 @@ export default function EvaluationPage() {
                   const isCorrectOption = option.is_correct;
 
                   let optionStyle =
-                    "border-slate-200 border-b-[8px] bg-white hover:border-slate-300 active:translate-y-[6px] active:border-b-[2px] hover:bg-slate-50 text-slate-600";
+                    "border-slate-200 dark:border-slate-800 border-b-[8px] bg-white dark:bg-slate-900 hover:border-slate-300 active:translate-y-[6px] active:border-b-[2px] hover:bg-slate-50 dark:bg-slate-950 text-slate-600";
 
                   if (isSelected) {
                     optionStyle =
@@ -1203,7 +1203,7 @@ export default function EvaluationPage() {
                         "border-[#EA2B2B] border-b-[#EA2B2B] bg-[#FFDFE0] text-[#EA2B2B] opacity-60 border-b-[8px]";
                     else
                       optionStyle =
-                        "border-slate-200 bg-white opacity-40 scale-[0.96] border-b-[8px]";
+                        "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 opacity-40 scale-[0.96] border-b-[8px]";
                   }
 
                   return (
@@ -1225,7 +1225,7 @@ export default function EvaluationPage() {
                               ? "bg-green-500 border-green-600 text-white"
                               : showFeedback && isSelected && !isCorrectOption
                                 ? "bg-red-500 border-red-600 text-white"
-                                : "bg-white border-slate-200 text-slate-400 group-hover:border-slate-300 group-hover:text-slate-500",
+                                : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400 group-hover:border-slate-300 group-hover:text-slate-500 dark:text-slate-400",
                         )}
                       >
                         {String.fromCharCode(65 + idx)}
@@ -1258,7 +1258,7 @@ export default function EvaluationPage() {
                     <BookOpen className="h-5 w-5 text-sky-600" />
                   </div>
                   <div>
-                    <h2 className="font-bold text-slate-700">
+                    <h2 className="font-bold text-slate-700 dark:text-slate-200">
                       Fase 2: Leitura
                     </h2>
                     <p className="text-xs text-slate-400">
@@ -1272,8 +1272,8 @@ export default function EvaluationPage() {
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl border-2 border-slate-100 p-5 shadow-sm mb-6 max-h-[250px] overflow-y-auto">
-                <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm">
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-100 p-5 shadow-sm mb-6 max-h-[250px] overflow-y-auto">
+                <div className="text-slate-700 dark:text-slate-200 leading-relaxed whitespace-pre-wrap text-sm">
                   <InteractiveText
                     text={currentReadingEx.text}
                     language={targetLanguage}
@@ -1294,7 +1294,7 @@ export default function EvaluationPage() {
                   const isCorrectOption = option.is_correct;
 
                   let optionStyle =
-                    "border-slate-200 border-b-[8px] bg-white hover:border-slate-300 active:translate-y-[6px] active:border-b-[2px] hover:bg-slate-50 text-slate-600";
+                    "border-slate-200 dark:border-slate-800 border-b-[8px] bg-white dark:bg-slate-900 hover:border-slate-300 active:translate-y-[6px] active:border-b-[2px] hover:bg-slate-50 dark:bg-slate-950 text-slate-600";
 
                   if (isSelected) {
                     optionStyle =
@@ -1310,7 +1310,7 @@ export default function EvaluationPage() {
                         "border-[#EA2B2B] border-b-[#EA2B2B] bg-[#FFDFE0] text-[#EA2B2B] opacity-60 border-b-[8px]";
                     else
                       optionStyle =
-                        "border-slate-200 bg-white opacity-40 scale-[0.96] border-b-[8px]";
+                        "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 opacity-40 scale-[0.96] border-b-[8px]";
                   }
 
                   return (
@@ -1334,7 +1334,7 @@ export default function EvaluationPage() {
                                   isSelected &&
                                   !isCorrectOption
                                 ? "bg-red-500 border-red-600 text-white"
-                                : "bg-white border-slate-200 text-slate-400 group-hover:border-slate-300 group-hover:text-slate-500",
+                                : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400 group-hover:border-slate-300 group-hover:text-slate-500 dark:text-slate-400",
                         )}
                       >
                         {String.fromCharCode(65 + idx)}
@@ -1369,7 +1369,7 @@ export default function EvaluationPage() {
                     <Headphones className="h-5 w-5 text-indigo-600" />
                   </div>
                   <div>
-                    <h2 className="font-bold text-slate-700">
+                    <h2 className="font-bold text-slate-700 dark:text-slate-200">
                       Fase 3: Audição
                     </h2>
                     <p className="text-xs text-slate-400">
@@ -1439,7 +1439,7 @@ export default function EvaluationPage() {
                   const isCorrectOption = option.is_correct;
 
                   let optionStyle =
-                    "border-slate-200 border-b-[8px] bg-white hover:border-slate-300 active:translate-y-[6px] active:border-b-[2px] hover:bg-slate-50 text-slate-600";
+                    "border-slate-200 dark:border-slate-800 border-b-[8px] bg-white dark:bg-slate-900 hover:border-slate-300 active:translate-y-[6px] active:border-b-[2px] hover:bg-slate-50 dark:bg-slate-950 text-slate-600";
 
                   if (isSelected) {
                     optionStyle =
@@ -1455,7 +1455,7 @@ export default function EvaluationPage() {
                         "border-[#EA2B2B] border-b-[#EA2B2B] bg-[#FFDFE0] text-[#EA2B2B] opacity-60 border-b-[8px]";
                     else
                       optionStyle =
-                        "border-slate-200 bg-white opacity-40 scale-[0.96] border-b-[8px]";
+                        "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 opacity-40 scale-[0.96] border-b-[8px]";
                   }
 
                   return (
@@ -1479,7 +1479,7 @@ export default function EvaluationPage() {
                                   isSelected &&
                                   !isCorrectOption
                                 ? "bg-red-500 border-red-600 text-white"
-                                : "bg-white border-slate-200 text-slate-400 group-hover:border-slate-300 group-hover:text-slate-500",
+                                : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400 group-hover:border-slate-300 group-hover:text-slate-500 dark:text-slate-400",
                         )}
                       >
                         {String.fromCharCode(65 + idx)}
@@ -1510,14 +1510,16 @@ export default function EvaluationPage() {
                   <PenTool className="h-5 w-5 text-amber-600" />
                 </div>
                 <div>
-                  <h2 className="font-bold text-slate-700">Fase 4: Escrita</h2>
+                  <h2 className="font-bold text-slate-700 dark:text-slate-200">
+                    Fase 4: Escrita
+                  </h2>
                   <p className="text-xs text-slate-400">
                     Escreve aproximadamente 50 palavras em {targetLanguage}
                   </p>
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl border-2 border-slate-100 p-6 shadow-sm mb-6">
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-100 p-6 shadow-sm mb-6">
                 <div className="flex items-center gap-2 mb-3 text-amber-500">
                   <Sparkles className="h-4 w-4" />
                   <span className="text-xs font-bold uppercase tracking-wider">
@@ -1530,7 +1532,7 @@ export default function EvaluationPage() {
                     language={targetLanguage}
                   />
                 </div>
-                <div className="text-slate-500">
+                <div className="text-slate-500 dark:text-slate-400">
                   <InteractiveText
                     text={writingTopic.instruction}
                     language={targetLanguage}
@@ -1543,7 +1545,7 @@ export default function EvaluationPage() {
                   value={writingText}
                   onChange={(e) => setWritingText(e.target.value)}
                   placeholder={`Escreve a tua resposta aqui em ${targetLanguage}...`}
-                  className="w-full min-h-[200px] p-4 rounded-xl border-2 border-slate-200 bg-slate-50 text-lg resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+                  className="w-full min-h-[200px] p-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-lg resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
                   disabled={isLoading}
                 />
                 <div className="flex justify-between mt-2">
@@ -1618,7 +1620,7 @@ export default function EvaluationPage() {
                     initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="relative bg-white rounded-[3rem] border-2 border-b-[12px] border-slate-200 p-8 flex flex-col items-center text-center shadow-2xl overflow-hidden"
+                    className="relative bg-white dark:bg-slate-900 rounded-[3rem] border-2 border-b-[12px] border-slate-200 dark:border-slate-800 p-8 flex flex-col items-center text-center shadow-2xl overflow-hidden"
                   >
                     <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px]" />
 
@@ -1676,7 +1678,7 @@ export default function EvaluationPage() {
                     <h1 className="text-4xl font-black text-slate-800 mb-2">
                       Parabéns!
                     </h1>
-                    <p className="text-slate-500 font-medium leading-relaxed">
+                    <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
                       Concluíste a avaliação oficial. O teu domínio de{" "}
                       {targetLanguage} é classificado como{" "}
                       <span className="text-slate-800 font-black">
@@ -1689,9 +1691,9 @@ export default function EvaluationPage() {
                   <div className="grid grid-cols-2 gap-4">
                     <Link
                       href="/learn"
-                      className="flex flex-col items-center justify-center gap-3 py-6 bg-white border-2 border-slate-200 border-b-8 rounded-[2rem] font-black text-slate-500 hover:bg-slate-50 transition-all active:translate-y-1 active:border-b-4 group"
+                      className="flex flex-col items-center justify-center gap-3 py-6 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 border-b-8 rounded-[2rem] font-black text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:bg-slate-950 transition-all active:translate-y-1 active:border-b-4 group"
                     >
-                      <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Home className="h-6 w-6" />
                       </div>
                       Início
@@ -1751,7 +1753,7 @@ export default function EvaluationPage() {
                           initial={{ y: 20, opacity: 0 }}
                           animate={{ y: 0, opacity: 1 }}
                           transition={{ delay: 0.4 + i * 0.1 }}
-                          className="bg-white rounded-[2.5rem] border-2 border-b-[8px] border-slate-200 p-6 shadow-sm hover:translate-y-[-4px] transition-all"
+                          className="bg-white dark:bg-slate-900 rounded-[2.5rem] border-2 border-b-[8px] border-slate-200 dark:border-slate-800 p-6 shadow-sm hover:translate-y-[-4px] transition-all"
                         >
                           <div className="flex items-center justify-between mb-4">
                             <div
@@ -1773,7 +1775,7 @@ export default function EvaluationPage() {
                             {detail}
                           </p>
 
-                          <div className="mt-4 h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200/50">
+                          <div className="mt-4 h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden border border-slate-200/50">
                             <motion.div
                               initial={{ width: 0 }}
                               animate={{ width: `${score}%` }}
@@ -1825,7 +1827,7 @@ export default function EvaluationPage() {
         (phase === "grammar" ||
           phase === "reading" ||
           phase === "listening") && (
-          <div className="fixed bottom-0 left-0 right-0 p-5 sm:p-8 pt-6 bg-white border-t-2 border-slate-200 z-40 shadow-[0_-20px_30px_rgba(0,0,0,0.03)]">
+          <div className="fixed bottom-0 left-0 right-0 p-5 sm:p-8 pt-6 bg-white dark:bg-slate-900 border-t-2 border-slate-200 dark:border-slate-800 z-40 shadow-[0_-20px_30px_rgba(0,0,0,0.03)]">
             <div className="max-w-2xl mx-auto flex justify-center">
               <button
                 onClick={() => {
@@ -1971,16 +1973,16 @@ export default function EvaluationPage() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-2xl bg-white rounded-[2.5rem] border-2 border-b-[12px] border-slate-200 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+              className="relative w-full max-w-2xl bg-white dark:bg-slate-900 rounded-[2.5rem] border-2 border-b-[12px] border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
             >
               {/* Header */}
-              <div className="p-8 border-b-2 border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <div className="p-8 border-b-2 border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-[#1CB0F6] rounded-2xl flex items-center justify-center shadow-lg shadow-sky-200">
                     <Info className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-black text-slate-800 tracking-tight">
+                    <h2 className="text-2xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
                       Sobre a Avaliação
                     </h2>
                     <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">
@@ -2001,10 +2003,10 @@ export default function EvaluationPage() {
                 <div className="flex flex-col gap-8">
                   {/* Introduction */}
                   <section>
-                    <h3 className="text-lg font-black text-slate-800 mb-3 flex items-center gap-2">
+                    <h3 className="text-lg font-black text-slate-800 dark:text-slate-100 mb-3 flex items-center gap-2">
                       <Zap className="w-5 h-5 text-amber-500" /> Como funciona?
                     </h3>
-                    <p className="text-slate-600 leading-relaxed font-medium">
+                    <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                       A nossa avaliação utiliza um **sistema adaptativo
                       inteligente** para medir a tua proficiência em tempo real.
                       O teste está dividido em 4 pilares fundamentais que cobrem
@@ -2042,7 +2044,7 @@ export default function EvaluationPage() {
                     ].map((item, i) => (
                       <div
                         key={i}
-                        className="p-5 rounded-2xl border-2 border-slate-100 bg-slate-50/50 flex flex-col gap-3"
+                        className="p-5 rounded-2xl border-2 border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 flex flex-col gap-3"
                       >
                         <div
                           className={cn(
@@ -2052,10 +2054,10 @@ export default function EvaluationPage() {
                         >
                           <item.icon className="w-5 h-5" />
                         </div>
-                        <h4 className="font-black text-slate-800">
+                        <h4 className="font-black text-slate-800 dark:text-slate-100">
                           {item.title}
                         </h4>
-                        <p className="text-xs font-bold text-slate-500 leading-relaxed">
+                        <p className="text-xs font-bold text-slate-500 dark:text-slate-400 leading-relaxed">
                           {item.desc}
                         </p>
                       </div>
@@ -2085,7 +2087,7 @@ export default function EvaluationPage() {
               </div>
 
               {/* Footer */}
-              <div className="p-8 bg-slate-50 border-t-2 border-slate-100">
+              <div className="p-8 bg-slate-50 dark:bg-slate-950 border-t-2 border-slate-100 dark:border-slate-800">
                 <button
                   onClick={() => setIsInfoModalOpen(false)}
                   className="w-full py-4 bg-[#58CC02] border-b-[6px] border-[#46a302] rounded-2xl text-white font-black text-lg hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all"

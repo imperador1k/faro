@@ -43,25 +43,29 @@ export default async function PublicProfilePage({ params }: Props) {
       icon: <Flame className="h-9 w-9 text-orange-500 fill-orange-200" />,
       value: streak,
       label: "Série",
-      color: "bg-white border-stone-200 text-stone-700",
+      color:
+        "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-stone-700 dark:text-slate-200",
     },
     {
       icon: <Zap className="h-9 w-9 text-amber-500 fill-amber-200" />,
       value: totalXpEarned.toLocaleString(),
       label: "XP Total",
-      color: "bg-white border-stone-200 text-stone-700",
+      color:
+        "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-stone-700 dark:text-slate-200",
     },
     {
       icon: <Target className="h-9 w-9 text-green-500 fill-green-200" />,
       value: completedLessons,
       label: "Lições",
-      color: "bg-white border-stone-200 text-stone-700",
+      color:
+        "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-stone-700 dark:text-slate-200",
     },
     {
       icon: <Heart className="h-9 w-9 text-rose-500 fill-rose-200" />,
       value: userProgress.hearts,
       label: "Vidas",
-      color: "bg-white border-stone-200 text-stone-700",
+      color:
+        "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-stone-700 dark:text-slate-200",
     },
   ];
 
@@ -98,7 +102,7 @@ export default async function PublicProfilePage({ params }: Props) {
                   href={`/messages?userId=${params.userId}`}
                   className="w-full block h-full"
                 >
-                  <button className="w-full h-full flex items-center justify-center gap-2 rounded-[1.2rem] sm:rounded-[1.5rem] px-4 sm:px-6 bg-stone-100 text-[#1CB0F6] font-black uppercase tracking-widest text-[12px] sm:text-sm border-2 border-stone-200 border-b-4 hover:bg-stone-200 hover:border-stone-300 active:translate-y-1 active:border-b-0 transition-all shadow-sm">
+                  <button className="w-full h-full flex items-center justify-center gap-2 rounded-[1.2rem] sm:rounded-[1.5rem] px-4 sm:px-6 bg-stone-100 dark:bg-slate-800 text-[#1CB0F6] font-black uppercase tracking-widest text-[12px] sm:text-sm border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:border-stone-300 dark:border-slate-700 active:translate-y-1 active:border-b-0 transition-all shadow-sm">
                     <MessageSquareText className="h-5 w-5 sm:h-6 sm:w-6" />
                     <span>Mensagem</span>
                   </button>
@@ -115,17 +119,17 @@ export default async function PublicProfilePage({ params }: Props) {
           <div
             key={i}
             className={cn(
-              "group flex flex-col items-center justify-center rounded-[2.5rem] border-b-8 border-2 p-7 transition-all shadow-sm hover:shadow-md hover:-translate-y-1 active:translate-y-0 active:border-b-0 active:mb-[8px] bg-white",
+              "group flex flex-col items-center justify-center rounded-[2.5rem] border-b-8 border-2 p-7 transition-all shadow-sm hover:shadow-md hover:-translate-y-1 active:translate-y-0 active:border-b-0 active:mb-[8px] bg-white dark:bg-slate-900",
               stat.color,
             )}
           >
-            <div className="p-3 bg-stone-50 rounded-2xl border-2 border-stone-100 mb-4 group-hover:scale-110 transition-transform">
+            <div className="p-3 bg-stone-50 dark:bg-slate-950 rounded-2xl border-2 border-stone-100 mb-4 group-hover:scale-110 transition-transform">
               {stat.icon}
             </div>
-            <p className="text-3xl font-black text-stone-700 tracking-tighter drop-shadow-sm">
+            <p className="text-3xl font-black text-stone-700 dark:text-slate-200 tracking-tighter drop-shadow-sm">
               {stat.value}
             </p>
-            <p className="text-[10px] font-black text-stone-400 uppercase tracking-[0.2em] mt-2">
+            <p className="text-[10px] font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] mt-2">
               {stat.label}
             </p>
           </div>
@@ -133,7 +137,7 @@ export default async function PublicProfilePage({ params }: Props) {
       </div>
 
       {/* Active Course Context Segment - Bento Upgrade */}
-      <div className="mb-14 rounded-[3rem] border-2 border-stone-200 border-b-8 bg-white p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 shadow-sm hover:shadow-md transition-all group overflow-hidden relative">
+      <div className="mb-14 rounded-[3rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 bg-white dark:bg-slate-900 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 shadow-sm hover:shadow-md transition-all group overflow-hidden relative">
         {/* Decorative background accent */}
         <div className="absolute -top-10 -left-10 w-40 h-40 bg-sky-50 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity" />
 
@@ -154,21 +158,21 @@ export default async function PublicProfilePage({ params }: Props) {
               Curso Ativo
             </h3>
           </div>
-          <p className="font-black text-3xl text-stone-700 tracking-tight leading-none uppercase">
+          <p className="font-black text-3xl text-stone-700 dark:text-slate-200 tracking-tight leading-none uppercase">
             A estudar {userProgress.activeCourse?.title || "Um Novo Idioma"}
           </p>
 
           {/* Dojo Progress Bar */}
           <div className="w-full mt-4">
             <div className="flex justify-between items-center mb-2 px-1">
-              <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest">
+              <span className="text-[10px] font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                 Nível de Mestria
               </span>
               <span className="text-[10px] font-black text-sky-500 uppercase tracking-widest">
                 65%
               </span>
             </div>
-            <div className="w-full h-5 bg-stone-100 rounded-full overflow-hidden relative border-2 border-stone-200 shadow-inner">
+            <div className="w-full h-5 bg-stone-100 dark:bg-slate-800 rounded-full overflow-hidden relative border-2 border-stone-200 dark:border-slate-800 shadow-inner">
               <div className="absolute inset-y-0 left-0 bg-sky-400 w-2/3 rounded-full transition-all duration-1000 ease-out border-r-4 border-sky-500 shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
             </div>
           </div>

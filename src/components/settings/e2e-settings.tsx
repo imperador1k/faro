@@ -78,28 +78,28 @@ export function E2ESettings() {
 
   return (
     <div>
-      <h3 className="text-xl font-black text-stone-800 mb-4 flex items-center gap-2">
+      <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-4 flex items-center gap-2">
         <Lock className="w-6 h-6 text-emerald-500" />
         Segurança & Encriptação E2EE
       </h3>
-      <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-6">
+      <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-emerald-50 border-2 border-emerald-100 text-emerald-500 rounded-2xl shrink-0">
               <KeyRound className="w-6 h-6" />
             </div>
             <div className="flex flex-col gap-1">
-              <h4 className="text-lg font-bold text-stone-800">
+              <h4 className="text-lg font-bold text-stone-800 dark:text-slate-100">
                 Cofre de Mensagens E2EE
               </h4>
-              <p className="text-sm font-medium text-stone-500">
+              <p className="text-sm font-medium text-stone-500 dark:text-slate-400">
                 Gere o teu PIN de recuperação.
               </p>
             </div>
           </div>
           <button
             onClick={() => setShowInfo(true)}
-            className="w-full sm:w-auto h-12 px-5 rounded-xl bg-stone-100 text-stone-500 font-black uppercase tracking-wider border-2 border-stone-200 border-b-4 hover:bg-stone-200 active:border-b-0 active:translate-y-1 transition-all flex justify-center items-center gap-2 shrink-0"
+            className="w-full sm:w-auto h-12 px-5 rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-black uppercase tracking-wider border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 active:border-b-0 active:translate-y-1 transition-all flex justify-center items-center gap-2 shrink-0"
           >
             <Info className="w-5 h-5" />O que é o PIN?
           </button>
@@ -108,10 +108,10 @@ export function E2ESettings() {
         {/* Modal O que é o PIN */}
         <Dialog open={showInfo} onOpenChange={setShowInfo}>
           <DialogContent className="z-modal max-w-md p-0 overflow-hidden border-none bg-transparent shadow-none [&>button]:hidden">
-            <div className="relative bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] shadow-2xl p-6 md:p-8 max-w-md w-full">
+            <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] shadow-2xl p-6 md:p-8 max-w-md w-full">
               <button
                 onClick={() => setShowInfo(false)}
-                className="absolute right-4 top-4 h-10 w-10 flex items-center justify-center rounded-xl bg-white border-2 border-stone-200 border-b-4 hover:bg-stone-50 active:translate-y-1 active:border-b-0 transition-all text-stone-400"
+                className="absolute right-4 top-4 h-10 w-10 flex items-center justify-center rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-1 active:border-b-0 transition-all text-stone-400 dark:text-slate-500 dark:text-slate-400"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -119,11 +119,11 @@ export function E2ESettings() {
                 <div className="p-3 bg-sky-50 border-2 border-sky-100 text-[#1CB0F6] rounded-2xl shrink-0">
                   <Info className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-black text-stone-800">
+                <h3 className="text-xl font-black text-stone-800 dark:text-slate-100">
                   O teu Cofre E2EE
                 </h3>
               </div>
-              <p className="text-sm font-bold text-stone-500 leading-relaxed mb-6">
+              <p className="text-sm font-bold text-stone-500 dark:text-slate-400 leading-relaxed mb-6">
                 As tuas mensagens são protegidas de Ponta-a-Ponta (E2EE) usando
                 uma <b>Chave Privada Mestra</b> que vive no teu dispositivo.
                 Para que não percas o histórico ao trocar de telemóvel, nós
@@ -146,13 +146,13 @@ export function E2ESettings() {
 
         {isChanging ? (
           <div className="flex flex-col gap-3 animate-in fade-in slide-in-from-top-2">
-            <label className="text-sm font-bold text-stone-700">
+            <label className="text-sm font-bold text-stone-700 dark:text-slate-200">
               Introduz o teu Novo PIN ou Password
             </label>
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
               <input
                 type="password"
-                className="flex h-12 w-full rounded-xl border-2 border-stone-200 bg-white px-4 py-2 text-sm font-bold ring-offset-background placeholder:text-stone-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:border-transparent transition-all"
+                className="flex h-12 w-full rounded-xl border-2 border-stone-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2 text-sm font-bold ring-offset-background placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:border-transparent transition-all"
                 placeholder="Ex: 1234 ou Senh@Forte"
                 value={newPin}
                 onChange={(e) => setNewPin(e.target.value)}
@@ -169,13 +169,13 @@ export function E2ESettings() {
                 <button
                   onClick={() => setIsChanging(false)}
                   disabled={loading}
-                  className="w-full sm:w-auto h-12 px-6 rounded-xl bg-stone-100 text-stone-500 font-black uppercase tracking-wider border-2 border-stone-200 border-b-4 active:border-b-0 active:translate-y-1 transition-all shrink-0"
+                  className="w-full sm:w-auto h-12 px-6 rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-black uppercase tracking-wider border-2 border-stone-200 dark:border-slate-800 border-b-4 active:border-b-0 active:translate-y-1 transition-all shrink-0"
                 >
                   Cancelar
                 </button>
               </div>
             </div>
-            <p className="text-xs font-bold text-stone-400">
+            <p className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
               Nota: Alterar o PIN não vai apagar as tuas mensagens. Apenas
               substitui o "cadeado" do teu cofre na nuvem.
             </p>

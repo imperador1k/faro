@@ -73,10 +73,10 @@ export default async function HistoryPage() {
             <div className="bg-sky-100 p-8 rounded-[2rem] border-4 border-sky-200 border-b-8 mb-8 shadow-sm">
               <Bot className="h-16 w-16 text-sky-400" strokeWidth={2.5} />
             </div>
-            <h2 className="text-2xl font-black text-stone-700 tracking-tight uppercase mb-3">
+            <h2 className="text-2xl font-black text-stone-700 dark:text-slate-200 tracking-tight uppercase mb-3">
               Sem histórico ainda
             </h2>
-            <p className="text-stone-500 font-bold max-w-sm mx-auto mb-8">
+            <p className="text-stone-500 dark:text-slate-400 font-bold max-w-sm mx-auto mb-8">
               Complete exercícios na Área de Prática para construíres o teu
               arquivo de aprendizagem.
             </p>

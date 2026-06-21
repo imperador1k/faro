@@ -58,8 +58,8 @@ const SidebarItem = memo(
             className={cn(
               "sidebar-item flex items-center justify-center lg:justify-start py-3 px-4 rounded-xl gap-3 w-16 lg:w-full h-16 lg:h-14 relative transition-all duration-300",
               isActive
-                ? "active bg-[#ddf4ff] border-2 border-b-4 border-[#147bb0]"
-                : "text-gray-400 hover:text-gray-600 hover:bg-gray-100 border-2 border-transparent hover:border-gray-200 hover:border-b-4",
+                ? "active bg-[#ddf4ff] dark:bg-sky-900/40 border-2 border-b-4 border-[#147bb0] dark:border-sky-700"
+                : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 border-2 border-transparent hover:border-gray-200 dark:hover:border-slate-700 hover:border-b-4",
               isCollapsed ? "lg:justify-center lg:px-0" : "",
             )}
           >
@@ -132,7 +132,7 @@ export const Sidebar = ({
   return (
     <aside
       className={cn(
-        "bg-white border-r border-gray-200 flex-col items-center py-6 h-full z-20 flex-shrink-0 hidden lg:flex transition-all duration-300 ease-in-out relative",
+        "bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 flex-col items-center py-6 h-full z-20 flex-shrink-0 hidden lg:flex transition-all duration-300 ease-in-out relative",
         isCollapsed ? "w-[96px]" : "w-[256px]",
         className,
       )}
@@ -140,12 +140,12 @@ export const Sidebar = ({
       {/* Collapse Toggle Button */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-3.5 top-12 bg-white border-2 border-stone-200 border-b-4 rounded-full p-1 shadow-sm hover:scale-110 active:scale-95 active:border-b-2 active:translate-y-[2px] transition-all z-30"
+        className="absolute -right-3.5 top-12 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-full p-1 shadow-sm hover:scale-110 active:scale-95 active:border-b-2 active:translate-y-[2px] transition-all z-30"
       >
         {isCollapsed ? (
-          <ChevronRight className="w-4 h-4 text-stone-500 stroke-[3]" />
+          <ChevronRight className="w-4 h-4 text-stone-500 dark:text-slate-400 stroke-[3]" />
         ) : (
-          <ChevronLeft className="w-4 h-4 text-stone-500 stroke-[3]" />
+          <ChevronLeft className="w-4 h-4 text-stone-500 dark:text-slate-400 stroke-[3]" />
         )}
       </button>
 
@@ -237,15 +237,15 @@ export const Sidebar = ({
             className={cn(
               "sidebar-item flex items-center justify-center lg:justify-start py-3 px-4 rounded-xl gap-3 text-gray-400 w-16 lg:w-full h-16 lg:h-14 cursor-pointer relative transition-all duration-300",
               isMoreOpen
-                ? "bg-gray-100 text-gray-700 font-bold border-2 border-transparent"
-                : "hover:bg-gray-100 border-2 border-transparent hover:border-gray-200 hover:border-b-4",
+                ? "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 font-bold border-2 border-transparent"
+                : "hover:bg-gray-100 dark:hover:bg-slate-800 border-2 border-transparent hover:border-gray-200 dark:hover:border-slate-700 hover:border-b-4",
               isCollapsed ? "lg:justify-center lg:px-0" : "",
             )}
           >
             <div
               className={cn(
                 "rounded-full w-8 h-8 flex items-center justify-center shrink-0 transition-colors",
-                !isMoreOpen && "bg-gray-200",
+                !isMoreOpen && "bg-gray-200 dark:bg-slate-700",
               )}
             >
               <MoreHorizontal className="w-5 h-5 text-gray-500" />
@@ -282,7 +282,7 @@ export const Sidebar = ({
 
         {/* Secondary Routes Dropdown/Accordion */}
         {isMoreOpen && (
-          <div className="flex flex-col gap-y-2 mt-2 w-full lg:pl-4 lg:border-l-2 lg:border-slate-200 animate-in slide-in-from-top-2 duration-200">
+          <div className="flex flex-col gap-y-2 mt-2 w-full lg:pl-4 lg:border-l-2 lg:border-slate-200 dark:border-slate-800 animate-in slide-in-from-top-2 duration-200">
             <SidebarItem
               label="Cursos"
               href="/courses"
@@ -366,9 +366,9 @@ export const Sidebar = ({
       </nav>
 
       {/* Hint for global search */}
-      <div className="mt-auto hidden lg:flex flex-col pt-4 items-center justify-center text-stone-400 gap-2 mb-2 w-full transition-all duration-300">
+      <div className="mt-auto hidden lg:flex flex-col pt-4 items-center justify-center text-stone-400 dark:text-slate-500 dark:text-slate-400 gap-2 mb-2 w-full transition-all duration-300">
         <div
-          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 hover:text-stone-600 transition-colors cursor-pointer border-2 border-stone-200 border-b-4 active:border-b-2 active:translate-y-[2px]"
+          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-600 dark:text-slate-300 transition-colors cursor-pointer border-2 border-stone-200 dark:border-slate-800 border-b-4 active:border-b-2 active:translate-y-[2px]"
           onClick={() => {
             document.dispatchEvent(
               new KeyboardEvent("keydown", { key: "k", ctrlKey: true }),

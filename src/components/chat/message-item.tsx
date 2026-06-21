@@ -188,13 +188,13 @@ export const MessageItem = memo(
           <div
             onClick={() => scrollToMessage(msg.replyToId as number)}
             className={cn(
-              "px-4 py-2 mb-[-8px] text-[13px] font-bold opacity-60 bg-stone-100 border-2 border-stone-200 rounded-t-2xl max-w-[70%] truncate flex items-center gap-2 cursor-pointer hover:bg-stone-200 transition-all active:scale-95",
+              "px-4 py-2 mb-[-8px] text-[13px] font-bold opacity-60 bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-700 rounded-t-2xl max-w-[70%] truncate flex items-center gap-2 cursor-pointer hover:bg-stone-200 dark:hover:bg-slate-700 transition-all active:scale-95",
               isMe
                 ? "rounded-tr-md mr-1 border-r-0"
                 : "rounded-tl-md ml-1 border-l-0",
             )}
           >
-            <div className="w-1 h-4 bg-stone-300 rounded-full shrink-0" />
+            <div className="w-1 h-4 bg-stone-300 dark:bg-slate-600 rounded-full shrink-0" />
             <Reply className="w-3 h-3" />
             {truncate(msg.repliedMessage.content)}
           </div>
@@ -210,7 +210,7 @@ export const MessageItem = memo(
             "max-w-[75%] rounded-[1.5rem] text-[15px] overflow-visible relative border-2 border-b-[6px] transition-all animate-in fade-in slide-in-from-bottom-1 duration-300 shadow-sm cursor-pointer break-words break-all whitespace-pre-wrap",
             isMe
               ? "bg-[#1CB0F6] text-white border-[#1CB0F6] rounded-tr-md self-end"
-              : "bg-white text-stone-700 border-stone-200 rounded-tl-md self-start",
+              : "bg-white dark:bg-slate-800 text-stone-700 dark:text-slate-200 border-stone-200 dark:border-slate-700 rounded-tl-md self-start",
             isTemp && "opacity-70 grayscale-[0.5]",
             highlightedId === msg.id &&
               "ring-4 ring-[#1CB0F6]/20 border-[#1CB0F6]",
@@ -226,7 +226,7 @@ export const MessageItem = memo(
                 animate={{ opacity: 1, y: -65, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 className={cn(
-                  "absolute bottom-full flex bg-white border-2 border-stone-200 border-b-6 rounded-[1.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] p-1.5 z-above-modal gap-1",
+                  "absolute bottom-full flex bg-white dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-700 border-b-6 rounded-[1.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:shadow-none p-1.5 z-above-modal gap-1",
                   isMe ? "right-0" : "left-0",
                 )}
               >
@@ -237,22 +237,22 @@ export const MessageItem = memo(
                       e.stopPropagation();
                       onReaction(msg.id, emoji);
                     }}
-                    className="h-10 w-10 flex items-center justify-center text-xl hover:bg-stone-50 hover:scale-125 transition-all rounded-xl active:scale-95"
+                    className="h-10 w-10 flex items-center justify-center text-xl hover:bg-stone-50 dark:hover:bg-slate-700 hover:scale-125 transition-all rounded-xl active:scale-95"
                   >
                     {emoji}
                   </button>
                 ))}
-                <div className="w-[2px] h-6 bg-stone-100 self-center mx-1 rounded-full" />
+                <div className="w-[2px] h-6 bg-stone-100 dark:bg-slate-800 self-center mx-1 rounded-full" />
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     setReplyingTo(msg);
                     setActiveMenuId(null);
                   }}
-                  className="px-4 flex items-center gap-2 hover:bg-stone-50 transition-all rounded-xl active:scale-95"
+                  className="px-4 flex items-center gap-2 hover:bg-stone-50 dark:hover:bg-slate-700 transition-all rounded-xl active:scale-95"
                 >
-                  <Reply className="w-4 h-4 text-stone-400" />
-                  <span className="text-xs font-black text-stone-600 uppercase tracking-widest">
+                  <Reply className="w-4 h-4 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
+                  <span className="text-xs font-black text-stone-600 dark:text-slate-300 uppercase tracking-widest">
                     Responder
                   </span>
                 </button>
@@ -261,7 +261,7 @@ export const MessageItem = memo(
           </AnimatePresence>
 
           {isDecrypting ? (
-            <div className="px-5 py-3 font-bold text-stone-500 italic animate-pulse">
+            <div className="px-5 py-3 font-bold text-stone-500 dark:text-slate-400 italic animate-pulse">
               A desencriptar...
             </div>
           ) : isImage ? (
@@ -269,7 +269,7 @@ export const MessageItem = memo(
               <img
                 src={displayContent}
                 alt="Image"
-                className="rounded-2xl object-cover max-h-72 w-auto bg-stone-200"
+                className="rounded-2xl object-cover max-h-72 w-auto bg-stone-200 dark:bg-slate-700"
                 loading="lazy"
               />
             </div>
@@ -278,7 +278,9 @@ export const MessageItem = memo(
               <FileText
                 className={cn(
                   "h-8 w-8",
-                  isMe ? "text-white" : "text-stone-400",
+                  isMe
+                    ? "text-white"
+                    : "text-stone-400 dark:text-slate-500 dark:text-slate-400",
                 )}
               />
               <div className="flex flex-col">
@@ -335,7 +337,7 @@ export const MessageItem = memo(
                         "px-2.5 py-1 rounded-full border-2 border-b-4 text-[13px] font-black flex items-center gap-1.5 transition-all shadow-sm active:translate-y-0.5 active:border-b-2",
                         isMe
                           ? "bg-white/10 border-white/20 text-white"
-                          : "bg-white border-stone-200 text-stone-600",
+                          : "bg-white dark:bg-slate-800 border-stone-200 dark:border-slate-700 text-stone-600 dark:text-slate-300",
                       )}
                     >
                       <span>{emoji}</span>

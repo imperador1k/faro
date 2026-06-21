@@ -27,31 +27,42 @@ const TOTAL_STEPS = 8;
 
 const variants = {
   initial: { x: "100%", opacity: 0 },
-  animate: { 
-    x: 0, 
-    opacity: 1, 
-    transition: { 
-      type: "spring", 
-      stiffness: 300, 
-      damping: 30 
-    } 
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+    },
   },
-  exit: { 
-    x: "-100%", 
-    opacity: 0, 
-    transition: { 
-      duration: 0.2 
-    } 
-  }
+  exit: {
+    x: "-100%",
+    opacity: 0,
+    transition: {
+      duration: 0.2,
+    },
+  },
 } as const;
 
 export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
   const router = useRouter();
-  const { step, setStep, prevStep, nextStep, selectedCourse, motivation, experienceLevel, placementResults, completeOnboarding } = useOnboardingStore();
+  const {
+    step,
+    setStep,
+    prevStep,
+    nextStep,
+    selectedCourse,
+    motivation,
+    experienceLevel,
+    placementResults,
+    completeOnboarding,
+  } = useOnboardingStore();
 
   const progress = (step / TOTAL_STEPS) * 100;
-  
-  const selectedCourseTitle = courses.find(c => c.id === selectedCourse)?.title || "Inglês";
+
+  const selectedCourseTitle =
+    courses.find((c) => c.id === selectedCourse)?.title || "Inglês";
 
   const handleBack = () => {
     if (step === 1) {
@@ -68,19 +79,19 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
     prevStep();
   };
 
-  const canContinue = 
-    (step === 1) || 
-    (step === 2) || 
+  const canContinue =
+    step === 1 ||
+    step === 2 ||
     (step === 3 && selectedCourse !== null) ||
     (step === 4 && motivation !== null) ||
     (step === 5 && experienceLevel !== null) ||
-    (step === 6) ||
-    (step === 7) ||
-    (step === 8);
+    step === 6 ||
+    step === 7 ||
+    step === 8;
 
   const handleContinue = () => {
     if (!canContinue) return;
-    
+
     // Logic for Step 5 (Level selection)
     if (step === 5) {
       if (experienceLevel === "beginner") {
@@ -95,30 +106,34 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
       nextStep();
     } else {
       completeOnboarding();
-      
+
       // Save full onboarding data to a cookie for server-side syncing
       const onboardingData = {
         selectedCourse,
         motivation,
         experienceLevel,
-        cefrLevel: placementResults?.level || null
+        cefrLevel: placementResults?.level || null,
       };
-      
+
       document.cookie = `onboarding_data=${JSON.stringify(onboardingData)}; path=/; max-age=3600; SameSite=Lax`;
-      document.cookie = "onboarding_completed=true; path=/; max-age=3600; SameSite=Lax";
-      
+      document.cookie =
+        "onboarding_completed=true; path=/; max-age=3600; SameSite=Lax";
+
       router.push("/sign-up");
     }
   };
 
   return (
-    <div className="flex flex-col h-[100dvh] w-full bg-white text-[#042c60]">
+    <div className="flex flex-col h-[100dvh] w-full bg-white dark:bg-slate-900 text-[#042c60]">
       <header className="flex items-center px-4 pt-4 pb-2 lg:max-w-5xl lg:mx-auto w-full gap-4">
-        <button onClick={handleBack} className="text-gray-400 hover:text-gray-600 transition-colors">
+        <button
+          onClick={handleBack}
+          className="text-gray-400 hover:text-gray-600 transition-colors"
+        >
           <ArrowLeft size={28} strokeWidth={2.5} />
         </button>
         <div className="flex-1 h-4 bg-gray-200 rounded-full overflow-hidden">
-          <motion.div 
+          <motion.div
             className="h-full bg-[#58cc02]"
             animate={{ width: `${progress}%` }}
             transition={{ type: "spring", stiffness: 100, damping: 20 }}
@@ -148,14 +163,16 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
         </AnimatePresence>
       </main>
 
-      <footer className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t-2 border-gray-100 lg:max-w-5xl lg:mx-auto z-50">
+      <footer className="fixed bottom-0 left-0 right-0 p-4 bg-white dark:bg-slate-900 border-t-2 border-gray-100 lg:max-w-5xl lg:mx-auto z-50">
         <button
           onClick={handleContinue}
           disabled={!canContinue}
           className={`w-full py-4 rounded-2xl font-bold text-lg tracking-wide uppercase transition-all
-            ${canContinue 
-              ? "bg-[#58cc02] text-white border-b-4 border-[#46a302] hover:bg-[#46a302] hover:border-[#388202] active:border-b-0 active:translate-y-1" 
-              : "bg-[#e5e5e5] text-[#afafaf] cursor-not-allowed"}
+            ${
+              canContinue
+                ? "bg-[#58cc02] text-white border-b-4 border-[#46a302] hover:bg-[#46a302] hover:border-[#388202] active:border-b-0 active:translate-y-1"
+                : "bg-[#e5e5e5] text-[#afafaf] cursor-not-allowed"
+            }
           `}
         >
           Continuar

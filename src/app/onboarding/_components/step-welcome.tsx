@@ -21,7 +21,7 @@ export const StepWelcome = () => {
               height: 100 + i * 20,
               left: `${15 + i * 15}%`,
               top: `${20 + i * 10}%`,
-              filter: "blur(40px)"
+              filter: "blur(40px)",
             }}
           />
         ))}
@@ -59,20 +59,24 @@ export const StepWelcome = () => {
             className="relative"
           >
             {/* Speech Bubble */}
-            <div className="bg-white border-4 border-[#e5e5e5] rounded-[2.5rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 shadow-[0_10px_0_#e5e5e5] relative">
+            <div className="bg-white dark:bg-slate-900 border-4 border-[#e5e5e5] rounded-[2.5rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 shadow-[0_10px_0_#e5e5e5] relative">
               <div className="flex flex-col gap-1">
                 <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
                   <Sparkles className="text-yellow-400 w-5 h-5" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Novo Amigo</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+                    Novo Amigo
+                  </span>
                 </div>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#042c60] leading-none">
                   Olá! Eu sou o <br />
-                  <span className="text-[#58cc02] inline-block mt-2">Marco!</span>
+                  <span className="text-[#58cc02] inline-block mt-2">
+                    Marco!
+                  </span>
                 </h1>
               </div>
-              
+
               {/* Bubble Tail (Responsive) */}
-              <div className="absolute -top-3 md:top-1/2 left-1/2 md:left-[-12px] -translate-x-1/2 md:translate-x-0 md:-translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white border-l-4 border-t-4 md:border-t-0 md:border-b-4 border-[#e5e5e5] rotate-45 md:-rotate-45" />
+              <div className="absolute -top-3 md:top-1/2 left-1/2 md:left-[-12px] -translate-x-1/2 md:translate-x-0 md:-translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white dark:bg-slate-900 border-l-4 border-t-4 md:border-t-0 md:border-b-4 border-[#e5e5e5] rotate-45 md:-rotate-45" />
             </div>
           </motion.div>
 
@@ -83,11 +87,15 @@ export const StepWelcome = () => {
             className="space-y-4 md:pl-4"
           >
             <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-500 leading-snug">
-              Vou ajudar-te a dominar um <span className="text-sky-500 font-black">novo idioma</span> de forma divertida e eficaz.
+              Vou ajudar-te a dominar um{" "}
+              <span className="text-sky-500 font-black">novo idioma</span> de
+              forma divertida e eficaz.
             </p>
             <div className="flex items-center justify-center md:justify-start gap-3 text-[#58cc02]">
               <Heart size={18} fill="currentColor" />
-              <span className="text-xs font-black uppercase tracking-widest">Pronto para começar?</span>
+              <span className="text-xs font-black uppercase tracking-widest">
+                Pronto para começar?
+              </span>
               <Heart size={18} fill="currentColor" />
             </div>
           </motion.div>

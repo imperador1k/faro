@@ -172,7 +172,7 @@ export default function VocabularySprint() {
       <div className="flex items-center justify-between mb-12">
         <button
           onClick={() => router.push("/arcade")}
-          className="text-stone-400 hover:text-stone-600 font-bold uppercase text-sm tracking-wider"
+          className="text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 font-bold uppercase text-sm tracking-wider"
         >
           &larr; Sair
         </button>
@@ -185,7 +185,7 @@ export default function VocabularySprint() {
       {/* Game Content */}
       <div className="flex-1 flex flex-col items-center justify-center">
         {/* The PT Word */}
-        <h1 className="text-3xl md:text-5xl font-black text-stone-700 text-center mb-12 tracking-tight uppercase">
+        <h1 className="text-3xl md:text-5xl font-black text-stone-700 dark:text-slate-200 text-center mb-12 tracking-tight uppercase">
           {currentWord.pt}
         </h1>
 
@@ -216,7 +216,7 @@ export default function VocabularySprint() {
                   "w-12 h-14 md:w-16 md:h-16 text-center text-2xl md:text-3xl font-black uppercase rounded-2xl border-2 border-b-[6px] outline-none transition-all duration-200 placeholder:text-stone-300 placeholder:opacity-50",
                   // Visual States
                   status === "playing"
-                    ? "border-stone-200 text-stone-700 focus:border-[#1CB0F6] focus:bg-[#ddf4ff] bg-white shadow-sm"
+                    ? "border-stone-200 dark:border-slate-800 text-stone-700 dark:text-slate-200 focus:border-[#1CB0F6] focus:bg-[#ddf4ff] bg-white dark:bg-slate-900 shadow-sm"
                     : "",
                   status === "correct"
                     ? "bg-[#58CC02] border-[#46a302] text-white transform scale-105"
@@ -245,7 +245,7 @@ export default function VocabularySprint() {
               ? "bg-[#58CC02] text-white border-[#46a302] hover:bg-[#46a302]"
               : status === "wrong"
                 ? "bg-rose-500 text-white border-rose-600 grayscale opacity-80 cursor-not-allowed"
-                : "bg-stone-300 text-stone-500 border-stone-400 cursor-not-allowed",
+                : "bg-stone-300 dark:bg-slate-600 text-stone-500 dark:text-slate-400 border-stone-400 cursor-not-allowed",
           )}
         >
           {status === "playing"

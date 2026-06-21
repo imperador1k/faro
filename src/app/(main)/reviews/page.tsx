@@ -15,10 +15,10 @@ export default function ReviewsPage() {
       <div className="mb-6 flex animate-in fade-in duration-500">
         <Link
           href="/settings"
-          className="inline-flex items-center gap-2 text-stone-400 hover:text-stone-600 font-bold transition-all group active:translate-x-[-4px]"
+          className="inline-flex items-center gap-2 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 font-bold transition-all group active:translate-x-[-4px]"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-stone-200 border-b-4 bg-white group-hover:bg-stone-50 transition-all">
-            <ArrowLeft className="w-5 h-5 text-stone-400 group-hover:text-stone-600" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-4 bg-white dark:bg-slate-900 group-hover:bg-stone-50 dark:bg-slate-950 transition-all">
+            <ArrowLeft className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-stone-600 dark:text-slate-300" />
           </div>
           VOLTAR
         </Link>
@@ -44,9 +44,9 @@ async function ReviewsData() {
 
   return (
     <div className="animate-in fade-in duration-500">
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 mb-12 bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-8 lg:p-12">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 mb-12 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-8 lg:p-12">
         <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left gap-4">
-          <h1 className="text-4xl md:text-5xl font-black text-stone-800 leading-tight flex items-center justify-center md:justify-start gap-2 flex-wrap">
+          <h1 className="text-4xl md:text-5xl font-black text-stone-800 dark:text-slate-100 leading-tight flex items-center justify-center md:justify-start gap-2 flex-wrap">
             O que dizem de{" "}
             <span className="text-[#1CB0F6] bg-sky-100 px-4 py-1 rounded-2xl ml-1">
               nós
@@ -59,7 +59,7 @@ async function ReviewsData() {
               className="drop-shadow-md animate-bounce ml-2"
             />
           </h1>
-          <p className="text-stone-500 font-medium text-lg leading-relaxed max-w-md">
+          <p className="text-stone-500 dark:text-slate-400 font-medium text-lg leading-relaxed max-w-md">
             A comunidade constrói o futuro da aprendizagem. Vê o que os teus
             amigos estão a achar da jornada.
           </p>
@@ -67,8 +67,8 @@ async function ReviewsData() {
           <ReviewCTA />
         </div>
 
-        <div className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-6 md:p-8 flex items-center gap-6 shadow-xl rotate-2 hover:rotate-0 transition-transform shrink-0">
-          <div className="text-6xl md:text-7xl font-black text-stone-800 tracking-tighter">
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 md:p-8 flex items-center gap-6 shadow-xl rotate-2 hover:rotate-0 transition-transform shrink-0">
+          <div className="text-6xl md:text-7xl font-black text-stone-800 dark:text-slate-100 tracking-tighter">
             {average}
           </div>
           <div className="flex flex-col items-start justify-center gap-1">
@@ -80,7 +80,7 @@ async function ReviewsData() {
                 />
               ))}
             </div>
-            <span className="text-stone-400 font-bold uppercase tracking-widest text-sm mt-1">
+            <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-sm mt-1">
               {reviews.length}{" "}
               {reviews.length === 1 ? "Avaliação" : "Avaliações"}
             </span>
@@ -92,10 +92,10 @@ async function ReviewsData() {
       {reviews.length === 0 ? (
         <div className="w-full text-center py-20 flex flex-col items-center opacity-60">
           <Star className="w-20 h-20 fill-stone-200 text-stone-200 mb-4" />
-          <p className="text-stone-500 font-bold text-xl">
+          <p className="text-stone-500 dark:text-slate-400 font-bold text-xl">
             Ainda não há reviews.
           </p>
-          <p className="text-stone-400 font-medium">
+          <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-medium">
             Sê o primeiro a contar-nos a tua experiência!
           </p>
         </div>
@@ -112,11 +112,11 @@ async function ReviewsData() {
             }) => (
               <div
                 key={review.id}
-                className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-5 sm:p-6 relative flex flex-col gap-4 animate-in zoom-in-95 duration-500 hover:-translate-y-1 transition-transform group overflow-hidden"
+                className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-5 sm:p-6 relative flex flex-col gap-4 animate-in zoom-in-95 duration-500 hover:-translate-y-1 transition-transform group overflow-hidden"
               >
                 <div className="flex flex-col gap-3 w-full">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 relative shrink-0 rounded-full border-4 border-stone-100 overflow-hidden bg-stone-50 group-hover:border-[#1CB0F6]/20 transition-colors">
+                    <div className="w-12 h-12 relative shrink-0 rounded-full border-4 border-stone-100 overflow-hidden bg-stone-50 dark:bg-slate-950 group-hover:border-[#1CB0F6]/20 transition-colors">
                       <Image
                         src={review.userImageSrc || "/mascot.svg"}
                         alt={review.userName}
@@ -125,10 +125,10 @@ async function ReviewsData() {
                       />
                     </div>
                     <div className="flex flex-col min-w-0">
-                      <span className="font-bold text-stone-800 text-lg truncate leading-tight">
+                      <span className="font-bold text-stone-800 dark:text-slate-100 text-lg truncate leading-tight">
                         {review.userName}
                       </span>
-                      <span className="text-stone-400 text-xs sm:text-sm font-medium">
+                      <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium">
                         {new Date(
                           review.createdAt || new Date(),
                         ).toLocaleDateString("pt-PT", {
@@ -153,7 +153,7 @@ async function ReviewsData() {
                   <span className="text-5xl text-stone-200 font-serif absolute -top-4 -left-2 opacity-50 z-0">
                     "
                   </span>
-                  <p className="text-stone-600 font-medium italic text-lg leading-relaxed relative z-10 pl-4 py-2">
+                  <p className="text-stone-600 dark:text-slate-300 font-medium italic text-lg leading-relaxed relative z-10 pl-4 py-2">
                     {review.comment}
                   </p>
                 </div>
@@ -171,14 +171,14 @@ const ReviewsSkeleton = () => {
   return (
     <div className="animate-in fade-in duration-500 w-full">
       {/* Header / CTA Skeleton */}
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 mb-12 bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-8 lg:p-12 animate-pulse">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 mb-12 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-8 lg:p-12 animate-pulse">
         <div className="flex-1 flex flex-col items-center md:items-start w-full gap-4">
-          <div className="h-12 w-3/4 bg-stone-200 rounded-xl" />
-          <div className="h-12 w-1/2 bg-stone-200 rounded-xl" />
-          <div className="h-6 w-full max-w-md bg-stone-200 rounded-lg mt-2" />
-          <div className="h-[52px] w-[200px] bg-stone-200 rounded-2xl mt-4" />
+          <div className="h-12 w-3/4 bg-stone-200 dark:bg-slate-700 rounded-xl" />
+          <div className="h-12 w-1/2 bg-stone-200 dark:bg-slate-700 rounded-xl" />
+          <div className="h-6 w-full max-w-md bg-stone-200 dark:bg-slate-700 rounded-lg mt-2" />
+          <div className="h-[52px] w-[200px] bg-stone-200 dark:bg-slate-700 rounded-2xl mt-4" />
         </div>
-        <div className="bg-stone-100 border-2 border-stone-200 rounded-3xl p-6 md:p-8 flex items-center gap-6 shadow-sm shrink-0 w-full md:w-[320px] h-[140px]" />
+        <div className="bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 flex items-center gap-6 shadow-sm shrink-0 w-full md:w-[320px] h-[140px]" />
       </div>
 
       {/* Grid Skeleton */}
@@ -186,22 +186,22 @@ const ReviewsSkeleton = () => {
         {[1, 2, 3, 4, 5, 6].map((i) => (
           <div
             key={i}
-            className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-5 sm:p-6 relative flex flex-col gap-4 animate-pulse"
+            className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-5 sm:p-6 relative flex flex-col gap-4 animate-pulse"
           >
             <div className="flex flex-col gap-3 w-full">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-stone-200 shrink-0" />
+                <div className="w-12 h-12 rounded-full bg-stone-200 dark:bg-slate-700 shrink-0" />
                 <div className="flex flex-col gap-2">
-                  <div className="h-5 w-24 bg-stone-200 rounded-md" />
-                  <div className="h-4 w-16 bg-stone-200 rounded-md" />
+                  <div className="h-5 w-24 bg-stone-200 dark:bg-slate-700 rounded-md" />
+                  <div className="h-4 w-16 bg-stone-200 dark:bg-slate-700 rounded-md" />
                 </div>
               </div>
-              <div className="w-24 h-6 bg-stone-200 rounded-xl" />
+              <div className="w-24 h-6 bg-stone-200 dark:bg-slate-700 rounded-xl" />
             </div>
             <div className="relative mt-2 space-y-2">
-              <div className="h-4 w-full bg-stone-200 rounded-md" />
-              <div className="h-4 w-5/6 bg-stone-200 rounded-md" />
-              <div className="h-4 w-4/6 bg-stone-200 rounded-md" />
+              <div className="h-4 w-full bg-stone-200 dark:bg-slate-700 rounded-md" />
+              <div className="h-4 w-5/6 bg-stone-200 dark:bg-slate-700 rounded-md" />
+              <div className="h-4 w-4/6 bg-stone-200 dark:bg-slate-700 rounded-md" />
             </div>
           </div>
         ))}

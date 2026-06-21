@@ -83,9 +83,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       <div className="flex-1 flex flex-col">
         <Link
           href="/docs"
-          className="group flex items-center gap-2 text-stone-500 font-black text-sm uppercase tracking-widest mb-6 hover:text-[#58cc02] transition-colors w-fit"
+          className="group flex items-center gap-2 text-stone-500 dark:text-slate-400 font-black text-sm uppercase tracking-widest mb-6 hover:text-[#58cc02] transition-colors w-fit"
         >
-          <div className="w-8 h-8 rounded-xl bg-white border-2 border-stone-200 border-b-4 flex items-center justify-center group-hover:border-[#58cc02] group-hover:text-[#58cc02] transition-all group-active:translate-y-1 group-active:border-b-0">
+          <div className="w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 flex items-center justify-center group-hover:border-[#58cc02] group-hover:text-[#58cc02] transition-all group-active:translate-y-1 group-active:border-b-0">
             <LucideIcons.ArrowLeft className="w-5 h-5" />
           </div>
           Voltar para a Base de Conhecimento
@@ -127,16 +127,16 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           </div>
         </div>
 
-        <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-8 md:p-12 mb-8 shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-8 md:p-12 mb-8 shadow-sm">
           <div
-            className="text-stone-700 font-medium text-lg md:text-xl leading-loose
+            className="text-stone-700 dark:text-slate-200 font-medium text-lg md:text-xl leading-loose
                                    [&>p]:mb-6 last:[&>p]:mb-0
                                    [&>ul]:list-none [&>ul]:pl-0 [&>ul]:mb-8
                                    [&>ul>li]:relative [&>ul>li]:pl-8 [&>ul>li]:mb-4
                                    [&>ul>li::before]:content-[''] [&>ul>li::before]:absolute [&>ul>li::before]:left-0 [&>ul>li::before]:top-2.5
                                    [&>ul>li::before]:w-3.5 [&>ul>li::before]:h-3.5 [&>ul>li::before]:bg-[#58cc02] [&>ul>li::before]:rounded-full [&>ul>li::before]:shadow-sm
                                    [&>strong]:text-stone-900 [&>strong]:font-[1000]
-                                   [&>em]:text-stone-500 [&>em]:font-bold
+                                   [&>em]:text-stone-500 dark:text-slate-400 [&>em]:font-bold
                                    [&>a]:text-[#58cc02] [&>a]:underline [&>a]:decoration-2 [&>a]:underline-offset-4 [&>a:hover]:text-[#46a302]"
             dangerouslySetInnerHTML={{ __html: sanitizedContent }}
           />
@@ -151,7 +151,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 w-full max-w-lg mx-auto">
                 <button
                   onClick={() => handleFeedback(true)}
-                  className="flex-1 flex items-center justify-center gap-3 bg-white text-stone-700 border-2 border-stone-200 border-b-[6px] rounded-2xl px-6 py-5 font-[1000] text-lg uppercase hover:bg-[#58CC02] hover:text-white hover:border-[#46a302] active:translate-y-2 active:border-b-0 transition-all shadow-sm outline-none group"
+                  className="flex-1 flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-stone-700 dark:text-slate-200 border-2 border-stone-200 dark:border-slate-800 border-b-[6px] rounded-2xl px-6 py-5 font-[1000] text-lg uppercase hover:bg-[#58CC02] hover:text-white hover:border-[#46a302] active:translate-y-2 active:border-b-0 transition-all shadow-sm outline-none group"
                 >
                   <span className="text-2xl group-hover:scale-125 transition-transform">
                     👍
@@ -160,7 +160,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                 </button>
                 <button
                   onClick={() => handleFeedback(false)}
-                  className="flex-1 flex items-center justify-center gap-3 bg-white text-stone-700 border-2 border-stone-200 border-b-[6px] rounded-2xl px-6 py-5 font-[1000] text-lg uppercase hover:bg-[#ea2b2b] hover:text-white hover:border-[#b21c1c] active:translate-y-2 active:border-b-0 transition-all shadow-sm outline-none group"
+                  className="flex-1 flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-stone-700 dark:text-slate-200 border-2 border-stone-200 dark:border-slate-800 border-b-[6px] rounded-2xl px-6 py-5 font-[1000] text-lg uppercase hover:bg-[#ea2b2b] hover:text-white hover:border-[#b21c1c] active:translate-y-2 active:border-b-0 transition-all shadow-sm outline-none group"
                 >
                   <span className="text-2xl group-hover:scale-125 transition-transform">
                     👎
@@ -187,7 +187,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
       <div className="w-full lg:w-80 shrink-0">
         <div className="sticky top-6 flex flex-col gap-6">
-          <h3 className="text-xl font-[1000] text-stone-800 border-b-2 border-stone-100 pb-4">
+          <h3 className="text-xl font-[1000] text-stone-800 dark:text-slate-100 border-b-2 border-stone-100 pb-4">
             Também na secção <br />
             <span className="text-[#58cc02]">{article.category}</span>
           </h3>
@@ -198,28 +198,28 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                 <Link
                   key={related.id}
                   href={`/docs/${related.slug}`}
-                  className="bg-stone-50 hover:bg-stone-100 border-2 border-stone-200 border-b-4 rounded-2xl p-5 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-sm transition-all group"
+                  className="bg-stone-50 dark:bg-slate-950 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-5 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-sm transition-all group"
                 >
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-xl bg-white border-2 border-stone-200 flex items-center justify-center group-hover:border-emerald-200 transition-colors">
+                    <div className="w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 flex items-center justify-center group-hover:border-emerald-200 transition-colors">
                       <DynamicIcon
                         name={related.icon}
-                        className="w-4 h-4 text-stone-500 group-hover:text-[#58cc02] transition-colors"
+                        className="w-4 h-4 text-stone-500 dark:text-slate-400 group-hover:text-[#58cc02] transition-colors"
                       />
                     </div>
                   </div>
-                  <h4 className="font-black text-stone-700 text-lg mb-1 group-hover:text-stone-900 transition-colors leading-tight">
+                  <h4 className="font-black text-stone-700 dark:text-slate-200 text-lg mb-1 group-hover:text-stone-900 transition-colors leading-tight">
                     {related.title}
                   </h4>
-                  <p className="text-sm font-medium text-stone-500 line-clamp-2">
+                  <p className="text-sm font-medium text-stone-500 dark:text-slate-400 line-clamp-2">
                     {related.summary}
                   </p>
                 </Link>
               ))}
             </div>
           ) : (
-            <div className="bg-stone-50 border-2 border-dashed border-stone-200 rounded-2xl p-6 text-center">
-              <p className="text-stone-400 font-bold text-sm">
+            <div className="bg-stone-50 dark:bg-slate-950 border-2 border-dashed border-stone-200 dark:border-slate-800 rounded-2xl p-6 text-center">
+              <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
                 Este é atualmente o único artigo soberano desta categoria.
               </p>
             </div>
@@ -227,7 +227,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
           <Link
             href="/docs"
-            className="bg-white border-2 border-stone-200 border-b-4 rounded-2xl p-4 text-center font-black text-[#58cc02] hover:bg-stone-50 hover:border-emerald-300 active:translate-y-1 active:border-b-2 transition-all mt-4 flex items-center justify-center gap-2"
+            className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-4 text-center font-black text-[#58cc02] hover:bg-stone-50 dark:bg-slate-950 hover:border-emerald-300 active:translate-y-1 active:border-b-2 transition-all mt-4 flex items-center justify-center gap-2"
           >
             <LucideIcons.ArrowLeft className="w-5 h-5" /> Explorar Tudo
           </Link>

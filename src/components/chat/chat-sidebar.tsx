@@ -312,7 +312,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
   return (
     <div
       className={cn(
-        "flex w-full flex-col bg-stone-50/50 h-full",
+        "flex w-full flex-col bg-stone-50 dark:bg-slate-900 h-full",
         activeConversationId ? "hidden md:flex md:w-[380px]" : "w-full",
       )}
     >
@@ -325,8 +325,8 @@ export const ChatSidebar = ({ conversations }: Props) => {
         onClose={() => setIsNewChatModalOpen(false)}
       />
 
-      <div className="p-6 border-b-2 border-stone-100 bg-white flex flex-col gap-6 z-20 relative">
-        <h1 className="text-2xl font-black text-stone-800 tracking-tight">
+      <div className="p-6 border-b-2 border-stone-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col gap-6 z-20 relative">
+        <h1 className="text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight">
           Conversas
         </h1>
 
@@ -341,7 +341,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
           </button>
           <button
             onClick={() => setIsGroupModalOpen(true)}
-            className="bg-white text-[#1CB0F6] border-2 border-blue-200 border-b-4 rounded-xl px-4 flex items-center justify-center hover:bg-blue-50 active:translate-y-1 active:border-b-0 transition-all shadow-sm"
+            className="bg-white dark:bg-slate-900 text-[#1CB0F6] border-2 border-blue-200 border-b-4 rounded-xl px-4 flex items-center justify-center hover:bg-blue-50 active:translate-y-1 active:border-b-0 transition-all shadow-sm"
           >
             <Users className="w-5 h-5" />
           </button>
@@ -349,23 +349,23 @@ export const ChatSidebar = ({ conversations }: Props) => {
 
         {/* Search Input */}
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
           <input
             id="chat-search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Pesquisar..."
-            className="w-full pl-11 pr-4 py-3 bg-stone-100 rounded-2xl text-[15px] font-bold text-stone-700 placeholder:text-stone-400 border-2 border-stone-200 border-b-[4px] outline-none focus:bg-white focus:border-[#1CB0F6] transition-all"
+            className="w-full pl-11 pr-4 py-3 bg-stone-100 dark:bg-slate-800 rounded-2xl text-[15px] font-bold text-stone-700 dark:text-slate-200 placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-stone-200 dark:border-slate-800 border-b-[4px] outline-none focus:bg-white dark:bg-slate-900 focus:border-[#1CB0F6] transition-all"
           />
           {/* Search Results Dropdown */}
           {query && (
-            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] border-2 border-stone-200 border-b-[6px] z-50 overflow-hidden max-h-[300px] overflow-y-auto">
+            <div className="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-slate-900 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] border-2 border-stone-200 dark:border-slate-800 border-b-[6px] z-50 overflow-hidden max-h-[300px] overflow-y-auto">
               {loading ? (
                 <div className="p-6 flex justify-center text-[#1CB0F6]">
                   <Loader2 className="h-6 w-6 animate-spin" />
                 </div>
               ) : results.length === 0 ? (
-                <div className="p-6 text-center text-stone-400 font-bold text-sm">
+                <div className="p-6 text-center text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
                   Nenhum utilizador encontrado.
                 </div>
               ) : (
@@ -373,9 +373,9 @@ export const ChatSidebar = ({ conversations }: Props) => {
                   <div
                     key={user.userId}
                     onClick={() => onSelectUser(user.userId)}
-                    className="flex items-center gap-4 p-4 hover:bg-stone-50 active:bg-stone-100 cursor-pointer transition border-b-2 border-stone-100 last:border-b-0"
+                    className="flex items-center gap-4 p-4 hover:bg-stone-50 dark:bg-slate-950 active:bg-stone-100 dark:bg-slate-800 cursor-pointer transition border-b-2 border-stone-100 last:border-b-0"
                   >
-                    <div className="relative h-10 w-10 rounded-[12px] border-2 border-stone-200 overflow-hidden flex-shrink-0 bg-stone-100">
+                    <div className="relative h-10 w-10 rounded-[12px] border-2 border-stone-200 dark:border-slate-800 overflow-hidden flex-shrink-0 bg-stone-100 dark:bg-slate-800">
                       {user.userImageSrc ? (
                         <Image
                           src={user.userImageSrc}
@@ -384,13 +384,13 @@ export const ChatSidebar = ({ conversations }: Props) => {
                           className="object-cover"
                         />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center text-sm font-black text-stone-400">
+                        <div className="flex h-full w-full items-center justify-center text-sm font-black text-stone-400 dark:text-slate-500 dark:text-slate-400">
                           {user.userName[0]?.toUpperCase()}
                         </div>
                       )}
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[15px] font-black text-stone-800 truncate">
+                      <span className="text-[15px] font-black text-stone-800 dark:text-slate-100 truncate">
                         {user.userName}
                       </span>
                     </div>
@@ -404,10 +404,12 @@ export const ChatSidebar = ({ conversations }: Props) => {
 
       <div className="flex-1 overflow-y-auto p-3 pb-[120px] md:pb-4 flex flex-col gap-3 scrollbar-hide">
         {localConversations.length === 0 && !query && (
-          <div className="p-8 text-center bg-white rounded-2xl border-2 border-stone-200 border-b-4 mt-4">
+          <div className="p-8 text-center bg-white dark:bg-slate-900 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-4 mt-4">
             <span className="text-4xl">📭</span>
-            <h3 className="text-lg font-black text-stone-700 mt-4">Vazio</h3>
-            <p className="text-sm font-bold text-stone-400 mt-2">
+            <h3 className="text-lg font-black text-stone-700 dark:text-slate-200 mt-4">
+              Vazio
+            </h3>
+            <p className="text-sm font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 mt-2">
               Pesquisa amigos para começar.
             </p>
           </div>
@@ -423,8 +425,8 @@ export const ChatSidebar = ({ conversations }: Props) => {
               className={cn(
                 "flex items-start gap-4 p-4 rounded-2xl border-2 border-b-4 cursor-pointer transition-all hover:-translate-y-1 active:translate-y-1 active:border-b-2",
                 isActive
-                  ? "bg-blue-50 border-[#1CB0F6] border-b-[#1CB0F6] text-stone-800 shadow-md shadow-blue-100/50"
-                  : "bg-white border-stone-200 hover:bg-stone-50",
+                  ? "bg-blue-50 dark:bg-sky-950 border-[#1CB0F6] border-b-[#1CB0F6] text-stone-800 dark:text-slate-100 shadow-md shadow-blue-100/50 dark:shadow-[#1CB0F6]/10"
+                  : "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 hover:bg-stone-50 dark:hover:bg-slate-800",
               )}
             >
               {/* Avatar Logic */}
@@ -447,7 +449,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
                         <div
                           key={p.userId}
                           className={cn(
-                            "h-10 w-10 rounded-full border-2 border-white overflow-hidden bg-stone-100 shadow-sm relative shrink-0",
+                            "h-10 w-10 rounded-full border-2 border-white overflow-hidden bg-stone-100 dark:bg-slate-800 shadow-sm relative shrink-0",
                             idx === 1 && "z-10",
                           )}
                         >
@@ -459,14 +461,14 @@ export const ChatSidebar = ({ conversations }: Props) => {
                               className="object-cover"
                             />
                           ) : (
-                            <div className="flex h-full w-full items-center justify-center text-[10px] font-black text-stone-400">
+                            <div className="flex h-full w-full items-center justify-center text-[10px] font-black text-stone-400 dark:text-slate-500 dark:text-slate-400">
                               {p.userName?.[0] || "?"}
                             </div>
                           )}
                         </div>
                       ))}
                       {conv.participants.length > 2 && (
-                        <div className="h-10 w-10 rounded-full border-2 border-white bg-stone-50 flex items-center justify-center text-[10px] font-black text-stone-500 z-20 shadow-sm shrink-0">
+                        <div className="h-10 w-10 rounded-full border-2 border-white bg-stone-50 dark:bg-slate-950 flex items-center justify-center text-[10px] font-black text-stone-500 dark:text-slate-400 z-20 shadow-sm shrink-0">
                           +{conv.participants.length - 2}
                         </div>
                       )}
@@ -477,8 +479,8 @@ export const ChatSidebar = ({ conversations }: Props) => {
                     className={cn(
                       "relative h-14 w-14 rounded-[16px] border-2 overflow-hidden shrink-0 flex items-center justify-center shadow-sm",
                       isActive
-                        ? "border-[#1CB0F6] bg-white"
-                        : "border-stone-200 bg-stone-100",
+                        ? "border-[#1CB0F6] bg-white dark:bg-slate-900"
+                        : "border-stone-200 dark:border-slate-800 bg-stone-100 dark:bg-slate-800",
                     )}
                   >
                     {conv.partner?.userImageSrc ? (
@@ -492,7 +494,9 @@ export const ChatSidebar = ({ conversations }: Props) => {
                       <span
                         className={cn(
                           "text-xl font-black",
-                          isActive ? "text-[#1CB0F6]" : "text-stone-400",
+                          isActive
+                            ? "text-[#1CB0F6]"
+                            : "text-stone-400 dark:text-slate-500 dark:text-slate-400",
                         )}
                       >
                         {conv.partner?.userName?.[0]?.toUpperCase()}
@@ -512,7 +516,9 @@ export const ChatSidebar = ({ conversations }: Props) => {
                   <span
                     className={cn(
                       "truncate text-[15px] font-black flex items-center",
-                      isActive ? "text-[#1CB0F6]" : "text-stone-800",
+                      isActive
+                        ? "text-[#1CB0F6]"
+                        : "text-stone-800 dark:text-slate-100",
                     )}
                   >
                     <span className="truncate">{displayName}</span>
@@ -526,7 +532,9 @@ export const ChatSidebar = ({ conversations }: Props) => {
                   <span
                     className={cn(
                       "text-xs font-bold",
-                      isActive ? "text-[#1CB0F6]/70" : "text-stone-400",
+                      isActive
+                        ? "text-[#1CB0F6]/70"
+                        : "text-stone-400 dark:text-slate-500 dark:text-slate-400",
                     )}
                   >
                     {mounted && conv.lastMessage
@@ -543,11 +551,11 @@ export const ChatSidebar = ({ conversations }: Props) => {
                     className={cn(
                       "text-[13px] font-bold truncate mr-3",
                       isActive
-                        ? "text-stone-600"
+                        ? "text-stone-600 dark:text-slate-300"
                         : conv.unreadCount > 0 &&
                             conv.lastMessage?.senderId !== "me"
-                          ? "text-stone-900"
-                          : "text-stone-400",
+                          ? "text-stone-900 dark:text-slate-200"
+                          : "text-stone-400 dark:text-slate-500 dark:text-slate-400",
                     )}
                   >
                     {conv.lastMessage ? (

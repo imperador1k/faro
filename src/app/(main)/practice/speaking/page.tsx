@@ -318,26 +318,26 @@ export default function SpeakingPracticePage() {
     );
   }
   return (
-    <div className="flex flex-col min-h-screen bg-stone-50 w-full overflow-x-hidden pb-10">
+    <div className="flex flex-col min-h-screen bg-stone-50 dark:bg-slate-950 w-full overflow-x-hidden pb-10">
       {/* ── Top Progress Header ── */}
-      <header className="w-full sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b-2 border-stone-200 px-4 py-4 flex items-center justify-between">
+      <header className="w-full sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b-2 border-stone-200 dark:border-slate-800 px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full text-stone-400 hover:text-stone-600 hover:bg-stone-100 transition-colors"
+            className="rounded-full text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors"
             onClick={() => setIsSetupComplete(false)}
           >
             <X className="w-7 h-7" strokeWidth={3} />
           </Button>
-          <div className="hidden sm:block h-4 w-48 md:w-64 bg-stone-100 rounded-full overflow-hidden border-2 border-stone-200">
+          <div className="hidden sm:block h-4 w-48 md:w-64 bg-stone-100 dark:bg-slate-800 rounded-full overflow-hidden border-2 border-stone-200 dark:border-slate-800">
             {/* Fake progress for Dojo feel */}
             <div className="h-full bg-rose-500 w-[45%] rounded-full opacity-50 relative overflow-hidden">
               <div className="absolute inset-0 bg-white/20 w-full rounded-full animate-pulse"></div>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2 font-black text-stone-400 uppercase tracking-widest text-xs md:text-sm bg-stone-100 px-4 py-2 rounded-2xl border-2 border-stone-200">
+        <div className="flex items-center gap-2 font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-xs md:text-sm bg-stone-100 dark:bg-slate-800 px-4 py-2 rounded-2xl border-2 border-stone-200 dark:border-slate-800">
           <span className="text-indigo-500">{config?.language}</span>
           <span className="text-stone-300">•</span>
           <span className="text-fuchsia-500">{config?.level}</span>
@@ -348,7 +348,7 @@ export default function SpeakingPracticePage() {
         {/* ── Left Column: Challenge & Editor (Spans 8 cols) ── */}
         <div className="lg:col-span-8 flex flex-col gap-6 md:gap-8">
           {/* The Challenge Area */}
-          <section className="bg-white rounded-[2rem] border-2 border-stone-200 border-b-8 p-6 md:p-8 flex flex-col sm:flex-row items-start gap-4 md:gap-6 relative overflow-visible z-10 transition-all hover:-translate-y-1 hover:border-b-[10px] hover:mb-[-2px]">
+          <section className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col sm:flex-row items-start gap-4 md:gap-6 relative overflow-visible z-10 transition-all hover:-translate-y-1 hover:border-b-[10px] hover:mb-[-2px]">
             <div
               className="w-14 h-14 md:w-20 md:h-20 shrink-0 bg-rose-100 rounded-[1.5rem] border-b-4 border-rose-200 flex items-center justify-center shadow-inner cursor-pointer hover:bg-rose-200 transition-colors"
               onClick={() => {
@@ -363,14 +363,14 @@ export default function SpeakingPracticePage() {
             </div>
             <div className="flex flex-col gap-3 relative z-10 w-full">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl md:text-3xl font-black text-stone-700 tracking-tight leading-tight">
+                <h2 className="text-xl md:text-3xl font-black text-stone-700 dark:text-slate-200 tracking-tight leading-tight">
                   <InteractiveText
                     text={promptData?.scenario}
                     language={config?.language}
                   />
                 </h2>
               </div>
-              <p className="text-stone-500 font-medium text-sm md:text-lg leading-relaxed max-w-2xl">
+              <p className="text-stone-500 dark:text-slate-400 font-medium text-sm md:text-lg leading-relaxed max-w-2xl">
                 {promptData?.translation}
               </p>
 
@@ -406,12 +406,12 @@ export default function SpeakingPracticePage() {
 
             <div
               className={cn(
-                "w-full min-h-[350px] md:min-h-[450px] bg-white border-2 border-b-8 rounded-[2rem] p-6 md:p-8 pt-10 flex flex-col items-center justify-center transition-all shadow-sm",
+                "w-full min-h-[350px] md:min-h-[450px] bg-white dark:bg-slate-900 border-2 border-b-8 rounded-[2rem] p-6 md:p-8 pt-10 flex flex-col items-center justify-center transition-all shadow-sm",
                 status === "recording"
                   ? "border-rose-300 bg-rose-50/30"
                   : feedback
-                    ? "border-stone-200 text-stone-400 bg-stone-50"
-                    : "border-stone-200",
+                    ? "border-stone-200 dark:border-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 bg-stone-50 dark:bg-slate-950"
+                    : "border-stone-200 dark:border-slate-800",
               )}
             >
               <div
@@ -421,7 +421,7 @@ export default function SpeakingPracticePage() {
                     ? "border-rose-500 bg-rose-100 scale-110 shadow-lg shadow-rose-200"
                     : status === "paused"
                       ? "border-amber-500 bg-amber-50"
-                      : "border-stone-200 bg-stone-50",
+                      : "border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950",
                 )}
               >
                 {status === "recording" && (
@@ -437,7 +437,7 @@ export default function SpeakingPracticePage() {
                       ? "text-rose-600"
                       : status === "paused"
                         ? "text-amber-600"
-                        : "text-stone-400",
+                        : "text-stone-400 dark:text-slate-500 dark:text-slate-400",
                   )}
                 />
               </div>
@@ -449,13 +449,13 @@ export default function SpeakingPracticePage() {
                     ? "text-rose-500 animate-pulse"
                     : status === "paused"
                       ? "text-amber-500"
-                      : "text-stone-400",
+                      : "text-stone-400 dark:text-slate-500 dark:text-slate-400",
                 )}
               >
                 {getStatusText()}
               </p>
 
-              <div className="w-full max-w-xl rounded-2xl bg-white p-4 md:p-6 text-lg md:text-xl font-medium text-stone-700 border-2 border-stone-100 min-h-[120px] text-center shadow-inner flex items-center justify-center">
+              <div className="w-full max-w-xl rounded-2xl bg-white dark:bg-slate-900 p-4 md:p-6 text-lg md:text-xl font-medium text-stone-700 dark:text-slate-200 border-2 border-stone-100 min-h-[120px] text-center shadow-inner flex items-center justify-center">
                 {transcript || (
                   <span className="text-stone-300 italic flex items-center gap-2">
                     <Mic className="w-5 h-5" /> Pressiona GRAVAR para
@@ -467,7 +467,7 @@ export default function SpeakingPracticePage() {
 
             {/* Dynamic Word Count */}
             {!feedback && !isAnalyzing && transcript.trim().length > 0 && (
-              <div className="absolute bottom-6 right-6 hidden md:flex items-center gap-2 px-4 py-2 bg-stone-100 rounded-[1rem] border-2 border-stone-200 font-black text-stone-500 text-xs tracking-widest uppercase shadow-sm">
+              <div className="absolute bottom-6 right-6 hidden md:flex items-center gap-2 px-4 py-2 bg-stone-100 dark:bg-slate-800 rounded-[1rem] border-2 border-stone-200 dark:border-slate-800 font-black text-stone-500 dark:text-slate-400 text-xs tracking-widest uppercase shadow-sm">
                 <span className="text-lg text-rose-500">
                   {transcript.trim()
                     ? transcript.trim().split(/\s+/).length
@@ -530,7 +530,7 @@ export default function SpeakingPracticePage() {
                   </div>
                 </div>
 
-                <p className="text-stone-700 font-medium text-lg leading-relaxed mb-8 bg-white/50 p-6 rounded-2xl border border-stone-200/50">
+                <p className="text-stone-700 dark:text-slate-200 font-medium text-lg leading-relaxed mb-8 bg-white/50 p-6 rounded-2xl border border-stone-200/50">
                   {feedback.feedback}
                 </p>
               </div>
@@ -563,8 +563,8 @@ export default function SpeakingPracticePage() {
         <aside className="lg:col-span-4 flex flex-col gap-6 lg:sticky lg:top-24">
           {/* Vocabulary Card */}
           {promptData?.hints && promptData.hints.length > 0 && (
-            <div className="bg-white rounded-[2rem] border-2 border-stone-200 border-b-8 p-6 md:p-8 flex flex-col gap-4">
-              <h3 className="text-sm font-black uppercase tracking-widest text-stone-400 flex items-center gap-3">
+            <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col gap-4">
+              <h3 className="text-sm font-black uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center gap-3">
                 <div className="p-2 bg-indigo-50 text-indigo-500 rounded-xl">
                   <Info className="w-5 h-5" />
                 </div>
@@ -574,7 +574,7 @@ export default function SpeakingPracticePage() {
                 {promptData.hints.map((hint, i) => (
                   <span
                     key={i}
-                    className="px-3 md:px-4 py-2 bg-stone-50 border-2 border-stone-200 rounded-xl font-bold text-stone-600 text-sm md:text-base hover:bg-stone-100 hover:-translate-y-0.5 transition-all cursor-default"
+                    className="px-3 md:px-4 py-2 bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 rounded-xl font-bold text-stone-600 dark:text-slate-300 text-sm md:text-base hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:-translate-y-0.5 transition-all cursor-default"
                   >
                     {hint}
                   </span>
@@ -585,8 +585,8 @@ export default function SpeakingPracticePage() {
 
           {/* Download Audio Card */}
           {audioUrl && !feedback && (
-            <div className="bg-white rounded-[2rem] border-2 border-stone-200 border-b-8 p-6 flex flex-col items-center gap-4">
-              <h3 className="text-xs font-black uppercase tracking-widest text-stone-400">
+            <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 flex flex-col items-center gap-4">
+              <h3 className="text-xs font-black uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400">
                 TUA GRAVAÇÃO
               </h3>
               <audio src={audioUrl} controls className="w-full h-10" />
@@ -595,7 +595,7 @@ export default function SpeakingPracticePage() {
                 download={`speaking-practice-${Date.now()}.webm`}
                 className="w-full"
               >
-                <button className="w-full py-3 bg-stone-100 font-bold text-stone-500 rounded-xl border-2 border-stone-200 hover:bg-stone-200 flex items-center justify-center gap-2">
+                <button className="w-full py-3 bg-stone-100 dark:bg-slate-800 font-bold text-stone-500 dark:text-slate-400 rounded-xl border-2 border-stone-200 dark:border-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 flex items-center justify-center gap-2">
                   <Download className="w-4 h-4" /> TRANSFERIR ÁUDIO
                 </button>
               </a>
@@ -653,7 +653,7 @@ export default function SpeakingPracticePage() {
               </button>
             )}
 
-            <p className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-stone-400 flex items-center justify-center gap-2 mt-2">
+            <p className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2 mt-2">
               A AI ouve a tua pronúncia
             </p>
           </div>

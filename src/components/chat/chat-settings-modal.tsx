@@ -389,12 +389,12 @@ export const ChatSettingsModal = ({
         }
       }}
     >
-      <DialogContent className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] h-[100dvh] sm:h-[90vh] w-full sm:w-[500px] md:w-[600px] max-w-full p-0 sm:rounded-[2.5rem] border-0 sm:border-4 sm:border-white flex flex-col overflow-hidden bg-[#f4f6f8] shadow-[0_0_80px_rgba(0,0,0,0.15)] z-[100] duration-300 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]">
+      <DialogContent className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] h-[100dvh] sm:h-[90vh] w-full sm:w-[500px] md:w-[600px] max-w-full p-0 sm:rounded-[2.5rem] border-0 sm:border-4 sm:border-white dark:sm:border-slate-800 flex flex-col overflow-hidden bg-[#f4f6f8] dark:bg-slate-950 shadow-[0_0_80px_rgba(0,0,0,0.15)] z-[100] duration-300 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]">
         <DialogTitle className="sr-only">Definições da Conversa</DialogTitle>
 
         {confirmState && (
-          <div className="absolute inset-0 bg-[#f4f6f8]/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-6 animate-in fade-in duration-200">
-            <div className="bg-white rounded-3xl p-6 shadow-sm w-full max-w-[320px] flex flex-col items-center text-center border-2 border-stone-100 relative">
+          <div className="absolute inset-0 bg-[#f4f6f8]/80 dark:bg-slate-950/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-6 animate-in fade-in duration-200">
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm w-full max-w-[320px] flex flex-col items-center text-center border-2 border-stone-100 dark:border-slate-800 relative">
               <div
                 className={cn(
                   "w-20 h-20 rounded-[2rem] flex items-center justify-center mb-5 rotate-[-5deg]",
@@ -409,14 +409,14 @@ export const ChatSettingsModal = ({
                   <AlertTriangle className="w-10 h-10" />
                 )}
               </div>
-              <h2 className="text-xl font-black text-stone-800 mb-2">
+              <h2 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-2">
                 {confirmState.type === "promote"
                   ? "Promover Membro?"
                   : confirmState.type === "kick"
                     ? "Expulsar Membro?"
                     : "Sair do Grupo?"}
               </h2>
-              <p className="text-sm text-stone-400 font-bold mb-8">
+              <p className="text-sm text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold mb-8">
                 {confirmState.type === "promote"
                   ? `Queres promover ${confirmState.targetName} a Administrador? Ele terá os mesmos poderes que tu.`
                   : confirmState.type === "kick"
@@ -427,7 +427,7 @@ export const ChatSettingsModal = ({
                 <button
                   onClick={() => setConfirmState(null)}
                   disabled={isPending}
-                  className="flex-1 py-3 rounded-2xl bg-stone-100 text-stone-600 font-bold hover:bg-stone-200 transition active:scale-95 disabled:opacity-50"
+                  className="flex-1 py-3 rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-bold hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition active:scale-95 disabled:opacity-50"
                 >
                   Cancelar
                 </button>
@@ -454,27 +454,27 @@ export const ChatSettingsModal = ({
 
         {viewMode === "media" ? (
           <>
-            <div className="flex items-center justify-between p-5 bg-white border-b border-stone-200 shrink-0 z-10 sticky top-0 shadow-sm">
+            <div className="flex items-center justify-between p-5 bg-white dark:bg-slate-900 border-b border-stone-200 dark:border-slate-800 shrink-0 z-10 sticky top-0 shadow-sm">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setViewMode("settings")}
-                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 text-stone-500 transition-colors active:scale-95"
+                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 text-stone-500 dark:text-slate-400 transition-colors active:scale-95"
                 >
                   <ArrowLeft className="h-6 w-6" />
                 </button>
-                <span className="font-black text-stone-800 text-lg tracking-tight">
+                <span className="font-black text-stone-800 dark:text-slate-100 text-lg tracking-tight">
                   Média, Links e Docs
                 </span>
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-1 bg-white">
+            <div className="flex-1 overflow-y-auto p-1 bg-white dark:bg-slate-900">
               {mediaMessages.length > 0 ? (
                 <div className="grid grid-cols-3 gap-1">
                   {mediaMessages.map((msg, idx) => (
                     <div
                       key={idx}
-                      className="relative aspect-square bg-stone-100 cursor-pointer hover:opacity-80 transition-opacity"
+                      className="relative aspect-square bg-stone-100 dark:bg-slate-800 cursor-pointer hover:opacity-80 transition-opacity"
                     >
                       <Image
                         src={msg.content || ""}
@@ -488,7 +488,7 @@ export const ChatSettingsModal = ({
               ) : (
                 <div className="p-10 flex flex-col items-center justify-center text-center mt-20">
                   <File className="h-12 w-12 text-stone-200 mb-4" />
-                  <p className="text-base font-bold text-stone-400">
+                  <p className="text-base font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
                     Nenhuma média partilhada
                   </p>
                 </div>
@@ -498,23 +498,23 @@ export const ChatSettingsModal = ({
         ) : viewMode === "edit-group" ? (
           <>
             {/* Header - Edit Group */}
-            <div className="flex items-center justify-between p-5 bg-white border-b border-stone-200 shrink-0 z-10 sticky top-0 shadow-sm">
+            <div className="flex items-center justify-between p-5 bg-white dark:bg-slate-900 border-b border-stone-200 dark:border-slate-800 shrink-0 z-10 sticky top-0 shadow-sm">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setViewMode("settings")}
-                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 text-stone-500 transition-colors active:scale-95"
+                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 text-stone-500 dark:text-slate-400 transition-colors active:scale-95"
                 >
                   <ArrowLeft className="h-6 w-6" />
                 </button>
-                <span className="font-black text-stone-800 text-lg tracking-tight">
+                <span className="font-black text-stone-800 dark:text-slate-100 text-lg tracking-tight">
                   Editar Grupo
                 </span>
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-5 space-y-6 bg-stone-50">
+            <div className="flex-1 overflow-y-auto p-5 space-y-6 bg-stone-50 dark:bg-slate-950">
               <div className="space-y-2">
-                <label className="text-sm font-bold text-stone-700 uppercase tracking-wider ml-2">
+                <label className="text-sm font-bold text-stone-700 dark:text-slate-200 uppercase tracking-wider ml-2">
                   Nome do Grupo
                 </label>
                 <input
@@ -522,12 +522,12 @@ export const ChatSettingsModal = ({
                   value={editGroupName}
                   onChange={(e) => setEditGroupName(e.target.value)}
                   placeholder="Ex: Grupo de Estudos"
-                  className="w-full p-4 bg-white rounded-2xl text-[15px] font-bold text-stone-700 placeholder:text-stone-400 border-2 border-stone-200 border-b-[4px] outline-none focus:border-[#1CB0F6] transition-all"
+                  className="w-full p-4 bg-white dark:bg-slate-900 rounded-2xl text-[15px] font-bold text-stone-700 dark:text-slate-200 placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-stone-200 dark:border-slate-800 border-b-[4px] outline-none focus:border-[#1CB0F6] transition-all"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-bold text-stone-700 uppercase tracking-wider ml-2">
+                <label className="text-sm font-bold text-stone-700 dark:text-slate-200 uppercase tracking-wider ml-2">
                   Fotografia do Grupo
                 </label>
 
@@ -542,7 +542,7 @@ export const ChatSettingsModal = ({
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex-1 py-3 px-4 bg-white hover:bg-stone-50 text-stone-700 font-bold rounded-2xl border-2 border-stone-200 border-b-[4px] active:border-b-2 active:translate-y-[2px] transition-all flex items-center justify-center gap-2"
+                    className="flex-1 py-3 px-4 bg-white dark:bg-slate-900 hover:bg-stone-50 dark:bg-slate-950 text-stone-700 dark:text-slate-200 font-bold rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-[4px] active:border-b-2 active:translate-y-[2px] transition-all flex items-center justify-center gap-2"
                   >
                     <ImageIcon className="h-5 w-5 text-[#1CB0F6]" />
                     Escolher da Galeria
@@ -561,10 +561,10 @@ export const ChatSettingsModal = ({
 
               {editGroupImageUrl && (
                 <div className="space-y-2 flex flex-col items-center pt-4">
-                  <label className="text-xs font-bold text-stone-400 uppercase tracking-wider">
+                  <label className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     Pré-visualização
                   </label>
-                  <div className="relative h-24 w-24 rounded-[2rem] border-4 border-white shadow-md overflow-hidden bg-stone-200">
+                  <div className="relative h-24 w-24 rounded-[2rem] border-4 border-white shadow-md overflow-hidden bg-stone-200 dark:bg-slate-700">
                     <Image
                       src={editGroupImageUrl}
                       alt="Preview"
@@ -594,28 +594,28 @@ export const ChatSettingsModal = ({
           </>
         ) : viewMode === "add-member" ? (
           <>
-            <div className="flex items-center justify-between p-5 bg-white border-b border-stone-200 shrink-0 z-10 sticky top-0 shadow-sm">
+            <div className="flex items-center justify-between p-5 bg-white dark:bg-slate-900 border-b border-stone-200 dark:border-slate-800 shrink-0 z-10 sticky top-0 shadow-sm">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setViewMode("settings")}
-                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 text-stone-500 transition-colors active:scale-95"
+                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 text-stone-500 dark:text-slate-400 transition-colors active:scale-95"
                 >
                   <ArrowLeft className="h-6 w-6" />
                 </button>
-                <span className="font-black text-stone-800 text-lg tracking-tight">
+                <span className="font-black text-stone-800 dark:text-slate-100 text-lg tracking-tight">
                   Adicionar Membros
                 </span>
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-5 bg-stone-50 flex flex-col">
-              <div className="bg-white rounded-[2rem] shadow-sm border border-stone-100 p-2 flex flex-col gap-1">
+            <div className="flex-1 overflow-y-auto p-5 bg-stone-50 dark:bg-slate-950 flex flex-col">
+              <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-stone-100 p-2 flex flex-col gap-1">
                 {isLoadingFriends ? (
                   <div className="flex justify-center py-8 text-[#1CB0F6]">
                     <Loader2 className="w-8 h-8 animate-spin" />
                   </div>
                 ) : friends.length === 0 ? (
-                  <div className="text-center py-8 text-stone-400 font-bold text-sm px-6">
+                  <div className="text-center py-8 text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm px-6">
                     Não tens amigos para adicionar ou já estão todos neste
                     grupo.
                   </div>
@@ -630,13 +630,15 @@ export const ChatSettingsModal = ({
                         }
                         className={cn(
                           "flex items-center justify-between p-3 rounded-2xl cursor-pointer transition-colors group",
-                          isSelected ? "bg-blue-50/50" : "hover:bg-stone-50",
+                          isSelected
+                            ? "bg-blue-50/50"
+                            : "hover:bg-stone-50 dark:bg-slate-950",
                           isSubmittingMembers &&
                             "opacity-50 cursor-not-allowed",
                         )}
                       >
                         <div className="flex items-center gap-4">
-                          <div className="relative h-12 w-12 rounded-full border-2 border-white shadow-sm overflow-hidden bg-stone-100">
+                          <div className="relative h-12 w-12 rounded-full border-2 border-white shadow-sm overflow-hidden bg-stone-100 dark:bg-slate-800">
                             {friend.userImageSrc ? (
                               <Image
                                 src={friend.userImageSrc}
@@ -645,12 +647,12 @@ export const ChatSettingsModal = ({
                                 className="object-cover"
                               />
                             ) : (
-                              <div className="flex h-full w-full items-center justify-center font-black text-stone-400">
+                              <div className="flex h-full w-full items-center justify-center font-black text-stone-400 dark:text-slate-500 dark:text-slate-400">
                                 {friend.userName[0]?.toUpperCase()}
                               </div>
                             )}
                           </div>
-                          <span className="font-bold text-stone-700 group-hover:text-[#1CB0F6] transition-colors">
+                          <span className="font-bold text-stone-700 dark:text-slate-200 group-hover:text-[#1CB0F6] transition-colors">
                             {friend.userName}
                           </span>
                         </div>
@@ -659,7 +661,7 @@ export const ChatSettingsModal = ({
                             "h-6 w-6 rounded-full border-2 flex items-center justify-center transition-all",
                             isSelected
                               ? "bg-[#1CB0F6] border-[#1CB0F6]"
-                              : "bg-white border-stone-200 group-hover:border-stone-300",
+                              : "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 group-hover:border-stone-300 dark:border-slate-700",
                           )}
                         >
                           {isSelected && (
@@ -673,11 +675,11 @@ export const ChatSettingsModal = ({
               </div>
             </div>
 
-            <div className="p-5 bg-white border-t border-stone-200 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] sticky bottom-0 z-10">
+            <div className="p-5 bg-white dark:bg-slate-900 border-t border-stone-200 dark:border-slate-800 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] sticky bottom-0 z-10">
               <button
                 onClick={handleAddMembers}
                 disabled={selectedFriends.length === 0 || isSubmittingMembers}
-                className="w-full flex items-center justify-center py-4 bg-[#58CC02] hover:bg-[#46a302] text-white font-black tracking-widest text-sm uppercase rounded-2xl shadow-sm border-b-4 border-[#46a302] active:border-b-0 active:translate-y-1 transition-all disabled:bg-stone-200 disabled:border-stone-300 disabled:text-stone-400"
+                className="w-full flex items-center justify-center py-4 bg-[#58CC02] hover:bg-[#46a302] text-white font-black tracking-widest text-sm uppercase rounded-2xl shadow-sm border-b-4 border-[#46a302] active:border-b-0 active:translate-y-1 transition-all disabled:bg-stone-200 dark:bg-slate-700 disabled:border-stone-300 dark:border-slate-700 disabled:text-stone-400 dark:text-slate-500 dark:text-slate-400"
               >
                 {isSubmittingMembers ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
@@ -690,15 +692,15 @@ export const ChatSettingsModal = ({
         ) : (
           <>
             {/* Header - Fixed */}
-            <div className="flex items-center justify-between p-5 bg-white border-b border-stone-200 shrink-0 z-10 sticky top-0 shadow-sm">
+            <div className="flex items-center justify-between p-5 bg-white dark:bg-slate-900 border-b border-stone-200 dark:border-slate-800 shrink-0 z-10 sticky top-0 shadow-sm">
               <div className="flex items-center gap-3">
                 <button
                   onClick={onClose}
-                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 text-stone-500 transition-colors active:scale-95"
+                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 text-stone-500 dark:text-slate-400 transition-colors active:scale-95"
                 >
                   <X className="h-6 w-6" />
                 </button>
-                <span className="font-black text-stone-800 text-lg tracking-tight">
+                <span className="font-black text-stone-800 dark:text-slate-100 text-lg tracking-tight">
                   Info da Conversa
                 </span>
               </div>
@@ -706,8 +708,8 @@ export const ChatSettingsModal = ({
 
             <div className="flex-1 overflow-y-auto overflow-x-hidden p-5 space-y-5 scrollbar-hide">
               {/* Main Profile Info Card */}
-              <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-stone-100 flex flex-col items-center">
-                <div className="relative h-28 w-28 shrink-0 flex items-center justify-center rounded-[2rem] border-4 border-white bg-stone-50 overflow-hidden shadow-md mb-5">
+              <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-6 shadow-sm border border-stone-100 dark:border-slate-800 flex flex-col items-center">
+                <div className="relative h-28 w-28 shrink-0 flex items-center justify-center rounded-[2rem] border-4 border-white dark:border-slate-900 bg-stone-50 dark:bg-slate-800 overflow-hidden shadow-md mb-5">
                   {isGroup ? (
                     groupImageUrl ? (
                       <Image
@@ -717,12 +719,12 @@ export const ChatSettingsModal = ({
                         className="object-cover"
                       />
                     ) : (
-                      <div className="flex -space-x-4 items-center h-full w-full justify-center bg-stone-100">
+                      <div className="flex -space-x-4 items-center h-full w-full justify-center bg-stone-100 dark:bg-slate-800">
                         {participants.slice(0, 2).map((p, idx) => (
                           <div
                             key={p.userId}
                             className={cn(
-                              "h-14 w-14 rounded-full border-4 border-white overflow-hidden bg-stone-200 shadow-sm relative shrink-0",
+                              "h-14 w-14 rounded-full border-4 border-white overflow-hidden bg-stone-200 dark:bg-slate-700 shadow-sm relative shrink-0",
                               idx === 1 && "z-10",
                             )}
                           >
@@ -734,7 +736,7 @@ export const ChatSettingsModal = ({
                                 className="object-cover"
                               />
                             ) : (
-                              <div className="flex h-full w-full items-center justify-center text-sm font-black text-stone-400">
+                              <div className="flex h-full w-full items-center justify-center text-sm font-black text-stone-400 dark:text-slate-500 dark:text-slate-400">
                                 {p.userName?.[0] || "?"}
                               </div>
                             )}
@@ -750,13 +752,13 @@ export const ChatSettingsModal = ({
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-4xl font-black text-stone-400 uppercase">
+                    <div className="flex h-full w-full items-center justify-center text-4xl font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase">
                       {partner?.userName?.[0] || "?"}
                     </div>
                   )}
                 </div>
 
-                <h2 className="font-black text-stone-800 text-2xl tracking-tight text-center leading-none">
+                <h2 className="font-black text-stone-800 dark:text-slate-100 text-2xl tracking-tight text-center leading-none">
                   {isGroup ? groupName : partner?.userName}
                 </h2>
                 <span
@@ -764,7 +766,7 @@ export const ChatSettingsModal = ({
                     "text-xs font-black uppercase tracking-widest mt-3 px-4 py-1.5 rounded-full border-2",
                     isPartnerOnline || isGroup
                       ? "bg-green-50 border-green-200 text-green-500"
-                      : "bg-stone-50 border-stone-200 text-stone-400",
+                      : "bg-stone-50 dark:bg-slate-950 border-stone-200 dark:border-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400",
                   )}
                 >
                   {isGroup
@@ -781,7 +783,7 @@ export const ChatSettingsModal = ({
                       setEditGroupImageUrl(groupImageUrl || "");
                       setViewMode("edit-group");
                     }}
-                    className="mt-5 flex items-center justify-center gap-2 w-full py-3 bg-stone-100 hover:bg-stone-200 active:bg-stone-300 rounded-xl text-stone-700 font-bold transition-colors"
+                    className="mt-5 flex items-center justify-center gap-2 w-full py-3 bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 active:bg-stone-300 dark:bg-slate-600 rounded-xl text-stone-700 dark:text-slate-200 font-bold transition-colors"
                   >
                     <Pencil className="h-4 w-4" />
                     Editar Perfil do Grupo
@@ -791,26 +793,26 @@ export const ChatSettingsModal = ({
                 {/* Quick Actions (Audio / Video / Search) */}
                 <div className="flex items-center gap-4 mt-6 w-full justify-center">
                   <button className="flex flex-col items-center gap-2 group">
-                    <div className="h-12 w-12 rounded-2xl bg-stone-100 text-stone-600 flex items-center justify-center group-hover:bg-[#1CB0F6] group-hover:text-white transition-all active:scale-95">
+                    <div className="h-12 w-12 rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 flex items-center justify-center group-hover:bg-[#1CB0F6] group-hover:text-white transition-all active:scale-95">
                       <Phone className="h-5 w-5" />
                     </div>
-                    <span className="text-[10px] font-bold text-stone-500 group-hover:text-stone-700">
+                    <span className="text-[10px] font-bold text-stone-500 dark:text-slate-400 group-hover:text-stone-700 dark:text-slate-200">
                       Áudio
                     </span>
                   </button>
                   <button className="flex flex-col items-center gap-2 group">
-                    <div className="h-12 w-12 rounded-2xl bg-stone-100 text-stone-600 flex items-center justify-center group-hover:bg-[#1CB0F6] group-hover:text-white transition-all active:scale-95">
+                    <div className="h-12 w-12 rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 flex items-center justify-center group-hover:bg-[#1CB0F6] group-hover:text-white transition-all active:scale-95">
                       <Video className="h-5 w-5" />
                     </div>
-                    <span className="text-[10px] font-bold text-stone-500 group-hover:text-stone-700">
+                    <span className="text-[10px] font-bold text-stone-500 dark:text-slate-400 group-hover:text-stone-700 dark:text-slate-200">
                       Vídeo
                     </span>
                   </button>
                   <button className="flex flex-col items-center gap-2 group">
-                    <div className="h-12 w-12 rounded-2xl bg-stone-100 text-stone-600 flex items-center justify-center group-hover:bg-[#1CB0F6] group-hover:text-white transition-all active:scale-95">
+                    <div className="h-12 w-12 rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 flex items-center justify-center group-hover:bg-[#1CB0F6] group-hover:text-white transition-all active:scale-95">
                       <Search className="h-5 w-5" />
                     </div>
-                    <span className="text-[10px] font-bold text-stone-500 group-hover:text-stone-700">
+                    <span className="text-[10px] font-bold text-stone-500 dark:text-slate-400 group-hover:text-stone-700 dark:text-slate-200">
                       Pesquisar
                     </span>
                   </button>
@@ -818,20 +820,20 @@ export const ChatSettingsModal = ({
               </div>
 
               {/* Options Card */}
-              <div className="bg-white rounded-[2rem] shadow-sm border border-stone-100 overflow-hidden flex flex-col">
+              <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-stone-100 dark:border-slate-800 overflow-hidden flex flex-col">
                 <button
                   onClick={() => setIsMuted(!isMuted)}
-                  className="flex items-center justify-between p-5 hover:bg-stone-50 transition-colors border-b border-stone-100 active:bg-stone-100"
+                  className="flex items-center justify-between p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors border-b border-stone-100 dark:border-slate-800 active:bg-stone-100 dark:active:bg-slate-700"
                 >
                   <div className="flex items-center gap-4">
                     <div className="p-2.5 bg-indigo-50 text-indigo-500 rounded-xl">
                       <BellOff className="h-5 w-5" />
                     </div>
                     <div className="flex flex-col items-start">
-                      <span className="font-bold text-stone-700">
+                      <span className="font-bold text-stone-700 dark:text-slate-200">
                         Silenciar Notificações
                       </span>
-                      <span className="text-xs text-stone-400 font-medium">
+                      <span className="text-xs text-stone-400 dark:text-slate-500 dark:text-slate-400 font-medium">
                         As mensagens não farão som
                       </span>
                     </div>
@@ -839,12 +841,14 @@ export const ChatSettingsModal = ({
                   <div
                     className={cn(
                       "w-12 h-6 rounded-full flex items-center p-1 transition-colors duration-300",
-                      isMuted ? "bg-indigo-500" : "bg-stone-200",
+                      isMuted
+                        ? "bg-indigo-500"
+                        : "bg-stone-200 dark:bg-slate-700",
                     )}
                   >
                     <div
                       className={cn(
-                        "bg-white w-4 h-4 rounded-full shadow-sm transform transition-transform duration-300",
+                        "bg-white dark:bg-slate-900 w-4 h-4 rounded-full shadow-sm transform transition-transform duration-300",
                         isMuted ? "translate-x-6" : "translate-x-0",
                       )}
                     />
@@ -853,20 +857,20 @@ export const ChatSettingsModal = ({
               </div>
 
               {/* Media Section */}
-              <div className="bg-white rounded-[2rem] shadow-sm border border-stone-100 overflow-hidden flex flex-col">
+              <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-stone-100 dark:border-slate-800 overflow-hidden flex flex-col">
                 <button
                   onClick={() => setViewMode("media")}
-                  className="flex items-center justify-between p-5 hover:bg-stone-50 transition-colors active:bg-stone-100"
+                  className="flex items-center justify-between p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors active:bg-stone-100 dark:active:bg-slate-700"
                 >
                   <div className="flex items-center gap-4">
                     <div className="p-2.5 bg-blue-50 text-blue-500 rounded-xl">
                       <ImageIcon className="h-5 w-5" />
                     </div>
                     <div className="flex flex-col items-start">
-                      <span className="font-bold text-stone-700">
+                      <span className="font-bold text-stone-700 dark:text-slate-200">
                         Média, Links e Docs
                       </span>
-                      <span className="text-xs text-stone-400 font-medium">
+                      <span className="text-xs text-stone-400 dark:text-slate-500 dark:text-slate-400 font-medium">
                         {mediaMessages.length} ficheiros partilhados
                       </span>
                     </div>
@@ -879,7 +883,7 @@ export const ChatSettingsModal = ({
                     {mediaMessages.slice(0, 4).map((msg, idx) => (
                       <div
                         key={idx}
-                        className="relative aspect-square rounded-xl overflow-hidden border border-stone-200 bg-stone-50"
+                        className="relative aspect-square rounded-xl overflow-hidden border border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950"
                       >
                         <Image
                           src={msg.content || ""}
@@ -895,17 +899,17 @@ export const ChatSettingsModal = ({
 
               {/* Participants (If Group) */}
               {isGroup && (
-                <div className="bg-white rounded-[2rem] shadow-sm border border-stone-100 overflow-hidden p-2">
+                <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-stone-100 dark:border-slate-800 overflow-hidden p-2">
                   <div className="px-4 pt-4 pb-3 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div className="p-2.5 bg-purple-50 text-purple-500 rounded-xl">
                         <Users className="h-5 w-5" />
                       </div>
                       <div className="flex flex-col">
-                        <h3 className="font-bold text-stone-700">
+                        <h3 className="font-bold text-stone-700 dark:text-slate-200">
                           Membros do Grupo
                         </h3>
-                        <p className="text-xs font-bold text-stone-400">
+                        <p className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
                           {participants.length} participantes
                         </p>
                       </div>
@@ -923,7 +927,7 @@ export const ChatSettingsModal = ({
                     {participants.map((p) => (
                       <div
                         key={p.userId}
-                        className="flex flex-col bg-white rounded-2xl hover:bg-stone-50 transition-colors group"
+                        className="flex flex-col bg-white dark:bg-slate-900 rounded-2xl hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors group"
                       >
                         <div className="flex items-center gap-4 p-3">
                           <Link
@@ -934,7 +938,7 @@ export const ChatSettingsModal = ({
                             }
                             className="flex items-center gap-4 flex-1 min-w-0"
                           >
-                            <div className="relative h-12 w-12 shrink-0 rounded-full border-2 border-white shadow-sm overflow-hidden bg-stone-100 group-hover:scale-105 transition-transform">
+                            <div className="relative h-12 w-12 shrink-0 rounded-full border-2 border-white shadow-sm overflow-hidden bg-stone-100 dark:bg-slate-800 group-hover:scale-105 transition-transform">
                               {p.userImageSrc ? (
                                 <Image
                                   src={p.userImageSrc}
@@ -943,16 +947,16 @@ export const ChatSettingsModal = ({
                                   className="object-cover"
                                 />
                               ) : (
-                                <div className="flex h-full w-full items-center justify-center text-sm font-black text-stone-400 uppercase">
+                                <div className="flex h-full w-full items-center justify-center text-sm font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase">
                                   {p.userName?.[0] || "?"}
                                 </div>
                               )}
                             </div>
                             <div className="flex flex-col flex-1 min-w-0">
-                              <span className="font-bold text-stone-700 truncate group-hover:text-[#1CB0F6] transition-colors">
+                              <span className="font-bold text-stone-700 dark:text-slate-200 truncate group-hover:text-[#1CB0F6] transition-colors">
                                 {p.userName}
                               </span>
-                              <span className="text-xs text-stone-400 font-medium truncate flex items-center gap-1">
+                              <span className="text-xs text-stone-400 dark:text-slate-500 dark:text-slate-400 font-medium truncate flex items-center gap-1">
                                 {p.role === "admin" && (
                                   <span className="text-[10px] font-bold text-amber-500 bg-amber-50 px-1.5 py-0.5 rounded-sm uppercase tracking-wider">
                                     Admin
@@ -978,8 +982,8 @@ export const ChatSettingsModal = ({
                                 className={cn(
                                   "p-2 rounded-xl transition-colors active:scale-95",
                                   managingUserId === p.userId
-                                    ? "bg-stone-200 text-stone-700"
-                                    : "text-stone-400 hover:text-stone-600 hover:bg-stone-100",
+                                    ? "bg-stone-200 dark:bg-slate-700 text-stone-700 dark:text-slate-200"
+                                    : "text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800",
                                 )}
                               >
                                 <MoreVertical className="h-5 w-5" />
@@ -1027,15 +1031,15 @@ export const ChatSettingsModal = ({
               )}
 
               {/* Security */}
-              <div className="bg-[#f0fdf4] rounded-[2rem] border border-green-200 shadow-sm p-6 flex flex-col items-center text-center gap-3">
-                <div className="p-3 bg-green-100 text-green-500 rounded-2xl shrink-0">
+              <div className="bg-[#f0fdf4] dark:bg-green-950/30 rounded-[2rem] border border-green-200 dark:border-green-900/50 shadow-sm p-6 flex flex-col items-center text-center gap-3">
+                <div className="p-3 bg-green-100 dark:bg-green-900 text-green-500 dark:text-green-400 rounded-2xl shrink-0">
                   <ShieldCheck className="h-7 w-7" />
                 </div>
                 <div>
-                  <h3 className="font-black text-green-800 mb-1">
+                  <h3 className="font-black text-green-800 dark:text-green-500 mb-1">
                     Encriptação de Ponta a Ponta
                   </h3>
-                  <p className="text-xs font-bold text-green-600/80 leading-relaxed px-4">
+                  <p className="text-xs font-bold text-green-600/80 dark:text-green-500/80 leading-relaxed px-4">
                     Esta conversa está protegida com E2EE de nível militar. O
                     Duolingo não consegue ler as tuas mensagens.
                   </p>
@@ -1043,11 +1047,11 @@ export const ChatSettingsModal = ({
               </div>
 
               {/* Danger Zone Actions */}
-              <div className="bg-white rounded-[2rem] shadow-sm border border-stone-100 overflow-hidden flex flex-col">
+              <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-stone-100 dark:border-slate-800 overflow-hidden flex flex-col">
                 <button
                   disabled={isPending}
                   onClick={handleClearHistory}
-                  className="flex items-center gap-4 p-5 hover:bg-stone-50 transition-colors border-b border-stone-100 text-rose-500 font-bold active:bg-stone-100 disabled:opacity-50"
+                  className="flex items-center gap-4 p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors border-b border-stone-100 dark:border-slate-800 text-rose-500 font-bold active:bg-stone-100 dark:active:bg-slate-700 disabled:opacity-50"
                 >
                   {isPending ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -1059,11 +1063,11 @@ export const ChatSettingsModal = ({
 
                 {!isGroup && (
                   <>
-                    <button className="flex items-center gap-4 p-5 hover:bg-stone-50 transition-colors border-b border-stone-100 text-rose-500 font-bold active:bg-stone-100">
+                    <button className="flex items-center gap-4 p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors border-b border-stone-100 dark:border-slate-800 text-rose-500 font-bold active:bg-stone-100 dark:active:bg-slate-700">
                       <Ban className="h-5 w-5" />
                       Bloquear Contacto
                     </button>
-                    <button className="flex items-center gap-4 p-5 hover:bg-stone-50 transition-colors text-rose-500 font-bold active:bg-stone-100">
+                    <button className="flex items-center gap-4 p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors text-rose-500 font-bold active:bg-stone-100 dark:active:bg-slate-700">
                       <Flag className="h-5 w-5" />
                       Denunciar
                     </button>
@@ -1074,7 +1078,7 @@ export const ChatSettingsModal = ({
                   <button
                     disabled={isPending}
                     onClick={handleLeaveGroup}
-                    className="flex items-center gap-4 p-5 hover:bg-stone-50 transition-colors text-rose-500 font-bold active:bg-stone-100 disabled:opacity-50"
+                    className="flex items-center gap-4 p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors text-rose-500 font-bold active:bg-stone-100 dark:active:bg-slate-700 disabled:opacity-50"
                   >
                     <LogOut className="h-5 w-5" />
                     Sair do Grupo

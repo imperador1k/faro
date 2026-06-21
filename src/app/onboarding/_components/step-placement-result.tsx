@@ -8,12 +8,14 @@ export const StepPlacementResult = () => {
   const { placementResults } = useOnboardingStore();
 
   const levelMap = {
-    "A1": { section: 1, label: "Iniciante (A1)", bonus: 20 },
-    "A2": { section: 2, label: "Elementar (A2)", bonus: 50 },
-    "B1": { section: 3, label: "Intermédio (B1)", bonus: 100 },
+    A1: { section: 1, label: "Iniciante (A1)", bonus: 20 },
+    A2: { section: 2, label: "Elementar (A2)", bonus: 50 },
+    B1: { section: 3, label: "Intermédio (B1)", bonus: 100 },
   };
 
-  const result = placementResults?.level ? levelMap[placementResults.level] : levelMap["A1"];
+  const result = placementResults?.level
+    ? levelMap[placementResults.level]
+    : levelMap["A1"];
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center sm:justify-start sm:pt-6 text-center px-4 max-w-xl mx-auto">
@@ -38,28 +40,34 @@ export const StepPlacementResult = () => {
             Incrível! 🏆
           </h2>
           <p className="text-lg sm:text-xl font-black text-[#58cc02]">
-            Já tens algum <span className="underline decoration-4 underline-offset-4">poder</span> acumulado!
+            Já tens algum{" "}
+            <span className="underline decoration-4 underline-offset-4">
+              poder
+            </span>{" "}
+            acumulado!
           </p>
         </div>
-        
-        <div className="bg-white border-4 border-[#e5e5e5] rounded-3xl p-4 sm:p-6 shadow-[0_6px_0_#e5e5e5] relative overflow-hidden group hover:translate-y-[-2px] transition-transform">
+
+        <div className="bg-white dark:bg-slate-900 border-4 border-[#e5e5e5] rounded-3xl p-4 sm:p-6 shadow-[0_6px_0_#e5e5e5] relative overflow-hidden group hover:translate-y-[-2px] transition-transform">
           {/* Subtle background glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent to-yellow-50/50 opacity-0 group-hover:opacity-100 transition-opacity" />
-          
+
           <div className="space-y-4">
             <p className="text-base sm:text-lg font-bold text-gray-600 relative z-10">
-              Com base nos teus {placementResults?.score} acertos, o Marco colocou-te no nível:
+              Com base nos teus {placementResults?.score} acertos, o Marco
+              colocou-te no nível:
             </p>
-            
+
             <div className="text-4xl font-black text-[#1cb0f6] relative z-10">
               {result.label}
             </div>
 
             <p className="text-gray-500 font-bold text-sm">
-              Começarás na <span className="text-[#042c60]">Secção {result.section}</span>.
+              Começarás na{" "}
+              <span className="text-[#042c60]">Secção {result.section}</span>.
             </p>
           </div>
-          
+
           <div className="mt-6 flex items-center justify-center gap-2 relative z-10">
             <span className="bg-amber-100 text-amber-600 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
               Atalho Ativado

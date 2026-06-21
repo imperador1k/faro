@@ -521,7 +521,7 @@ export const LessonClient = ({
 
               <button
                 onClick={() => router.push("/learn")}
-                className="mt-4 text-slate-500 font-bold hover:text-white transition-colors uppercase tracking-widest text-sm"
+                className="mt-4 text-slate-500 dark:text-slate-400 font-bold hover:text-white transition-colors uppercase tracking-widest text-sm"
               >
                 Voltar para o mapa
               </button>
@@ -577,7 +577,7 @@ export const LessonClient = ({
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="w-full max-w-md rounded-[3rem] bg-white p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] flex flex-col items-center text-center border-b-[10px] border-slate-200 relative overflow-hidden"
+              className="w-full max-w-md rounded-[3rem] bg-white dark:bg-slate-900 p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] flex flex-col items-center text-center border-b-[10px] border-slate-200 dark:border-slate-800 relative overflow-hidden"
             >
               {/* Decorative elements */}
               <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-rose-50 to-white -z-10" />
@@ -606,7 +606,7 @@ export const LessonClient = ({
                   😭
                 </h2>
 
-                <p className="mt-4 mb-10 text-lg font-medium text-slate-500 px-4 leading-relaxed">
+                <p className="mt-4 mb-10 text-lg font-medium text-slate-500 dark:text-slate-400 px-4 leading-relaxed">
                   O gatinho está a rir-se da tua fraqueza... Fica e prova o teu
                   valor!
                   <span className="block mt-3 text-sm text-slate-400 font-normal italic opacity-80">
@@ -642,7 +642,7 @@ export const LessonClient = ({
         )}
       </AnimatePresence>
 
-      <div className="flex h-[100dvh] w-full flex-col overflow-hidden bg-white">
+      <div className="flex h-[100dvh] w-full flex-col overflow-hidden bg-white dark:bg-slate-900">
         <LessonHeader
           progress={progress}
           hearts={hearts}
@@ -655,7 +655,7 @@ export const LessonClient = ({
         />
 
         {showTransition && (
-          <div className="fixed inset-0 z-modal flex flex-col items-center justify-center bg-white animate-in fade-in duration-300">
+          <div className="fixed inset-0 z-modal flex flex-col items-center justify-center bg-white dark:bg-slate-900 animate-in fade-in duration-300">
             <div className="w-80 h-80 animate-in zoom-in duration-500">
               <DuoAnimationLottie className="w-full h-full drop-shadow-2xl" />
             </div>
@@ -674,7 +674,7 @@ export const LessonClient = ({
                 </span>
                 <Button
                   variant="ghost"
-                  className="absolute top-3 right-3 rounded-xl w-10 h-10 p-0 text-blue-500 bg-white border-2 border-slate-100 border-b-4 shadow-sm transition-all active:translate-y-1 active:border-b-2"
+                  className="absolute top-3 right-3 rounded-xl w-10 h-10 p-0 text-blue-500 bg-white dark:bg-slate-900 border-2 border-slate-100 border-b-4 shadow-sm transition-all active:translate-y-1 active:border-b-2"
                   onClick={() =>
                     playAudio(
                       currentChallenge.context as string,
@@ -689,7 +689,7 @@ export const LessonClient = ({
                     <Volume2 className="h-5 w-5" />
                   )}
                 </Button>
-                <div className="text-xl font-medium text-slate-700 mt-2 px-8 leading-relaxed">
+                <div className="text-xl font-medium text-slate-700 dark:text-slate-200 mt-2 px-8 leading-relaxed">
                   &quot;
                   <InteractiveText
                     text={currentChallenge.context}
@@ -715,14 +715,14 @@ export const LessonClient = ({
                   }
                 >
                   {isPlaying && playingText === currentChallenge.question ? (
-                    <div className="w-8 h-8 bg-white rounded-md animate-pulse" />
+                    <div className="w-8 h-8 bg-white dark:bg-slate-900 rounded-md animate-pulse" />
                   ) : (
                     <Volume2 className="h-10 w-10 text-white" />
                   )}
                 </Button>
                 <Button
                   variant="ghost"
-                  className="bg-white border-2 border-stone-200 border-b-4 w-12 h-12 rounded-2xl shadow-sm hover:bg-stone-50 transition-all active:translate-y-1 active:border-b-2 p-0"
+                  className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 w-12 h-12 rounded-2xl shadow-sm hover:bg-stone-50 dark:bg-slate-950 transition-all active:translate-y-1 active:border-b-2 p-0"
                   onClick={() =>
                     playAudio(
                       currentChallenge.question,
@@ -783,7 +783,7 @@ export const LessonClient = ({
                   placeholder="Escreve o que ouviste..."
                   autoFocus
                   className={cn(
-                    "w-full bg-stone-100 border-2 border-stone-200 border-b-4 rounded-2xl p-4 text-xl font-bold text-stone-700 focus:outline-none focus:border-[#1CB0F6] focus:bg-white transition-all text-center",
+                    "w-full bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-4 text-xl font-bold text-stone-700 dark:text-slate-200 focus:outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 transition-all text-center",
                     status === "correct" &&
                       "border-[#58CC02] bg-[#d7ffb8]/30 text-[#46a302] border-b-2 translate-y-0.5",
                     status === "wrong" &&
@@ -875,7 +875,7 @@ export const LessonClient = ({
                   placeholder="Escreve a tua resposta..."
                   autoFocus
                   className={cn(
-                    "w-full bg-stone-100 border-2 border-stone-200 border-b-4 rounded-2xl p-4 text-xl font-bold text-stone-700 focus:outline-none focus:border-[#1CB0F6] focus:bg-white transition-all text-center",
+                    "w-full bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-4 text-xl font-bold text-stone-700 dark:text-slate-200 focus:outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 transition-all text-center",
                     status === "correct" &&
                       "border-[#58CC02] bg-[#d7ffb8]/30 text-[#46a302] border-b-2 translate-y-0.5",
                     status === "wrong" &&

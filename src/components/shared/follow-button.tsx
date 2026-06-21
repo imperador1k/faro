@@ -29,8 +29,8 @@ export const FollowButton = ({ userId, isFollowing, className }: Props) => {
     return (
       <button
         className={cn(
-          "bg-rose-500 text-white border-rose-600 border-b-4 rounded-[1.2rem] sm:rounded-[1.5rem] font-black uppercase tracking-widest text-[12px] sm:text-sm hover:bg-rose-400 hover:border-rose-500 active:translate-y-1 active:border-b-0 transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm h-full",
-          className || "w-full",
+          "bg-rose-500 text-white border-rose-600 border-b-4 rounded-xl font-black uppercase tracking-widest text-[10px] sm:text-xs px-4 sm:px-6 py-2 sm:py-3 hover:bg-rose-400 hover:border-rose-500 active:translate-y-1 active:border-b-0 transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm",
+          className,
         )}
         onClick={onClick}
         disabled={pending}
@@ -44,8 +44,8 @@ export const FollowButton = ({ userId, isFollowing, className }: Props) => {
   return (
     <button
       className={cn(
-        "bg-[#1CB0F6] text-white border-[#1899D6] border-b-4 rounded-[1.2rem] sm:rounded-[1.5rem] font-black uppercase tracking-widest text-[12px] sm:text-sm hover:bg-[#1899D6] hover:border-[#1380B4] active:translate-y-1 active:border-b-0 transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm h-full",
-        className || "w-full",
+        "bg-[#1CB0F6] text-white border-[#1899D6] border-b-4 rounded-xl font-black uppercase tracking-widest text-[10px] sm:text-xs px-4 sm:px-6 py-2 sm:py-3 hover:bg-[#1899D6] hover:border-[#1380B4] active:translate-y-1 active:border-b-0 transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm",
+        className,
       )}
       onClick={onClick}
       disabled={pending}

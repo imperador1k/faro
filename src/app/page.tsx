@@ -26,7 +26,7 @@ export default async function Home() {
   const { userId } = await auth();
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-white">
+    <div className="relative flex min-h-screen flex-col overflow-hidden bg-white dark:bg-slate-900">
       {/* Background Pattern */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(#e5e7eb_2px,transparent_2px)] [background-size:24px_24px] opacity-40"></div>
 
@@ -83,7 +83,7 @@ export default async function Home() {
             divertido e eficaz de aprender um idioma!
           </h1>
 
-          <p className="hidden md:block animate-in slide-in-from-bottom-6 fade-in duration-700 delay-200 fill-mode-both text-lg font-medium text-slate-500 lg:text-xl">
+          <p className="hidden md:block animate-in slide-in-from-bottom-6 fade-in duration-700 delay-200 fill-mode-both text-lg font-medium text-slate-500 dark:text-slate-400 lg:text-xl">
             Junta-te a nós e começa a aprender hoje mesmo com lições curtas e
             viciantes.
           </p>

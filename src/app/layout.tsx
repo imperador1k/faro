@@ -13,6 +13,7 @@ import { GlobalPresenceProvider } from "@/components/providers/global-presence-p
 import { NativeBridge } from "@/components/providers/native-bridge";
 import { NativeUpdater } from "@/components/providers/native-updater";
 import { OnboardingSync } from "@/components/onboarding-sync";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const nunito = Nunito({ subsets: ["latin"] });
@@ -88,33 +89,42 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider localization={ptBR}>
-      <html lang="pt">
-        <body className={`${nunito.className} bg-slate-50`}>
-          <CustomToastProvider>
-            <UISoundsProvider>
-              <Toaster richColors />
-              <OneSignalProvider />
-              <NativeBridge />
-              <NativeUpdater />
+      <html lang="pt" suppressHydrationWarning>
+        <body
+          className={`${nunito.className} bg-slate-50 dark:bg-slate-950 transition-colors duration-300`}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <CustomToastProvider>
+              <UISoundsProvider>
+                <Toaster richColors />
+                <OneSignalProvider />
+                <NativeBridge />
+                <NativeUpdater />
 
-              <ClerkLoading>
-                <div className="fixed inset-0 z-above-modal bg-white flex items-center justify-center">
-                  <LoadingScreen />
-                </div>
-              </ClerkLoading>
+                <ClerkLoading>
+                  <div className="fixed inset-0 z-above-modal bg-white dark:bg-slate-950 flex items-center justify-center">
+                    <LoadingScreen />
+                  </div>
+                </ClerkLoading>
 
-              <ClerkLoaded>
-                <GlobalPresenceProvider>
-                  <OnboardingSync />
-                  <TTSUnlocker />
-                  <ReviewModal />
-                  {children}
-                  <FloatingMarco />
-                </GlobalPresenceProvider>
-              </ClerkLoaded>
-            </UISoundsProvider>
-          </CustomToastProvider>
-          <Analytics />
+                <ClerkLoaded>
+                  <GlobalPresenceProvider>
+                    <OnboardingSync />
+                    <TTSUnlocker />
+                    <ReviewModal />
+                    {children}
+                    <FloatingMarco />
+                  </GlobalPresenceProvider>
+                </ClerkLoaded>
+              </UISoundsProvider>
+            </CustomToastProvider>
+            <Analytics />
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

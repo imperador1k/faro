@@ -20,7 +20,7 @@ export const EmptyState = ({
   onAction,
 }: Props) => {
   return (
-    <div className="flex flex-col items-center justify-center p-8 text-center bg-white border-2 border-stone-200 border-b-8 rounded-[2.5rem] shadow-sm max-w-2xl mx-auto my-8 animate-in fade-in zoom-in duration-300">
+    <div className="flex flex-col items-center justify-center p-8 text-center bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] shadow-sm max-w-2xl mx-auto my-8 animate-in fade-in zoom-in duration-300">
       <motion.div
         animate={{
           y: [0, -20, 0],
@@ -35,11 +35,11 @@ export const EmptyState = ({
         <Image src={imageSrc} alt="Mascot" fill className="object-contain" />
       </motion.div>
 
-      <h2 className="text-3xl font-black text-stone-700 mb-4 tracking-tight">
+      <h2 className="text-3xl font-black text-stone-700 dark:text-slate-200 mb-4 tracking-tight">
         {title}
       </h2>
 
-      <p className="text-lg text-stone-500 font-bold mb-10 max-w-md mx-auto leading-relaxed">
+      <p className="text-lg text-stone-500 dark:text-slate-400 font-bold mb-10 max-w-md mx-auto leading-relaxed">
         {description}
       </p>
 

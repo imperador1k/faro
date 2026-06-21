@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { motion, AnimatePresence } from "framer-motion";
-import { generatePlacementTest, type PlacementQuestion } from "@/actions/onboarding";
+import {
+  generatePlacementTest,
+  type PlacementQuestion,
+} from "@/actions/onboarding";
 import Image from "next/image";
 import { Check, X, Loader2 } from "lucide-react";
 
@@ -12,7 +15,8 @@ interface StepPlacementProps {
 }
 
 export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
-  const { selectedCourse, setPlacementResults, nextStep } = useOnboardingStore();
+  const { selectedCourse, setPlacementResults, nextStep } =
+    useOnboardingStore();
   const [questions, setQuestions] = useState<PlacementQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -50,7 +54,7 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
         // Calculate final level based on score
         let level: "A1" | "A2" | "B1" = "A1";
         const finalScore = correct ? score + 1 : score;
-        
+
         if (finalScore >= 5) level = "B1";
         else if (finalScore >= 3) level = "A2";
         else level = "A1";
@@ -71,8 +75,12 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
           <Loader2 size={64} className="text-[#58cc02]" />
         </motion.div>
         <div className="text-center">
-          <h2 className="text-2xl font-black text-[#042c60]">Gerei um teste para ti!</h2>
-          <p className="text-gray-500 font-bold">O Marco está a pensar em boas perguntas...</p>
+          <h2 className="text-2xl font-black text-[#042c60]">
+            Gerei um teste para ti!
+          </h2>
+          <p className="text-gray-500 font-bold">
+            O Marco está a pensar em boas perguntas...
+          </p>
         </div>
       </div>
     );
@@ -89,12 +97,16 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
       <div className="w-full space-y-2">
         <div className="flex justify-between items-center text-sm font-black text-gray-400 uppercase tracking-widest">
           <span>Teste de Nivelamento</span>
-          <span>{currentIndex + 1} de {questions.length}</span>
+          <span>
+            {currentIndex + 1} de {questions.length}
+          </span>
         </div>
         <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-          <motion.div 
+          <motion.div
             className="h-full bg-sky-400"
-            animate={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
+            animate={{
+              width: `${((currentIndex + 1) / questions.length) * 100}%`,
+            }}
           />
         </div>
       </div>
@@ -111,9 +123,10 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
               disabled={isCorrect !== null}
               onClick={() => setSelectedOption(index)}
               className={`p-4 rounded-2xl border-2 border-b-4 font-bold text-lg transition-all text-left
-                ${selectedOption === index 
-                  ? "border-[#1cb0f6] bg-[#ddf4ff] text-[#1cb0f6]" 
-                  : "border-gray-200 hover:bg-gray-50 text-gray-700"
+                ${
+                  selectedOption === index
+                    ? "border-[#1cb0f6] bg-[#ddf4ff] text-[#1cb0f6]"
+                    : "border-gray-200 hover:bg-gray-50 text-gray-700"
                 }
                 ${isCorrect !== null && index === currentQuestion.correctIndex ? "border-[#58cc02] bg-[#d7ffb8] text-[#58cc02]" : ""}
                 ${isCorrect === false && index === selectedOption ? "border-[#ff4b4b] bg-[#ffdbdb] text-[#ff4b4b]" : ""}
@@ -130,9 +143,10 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
           onClick={handleCheck}
           disabled={selectedOption === null || isCorrect !== null}
           className={`w-full py-4 rounded-2xl font-black text-lg uppercase tracking-widest transition-all
-            ${selectedOption !== null && isCorrect === null
-              ? "bg-[#58cc02] text-white border-b-4 border-[#46a302] active:border-b-0 active:translate-y-1"
-              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+            ${
+              selectedOption !== null && isCorrect === null
+                ? "bg-[#58cc02] text-white border-b-4 border-[#46a302] active:border-b-0 active:translate-y-1"
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
             }
           `}
         >
@@ -150,14 +164,24 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
               ${isCorrect ? "bg-[#d7ffb8] border-[#58cc02]" : "bg-[#ffdbdb] border-[#ff4b4b]"}
             `}
           >
-            <div className={`p-3 rounded-full ${isCorrect ? "bg-white text-[#58cc02]" : "bg-white text-[#ff4b4b]"}`}>
-              {isCorrect ? <Check size={32} strokeWidth={4} /> : <X size={32} strokeWidth={4} />}
+            <div
+              className={`p-3 rounded-full ${isCorrect ? "bg-white dark:bg-slate-900 text-[#58cc02]" : "bg-white dark:bg-slate-900 text-[#ff4b4b]"}`}
+            >
+              {isCorrect ? (
+                <Check size={32} strokeWidth={4} />
+              ) : (
+                <X size={32} strokeWidth={4} />
+              )}
             </div>
             <div className="flex-1 text-center md:text-left">
-              <h3 className={`text-xl font-black ${isCorrect ? "text-[#46a302]" : "text-[#ea2b2b]"}`}>
+              <h3
+                className={`text-xl font-black ${isCorrect ? "text-[#46a302]" : "text-[#ea2b2b]"}`}
+              >
                 {isCorrect ? "Excelente!" : "Ups, quase!"}
               </h3>
-              <p className={`font-bold ${isCorrect ? "text-[#58cc02]" : "text-[#ff4b4b]"}`}>
+              <p
+                className={`font-bold ${isCorrect ? "text-[#58cc02]" : "text-[#ff4b4b]"}`}
+              >
                 {currentQuestion.explanation}
               </p>
             </div>

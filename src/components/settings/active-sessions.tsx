@@ -69,11 +69,11 @@ export const ActiveSessions = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h4 className="text-lg font-black text-stone-800 flex items-center gap-2">
+      <h4 className="text-lg font-black text-stone-800 dark:text-slate-100 flex items-center gap-2">
         <Monitor className="w-5 h-5 text-[#1CB0F6]" />
         Dispositivos Ativos
       </h4>
-      <p className="text-sm font-bold text-stone-400">
+      <p className="text-sm font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
         Estes são os dispositivos que têm sessão iniciada na tua conta. Se vires
         algum que não reconheças, podes terminar a sessão remotamente.
       </p>
@@ -98,8 +98,9 @@ export const ActiveSessions = () => {
             <div
               key={session.id}
               className={cn(
-                "flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 rounded-2xl border-2 border-stone-200 bg-white gap-4 transition-all hover:shadow-sm",
-                isCurrent && "border-[#1CB0F6] bg-blue-50/30",
+                "flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 rounded-2xl border-2 border-stone-200 dark:border-slate-800 bg-white dark:bg-slate-900 gap-4 transition-all hover:shadow-sm",
+                isCurrent &&
+                  "border-[#1CB0F6] dark:border-sky-500/50 bg-blue-50/30 dark:bg-sky-950/20",
               )}
             >
               <div className="flex items-start gap-4 min-w-0 w-full sm:w-auto">
@@ -107,28 +108,30 @@ export const ActiveSessions = () => {
                   className={cn(
                     "p-3 rounded-xl border-2 shrink-0",
                     isCurrent
-                      ? "bg-blue-100 border-blue-200 text-blue-500"
-                      : "bg-stone-50 border-stone-100 text-stone-400",
+                      ? "bg-blue-100 dark:bg-blue-900/40 border-blue-200 dark:border-blue-800 text-blue-500 dark:text-blue-400"
+                      : "bg-stone-50 dark:bg-slate-950 border-stone-100 dark:border-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400",
                   )}
                 >
                   <Icon className="w-6 h-6" />
                 </div>
                 <div className="flex flex-col gap-1 min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-black text-stone-700">{os}</span>
+                    <span className="font-black text-stone-700 dark:text-slate-200">
+                      {os}
+                    </span>
                     {isCurrent && (
                       <span className="bg-[#58CC02] text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-lg shrink-0">
                         Este Dispositivo
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-stone-400">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
                     <Globe className="w-3.5 h-3.5 shrink-0" />
                     <span className="truncate">
                       {browser} • {ip}
                     </span>
                   </div>
-                  <div className="text-[11px] font-bold text-stone-400 mt-1">
+                  <div className="text-[11px] font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 mt-1">
                     Última atividade:{" "}
                     {session.lastActiveAt
                       ? new Date(session.lastActiveAt).toLocaleString()
@@ -141,7 +144,7 @@ export const ActiveSessions = () => {
                 <button
                   onClick={() => handleRevoke(session.id)}
                   disabled={revokingId === session.id}
-                  className="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 bg-white text-rose-500 font-black uppercase text-xs tracking-wider px-4 py-3 rounded-xl border-2 border-rose-200 border-b-4 hover:bg-rose-50 active:translate-y-1 active:border-b-2 transition-all disabled:opacity-50"
+                  className="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-400 text-white font-black uppercase text-xs tracking-wider px-4 py-3 rounded-xl border-2 border-b-4 border-rose-600 active:translate-y-[2px] active:border-b-2 transition-all disabled:opacity-50"
                 >
                   {revokingId === session.id ? (
                     <Loader2 className="w-4 h-4 animate-spin" />

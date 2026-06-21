@@ -214,7 +214,7 @@ export const UnitIslandFeed = ({
                 }}
                 className="mt-12 flex flex-col items-center gap-2 group/btn z-20"
               >
-                <span className="font-black text-stone-400 uppercase tracking-widest text-sm group-hover/btn:text-sky-500 transition-colors">
+                <span className="font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-sm group-hover/btn:text-sky-500 transition-colors">
                   Voltar ao início?
                 </span>
                 <ArrowUpCircle

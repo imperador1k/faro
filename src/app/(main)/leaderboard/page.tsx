@@ -49,7 +49,9 @@ const LEAGUE_CONFIG: Record<
     color: "from-slate-400 via-slate-300 to-slate-200",
     border: "border-slate-300",
     accent: "text-slate-600",
-    icon: <Shield className="h-10 w-10 text-slate-500 fill-slate-200" />,
+    icon: (
+      <Shield className="h-10 w-10 text-slate-500 dark:text-slate-400 fill-slate-200" />
+    ),
   },
   GOLD: {
     label: "Ouro",
@@ -171,14 +173,14 @@ async function LeaderboardData() {
             user={topUsers[1]}
             rank={2}
             isCurrentUser={topUsers[1].userId === userId}
-            color="bg-slate-50 border-slate-200"
+            color="bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700"
             icon={<Star className="h-6 w-6 text-slate-400 fill-slate-200" />}
           />
           <PodiumCard
             user={topUsers[0]}
             rank={1}
             isCurrentUser={topUsers[0].userId === userId}
-            color="bg-amber-50 border-amber-200"
+            color="bg-amber-50 dark:bg-amber-950 border-amber-200 dark:border-amber-800"
             featured
             icon={<Crown className="h-10 w-10 text-amber-500 fill-amber-200" />}
           />
@@ -186,7 +188,7 @@ async function LeaderboardData() {
             user={topUsers[2]}
             rank={3}
             isCurrentUser={topUsers[2].userId === userId}
-            color="bg-orange-50 border-orange-200"
+            color="bg-orange-50 dark:bg-orange-950 border-orange-200 dark:border-orange-800"
             icon={<Star className="h-6 w-6 text-orange-400 fill-orange-200" />}
           />
         </div>
@@ -225,7 +227,7 @@ async function LeaderboardData() {
                   {index === PROMOTION_CUTOFF && (
                     <div className="flex items-center gap-3 w-full py-3 my-1">
                       <div className="flex-1 h-0.5 rounded-full bg-emerald-200" />
-                      <div className="flex items-center gap-1.5 px-4 py-1.5 rounded-2xl bg-emerald-50 border-2 border-emerald-200 border-b-4 shadow-sm">
+                      <div className="flex items-center gap-1.5 px-4 py-1.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border-2 border-emerald-200 dark:border-emerald-900/50 border-b-4 shadow-sm">
                         <TrendingUp className="h-4 w-4 text-emerald-500" />
                         <span className="text-emerald-600 font-black text-[10px] uppercase tracking-[0.2em] whitespace-nowrap">
                           Zona de Promoção
@@ -239,7 +241,7 @@ async function LeaderboardData() {
                   {showDemotionZone && index === DEMOTION_CUTOFF && (
                     <div className="flex items-center gap-3 w-full py-3 my-1">
                       <div className="flex-1 h-0.5 rounded-full bg-rose-200" />
-                      <div className="flex items-center gap-1.5 px-4 py-1.5 rounded-2xl bg-rose-50 border-2 border-rose-200 border-b-4 shadow-sm">
+                      <div className="flex items-center gap-1.5 px-4 py-1.5 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border-2 border-rose-200 dark:border-rose-900/50 border-b-4 shadow-sm">
                         <TrendingDown className="h-4 w-4 text-rose-500" />
                         <span className="text-rose-600 font-black text-[10px] uppercase tracking-[0.2em] whitespace-nowrap">
                           Zona de Despromoção
@@ -253,11 +255,11 @@ async function LeaderboardData() {
                   <Link
                     href={`/profile/${user.userId}`}
                     className={cn(
-                      "group bg-white rounded-[2.5rem] p-5 flex items-center gap-4 border-2 border-stone-200 border-b-8 hover:bg-stone-50 transition-all active:translate-y-1 active:border-b-0 active:mb-[8px]",
+                      "group bg-white dark:bg-slate-900 rounded-[2.5rem] p-5 flex items-center gap-4 border-2 border-stone-200 dark:border-slate-800 border-b-8 hover:bg-stone-50 dark:bg-slate-950 transition-all active:translate-y-1 active:border-b-0 active:mb-[8px]",
                       isCurrentUser &&
-                        "bg-sky-50 border-sky-300 shadow-sky-100",
+                        "bg-sky-50 dark:bg-sky-950/30 border-sky-300 dark:border-sky-900/50 shadow-sky-100 dark:shadow-none",
                       showAtRisk &&
-                        "bg-rose-50 border-rose-300 border-b-rose-400",
+                        "bg-rose-50 dark:bg-rose-950/30 border-rose-300 dark:border-rose-900/50 border-b-rose-400 dark:border-b-rose-800",
                     )}
                   >
                     <div className="flex items-center justify-center min-w-[50px]">
@@ -265,17 +267,17 @@ async function LeaderboardData() {
                         className={cn(
                           "font-black text-2xl tracking-tighter w-10 h-10 flex items-center justify-center rounded-xl",
                           isCurrentUser
-                            ? "text-sky-500 bg-sky-100 border-2 border-sky-200"
-                            : "text-stone-300",
+                            ? "text-sky-500 bg-sky-100 dark:bg-sky-900/30 border-2 border-sky-200 dark:border-sky-800"
+                            : "text-stone-300 dark:text-slate-600",
                           showAtRisk &&
-                            "text-rose-500 bg-rose-100 border-2 border-rose-200",
+                            "text-rose-500 bg-rose-100 dark:bg-rose-900/30 border-2 border-rose-200 dark:border-rose-800",
                         )}
                       >
                         {index + 1}
                       </span>
                     </div>
 
-                    <div className="relative h-16 w-16 rounded-[1.25rem] border-2 border-stone-200 overflow-hidden bg-stone-100 flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                    <div className="relative h-16 w-16 rounded-[1.25rem] border-2 border-stone-200 dark:border-slate-800 overflow-hidden bg-stone-100 dark:bg-slate-800 flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
                       {user.userImageSrc ? (
                         <Image
                           src={user.userImageSrc}
@@ -284,7 +286,7 @@ async function LeaderboardData() {
                           className="object-cover"
                         />
                       ) : (
-                        <div className="flex justify-center items-center h-full w-full font-black text-stone-400 text-xl">
+                        <div className="flex justify-center items-center h-full w-full font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 text-xl">
                           {user.userName[0]?.toUpperCase()}
                         </div>
                       )}
@@ -293,7 +295,7 @@ async function LeaderboardData() {
                     <div className="flex-1 flex flex-col px-2 min-w-0">
                       <span
                         className={cn(
-                          "font-black text-stone-700 text-lg sm:text-xl tracking-tight leading-none truncate",
+                          "font-black text-stone-700 dark:text-slate-200 text-lg sm:text-xl tracking-tight leading-none truncate",
                           isCurrentUser && "text-sky-700",
                           showAtRisk && "text-rose-700",
                         )}
@@ -308,17 +310,17 @@ async function LeaderboardData() {
                         )}
                         {/* On-the-bubble badges */}
                         {showAlmostUp && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-100 border border-amber-300 text-amber-600 font-black text-[10px] uppercase tracking-widest animate-pulse">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-800 text-amber-600 dark:text-amber-500 font-black text-[10px] uppercase tracking-widest animate-pulse">
                             🔥 Quase a subir!
                           </span>
                         )}
                         {showAtRisk && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-rose-100 border border-rose-300 text-rose-600 font-black text-[10px] uppercase tracking-widest animate-pulse">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-rose-100 dark:bg-rose-900/30 border border-rose-300 dark:border-rose-800 text-rose-600 dark:text-rose-500 font-black text-[10px] uppercase tracking-widest animate-pulse">
                             ⚠️ Em risco!
                           </span>
                         )}
                         {/* Mobile Weekly XP */}
-                        <div className="flex sm:hidden items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200">
+                        <div className="flex sm:hidden items-center gap-1 bg-amber-50 dark:bg-amber-950/30 px-2 py-0.5 rounded-lg border border-amber-200 dark:border-amber-900/50">
                           {user.xpBoostLessons > 0 ? (
                             <div title="XP Duplo Ativo!" className="relative">
                               <div className="absolute inset-0 bg-amber-400 opacity-30 blur-md rounded-full animate-pulse" />
@@ -327,7 +329,7 @@ async function LeaderboardData() {
                           ) : (
                             <Zap className="h-3 w-3 text-amber-500 fill-amber-300" />
                           )}
-                          <span className="font-extrabold text-stone-700 text-xs tracking-tighter">
+                          <span className="font-extrabold text-stone-700 dark:text-slate-200 text-xs tracking-tighter">
                             {user.weeklyXp} XP
                           </span>
                         </div>
@@ -335,7 +337,7 @@ async function LeaderboardData() {
                     </div>
 
                     {/* Desktop Weekly XP Badge */}
-                    <div className="hidden sm:flex bg-amber-100 rounded-2xl px-5 py-2.5 border-2 border-amber-200 border-b-4 items-center gap-2 group-hover:scale-110 transition-transform">
+                    <div className="hidden sm:flex bg-amber-100 dark:bg-amber-900/30 rounded-2xl px-5 py-2.5 border-2 border-amber-200 dark:border-amber-800 border-b-4 items-center gap-2 group-hover:scale-110 transition-transform">
                       {user.xpBoostLessons > 0 ? (
                         <div
                           title="XP Duplo Ativo!"
@@ -347,7 +349,7 @@ async function LeaderboardData() {
                       ) : (
                         <Zap className="h-5 w-5 text-amber-500 fill-amber-300" />
                       )}
-                      <span className="font-black text-stone-700 text-2xl tracking-tighter leading-none">
+                      <span className="font-black text-stone-700 dark:text-slate-200 text-2xl tracking-tighter leading-none">
                         {user.weeklyXp}
                       </span>
                       <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest -mb-1">
@@ -360,14 +362,14 @@ async function LeaderboardData() {
             })}
 
             {topUsers.length === 0 && (
-              <div className="bg-white rounded-[3rem] border-2 border-stone-200 border-b-8 p-20 text-center flex flex-col items-center justify-center gap-6 shadow-sm overflow-hidden relative">
+              <div className="bg-white dark:bg-slate-900 rounded-[3rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-20 text-center flex flex-col items-center justify-center gap-6 shadow-sm overflow-hidden relative">
                 <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#e5e7eb_2px,transparent_2px)] [background-size:24px_24px]" />
                 <LottieBlock className="h-48 w-48 relative z-10" />
                 <div className="relative z-10">
-                  <h2 className="text-3xl font-black text-stone-700 tracking-tight uppercase">
+                  <h2 className="text-3xl font-black text-stone-700 dark:text-slate-200 tracking-tight uppercase">
                     Deserto Absoluto
                   </h2>
-                  <p className="text-stone-400 font-bold text-lg mt-2 max-w-xs mx-auto">
+                  <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-lg mt-2 max-w-xs mx-auto">
                     A classificação está vazia. Sê o primeiro a dominar!
                   </p>
                 </div>
@@ -387,13 +389,13 @@ async function LeaderboardData() {
 const LeaderboardSkeleton = () => (
   <div className="flex flex-col w-full gap-6 animate-in fade-in duration-500">
     {/* Banner skeleton */}
-    <div className="h-[160px] rounded-[3rem] border-2 border-b-[10px] border-stone-200 bg-stone-100 animate-pulse" />
+    <div className="h-[160px] rounded-[3rem] border-2 border-b-[10px] border-stone-200 dark:border-slate-800 bg-stone-100 dark:bg-slate-800 animate-pulse" />
 
     {/* Podium skeleton */}
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className="h-48 rounded-[3rem] border-2 border-b-8 border-stone-200 bg-stone-100 animate-pulse mt-4" />
-      <div className="h-56 rounded-[3rem] border-2 border-b-8 border-stone-200 bg-stone-100 animate-pulse" />
-      <div className="h-48 rounded-[3rem] border-2 border-b-8 border-stone-200 bg-stone-100 animate-pulse mt-4" />
+      <div className="h-48 rounded-[3rem] border-2 border-b-8 border-stone-200 dark:border-slate-800 bg-stone-100 dark:bg-slate-800 animate-pulse mt-4" />
+      <div className="h-56 rounded-[3rem] border-2 border-b-8 border-stone-200 dark:border-slate-800 bg-stone-100 dark:bg-slate-800 animate-pulse" />
+      <div className="h-48 rounded-[3rem] border-2 border-b-8 border-stone-200 dark:border-slate-800 bg-stone-100 dark:bg-slate-800 animate-pulse mt-4" />
     </div>
 
     {/* List skeleton */}
@@ -401,17 +403,17 @@ const LeaderboardSkeleton = () => (
       {[1, 2, 3, 4, 5, 6, 7].map((i) => (
         <div
           key={i}
-          className="bg-white rounded-[2.5rem] p-5 flex items-center gap-4 border-2 border-stone-200 border-b-8"
+          className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-5 flex items-center gap-4 border-2 border-stone-200 dark:border-slate-800 border-b-8"
         >
           <div className="flex items-center justify-center min-w-[50px]">
-            <div className="w-10 h-10 bg-stone-200 rounded-xl animate-pulse" />
+            <div className="w-10 h-10 bg-stone-200 dark:bg-slate-700 rounded-xl animate-pulse" />
           </div>
-          <div className="w-16 h-16 bg-stone-200 rounded-[1.25rem] flex-shrink-0 animate-pulse" />
+          <div className="w-16 h-16 bg-stone-200 dark:bg-slate-700 rounded-[1.25rem] flex-shrink-0 animate-pulse" />
           <div className="flex-1 flex flex-col px-2 gap-2">
-            <div className="h-6 w-32 bg-stone-200 rounded-lg animate-pulse" />
-            <div className="h-4 w-16 bg-stone-200 rounded-md animate-pulse sm:hidden" />
+            <div className="h-6 w-32 bg-stone-200 dark:bg-slate-700 rounded-lg animate-pulse" />
+            <div className="h-4 w-16 bg-stone-200 dark:bg-slate-700 rounded-md animate-pulse sm:hidden" />
           </div>
-          <div className="hidden sm:flex h-12 w-28 bg-stone-200 rounded-2xl animate-pulse" />
+          <div className="hidden sm:flex h-12 w-28 bg-stone-200 dark:bg-slate-700 rounded-2xl animate-pulse" />
         </div>
       ))}
     </div>
@@ -447,7 +449,7 @@ const PodiumCard = memo(
         color,
         featured ? "md:scale-110 md:z-10 shadow-xl py-10" : "shadow-md mt-4",
         isCurrentUser &&
-          "ring-4 ring-sky-500 ring-offset-4 ring-offset-stone-50",
+          "ring-4 ring-sky-500 ring-offset-4 ring-offset-stone-50 dark:ring-offset-slate-950",
       )}
     >
       <div
@@ -466,10 +468,10 @@ const PodiumCard = memo(
       <div
         className={cn("relative mb-4", featured ? "h-28 w-28" : "h-20 w-20")}
       >
-        <div className="absolute inset-0 bg-white rounded-[2rem] border-2 border-stone-100 shadow-inner -z-10" />
+        <div className="absolute inset-0 bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-100 dark:border-slate-800 shadow-inner -z-10" />
         <div
           className={cn(
-            "relative h-full w-full rounded-[1.75rem] border-2 border-stone-200 overflow-hidden bg-stone-100 shadow-sm group-hover:scale-110 transition-transform",
+            "relative h-full w-full rounded-[1.75rem] border-2 border-stone-200 dark:border-slate-800 overflow-hidden bg-stone-100 dark:bg-slate-800 shadow-sm group-hover:scale-110 transition-transform",
             isCurrentUser && "border-sky-300",
           )}
         >
@@ -481,19 +483,19 @@ const PodiumCard = memo(
               className="object-cover"
             />
           ) : (
-            <div className="flex justify-center items-center h-full w-full font-black text-stone-400 text-3xl uppercase">
+            <div className="flex justify-center items-center h-full w-full font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 text-3xl uppercase">
               {user.userName[0]}
             </div>
           )}
         </div>
-        <div className="absolute -bottom-2 -right-2 bg-white rounded-xl p-1.5 border-2 border-stone-100 shadow-md group-hover:rotate-12 transition-transform">
+        <div className="absolute -bottom-2 -right-2 bg-white dark:bg-slate-900 rounded-xl p-1.5 border-2 border-stone-100 dark:border-slate-800 shadow-md group-hover:rotate-12 transition-transform">
           {icon}
         </div>
       </div>
 
       <h3
         className={cn(
-          "text-2xl font-black text-stone-700 tracking-tight text-center leading-tight truncate w-full",
+          "text-2xl font-black text-stone-700 dark:text-slate-200 tracking-tight text-center leading-tight truncate w-full",
           featured && "text-3xl",
           isCurrentUser && "text-sky-700",
         )}
@@ -509,11 +511,11 @@ const PodiumCard = memo(
               rank === 1 ? "text-amber-500" : "text-amber-400",
             )}
           />
-          <span className="text-3xl font-black text-stone-700 tracking-tighter">
+          <span className="text-3xl font-black text-stone-700 dark:text-slate-200 tracking-tighter">
             {user.weeklyXp}
           </span>
         </div>
-        <span className="text-[10px] font-black text-stone-400 uppercase tracking-[0.2em] -mt-1">
+        <span className="text-[10px] font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] -mt-1">
           XP ESTA SEMANA
         </span>
       </div>

@@ -56,9 +56,9 @@ export const ShareProfileModal = ({
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-sm p-0 border-0 bg-transparent shadow-none [&>button]:hidden">
-        <div className="relative bg-white border-2 border-stone-200 border-b-8 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col p-8 items-center text-center">
+        <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col p-8 items-center text-center">
           {/* Custom Close Button */}
-          <DialogClose className="absolute right-6 top-6 h-10 w-10 flex items-center justify-center rounded-2xl bg-stone-100 text-stone-400 hover:bg-stone-200 hover:text-stone-600 transition-colors active:scale-95 z-50">
+          <DialogClose className="absolute right-6 top-6 h-10 w-10 flex items-center justify-center rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-600 dark:text-slate-300 transition-colors active:scale-95 z-50">
             <X className="w-5 h-5" />
           </DialogClose>
 
@@ -68,21 +68,21 @@ export const ShareProfileModal = ({
             <QrCode className="w-10 h-10" />
           </div>
 
-          <h2 className="text-2xl font-black text-stone-800 tracking-tight mb-2">
+          <h2 className="text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight mb-2">
             Partilha o Teu Perfil!
           </h2>
-          <p className="text-sm font-bold text-stone-400 mb-8">
+          <p className="text-sm font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 mb-8">
             Vem aprender idiomas comigo e acompanha a minha ofensiva no
             MyDuolingo.
           </p>
 
-          <div className="bg-white p-4 rounded-3xl border-2 border-stone-100 shadow-sm relative group mb-8">
+          <div className="bg-white dark:bg-slate-900 p-4 rounded-3xl border-2 border-stone-100 shadow-sm relative group mb-8">
             <div className="absolute inset-0 bg-blue-50 rounded-3xl opacity-0 group-hover:opacity-100 transition duration-500 -z-10" />
             <QRCode value={profileLink} size={180} level="M" fgColor="#444" />
           </div>
 
           <div className="text-center w-full mb-8">
-            <p className="text-[13px] font-bold text-stone-500 truncate max-w-full bg-stone-100 border-2 border-stone-200 rounded-2xl py-3 px-4 select-all">
+            <p className="text-[13px] font-bold text-stone-500 dark:text-slate-400 truncate max-w-full bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 rounded-2xl py-3 px-4 select-all">
               {profileLink}
             </p>
           </div>
@@ -90,7 +90,7 @@ export const ShareProfileModal = ({
           <div className="flex w-full gap-3">
             <button
               onClick={handleCopy}
-              className="flex-1 flex flex-col items-center justify-center gap-1 bg-stone-100 text-stone-500 font-bold border-b-4 border-stone-200 py-3 rounded-2xl hover:bg-stone-200 transition-all active:translate-y-1 active:border-b-0"
+              className="flex-1 flex flex-col items-center justify-center gap-1 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-bold border-b-4 border-stone-200 dark:border-slate-800 py-3 rounded-2xl hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-all active:translate-y-1 active:border-b-0"
             >
               <Copy className="h-5 w-5" />
               <span className="text-[10px] uppercase tracking-widest">

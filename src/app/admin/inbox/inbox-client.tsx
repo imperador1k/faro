@@ -203,15 +203,15 @@ export function InboxClient({ initialItems }: Props) {
   return (
     <div className="flex h-[calc(100vh-80px)] gap-6 p-6 font-sans">
       {/* Left Column (The Ticket List) */}
-      <div className="w-[320px] md:w-[380px] shrink-0 bg-white border-2 border-stone-200 border-b-8 rounded-3xl flex flex-col overflow-hidden shadow-sm">
+      <div className="w-[320px] md:w-[380px] shrink-0 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl flex flex-col overflow-hidden shadow-sm">
         {/* Header */}
-        <div className="bg-stone-50 border-b-2 border-stone-200 shrink-0">
+        <div className="bg-stone-50 dark:bg-slate-950 border-b-2 border-stone-200 dark:border-slate-800 shrink-0">
           <div className="p-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="bg-sky-100 p-2 rounded-xl border border-sky-200">
                 <Inbox className="h-5 w-5 text-sky-500" strokeWidth={3} />
               </div>
-              <h2 className="text-xl font-black text-stone-800 tracking-tight">
+              <h2 className="text-xl font-black text-stone-800 dark:text-slate-100 tracking-tight">
                 Caixa de Entrada
               </h2>
             </div>
@@ -227,14 +227,14 @@ export function InboxClient({ initialItems }: Props) {
             <button
               onClick={() => setViewMode("active")}
               className={`flex-1 py-3 text-[11px] font-black uppercase tracking-widest transition-all rounded-t-xl border-t-2 border-x-2 
-                                ${viewMode === "active" ? "bg-white border-stone-200 text-sky-600" : "bg-transparent border-transparent text-stone-400 hover:text-stone-600"}`}
+                                ${viewMode === "active" ? "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-sky-600" : "bg-transparent border-transparent text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300"}`}
             >
               Ativos
             </button>
             <button
               onClick={() => setViewMode("archived")}
               className={`flex-1 py-3 text-[11px] font-black uppercase tracking-widest transition-all rounded-t-xl border-t-2 border-x-2 
-                                ${viewMode === "archived" ? "bg-white border-stone-200 text-amber-600" : "bg-transparent border-transparent text-stone-400 hover:text-stone-600"}`}
+                                ${viewMode === "archived" ? "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-amber-600" : "bg-transparent border-transparent text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300"}`}
             >
               Arquivo (7d)
             </button>
@@ -249,9 +249,11 @@ export function InboxClient({ initialItems }: Props) {
             </div>
           )}
           {items.length === 0 && !isGlobalLoading ? (
-            <div className="flex flex-col items-center justify-center h-full text-stone-400 p-8 text-center bg-stone-50/50">
+            <div className="flex flex-col items-center justify-center h-full text-stone-400 dark:text-slate-500 dark:text-slate-400 p-8 text-center bg-stone-50/50">
               <span className="text-5xl mb-4 grayscale opacity-50">🎉</span>
-              <p className="font-bold text-lg text-stone-500">Inbox limpa!</p>
+              <p className="font-bold text-lg text-stone-500 dark:text-slate-400">
+                Inbox limpa!
+              </p>
               <p className="text-sm font-medium mt-1">
                 Nenhum pedido pendente. Bom trabalho.
               </p>
@@ -266,13 +268,13 @@ export function InboxClient({ initialItems }: Props) {
                   key={item.id}
                   onClick={() => handleSelect(item.id)}
                   className={`p-4 cursor-pointer flex flex-col gap-1.5 transition-all
-                                        ${isSelected ? "bg-sky-50 border-l-[6px] border-l-sky-400 border-b-2 border-b-sky-100 pl-3 shadow-inner" : "border-b-2 border-b-stone-100 hover:bg-stone-50 border-l-[6px] border-l-transparent pl-3"}
+                                        ${isSelected ? "bg-sky-50 border-l-[6px] border-l-sky-400 border-b-2 border-b-sky-100 pl-3 shadow-inner" : "border-b-2 border-b-stone-100 hover:bg-stone-50 dark:bg-slate-950 border-l-[6px] border-l-transparent pl-3"}
                                         ${!isSelected ? (isReview ? "bg-amber-50/30" : "bg-blue-50/40") : ""}
                                     `}
                 >
                   <div className="flex justify-between items-start gap-3 mb-0.5">
                     <h3
-                      className={`font-bold truncate leading-tight ${item.isUnread ? "text-stone-900" : "text-stone-600"}`}
+                      className={`font-bold truncate leading-tight ${item.isUnread ? "text-stone-900" : "text-stone-600 dark:text-slate-300"}`}
                     >
                       {item.subject}
                     </h3>
@@ -285,9 +287,9 @@ export function InboxClient({ initialItems }: Props) {
                   </div>
                   <div className="flex justify-between items-center w-full">
                     <span
-                      className={`text-xs font-bold truncate flex items-center gap-2 ${item.isUnread ? "text-stone-600" : "text-stone-400"}`}
+                      className={`text-xs font-bold truncate flex items-center gap-2 ${item.isUnread ? "text-stone-600 dark:text-slate-300" : "text-stone-400 dark:text-slate-500 dark:text-slate-400"}`}
                     >
-                      <div className="w-5 h-5 rounded-full overflow-hidden bg-stone-200 border border-stone-300">
+                      <div className="w-5 h-5 rounded-full overflow-hidden bg-stone-200 dark:bg-slate-700 border border-stone-300 dark:border-slate-700">
                         {item.userImageSrc &&
                         !item.userImageSrc.endsWith(".svg") ? (
                           <Image
@@ -298,7 +300,7 @@ export function InboxClient({ initialItems }: Props) {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <UserCircle className="w-5 h-5 text-stone-400" />
+                          <UserCircle className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
                         )}
                       </div>
                       {item.userName}
@@ -319,7 +321,7 @@ export function InboxClient({ initialItems }: Props) {
       </div>
 
       {/* Right Column (The Detail View) */}
-      <div className="flex-1 bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-8 flex flex-col relative shadow-sm overflow-hidden">
+      <div className="flex-1 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-8 flex flex-col relative shadow-sm overflow-hidden">
         {!selectedTicket ? (
           <div className="w-full h-full flex flex-col items-center justify-center text-center">
             <div className="text-8xl mb-6 opacity-30 drop-shadow-sm filter">
@@ -328,7 +330,7 @@ export function InboxClient({ initialItems }: Props) {
             <h2 className="text-3xl font-black text-stone-300 tracking-tight">
               Selecione um item
             </h2>
-            <p className="text-stone-400 font-bold mt-3 max-w-sm">
+            <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold mt-3 max-w-sm">
               Aproveita e bebe um café enquanto lês os pedidos dos utilizadores.
             </p>
           </div>
@@ -337,19 +339,19 @@ export function InboxClient({ initialItems }: Props) {
             {/* Header Info */}
             <div className="shrink-0 mb-8 border-b-2 border-stone-100 pb-6">
               <div className="flex justify-between items-start gap-4 mb-6">
-                <h2 className="text-4xl font-black text-stone-800 tracking-tight leading-tight flex items-center gap-3">
+                <h2 className="text-4xl font-black text-stone-800 dark:text-slate-100 tracking-tight leading-tight flex items-center gap-3">
                   {selectedTicket.type === "review" && (
                     <Star className="w-8 h-8 text-amber-500 fill-amber-500" />
                   )}
                   {selectedTicket.subject}
                 </h2>
-                <div className="text-xs text-stone-400 font-bold bg-stone-100 px-3 py-1.5 rounded-full border-2 border-stone-200 shrink-0 uppercase">
+                <div className="text-xs text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold bg-stone-100 dark:bg-slate-800 px-3 py-1.5 rounded-full border-2 border-stone-200 dark:border-slate-800 shrink-0 uppercase">
                   {selectedTicket.type}: {selectedTicket.realId}
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-stone-200 shrink-0 bg-stone-100 flex items-center justify-center">
+                <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-stone-200 dark:border-slate-800 shrink-0 bg-stone-100 dark:bg-slate-800 flex items-center justify-center">
                   {selectedTicket.userImageSrc &&
                   !selectedTicket.userImageSrc.endsWith(".svg") ? (
                     <Image
@@ -360,20 +362,20 @@ export function InboxClient({ initialItems }: Props) {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <UserCircle className="w-10 h-10 text-stone-400" />
+                    <UserCircle className="w-10 h-10 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-black text-stone-700 text-lg">
+                  <span className="font-black text-stone-700 dark:text-slate-200 text-lg">
                     {selectedTicket.userName}
                   </span>
                   {selectedTicket.userEmail && (
-                    <span className="text-sm text-stone-500 font-bold font-mono">
+                    <span className="text-sm text-stone-500 dark:text-slate-400 font-bold font-mono">
                       {selectedTicket.userEmail}
                     </span>
                   )}
                 </div>
-                <div className="ml-auto text-xs text-stone-400 font-bold uppercase tracking-widest bg-white border-2 border-stone-200 rounded-xl px-4 py-2">
+                <div className="ml-auto text-xs text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-xl px-4 py-2">
                   {new Date(
                     selectedTicket.createdAt || new Date(),
                   ).toLocaleString("pt-PT", {
@@ -389,7 +391,7 @@ export function InboxClient({ initialItems }: Props) {
             {/* Main Content Area (Scrollable everything) */}
             <div className="flex-1 min-h-0 overflow-y-auto pr-2 custom-scrollbar flex flex-col gap-6">
               {/* User Message Box */}
-              <div className="bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-6 flex flex-col relative shadow-sm shrink-0">
+              <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-6 rounded-2xl p-6 flex flex-col relative shadow-sm shrink-0">
                 <span
                   className={`text-[10px] font-black uppercase tracking-[0.15em] mb-4 flex items-center gap-2 ${selectedTicket.type === "review" ? "text-amber-500" : "text-sky-500"}`}
                 >
@@ -401,15 +403,15 @@ export function InboxClient({ initialItems }: Props) {
                     : "Mensagem do Utilizador"}
                 </span>
 
-                <div className="text-stone-700 leading-relaxed font-semibold whitespace-pre-wrap text-lg">
+                <div className="text-stone-700 dark:text-slate-200 leading-relaxed font-semibold whitespace-pre-wrap text-lg">
                   {selectedTicket.message}
                 </div>
               </div>
 
               {/* Action Area/Reply Area */}
               {viewMode === "active" ? (
-                <div className="bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-4 flex flex-col shrink-0 mb-4">
-                  <span className="text-xs font-black uppercase text-stone-400 tracking-widest pl-2 mb-2">
+                <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-6 rounded-2xl p-4 flex flex-col shrink-0 mb-4">
+                  <span className="text-xs font-black uppercase text-stone-400 dark:text-slate-500 dark:text-slate-400 tracking-widest pl-2 mb-2">
                     Responder ao Utilizador (Dica: Usa / para Templates)
                   </span>
 
@@ -418,18 +420,18 @@ export function InboxClient({ initialItems }: Props) {
                     value={replyText}
                     onChange={handleReplyChange}
                     placeholder="Escreve aqui a tua resposta..."
-                    className="w-full bg-stone-50 border-2 border-stone-200 rounded-xl p-4 text-stone-700 font-medium placeholder:text-stone-400 focus:outline-none focus:border-[#1CB0F6] focus:bg-blue-50 transition-all resize-none min-h-[120px]"
+                    className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 rounded-xl p-4 text-stone-700 dark:text-slate-200 font-medium placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 focus:outline-none focus:border-[#1CB0F6] focus:bg-blue-50 transition-all resize-none min-h-[120px]"
                   />
 
                   <div className="flex justify-between items-center mt-4">
-                    <div className="text-xs text-stone-400 font-bold hidden sm:block">
+                    <div className="text-xs text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold hidden sm:block">
                       Modo Admin ativado
                     </div>
                     <div className="flex items-center gap-3">
                       <button
                         onClick={handleIgnore}
                         disabled={isReplying}
-                        className="bg-white text-stone-500 font-black uppercase tracking-wider py-3 px-6 rounded-2xl border-2 border-stone-200 border-b-4 hover:bg-stone-50 active:translate-y-1 active:border-b-2 transition-all disabled:opacity-50"
+                        className="bg-white dark:bg-slate-900 text-stone-500 dark:text-slate-400 font-black uppercase tracking-wider py-3 px-6 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-1 active:border-b-2 transition-all disabled:opacity-50"
                       >
                         Ignorar / Arquivar
                       </button>
@@ -461,12 +463,12 @@ export function InboxClient({ initialItems }: Props) {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col items-center gap-6 p-10 bg-stone-50 border-2 border-stone-200 border-dashed rounded-3xl text-center mb-8 shrink-0">
+                <div className="flex flex-col items-center gap-6 p-10 bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 border-dashed rounded-3xl text-center mb-8 shrink-0">
                   <div className="flex flex-col gap-2">
-                    <p className="text-stone-500 font-bold text-lg">
+                    <p className="text-stone-500 dark:text-slate-400 font-bold text-lg">
                       Este item está arquivado
                     </p>
-                    <p className="text-stone-400 font-medium text-sm">
+                    <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-medium text-sm">
                       Apenas modo de leitura disponível no arquivo.
                     </p>
                   </div>
@@ -474,7 +476,7 @@ export function InboxClient({ initialItems }: Props) {
                   <button
                     onClick={handleReopen}
                     disabled={isReplying}
-                    className="bg-white text-stone-600 font-black uppercase tracking-widest py-3 px-8 rounded-2xl border-2 border-stone-200 border-b-6 hover:bg-stone-50 active:translate-y-1 active:border-b-2 transition-all flex items-center gap-2 disabled:opacity-50"
+                    className="bg-white dark:bg-slate-900 text-stone-600 dark:text-slate-300 font-black uppercase tracking-widest py-3 px-8 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-6 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-1 active:border-b-2 transition-all flex items-center gap-2 disabled:opacity-50"
                   >
                     {isReplying ? (
                       <Loader2 className="w-5 h-5 animate-spin" />
@@ -489,8 +491,8 @@ export function InboxClient({ initialItems }: Props) {
 
             {/* Slash Command Popover (Absolute relative to the Detail View Right Column) */}
             {showSlashMenu && viewMode === "active" && (
-              <div className="absolute bottom-[220px] left-8 w-[calc(100%-64px)] sm:w-[500px] bg-white border-2 border-stone-200 border-b-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-[999] overflow-hidden animate-in slide-in-from-bottom-4 zoom-in-95 duration-200 flex flex-col">
-                <div className="bg-stone-100 text-stone-500 font-bold text-[10px] uppercase tracking-widest px-4 py-3 border-b-2 border-stone-200">
+              <div className="absolute bottom-[220px] left-8 w-[calc(100%-64px)] sm:w-[500px] bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-[999] overflow-hidden animate-in slide-in-from-bottom-4 zoom-in-95 duration-200 flex flex-col">
+                <div className="bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-bold text-[10px] uppercase tracking-widest px-4 py-3 border-b-2 border-stone-200 dark:border-slate-800">
                   Respostas Rápidas
                 </div>
                 <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
@@ -504,7 +506,7 @@ export function InboxClient({ initialItems }: Props) {
                         <div className="w-1.5 h-1.5 bg-sky-400 rounded-full"></div>
                         {t.command}
                       </div>
-                      <div className="text-xs text-stone-500 line-clamp-2 leading-relaxed group-hover:text-stone-700 font-medium">
+                      <div className="text-xs text-stone-500 dark:text-slate-400 line-clamp-2 leading-relaxed group-hover:text-stone-700 dark:text-slate-200 font-medium">
                         {t.text}
                       </div>
                     </div>

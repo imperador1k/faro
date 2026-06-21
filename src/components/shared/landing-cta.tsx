@@ -19,8 +19,8 @@ export const LandingCTA = ({ userId }: LandingCTAProps) => {
     <div className="flex w-full flex-col gap-3">
       {userId ? (
         <Link href="/learn" className="w-full">
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             className="w-full bg-green-500 hover:bg-green-600 text-white font-bold uppercase tracking-wide border-b-4 border-green-700 h-12 rounded-xl"
             onClick={playClick}
           >
@@ -30,8 +30,8 @@ export const LandingCTA = ({ userId }: LandingCTAProps) => {
       ) : (
         <>
           <Link href="/onboarding" className="w-full">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="w-full bg-green-500 hover:bg-green-600 text-white font-bold uppercase tracking-wide border-b-4 border-green-700 h-12 rounded-xl"
               onClick={playClick}
             >
@@ -39,10 +39,10 @@ export const LandingCTA = ({ userId }: LandingCTAProps) => {
             </Button>
           </Link>
           <Link href="/sign-in" className="w-full">
-            <Button 
-              variant="ghost" 
-              size="lg" 
-              className="w-full bg-white text-blue-500 hover:bg-slate-50 font-bold uppercase tracking-wide border-2 border-slate-200 border-b-4 h-12 rounded-xl active:border-b-2 hover:text-blue-600"
+            <Button
+              variant="ghost"
+              size="lg"
+              className="w-full bg-white dark:bg-slate-900 text-blue-500 hover:bg-slate-50 dark:bg-slate-950 font-bold uppercase tracking-wide border-2 border-slate-200 dark:border-slate-800 border-b-4 h-12 rounded-xl active:border-b-2 hover:text-blue-600"
               onClick={playClick}
             >
               Já tenho uma conta

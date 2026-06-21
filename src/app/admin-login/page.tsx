@@ -27,30 +27,30 @@ export default function AdminLoginVault() {
   const [state, formAction] = useFormState(authenticateVault, initialState);
 
   return (
-    <div className="min-h-screen bg-[#fbf9f8] flex flex-col items-center justify-center p-6 selection:bg-sky-500 selection:text-white relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#fbf9f8] dark:bg-slate-950 flex flex-col items-center justify-center p-6 selection:bg-sky-500 selection:text-white relative overflow-hidden font-sans">
       <div className="max-w-md w-full flex flex-col items-center gap-8 z-10">
         {/* Header Dinâmico */}
         <div className="flex flex-col items-center text-center gap-3">
-          <div className="w-20 h-20 bg-stone-100 border-4 border-stone-200 border-b-8 rounded-3xl flex items-center justify-center shadow-sm">
+          <div className="w-20 h-20 bg-stone-100 dark:bg-slate-800 border-4 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl flex items-center justify-center shadow-sm">
             <ShieldAlert className="w-10 h-10 text-sky-500" strokeWidth={3} />
           </div>
           <div>
-            <h1 className="text-3xl font-black text-stone-800 tracking-tight uppercase">
+            <h1 className="text-3xl font-black text-stone-800 dark:text-slate-100 tracking-tight uppercase">
               Acesso Restrito
             </h1>
-            <p className="text-stone-400 font-extrabold uppercase tracking-widest text-sm mt-1">
+            <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-extrabold uppercase tracking-widest text-sm mt-1">
               Painel do Administrador
             </p>
           </div>
         </div>
 
         {/* A Bento Box Gamificada */}
-        <div className="bg-white border-2 border-stone-200 border-b-8 rounded-3xl p-8 w-full">
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-8 w-full">
           <form action={formAction} className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="password"
-                className="text-stone-400 font-extrabold uppercase text-[11px] tracking-widest ml-1"
+                className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-extrabold uppercase text-[11px] tracking-widest ml-1"
               >
                 Código de Segurança (Sudo)
               </label>
@@ -60,7 +60,7 @@ export default function AdminLoginVault() {
                 type="password"
                 required
                 placeholder="••••••••"
-                className="bg-stone-100 border-2 border-stone-200 border-b-4 rounded-2xl text-center text-3xl tracking-[0.3em] font-black text-stone-700 p-4 focus:outline-none focus:border-sky-500 focus:bg-white transition-colors placeholder:text-stone-300"
+                className="bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl text-center text-3xl tracking-[0.3em] font-black text-stone-700 dark:text-slate-200 p-4 focus:outline-none focus:border-sky-500 focus:bg-white dark:focus:bg-slate-900 transition-colors placeholder:text-stone-300"
               />
             </div>
 
@@ -75,7 +75,7 @@ export default function AdminLoginVault() {
             <SubmitButton />
             <Link
               href="/learn"
-              className="w-full bg-stone-100 border-2 border-stone-200 border-b-4 hover:bg-stone-200 active:translate-y-[2px] active:border-b-2 text-stone-500 font-black text-lg rounded-2xl py-4 uppercase tracking-wider transition-all text-center block"
+              className="w-full bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 active:translate-y-[2px] active:border-b-2 text-stone-500 dark:text-slate-400 font-black text-lg rounded-2xl py-4 uppercase tracking-wider transition-all text-center block mt-4"
             >
               VOLTAR PARA O INÍCIO
             </Link>

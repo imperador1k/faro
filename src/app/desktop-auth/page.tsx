@@ -57,9 +57,11 @@ export default function DesktopAuthPage() {
   }, [isLoaded, signIn, setActive, router]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white flex-col gap-4">
+    <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-900 flex-col gap-4">
       <Loader2 className="h-8 w-8 animate-spin text-green-500" />
-      <p className="text-slate-500 font-bold">A autenticar na aplicação...</p>
+      <p className="text-slate-500 dark:text-slate-400 font-bold">
+        A autenticar na aplicação...
+      </p>
     </div>
   );
 }

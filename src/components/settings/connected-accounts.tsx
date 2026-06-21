@@ -90,11 +90,11 @@ export const ConnectedAccounts = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h4 className="text-lg font-black text-stone-800 flex items-center gap-2">
+      <h4 className="text-lg font-black text-stone-800 dark:text-slate-100 flex items-center gap-2">
         <Link2 className="w-5 h-5 text-[#1CB0F6]" />
         Contas Conectadas
       </h4>
-      <p className="text-sm font-bold text-stone-400">
+      <p className="text-sm font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
         Conecta contas externas para fazeres login de forma mais rápida.
       </p>
 
@@ -107,17 +107,17 @@ export const ConnectedAccounts = () => {
           return (
             <div
               key={account.id}
-              className="flex items-center justify-between p-4 rounded-2xl border-2 border-stone-200 bg-white hover:shadow-sm transition-all"
+              className="flex items-center justify-between p-4 rounded-2xl border-2 border-stone-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:shadow-sm transition-all"
             >
               <div className="flex items-center gap-4">
-                <div className="h-10 w-10 relative bg-stone-50 rounded-xl border-2 border-stone-100 flex items-center justify-center p-2">
+                <div className="h-10 w-10 relative bg-stone-50 dark:bg-slate-950 rounded-xl border-2 border-stone-100 flex items-center justify-center p-2">
                   {account.provider.includes("google") && <GoogleIcon />}
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-black text-stone-800">
+                  <span className="font-black text-stone-800 dark:text-slate-100">
                     {formattedName}
                   </span>
-                  <span className="text-xs font-bold text-stone-400 truncate max-w-[150px] sm:max-w-xs">
+                  <span className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 truncate max-w-[150px] sm:max-w-xs">
                     {account.emailAddress || account.username || "Conectado"}
                   </span>
                 </div>
@@ -127,7 +127,7 @@ export const ConnectedAccounts = () => {
                 disabled={
                   isUnlinking === account.id || connectedAccounts.length === 1
                 }
-                className="flex items-center justify-center p-3 rounded-xl bg-white text-stone-400 border-2 border-stone-200 border-b-4 hover:bg-stone-50 hover:text-rose-500 active:translate-y-1 active:border-b-2 transition-all disabled:opacity-50 group"
+                className="flex items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-900 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 hover:text-rose-500 active:translate-y-1 active:border-b-2 transition-all disabled:opacity-50 group"
                 title={
                   connectedAccounts.length === 1
                     ? "Não podes remover a única forma de login."
@@ -148,20 +148,20 @@ export const ConnectedAccounts = () => {
           <button
             onClick={() => handleLink("oauth_google")}
             disabled={isLinking === "oauth_google"}
-            className="flex items-center justify-between p-4 rounded-2xl border-2 border-dashed border-stone-300 bg-stone-50 hover:bg-stone-100 active:bg-stone-200 transition-all cursor-pointer group"
+            className="flex items-center justify-between p-4 rounded-2xl border-2 border-dashed border-stone-300 dark:border-slate-700 bg-stone-50 dark:bg-slate-950 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 active:bg-stone-200 dark:bg-slate-700 transition-all cursor-pointer group"
           >
             <div className="flex items-center gap-4">
-              <div className="h-10 w-10 relative bg-white rounded-xl border-2 border-stone-200 flex items-center justify-center p-2">
+              <div className="h-10 w-10 relative bg-white dark:bg-slate-900 rounded-xl border-2 border-stone-200 dark:border-slate-800 flex items-center justify-center p-2">
                 <GoogleIcon />
               </div>
-              <span className="font-black text-stone-600 group-hover:text-stone-800">
+              <span className="font-black text-stone-600 dark:text-slate-300 group-hover:text-stone-800 dark:text-slate-100">
                 Ligar Conta Google
               </span>
             </div>
             {isLinking === "oauth_google" ? (
-              <Loader2 className="w-5 h-5 animate-spin text-stone-400" />
+              <Loader2 className="w-5 h-5 animate-spin text-stone-400 dark:text-slate-500 dark:text-slate-400" />
             ) : (
-              <Plus className="w-5 h-5 text-stone-400 group-hover:text-[#1CB0F6]" />
+              <Plus className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6]" />
             )}
           </button>
         )}

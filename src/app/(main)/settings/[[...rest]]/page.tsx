@@ -21,13 +21,14 @@ import { checkSubscription } from "@/lib/subscription";
 import { E2ESettings } from "@/components/settings/e2e-settings";
 import { ActiveSessions } from "@/components/settings/active-sessions";
 import { ConnectedAccounts } from "@/components/settings/connected-accounts";
+import { ThemeToggle } from "@/components/settings/theme-toggle";
 
 export const dynamic = "force-dynamic";
 
 export default function SettingsPage() {
   return (
     <div className="max-w-4xl mx-auto py-10 px-4 flex flex-col gap-8 pb-24">
-      <h1 className="text-3xl md:text-4xl font-black text-stone-800 tracking-tight animate-in fade-in duration-500">
+      <h1 className="text-3xl md:text-4xl font-black text-stone-800 dark:text-slate-100 tracking-tight animate-in fade-in duration-500">
         Definições
       </h1>
 
@@ -56,13 +57,13 @@ async function SettingsData() {
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-500">
       {/* The "Player Passport" (Profile Section) */}
-      <div className="bg-white border-2 border-sky-200 border-b-8 rounded-[2.5rem] p-6 md:p-10 flex flex-col md:flex-row md:items-center justify-between relative overflow-hidden gap-6 shadow-sm group hover:shadow-md hover:-translate-y-1 transition-all">
+      <div className="bg-white dark:bg-slate-900 border-2 border-sky-200 border-b-8 rounded-[2.5rem] p-6 md:p-10 flex flex-col md:flex-row md:items-center justify-between relative overflow-hidden gap-6 shadow-sm group hover:shadow-md hover:-translate-y-1 transition-all">
         {/* Decorative blobs */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-sky-50 rounded-full blur-3xl opacity-60 z-0 translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform duration-700" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-50 rounded-full blur-3xl opacity-60 z-0 -translate-x-10 translate-y-10" />
 
         <div className="flex items-center gap-4 sm:gap-6 min-w-0 z-10">
-          <div className="relative h-20 w-20 md:h-28 md:w-28 shrink-0 overflow-hidden rounded-[1.8rem] md:rounded-[2.2rem] border-4 border-white shadow-lg bg-stone-100 group-hover:rotate-3 group-hover:scale-105 transition-all duration-500 ring-4 ring-sky-50">
+          <div className="relative h-20 w-20 md:h-28 md:w-28 shrink-0 overflow-hidden rounded-[1.8rem] md:rounded-[2.2rem] border-4 border-white shadow-lg bg-stone-100 dark:bg-slate-800 group-hover:rotate-3 group-hover:scale-105 transition-all duration-500 ring-4 ring-sky-50">
             <Image
               src={user.imageUrl}
               alt="Avatar"
@@ -71,7 +72,7 @@ async function SettingsData() {
             />
           </div>
           <div className="flex flex-col min-w-0">
-            <h2 className="text-2xl sm:text-3xl font-black text-stone-700 truncate tracking-tight drop-shadow-sm">
+            <h2 className="text-2xl sm:text-3xl font-black text-stone-700 dark:text-slate-200 truncate tracking-tight drop-shadow-sm">
               {user.firstName
                 ? `${user.firstName} ${user.lastName || ""}`
                 : "Utilizador"}
@@ -81,7 +82,7 @@ async function SettingsData() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
-              <p className="text-xs sm:text-sm font-black text-stone-400 truncate uppercase tracking-[0.2em]">
+              <p className="text-xs sm:text-sm font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 truncate uppercase tracking-[0.2em]">
                 Online Agora
               </p>
             </div>
@@ -95,38 +96,38 @@ async function SettingsData() {
 
       {/* Account Details (Bento Grid Style) */}
       <div>
-        <h3 className="text-xl font-black text-stone-800 mb-4">
+        <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-4">
           A Minha Conta
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {/* Email Card */}
-          <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-center items-center text-center sm:items-start sm:text-left gap-2 group hover:-translate-y-1 hover:shadow-md transition-all overflow-hidden relative">
+          <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-center items-center text-center sm:items-start sm:text-left gap-2 group hover:-translate-y-1 hover:shadow-md transition-all overflow-hidden relative">
             <div className="absolute -right-6 -bottom-6 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500">
-              <Mail className="w-32 h-32 text-stone-800" />
+              <Mail className="w-32 h-32 text-stone-800 dark:text-slate-100" />
             </div>
             <div className="p-3 bg-indigo-50 border-2 border-indigo-100 text-indigo-500 rounded-2xl mb-2 group-hover:scale-110 group-hover:rotate-[-5deg] transition-transform shadow-sm relative z-10">
               <Mail className="w-6 h-6" />
             </div>
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 relative z-10">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 relative z-10">
               Endereço de Email
             </span>
-            <span className="text-lg sm:text-xl font-black text-stone-700 break-all w-full relative z-10">
+            <span className="text-lg sm:text-xl font-black text-stone-700 dark:text-slate-200 break-all w-full relative z-10">
               {user.emailAddresses[0]?.emailAddress}
             </span>
           </div>
 
           {/* Member Since Card */}
-          <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-center items-center text-center sm:items-start sm:text-left gap-2 group hover:-translate-y-1 hover:shadow-md transition-all overflow-hidden relative">
+          <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-center items-center text-center sm:items-start sm:text-left gap-2 group hover:-translate-y-1 hover:shadow-md transition-all overflow-hidden relative">
             <div className="absolute -right-6 -bottom-6 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500">
-              <CalendarDays className="w-32 h-32 text-stone-800" />
+              <CalendarDays className="w-32 h-32 text-stone-800 dark:text-slate-100" />
             </div>
             <div className="p-3 bg-emerald-50 border-2 border-emerald-100 text-emerald-500 rounded-2xl mb-2 group-hover:scale-110 group-hover:rotate-[5deg] transition-transform shadow-sm relative z-10">
               <CalendarDays className="w-6 h-6" />
             </div>
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 relative z-10">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 relative z-10">
               Membro Desde
             </span>
-            <span className="text-lg sm:text-xl font-black text-stone-700 relative z-10">
+            <span className="text-lg sm:text-xl font-black text-stone-700 dark:text-slate-200 relative z-10">
               {formattedDate}
             </span>
           </div>
@@ -140,59 +141,72 @@ async function SettingsData() {
 
       {/* Notifications & Preferences */}
       <div>
-        <h3 className="text-xl font-black text-stone-800 mb-4">Notificações</h3>
-        <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-4">
+        <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-4">
+          Notificações
+        </h3>
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-4">
           <NotificationToggle
             initialEnabled={userProgress.notificationsEnabled}
           />
         </div>
       </div>
 
+      {/* Appearance & Theme */}
+      <div>
+        <ThemeToggle />
+      </div>
+
       {/* Security & Encryption (E2EE) */}
       <div className="flex flex-col gap-6">
         <E2ESettings />
-        <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-8">
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-8">
           <ActiveSessions />
-          <hr className="border-2 border-stone-100 rounded-full" />
+          <hr className="border-2 border-stone-100 dark:border-slate-800 rounded-full" />
           <ConnectedAccounts />
         </div>
       </div>
 
       {/* Support & Legal (The Compliance Grid) */}
       <div>
-        <h3 className="text-xl font-black text-stone-800 mb-4">
+        <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-4">
           Suporte & Legal
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Link
             href="/docs"
-            className="bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group"
+            className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-6 rounded-2xl p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group"
           >
-            <Book className="h-6 w-6 text-stone-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
-            <span className="font-bold text-stone-700">Manual de Apoio</span>
+            <Book className="h-6 w-6 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
+            <span className="font-bold text-stone-700 dark:text-slate-200">
+              Manual de Apoio
+            </span>
           </Link>
           <Link
             href="/terms"
-            className="bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group"
+            className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-6 rounded-2xl p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group"
           >
-            <FileText className="h-6 w-6 text-stone-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
-            <span className="font-bold text-stone-700">Termos de Uso</span>
+            <FileText className="h-6 w-6 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
+            <span className="font-bold text-stone-700 dark:text-slate-200">
+              Termos de Uso
+            </span>
           </Link>
           <Link
             href="/privacy"
-            className="bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group"
+            className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-6 rounded-2xl p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group"
           >
-            <Shield className="h-6 w-6 text-stone-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
-            <span className="font-bold text-stone-700">
+            <Shield className="h-6 w-6 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
+            <span className="font-bold text-stone-700 dark:text-slate-200">
               Política de Privacidade
             </span>
           </Link>
           <Link
             href="/licenses"
-            className="bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group"
+            className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-6 rounded-2xl p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group"
           >
-            <FileCheck className="h-6 w-6 text-stone-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
-            <span className="font-bold text-stone-700">Licenças</span>
+            <FileCheck className="h-6 w-6 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
+            <span className="font-bold text-stone-700 dark:text-slate-200">
+              Licenças
+            </span>
           </Link>
         </div>
       </div>
@@ -212,48 +226,53 @@ const SettingsSkeleton = () => {
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-500">
       {/* Player Passport Skeleton */}
-      <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between relative overflow-hidden gap-6 animate-pulse">
+      <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between relative overflow-hidden gap-6 animate-pulse">
         <div className="flex items-center gap-x-6">
-          <div className="h-20 w-20 md:h-24 md:w-24 rounded-full bg-stone-200 shrink-0" />
+          <div className="h-20 w-20 md:h-24 md:w-24 rounded-full bg-stone-200 dark:bg-slate-700 shrink-0" />
           <div className="flex flex-col gap-2">
-            <div className="h-6 w-48 bg-stone-200 rounded-lg" />
-            <div className="h-4 w-32 bg-stone-200 rounded-md" />
+            <div className="h-6 w-48 bg-stone-200 dark:bg-slate-700 rounded-lg" />
+            <div className="h-4 w-32 bg-stone-200 dark:bg-slate-700 rounded-md" />
           </div>
         </div>
-        <div className="w-full md:w-32 h-12 bg-stone-200 rounded-xl" />
+        <div className="w-full md:w-32 h-12 bg-stone-200 dark:bg-slate-700 rounded-xl" />
       </div>
 
       {/* Account Details Skeleton */}
       <div>
-        <div className="h-6 w-40 bg-stone-200 rounded-lg mb-4 animate-pulse" />
-        <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-4 animate-pulse">
-          <div className="h-16 w-full bg-stone-200 rounded-2xl" />
-          <div className="h-16 w-full bg-stone-200 rounded-2xl" />
+        <div className="h-6 w-40 bg-stone-200 dark:bg-slate-700 rounded-lg mb-4 animate-pulse" />
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-4 animate-pulse">
+          <div className="h-16 w-full bg-stone-200 dark:bg-slate-700 rounded-2xl" />
+          <div className="h-16 w-full bg-stone-200 dark:bg-slate-700 rounded-2xl" />
         </div>
       </div>
 
       {/* Subscription Skeleton */}
       <div>
-        <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-6 md:p-8 animate-pulse h-[240px]" />
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 animate-pulse h-[240px]" />
       </div>
 
       {/* Notifications Skeleton */}
       <div>
-        <div className="h-6 w-32 bg-stone-200 rounded-lg mb-4 animate-pulse" />
-        <div className="bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] p-6 md:p-8 animate-pulse h-[100px]" />
+        <div className="h-6 w-32 bg-stone-200 dark:bg-slate-700 rounded-lg mb-4 animate-pulse" />
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 animate-pulse h-[100px]" />
+      </div>
+
+      {/* Theme Skeleton */}
+      <div>
+        <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-[1rem] p-4 animate-pulse h-[120px]" />
       </div>
 
       {/* Support & Legal Skeleton */}
       <div>
-        <div className="h-6 w-48 bg-stone-200 rounded-lg mb-4 animate-pulse" />
+        <div className="h-6 w-48 bg-stone-200 dark:bg-slate-700 rounded-lg mb-4 animate-pulse" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className="h-20 bg-white border-2 border-stone-200 border-b-6 rounded-2xl p-5 animate-pulse flex items-center gap-4"
+              className="h-20 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-6 rounded-2xl p-5 animate-pulse flex items-center gap-4"
             >
-              <div className="w-6 h-6 rounded-md bg-stone-200" />
-              <div className="h-4 w-32 bg-stone-200 rounded-md" />
+              <div className="w-6 h-6 rounded-md bg-stone-200 dark:bg-slate-700" />
+              <div className="h-4 w-32 bg-stone-200 dark:bg-slate-700 rounded-md" />
             </div>
           ))}
         </div>

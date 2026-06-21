@@ -87,13 +87,13 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="z-modal max-w-md p-0 overflow-hidden border-none bg-transparent shadow-none [&>button]:hidden">
-        <div className="relative bg-white border-2 border-stone-200 border-b-8 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col p-6 md:p-8">
+        <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col p-6 md:p-8">
           {/* Custom Close Button */}
           <button
             onClick={onClose}
-            className="absolute right-6 top-6 h-10 w-10 flex items-center justify-center rounded-xl bg-white border-2 border-stone-200 border-b-4 hover:bg-stone-50 active:translate-y-1 active:border-b-0 transition-all z-50 group"
+            className="absolute right-6 top-6 h-10 w-10 flex items-center justify-center rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-1 active:border-b-0 transition-all z-50 group"
           >
-            <X className="w-5 h-5 text-stone-400 group-hover:text-stone-600 transition-colors" />
+            <X className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-stone-600 dark:text-slate-300 transition-colors" />
           </button>
 
           {/* Header */}
@@ -102,7 +102,7 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
               <UserPlus className="w-6 h-6 text-[#58CC02]" />
             </div>
             <DialogHeader>
-              <DialogTitle className="text-2xl font-black text-stone-800 tracking-tight">
+              <DialogTitle className="text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight">
                 Nova Mensagem
               </DialogTitle>
             </DialogHeader>
@@ -110,7 +110,7 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
 
           {/* Friend Selection */}
           <div className="space-y-3">
-            <label className="text-xs font-black text-stone-400 uppercase tracking-widest ml-1">
+            <label className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1">
               Escolher Amigo
             </label>
             <div className="max-h-80 overflow-y-auto pr-2 flex flex-col gap-2 scrollbar-hide">
@@ -119,8 +119,8 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
                   <Loader2 className="w-10 h-10 animate-spin" />
                 </div>
               ) : friends.length === 0 ? (
-                <div className="text-center py-12 px-4 bg-stone-50 rounded-2xl border-2 border-dashed border-stone-200">
-                  <p className="text-stone-400 font-bold text-sm">
+                <div className="text-center py-12 px-4 bg-stone-50 dark:bg-slate-950 rounded-2xl border-2 border-dashed border-stone-200 dark:border-slate-800">
+                  <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
                     Segue alguns amigos para iniciares conversas diretas.
                   </p>
                 </div>
@@ -142,7 +142,7 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
                     )}
                   >
                     <div className="flex items-center gap-4">
-                      <div className="relative h-12 w-12 rounded-[14px] border-2 border-stone-200 overflow-hidden bg-stone-100 shadow-sm group-hover:border-[#1CB0F6] transition-colors">
+                      <div className="relative h-12 w-12 rounded-[14px] border-2 border-stone-200 dark:border-slate-800 overflow-hidden bg-stone-100 dark:bg-slate-800 shadow-sm group-hover:border-[#1CB0F6] transition-colors">
                         {friend.userImageSrc ? (
                           <Image
                             src={friend.userImageSrc}
@@ -151,16 +151,16 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
                             className="object-cover"
                           />
                         ) : (
-                          <div className="h-full w-full flex items-center justify-center font-black text-stone-400 uppercase">
+                          <div className="h-full w-full flex items-center justify-center font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase">
                             {friend.userName[0]}
                           </div>
                         )}
                       </div>
                       <div className="flex flex-col">
-                        <span className="font-black text-stone-800 group-hover:text-[#1CB0F6] transition-colors">
+                        <span className="font-black text-stone-800 dark:text-slate-100 group-hover:text-[#1CB0F6] transition-colors">
                           {friend.userName}
                         </span>
-                        <span className="text-xs font-bold text-stone-400">
+                        <span className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
                           Online recentemente
                         </span>
                       </div>
@@ -169,7 +169,7 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
                     {isSubmitting === friend.userId ? (
                       <Loader2 className="w-5 h-5 animate-spin text-[#1CB0F6]" />
                     ) : (
-                      <div className="h-8 w-8 rounded-xl bg-stone-100 flex items-center justify-center text-stone-400 group-hover:bg-[#1CB0F6] group-hover:text-white transition-all shadow-sm">
+                      <div className="h-8 w-8 rounded-xl bg-stone-100 dark:bg-slate-800 flex items-center justify-center text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:bg-[#1CB0F6] group-hover:text-white transition-all shadow-sm">
                         <MessageSquare className="w-4 h-4" />
                       </div>
                     )}
@@ -181,7 +181,7 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
 
           {/* Footer Hint */}
           <div className="mt-8 pt-6 border-t-2 border-stone-100 text-center">
-            <p className="text-[13px] font-bold text-stone-400">
+            <p className="text-[13px] font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
               Podes pesquisar outros utilizadores usando a barra de pesquisa na
               lateral.
             </p>

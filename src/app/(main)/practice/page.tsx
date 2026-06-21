@@ -42,7 +42,7 @@ async function PracticeData() {
       {/* ── Clínica de Corações ── */}
       <div>
         {hasFullHearts ? (
-          <div className="bg-white rounded-xl border-2 border-stone-200 border-b-8 p-10 flex flex-col items-center text-center space-y-4 opacity-50 grayscale">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-8 p-10 flex flex-col items-center text-center space-y-4 opacity-50 grayscale">
             <div className="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center shadow-inner">
               <HeartPulse
                 className="h-10 w-10 text-rose-300"
@@ -50,10 +50,10 @@ async function PracticeData() {
               />
             </div>
             <div>
-              <h3 className="text-2xl font-black text-stone-400">
+              <h3 className="text-2xl font-black text-stone-400 dark:text-slate-500 dark:text-slate-400">
                 Clínica de Corações
               </h3>
-              <p className="mt-2 font-medium text-stone-400 max-w-sm mx-auto">
+              <p className="mt-2 font-medium text-stone-400 dark:text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
                 Tens as vidas no máximo! Volta aqui quando precisares de
                 recuperar corações.
               </p>
@@ -61,7 +61,7 @@ async function PracticeData() {
           </div>
         ) : (
           <Link href="/lesson?clinic=true">
-            <div className="bg-white rounded-xl border-2 border-stone-200 border-b-8 p-10 flex flex-col items-center text-center space-y-4 transition-all active:translate-y-1 active:border-b-4 hover:bg-stone-50 cursor-pointer">
+            <div className="bg-white dark:bg-slate-900 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-8 p-10 flex flex-col items-center text-center space-y-4 transition-all active:translate-y-1 active:border-b-4 hover:bg-stone-50 dark:bg-slate-950 cursor-pointer">
               <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center border-b-4 border-red-200">
                 <HeartPulse
                   className="h-10 w-10 text-red-500 animate-pulse"
@@ -69,10 +69,10 @@ async function PracticeData() {
                 />
               </div>
               <div>
-                <h3 className="text-2xl font-black text-stone-700">
+                <h3 className="text-2xl font-black text-stone-700 dark:text-slate-200">
                   Clínica de Corações
                 </h3>
-                <p className="mt-2 font-medium text-stone-500 max-w-sm mx-auto">
+                <p className="mt-2 font-medium text-stone-500 dark:text-slate-400 max-w-sm mx-auto">
                   Recupera vidas a rever os exercícios que erraste recentemente.
                 </p>
               </div>
@@ -93,14 +93,16 @@ async function PracticeData() {
             {/* Writing Card */}
             <Link
               href="/practice/writing"
-              className="group text-left bg-white rounded-xl border-2 border-stone-200 border-b-8 p-8 flex gap-6 items-start transition-all active:translate-y-1 active:border-b-4 hover:bg-stone-50"
+              className="group text-left bg-white dark:bg-slate-900 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-8 p-8 flex gap-6 items-start transition-all active:translate-y-1 active:border-b-4 hover:bg-stone-50 dark:bg-slate-950"
             >
               <div className="w-16 h-16 rounded-full flex items-center justify-center border-b-4 bg-[#1cb0f6] border-[#1899d6] shrink-0 group-hover:-translate-y-1 transition-transform">
                 <PenTool className="h-8 w-8 text-white" strokeWidth={2.5} />
               </div>
               <div>
-                <h3 className="text-xl font-black text-stone-700">Escrita</h3>
-                <p className="mt-2 text-stone-500 font-medium leading-relaxed">
+                <h3 className="text-xl font-black text-stone-700 dark:text-slate-200">
+                  Escrita
+                </h3>
+                <p className="mt-2 text-stone-500 dark:text-slate-400 font-medium leading-relaxed">
                   Recebe um tema e escreve um texto. A AI vai corrigir a tua
                   gramática e ortografia.
                 </p>
@@ -110,14 +112,16 @@ async function PracticeData() {
             {/* Speaking Card */}
             <Link
               href="/practice/speaking"
-              className="group text-left bg-white rounded-xl border-2 border-stone-200 border-b-8 p-8 flex gap-6 items-start transition-all active:translate-y-1 active:border-b-4 hover:bg-stone-50"
+              className="group text-left bg-white dark:bg-slate-900 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-8 p-8 flex gap-6 items-start transition-all active:translate-y-1 active:border-b-4 hover:bg-stone-50 dark:bg-slate-950"
             >
               <div className="w-16 h-16 rounded-full flex items-center justify-center border-b-4 bg-[#ff4b4b] border-[#ea2b2b] shrink-0 group-hover:-translate-y-1 transition-transform">
                 <Mic className="h-8 w-8 text-white" strokeWidth={2.5} />
               </div>
               <div>
-                <h3 className="text-xl font-black text-stone-700">Fala</h3>
-                <p className="mt-2 text-stone-500 font-medium leading-relaxed">
+                <h3 className="text-xl font-black text-stone-700 dark:text-slate-200">
+                  Fala
+                </h3>
+                <p className="mt-2 text-stone-500 dark:text-slate-400 font-medium leading-relaxed">
                   Recebe uma pergunta e responde falando. A AI vai analisar a
                   tua resposta e dar dicas.
                 </p>
@@ -127,14 +131,16 @@ async function PracticeData() {
             {/* Reading Card */}
             <Link
               href="/practice/reading"
-              className="group text-left bg-white rounded-xl border-2 border-stone-200 border-b-8 p-8 flex gap-6 items-start transition-all active:translate-y-1 active:border-b-4 hover:bg-stone-50"
+              className="group text-left bg-white dark:bg-slate-900 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-8 p-8 flex gap-6 items-start transition-all active:translate-y-1 active:border-b-4 hover:bg-stone-50 dark:bg-slate-950"
             >
               <div className="w-16 h-16 rounded-full flex items-center justify-center border-b-4 bg-[#58cc02] border-[#46a302] shrink-0 group-hover:-translate-y-1 transition-transform">
                 <BookOpen className="h-8 w-8 text-white" strokeWidth={2.5} />
               </div>
               <div>
-                <h3 className="text-xl font-black text-stone-700">Leitura</h3>
-                <p className="mt-2 text-stone-500 font-medium leading-relaxed">
+                <h3 className="text-xl font-black text-stone-700 dark:text-slate-200">
+                  Leitura
+                </h3>
+                <p className="mt-2 text-stone-500 dark:text-slate-400 font-medium leading-relaxed">
                   Lê um texto gerado pela AI e debate sobre o tema. Melhora a
                   tua compreensão.
                 </p>
@@ -144,14 +150,16 @@ async function PracticeData() {
             {/* Listening Card */}
             <Link
               href="/practice/listening"
-              className="group text-left bg-white rounded-xl border-2 border-stone-200 border-b-8 p-8 flex gap-6 items-start transition-all active:translate-y-1 active:border-b-4 hover:bg-stone-50"
+              className="group text-left bg-white dark:bg-slate-900 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-8 p-8 flex gap-6 items-start transition-all active:translate-y-1 active:border-b-4 hover:bg-stone-50 dark:bg-slate-950"
             >
               <div className="w-16 h-16 rounded-full flex items-center justify-center border-b-4 bg-[#ce82ff] border-[#a552c9] shrink-0 group-hover:-translate-y-1 transition-transform">
                 <Headphones className="h-8 w-8 text-white" strokeWidth={2.5} />
               </div>
               <div>
-                <h3 className="text-xl font-black text-stone-700">Escuta</h3>
-                <p className="mt-2 text-stone-500 font-medium leading-relaxed">
+                <h3 className="text-xl font-black text-stone-700 dark:text-slate-200">
+                  Escuta
+                </h3>
+                <p className="mt-2 text-stone-500 dark:text-slate-400 font-medium leading-relaxed">
                   Ouve um áudio gerado pela AI e analisa o conteúdo. Treina o
                   teu ouvido.
                 </p>
@@ -160,15 +168,15 @@ async function PracticeData() {
           </div>
 
           {/* ── Novidade: Conversação Fluída ── */}
-          <div className="bg-stone-100 rounded-3xl p-8 sm:p-12 relative border-2 border-stone-200 overflow-hidden flex flex-col md:flex-row items-center gap-8 mt-4">
+          <div className="bg-stone-100 dark:bg-slate-800 rounded-3xl p-8 sm:p-12 relative border-2 border-stone-200 dark:border-slate-800 overflow-hidden flex flex-col md:flex-row items-center gap-8 mt-4">
             <div className="flex-1 text-center md:text-left z-10">
               <div className="inline-flex items-center gap-2 bg-indigo-100 text-indigo-600 px-4 py-1.5 rounded-xl font-bold text-sm mb-4 uppercase tracking-wider">
                 <Sparkles className="w-4 h-4" /> Novidade
               </div>
-              <h3 className="text-3xl font-black text-stone-800 mb-3">
+              <h3 className="text-3xl font-black text-stone-800 dark:text-slate-100 mb-3">
                 Pratica Conversação Fluída
               </h3>
-              <p className="text-stone-500 font-medium text-lg max-w-md mb-8">
+              <p className="text-stone-500 dark:text-slate-400 font-medium text-lg max-w-md mb-8">
                 Simula conversas do dia a dia com a nossa Inteligência
                 Artificial por voz, sem interrupções.
               </p>
@@ -180,7 +188,7 @@ async function PracticeData() {
             </div>
             {/* Decorative background element replacing image */}
             <div className="w-48 h-48 md:w-64 md:h-64 bg-indigo-200 rounded-full opacity-20 absolute -right-10 -bottom-10 blur-3xl pointer-events-none"></div>
-            <div className="hidden md:flex w-48 h-48 shrink-0 bg-white rounded-[2rem] border-4 border-stone-200 shadow-xl items-center justify-center rotate-6 relative z-10">
+            <div className="hidden md:flex w-48 h-48 shrink-0 bg-white dark:bg-slate-900 rounded-[2rem] border-4 border-stone-200 dark:border-slate-800 shadow-xl items-center justify-center rotate-6 relative z-10">
               <div className="absolute inset-0 flex items-center justify-center gap-2">
                 <div
                   className="w-4 h-12 bg-sky-400 rounded-full animate-bounce"
@@ -266,14 +274,14 @@ const PracticeSkeleton = () => {
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-500">
       {/* Clínica de Corações Skeleton */}
-      <div className="bg-white rounded-xl border-2 border-stone-200 border-b-8 p-10 flex flex-col items-center text-center space-y-4">
-        <div className="w-20 h-20 bg-stone-200 rounded-full animate-pulse" />
+      <div className="bg-white dark:bg-slate-900 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-8 p-10 flex flex-col items-center text-center space-y-4">
+        <div className="w-20 h-20 bg-stone-200 dark:bg-slate-700 rounded-full animate-pulse" />
         <div className="flex flex-col items-center gap-3">
-          <div className="h-8 w-48 bg-stone-200 rounded-lg animate-pulse" />
-          <div className="h-4 w-64 bg-stone-200 rounded-md animate-pulse" />
+          <div className="h-8 w-48 bg-stone-200 dark:bg-slate-700 rounded-lg animate-pulse" />
+          <div className="h-4 w-64 bg-stone-200 dark:bg-slate-700 rounded-md animate-pulse" />
         </div>
         <div className="pt-2">
-          <div className="h-[48px] w-[240px] bg-stone-200 rounded-2xl animate-pulse" />
+          <div className="h-[48px] w-[240px] bg-stone-200 dark:bg-slate-700 rounded-2xl animate-pulse" />
         </div>
       </div>
 
@@ -282,27 +290,27 @@ const PracticeSkeleton = () => {
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="bg-white rounded-xl border-2 border-stone-200 border-b-8 p-8 flex gap-6 items-start"
+            className="bg-white dark:bg-slate-900 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-8 p-8 flex gap-6 items-start"
           >
-            <div className="w-16 h-16 rounded-full bg-stone-200 animate-pulse shrink-0" />
+            <div className="w-16 h-16 rounded-full bg-stone-200 dark:bg-slate-700 animate-pulse shrink-0" />
             <div className="flex-1 space-y-3">
-              <div className="h-6 w-32 bg-stone-200 rounded-lg animate-pulse" />
-              <div className="h-4 w-full bg-stone-200 rounded-md animate-pulse" />
-              <div className="h-4 w-3/4 bg-stone-200 rounded-md animate-pulse" />
+              <div className="h-6 w-32 bg-stone-200 dark:bg-slate-700 rounded-lg animate-pulse" />
+              <div className="h-4 w-full bg-stone-200 dark:bg-slate-700 rounded-md animate-pulse" />
+              <div className="h-4 w-3/4 bg-stone-200 dark:bg-slate-700 rounded-md animate-pulse" />
             </div>
           </div>
         ))}
       </div>
 
       {/* Conversação Fluída Skeleton */}
-      <div className="bg-stone-50 rounded-3xl p-8 sm:p-12 relative border-2 border-stone-200 overflow-hidden flex flex-col md:flex-row items-center gap-8 mt-4">
+      <div className="bg-stone-50 dark:bg-slate-950 rounded-3xl p-8 sm:p-12 relative border-2 border-stone-200 dark:border-slate-800 overflow-hidden flex flex-col md:flex-row items-center gap-8 mt-4">
         <div className="flex-1 text-center md:text-left z-10 space-y-4 flex flex-col items-center md:items-start">
-          <div className="w-24 h-8 bg-stone-200 rounded-xl animate-pulse" />
-          <div className="w-64 h-10 bg-stone-200 rounded-lg animate-pulse" />
-          <div className="w-full max-w-md h-16 bg-stone-200 rounded-md animate-pulse" />
-          <div className="w-48 h-[56px] bg-stone-200 rounded-2xl animate-pulse mt-4" />
+          <div className="w-24 h-8 bg-stone-200 dark:bg-slate-700 rounded-xl animate-pulse" />
+          <div className="w-64 h-10 bg-stone-200 dark:bg-slate-700 rounded-lg animate-pulse" />
+          <div className="w-full max-w-md h-16 bg-stone-200 dark:bg-slate-700 rounded-md animate-pulse" />
+          <div className="w-48 h-[56px] bg-stone-200 dark:bg-slate-700 rounded-2xl animate-pulse mt-4" />
         </div>
-        <div className="hidden md:flex w-48 h-48 shrink-0 bg-stone-200 rounded-[2rem] animate-pulse relative z-10" />
+        <div className="hidden md:flex w-48 h-48 shrink-0 bg-stone-200 dark:bg-slate-700 rounded-[2rem] animate-pulse relative z-10" />
       </div>
     </div>
   );

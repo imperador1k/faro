@@ -68,7 +68,7 @@ export default function ArcadeHub() {
             Popular
           </div>
 
-          <div className="h-28 w-28 bg-white rounded-[2rem] border-4 border-purple-200 border-b-[6px] flex items-center justify-center text-purple-500 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-md relative z-10">
+          <div className="h-28 w-28 bg-white dark:bg-slate-900 rounded-[2rem] border-4 border-purple-200 border-b-[6px] flex items-center justify-center text-purple-500 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-md relative z-10">
             <Zap className="h-12 w-12 fill-purple-500" />
           </div>
 
@@ -92,7 +92,7 @@ export default function ArcadeHub() {
         <div className="bg-gradient-to-b from-rose-50 to-rose-100 border-4 border-rose-200 border-b-[12px] rounded-[2.5rem] p-8 flex flex-col items-center text-center transition-all hover:-translate-y-2 hover:shadow-xl group relative overflow-hidden">
           <div className="absolute top-[-20px] right-[-20px] w-32 h-32 bg-rose-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
 
-          <div className="h-28 w-28 bg-white rounded-[2rem] border-4 border-rose-200 border-b-[6px] flex items-center justify-center text-rose-500 mb-8 group-hover:scale-110 group-hover:-rotate-6 transition-transform shadow-md relative z-10">
+          <div className="h-28 w-28 bg-white dark:bg-slate-900 rounded-[2rem] border-4 border-rose-200 border-b-[6px] flex items-center justify-center text-rose-500 mb-8 group-hover:scale-110 group-hover:-rotate-6 transition-transform shadow-md relative z-10">
             <CopyMinus className="h-12 w-12 text-rose-500" strokeWidth={3} />
           </div>
 
@@ -121,7 +121,7 @@ export default function ArcadeHub() {
             Hardcore
           </div>
 
-          <div className="h-28 w-28 bg-white rounded-[2rem] border-4 border-amber-200 border-b-[6px] flex items-center justify-center text-amber-500 mb-8 group-hover:scale-110 transition-transform shadow-md relative z-10">
+          <div className="h-28 w-28 bg-white dark:bg-slate-900 rounded-[2rem] border-4 border-amber-200 border-b-[6px] flex items-center justify-center text-amber-500 mb-8 group-hover:scale-110 transition-transform shadow-md relative z-10">
             <span className="absolute inset-0 bg-amber-400 opacity-20 blur-xl group-hover:opacity-40 transition-opacity rounded-[2rem]" />
             <Sparkles
               className="h-12 w-12 text-amber-500 relative z-10"
