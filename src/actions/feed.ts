@@ -108,10 +108,10 @@ export const sharePostToChat = async (friendId: string, postId: string) => {
   if (!userId) throw new Error("Unauthorized");
 
   // Create or get 1-on-1 conversation
-  const conv = await createConversation([friendId]);
+  const convId = await createConversation([friendId]);
 
   // Send the message
-  await sendMessage(conv.id, `[SHARED_POST:${postId}]`);
+  await sendMessage(convId, `[SHARED_POST:${postId}]`);
 
   return { success: true };
 };
