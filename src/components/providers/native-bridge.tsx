@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { App } from "@capacitor/app";
 import { Browser } from "@capacitor/browser";
 import { Capacitor } from "@capacitor/core";
+import { syncNativeLanguage } from "@/actions/user-progress";
 
 /**
  * NativeBridge — Handles Android-specific behaviors:
@@ -17,6 +18,32 @@ import { Capacitor } from "@capacitor/core";
  */
 export function NativeBridge() {
   const pathname = usePathname();
+
+  useEffect(() => {
+    // ── Native Language Sync ─────────────────────────────────────────
+    const syncLang = async () => {
+      const currentLang = navigator.language.split("-")[0];
+      const storedLang = localStorage.getItem("myduolingo_native_lang");
+
+      if (currentLang !== storedLang) {
+        try {
+          const res = await syncNativeLanguage(currentLang);
+          if (res?.success) {
+            localStorage.setItem("myduolingo_native_lang", currentLang);
+            if (process.env.NODE_ENV !== "production") {
+              console.log(
+                "[NativeBridge] Synced native language:",
+                currentLang,
+              );
+            }
+          }
+        } catch (e) {
+          // ignore if user is not logged in yet
+        }
+      }
+    };
+    syncLang();
+  }, []);
 
   useEffect(() => {
     const isCapacitor = Capacitor.isNativePlatform();

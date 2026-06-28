@@ -80,7 +80,9 @@ export default function SavedPostsClient({
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {savedPosts.map((post) => {
-              const authorName = post.creator?.name || "System";
+              const isSystem = !post.authorId || post.author === "System";
+              const authorName = isSystem ? "MyDuolingo" : post.author;
+              const authorImg = isSystem ? "/icon.png" : post.authorImg;
 
               return (
                 <motion.div
@@ -101,7 +103,9 @@ export default function SavedPostsClient({
                           {post.category} • {post.cefrLevel}
                         </span>
                         <span className="text-xs font-medium text-slate-500 dark:text-white/60">
-                          {post.savedAt}
+                          {post.savedAt
+                            ? new Date(post.savedAt).toLocaleDateString()
+                            : ""}
                         </span>
                       </div>
                       <h2 className="text-2xl font-black text-slate-900 dark:text-white drop-shadow-md">
@@ -124,9 +128,13 @@ export default function SavedPostsClient({
 
                   <div className="mt-6 flex items-center justify-between relative z-10 pt-4 border-t border-black/10 dark:border-white/10">
                     <div className="flex items-center gap-2 mt-4 text-xs font-bold text-slate-600 dark:text-white/60">
-                      <span className="w-6 h-6 rounded-full bg-black/10 dark:bg-white/20 flex items-center justify-center">
-                        {authorName.charAt(0)}
-                      </span>
+                      <div className="w-6 h-6 rounded-full bg-black/10 dark:bg-white/20 flex items-center justify-center overflow-hidden shrink-0 border border-black/10 dark:border-white/10">
+                        <img
+                          src={authorImg}
+                          alt={authorName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                       <span>{authorName}</span>
                     </div>
 

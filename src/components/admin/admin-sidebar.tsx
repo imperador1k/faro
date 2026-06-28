@@ -100,6 +100,18 @@ export const AdminSidebar = () => {
           <span>Lições & Drop</span>
         </Link>
         <Link
+          href="/admin/feed"
+          className={cn(
+            "flex items-center gap-x-3 rounded-[16px] px-4 py-3.5 transition-all font-black text-[13px] uppercase tracking-wider",
+            pathname.startsWith("/admin/feed")
+              ? "bg-[#1CB0F6] text-white border-2 border-transparent border-b-[4px] hover:border-b-[4px] border-b-[#0092d6] active:border-b-[2px] active:translate-y-[2px] shadow-sm cursor-default"
+              : "text-stone-500 dark:text-slate-400 hover:bg-stone-50 dark:hover:bg-slate-800 border-2 border-transparent border-b-[4px] hover:translate-x-1 cursor-pointer",
+          )}
+        >
+          <Inbox className="w-5 h-5" />
+          <span>Feed (TikTok)</span>
+        </Link>
+        <Link
           href="/admin/users"
           className={cn(
             "flex items-center gap-x-3 rounded-[16px] px-4 py-3.5 transition-all font-black text-[13px] uppercase tracking-wider",

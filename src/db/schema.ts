@@ -156,6 +156,7 @@ export const userProgress = pgTable(
       onDelete: "cascade",
     }),
     activeLanguage: text("active_language").notNull().default("English"),
+    nativeLanguage: text("native_language").notNull().default("pt"),
     // Streak system
     streak: integer("streak").notNull().default(0),
     longestStreak: integer("longest_streak").notNull().default(0),
@@ -800,6 +801,7 @@ export const postStatusEnum = pgEnum("post_status", [
 export const knowledgePosts = pgTable("knowledge_posts", {
   id: uuid("id").primaryKey().defaultRandom(),
   originalSourceUrl: text("original_source_url"),
+  imageBase64: text("image_base64"),
   targetLanguage: text("target_language").notNull(),
   cefrLevel: text("cefr_level").notNull(),
   title: text("title").notNull(),

@@ -16,7 +16,6 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { CreatePostModal } from "@/components/feed/create-post-modal";
 import { HappyStarLottie, CatLottie } from "@/components/ui/lottie-animation";
 import {
   toggleLike,
@@ -25,6 +24,7 @@ import {
   sharePostToChat,
   markPostAsRead,
 } from "@/actions/feed";
+import { translateWord } from "@/actions/translate";
 
 // Types
 type Post = {
@@ -35,9 +35,14 @@ type Post = {
   targetLanguage: string;
   cefrLevel: string;
   bgClass: string;
+  originalSourceUrl?: string | null;
+  imageBase64?: string | null;
   likes: any[];
   saves: any[];
   creator: any;
+  authorId?: string | null;
+  author: string;
+  authorImg: string;
 };
 
 export default function FeedClient({
@@ -47,6 +52,8 @@ export default function FeedClient({
 }) {
   const router = useRouter();
   const [posts] = useState<Post[]>(initialPosts);
+
+  const [isLoadingOld, setIsLoadingOld] = useState(false);
 
   // Initialize active post and track reads via IntersectionObserver
   useEffect(() => {
@@ -117,35 +124,49 @@ export default function FeedClient({
   const [activeSharePostId, setActiveSharePostId] = useState<string | null>(
     null,
   );
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
   const [friends, setFriends] = useState<any[]>([]);
   const [loadingFriends, setLoadingFriends] = useState(false);
   const [sharingTo, setSharingTo] = useState<string | null>(null);
 
-  const translateGhost = (word: string) => {
+  const translateGhost = async (word: string, context: string) => {
     const cleanWord = word.replace(/[^a-zA-ZÀ-ÿ]/g, "").toLowerCase();
     if (!cleanWord) return;
 
     setSelectedWord(cleanWord);
-    setTranslation(`[Tradução: ${cleanWord}]`);
+    setTranslation("..."); // Loading state
+
+    // Get the user's device language dynamically (fallback to 'pt' if undefined)
+    const deviceLang =
+      typeof navigator !== "undefined"
+        ? navigator.language.split("-")[0]
+        : "pt";
+
+    const result = await translateWord(cleanWord, context, deviceLang);
+    if (result) {
+      setTranslation(result);
+    } else {
+      setTranslation("[Erro]");
+    }
 
     setTimeout(() => {
       setSelectedWord(null);
       setTranslation(null);
-    }, 3000);
+    }, 4000);
   };
 
-  const renderInteractiveBody = (text: string) => {
+  const renderInteractiveBody = (text: string, lang: string) => {
     return text.split(" ").map((word, i) => (
-      <span
-        key={i}
-        onClick={(e) => {
-          e.stopPropagation();
-          translateGhost(word);
-        }}
-        className="active:bg-white/20 rounded px-0.5 cursor-pointer transition-colors inline-block"
-      >
-        {word}{" "}
+      <span key={i}>
+        <span
+          onClick={(e) => {
+            e.stopPropagation();
+            translateGhost(word, text);
+          }}
+          className="border-b-[2px] border-dotted border-slate-400/70 hover:bg-slate-200/50 dark:border-slate-500/70 dark:hover:bg-white/10 active:bg-slate-300/50 dark:active:bg-white/20 rounded-sm cursor-pointer transition-colors pb-[1px]"
+        >
+          {word}
+        </span>{" "}
       </span>
     ));
   };
@@ -265,7 +286,7 @@ export default function FeedClient({
         </div>
         <div className="flex items-center gap-2 pointer-events-auto">
           <button
-            onClick={() => setIsCreateModalOpen(true)}
+            onClick={() => router.push("/feed/create")}
             className="p-3 bg-sky-500/20 backdrop-blur-md rounded-2xl hover:bg-sky-500/30 transition-all active:scale-95 border-b-4 border-sky-500/20"
           >
             <Plus className="w-6 h-6 text-sky-600 dark:text-sky-400 stroke-[3]" />
@@ -292,15 +313,34 @@ export default function FeedClient({
         )}
       >
         {posts.length === 0 ? (
-          <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center text-slate-500 dark:text-slate-400">
-            <CatLottie className="w-48 h-48 mb-4 opacity-50" />
-            <h2 className="text-2xl font-black text-slate-800 dark:text-white mb-2">
-              Feed Vazio!
+          <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-white dark:bg-slate-950 text-slate-900 dark:text-white relative overflow-hidden">
+            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] dark:opacity-10 mix-blend-overlay pointer-events-none"></div>
+            <div className="w-32 h-32 mb-6 opacity-90 dark:opacity-80 z-10">
+              <HappyStarLottie />
+            </div>
+            <h2 className="text-2xl font-black mb-2 text-center drop-shadow-sm dark:drop-shadow-md z-10 text-slate-800 dark:text-white">
+              Chegaste ao fim das novidades!
             </h2>
-            <p className="font-medium max-w-[250px] mx-auto">
-              Já viste tudo o que tinhas a ver! 🚀 Volta mais tarde para mais
-              curiosidades ou cria a tua própria.
+            <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-[280px] text-center font-medium leading-relaxed z-10">
+              Já viste todos os factos de hoje. Volta amanhã para mais
+              curiosidades fresquinhas.
             </p>
+            <button
+              onClick={() => {
+                setIsLoadingOld(true);
+                window.location.href = "/feed?includeRead=true";
+              }}
+              disabled={isLoadingOld}
+              className="z-10 bg-[#1CB0F6] hover:bg-[#1899D6] active:bg-[#1582B7] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-wider transition-all border-b-4 border-[#0092d6] active:border-b-0 active:translate-y-[4px]"
+            >
+              {isLoadingOld ? "A carregar..." : "Rever Posts Antigos"}
+            </button>
+            <button
+              onClick={() => router.push("/learn")}
+              className="z-10 mt-6 text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider text-sm hover:text-slate-600 dark:hover:text-white transition-colors"
+            >
+              Voltar às Aulas
+            </button>
           </div>
         ) : (
           posts.map((post) => {
@@ -310,9 +350,9 @@ export default function FeedClient({
             const likeCount = (post.likes?.length || 0) + (isLiked ? 1 : 0);
             const shareCount = 0; // Temporary placeholder for shares
 
-            const authorName = post.creator?.name || "System";
-            const authorImg =
-              post.creator?.imageSrc || "https://i.pravatar.cc/150";
+            const isSystem = !post.authorId || post.author === "System";
+            const authorName = isSystem ? "MyDuolingo" : post.author;
+            const authorImg = isSystem ? "/icon.png" : post.authorImg;
 
             return (
               <div
@@ -329,6 +369,16 @@ export default function FeedClient({
                     post.bgClass,
                   )}
                 >
+                  {/* Dynamic Image based on exact subject keyword or category */}
+                  <img
+                    src={
+                      post.originalSourceUrl?.includes("loremflickr")
+                        ? post.originalSourceUrl
+                        : `https://loremflickr.com/800/1200/${post.category.toLowerCase()}?lock=${post.title.length}`
+                    }
+                    className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60 dark:opacity-40"
+                    alt="Background"
+                  />
                   {/* Abstract Blur blobs to make it look premium */}
                   <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full blur-[100px] opacity-60 dark:opacity-30 bg-white"></div>
                 </div>
@@ -365,10 +415,10 @@ export default function FeedClient({
                     </div>
 
                     <h2 className="text-xl font-black mb-2 text-slate-900 dark:text-white drop-shadow-md">
-                      {post.title}
+                      {renderInteractiveBody(post.title, post.targetLanguage)}
                     </h2>
                     <div className="text-[15px] text-slate-700 dark:text-slate-100 font-medium leading-snug drop-shadow-sm select-none">
-                      {renderInteractiveBody(post.body)}
+                      {renderInteractiveBody(post.body, post.targetLanguage)}
                     </div>
                   </div>
 
@@ -444,13 +494,6 @@ export default function FeedClient({
           })
         )}
       </div>
-
-      {/* Create Post Modal */}
-      <CreatePostModal
-        isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-        targetLanguage="Português"
-      />
 
       {/* Share Modal Overlay */}
       <AnimatePresence>

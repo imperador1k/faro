@@ -114,10 +114,17 @@ export const sharePostToChat = async (friendId: string, postId: string) => {
   return { success: true };
 };
 
-// Gets feed posts that the user hasn't seen yet
-export const getFeedPosts = async (limit = 15) => {
+// Gets feed posts that the user hasn't seen yet (or includes read posts if requested)
+export const getFeedPosts = async (limit = 15, includeRead = false) => {
   const { userId } = await auth();
   if (!userId) return [];
+
+  // Get active course language
+  const user = await db.query.userProgress.findFirst({
+    where: eq(userProgress.userId, userId),
+    with: { activeCourse: true },
+  });
+  const languageCode = user?.activeCourse?.languageCode || "en";
 
   // Get IDs of posts the user has already read
   const readHistory = await db.query.userReadHistory.findMany({
@@ -126,11 +133,15 @@ export const getFeedPosts = async (limit = 15) => {
   });
   const readPostIds = readHistory.map((r) => r.postId);
 
-  // Fetch approved posts that are not in the read history
+  // Fetch approved posts
   const posts = await db.query.knowledgePosts.findMany({
     where: (posts, { eq, and, notInArray }) => {
-      const conditions = [eq(posts.status, "APPROVED")];
-      if (readPostIds.length > 0) {
+      const conditions = [
+        eq(posts.status, "APPROVED"),
+        eq(posts.targetLanguage, languageCode),
+      ];
+      // Only filter out read posts if includeRead is false
+      if (!includeRead && readPostIds.length > 0) {
         conditions.push(notInArray(posts.id, readPostIds));
       }
       return and(...conditions);
@@ -141,6 +152,47 @@ export const getFeedPosts = async (limit = 15) => {
       saves: true,
     },
     orderBy: sql`RANDOM()`, // Randomize for the TikTok feel
+    limit,
+  });
+
+  return posts;
+};
+
+// Gets feed posts that the user HAS already seen
+export const getOldFeedPosts = async (limit = 10) => {
+  const { userId } = await auth();
+  if (!userId) return [];
+
+  // Get active course language
+  const user = await db.query.userProgress.findFirst({
+    where: eq(userProgress.userId, userId),
+    with: { activeCourse: true },
+  });
+  const languageCode = user?.activeCourse?.languageCode || "en";
+
+  // Get IDs of posts the user has already read
+  const readHistory = await db.query.userReadHistory.findMany({
+    where: eq(userReadHistory.userId, userId),
+    columns: { postId: true },
+  });
+  const readPostIds = readHistory.map((r) => r.postId);
+
+  if (readPostIds.length === 0) return []; // No old posts to show
+
+  const posts = await db.query.knowledgePosts.findMany({
+    where: (posts, { eq, and, inArray }) => {
+      return and(
+        eq(posts.status, "APPROVED"),
+        eq(posts.targetLanguage, languageCode),
+        inArray(posts.id, readPostIds),
+      );
+    },
+    with: {
+      creator: true,
+      likes: true,
+      saves: true,
+    },
+    orderBy: sql`RANDOM()`,
     limit,
   });
 

@@ -32,6 +32,25 @@ import { gameplayRateLimit } from "@/lib/ratelimit";
 import { getDailyQuests, getQuestProgress } from "@/lib/quests";
 
 /**
+ * Syncs the user's native device language for future i18n
+ */
+export const syncNativeLanguage = async (lang: string) => {
+  const parsed = z.string().min(2).max(5).safeParse(lang);
+  if (!parsed.success)
+    return actionError("INVALID_PAYLOAD", "Idioma inválido.");
+
+  const { userId } = await auth();
+  if (!userId) return actionError("UNAUTHORIZED", "Não estás autenticado");
+
+  await db
+    .update(userProgress)
+    .set({ nativeLanguage: parsed.data })
+    .where(eq(userProgress.userId, userId));
+
+  return { success: true, lang: parsed.data };
+};
+
+/**
  * Toggles global notification preferences.
  */
 export const updateNotificationPreference = async (enabled: boolean) => {
