@@ -22,6 +22,7 @@ import { E2ESettings } from "@/components/settings/e2e-settings";
 import { ActiveSessions } from "@/components/settings/active-sessions";
 import { ConnectedAccounts } from "@/components/settings/connected-accounts";
 import { ThemeToggle } from "@/components/settings/theme-toggle";
+import { LanguageToggle } from "@/components/settings/language-toggle";
 
 export const dynamic = "force-dynamic";
 
@@ -151,9 +152,10 @@ async function SettingsData() {
         </div>
       </div>
 
-      {/* Appearance & Theme */}
+      {/* Appearance & Theme & Language */}
       <div>
         <ThemeToggle />
+        <LanguageToggle />
       </div>
 
       {/* Security & Encryption (E2EE) */}

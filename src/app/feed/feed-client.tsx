@@ -230,6 +230,38 @@ export default function FeedClient({
     return num.toString();
   };
 
+  const endOfFeedCard = (
+    <div className="snap-start w-full h-[100dvh] md:h-[95dvh] flex flex-col items-center justify-center p-8 text-center bg-white dark:bg-slate-950 text-slate-900 dark:text-white relative overflow-hidden shrink-0">
+      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] dark:opacity-10 mix-blend-overlay pointer-events-none"></div>
+      <div className="w-32 h-32 mb-6 opacity-90 dark:opacity-80 z-10">
+        <HappyStarLottie />
+      </div>
+      <h2 className="text-2xl font-black mb-2 text-center drop-shadow-sm dark:drop-shadow-md z-10 text-slate-800 dark:text-white">
+        Chegaste ao fim das novidades!
+      </h2>
+      <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-[280px] text-center font-medium leading-relaxed z-10">
+        Já viste todos os factos de hoje. Volta amanhã para mais curiosidades
+        fresquinhas.
+      </p>
+      <button
+        onClick={() => {
+          setIsLoadingOld(true);
+          window.location.href = "/feed?includeRead=true";
+        }}
+        disabled={isLoadingOld}
+        className="z-10 bg-[#1CB0F6] hover:bg-[#1899D6] active:bg-[#1582B7] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-wider transition-all border-b-4 border-[#0092d6] active:border-b-0 active:translate-y-[4px]"
+      >
+        {isLoadingOld ? "A carregar..." : "Rever Posts Antigos"}
+      </button>
+      <button
+        onClick={() => router.push("/learn")}
+        className="z-10 mt-6 text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider text-sm hover:text-slate-600 dark:hover:text-white transition-colors"
+      >
+        Voltar às Aulas
+      </button>
+    </div>
+  );
+
   return (
     <div className="bg-stone-100 dark:bg-slate-900 w-full h-[100dvh] overflow-hidden relative font-sans text-slate-900 dark:text-white flex items-center justify-center">
       {/* Duolingo Gamified PC Background Pattern (Light & Dark modes) */}
@@ -313,185 +345,170 @@ export default function FeedClient({
         )}
       >
         {posts.length === 0 ? (
-          <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-white dark:bg-slate-950 text-slate-900 dark:text-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] dark:opacity-10 mix-blend-overlay pointer-events-none"></div>
-            <div className="w-32 h-32 mb-6 opacity-90 dark:opacity-80 z-10">
-              <HappyStarLottie />
-            </div>
-            <h2 className="text-2xl font-black mb-2 text-center drop-shadow-sm dark:drop-shadow-md z-10 text-slate-800 dark:text-white">
-              Chegaste ao fim das novidades!
-            </h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-[280px] text-center font-medium leading-relaxed z-10">
-              Já viste todos os factos de hoje. Volta amanhã para mais
-              curiosidades fresquinhas.
-            </p>
-            <button
-              onClick={() => {
-                setIsLoadingOld(true);
-                window.location.href = "/feed?includeRead=true";
-              }}
-              disabled={isLoadingOld}
-              className="z-10 bg-[#1CB0F6] hover:bg-[#1899D6] active:bg-[#1582B7] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-wider transition-all border-b-4 border-[#0092d6] active:border-b-0 active:translate-y-[4px]"
-            >
-              {isLoadingOld ? "A carregar..." : "Rever Posts Antigos"}
-            </button>
-            <button
-              onClick={() => router.push("/learn")}
-              className="z-10 mt-6 text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider text-sm hover:text-slate-600 dark:hover:text-white transition-colors"
-            >
-              Voltar às Aulas
-            </button>
-          </div>
+          endOfFeedCard
         ) : (
-          posts.map((post) => {
-            const isLiked = likedPosts.has(post.id);
-            const isSaved =
-              savedPosts.has(post.id) || (post.saves?.length || 0) > 0;
-            const likeCount = (post.likes?.length || 0) + (isLiked ? 1 : 0);
-            const shareCount = 0; // Temporary placeholder for shares
+          <>
+            {posts.map((post) => {
+              const isLiked = likedPosts.has(post.id);
+              const isSaved =
+                savedPosts.has(post.id) || (post.saves?.length || 0) > 0;
+              const likeCount = (post.likes?.length || 0) + (isLiked ? 1 : 0);
+              const shareCount = 0; // Temporary placeholder for shares
 
-            const isSystem = !post.authorId || post.author === "System";
-            const authorName = isSystem ? "MyDuolingo" : post.author;
-            const authorImg = isSystem ? "/icon.png" : post.authorImg;
+              const isSystem = !post.authorId || post.author === "System";
+              const authorName = isSystem ? "MyDuolingo" : post.author;
+              const authorImg = isSystem ? "/icon.png" : post.authorImg;
 
-            return (
-              <div
-                key={post.id}
-                data-post-id={post.id}
-                className={cn(
-                  "snap-start w-full h-[100dvh] md:h-[95dvh] flex flex-col justify-end relative overflow-hidden",
-                )}
-              >
-                {/* Background Image / Color */}
+              return (
                 <div
+                  key={post.id}
+                  data-post-id={post.id}
                   className={cn(
-                    "absolute inset-0 bg-gradient-to-b opacity-100 dark:opacity-80",
-                    post.bgClass,
+                    "snap-start w-full h-[100dvh] md:h-[95dvh] flex flex-col justify-end relative overflow-hidden",
                   )}
                 >
-                  {/* Dynamic Image based on exact subject keyword or category */}
-                  <img
-                    src={
-                      post.originalSourceUrl?.includes("loremflickr")
-                        ? post.originalSourceUrl
-                        : `https://loremflickr.com/800/1200/${post.category.toLowerCase()}?lock=${post.title.length}`
-                    }
-                    className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60 dark:opacity-40"
-                    alt="Background"
-                  />
-                  {/* Abstract Blur blobs to make it look premium */}
-                  <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full blur-[100px] opacity-60 dark:opacity-30 bg-white"></div>
-                </div>
+                  {/* Background Image / Color */}
+                  <div
+                    className={cn(
+                      "absolute inset-0 bg-gradient-to-b opacity-100 dark:opacity-80",
+                      post.bgClass,
+                    )}
+                  >
+                    {/* Dynamic Image based on exact subject keyword or category */}
+                    <img
+                      src={
+                        post.imageBase64 ||
+                        (post.originalSourceUrl?.includes("loremflickr")
+                          ? post.originalSourceUrl
+                          : `https://loremflickr.com/800/1200/${post.category.toLowerCase()}?lock=${post.title.length}`)
+                      }
+                      className={cn(
+                        "absolute inset-0 w-full h-full object-cover",
+                        post.imageBase64
+                          ? "opacity-90 dark:opacity-80" // User images: clear and visible
+                          : "mix-blend-overlay opacity-60 dark:opacity-40", // Placeholders: subtle texture
+                      )}
+                      alt="Background"
+                    />
+                    {/* Abstract Blur blobs to make it look premium (only for placeholder images) */}
+                    {!post.imageBase64 && (
+                      <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full blur-[100px] opacity-60 dark:opacity-30 bg-white"></div>
+                    )}
+                  </div>
 
-                {/* Dark gradient at bottom for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-100 via-stone-100/80 dark:from-black dark:via-black/40 to-transparent"></div>
+                  {/* Dark/Light gradient at bottom for text readability (only bottom 60%) */}
+                  <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-stone-100 via-stone-100/80 to-transparent dark:from-black dark:via-black/60 dark:to-transparent pointer-events-none"></div>
 
-                {/* Bottom Content Area */}
-                <div className="relative w-full p-4 pb-8 flex items-end justify-between pointer-events-none z-10">
-                  {/* Left Side: Post Info */}
-                  <div className="flex-1 pr-16 pointer-events-auto mb-4">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="relative">
-                        <img
-                          src={authorImg}
-                          alt={authorName}
-                          className="w-12 h-12 rounded-full border-2 border-white/20 shadow-md object-cover"
-                        />
-                        <div className="absolute -bottom-1 -right-1 bg-rose-500 rounded-full p-0.5 border-2 border-slate-900">
-                          <Plus className="w-3 h-3 text-white" />
+                  {/* Bottom Content Area */}
+                  <div className="relative w-full p-4 pb-8 flex items-end justify-between pointer-events-none z-10">
+                    {/* Left Side: Post Info */}
+                    <div className="flex-1 pr-16 pointer-events-auto mb-4">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="relative">
+                          <img
+                            src={authorImg}
+                            alt={authorName}
+                            className="w-12 h-12 rounded-full border-2 border-white/20 shadow-md object-cover"
+                          />
+                          <div className="absolute -bottom-1 -right-1 bg-rose-500 rounded-full p-0.5 border-2 border-slate-900">
+                            <Plus className="w-3 h-3 text-white" />
+                          </div>
                         </div>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-1">
-                          <span className="font-bold text-slate-800 dark:text-white drop-shadow-md">
-                            {authorName}
+                        <div>
+                          <div className="flex items-center gap-1">
+                            <span className="font-bold text-slate-800 dark:text-white drop-shadow-md">
+                              {authorName}
+                            </span>
+                            <CheckCircle2 className="w-4 h-4 text-sky-500" />
+                          </div>
+                          <span className="text-[10px] font-black tracking-wider px-2 py-0.5 bg-black/10 dark:bg-white/20 rounded-full backdrop-blur-md text-slate-700 dark:text-white inline-block mt-0.5">
+                            {post.category} • {post.cefrLevel}
                           </span>
-                          <CheckCircle2 className="w-4 h-4 text-sky-500" />
                         </div>
-                        <span className="text-[10px] font-black tracking-wider px-2 py-0.5 bg-black/10 dark:bg-white/20 rounded-full backdrop-blur-md text-slate-700 dark:text-white inline-block mt-0.5">
-                          {post.category} • {post.cefrLevel}
-                        </span>
+                      </div>
+
+                      <h2 className="text-xl font-black mb-2 text-slate-900 dark:text-white drop-shadow-md">
+                        {renderInteractiveBody(post.title, post.targetLanguage)}
+                      </h2>
+                      <div className="text-[15px] text-slate-700 dark:text-slate-100 font-medium leading-snug drop-shadow-sm select-none">
+                        {renderInteractiveBody(post.body, post.targetLanguage)}
                       </div>
                     </div>
 
-                    <h2 className="text-xl font-black mb-2 text-slate-900 dark:text-white drop-shadow-md">
-                      {renderInteractiveBody(post.title, post.targetLanguage)}
-                    </h2>
-                    <div className="text-[15px] text-slate-700 dark:text-slate-100 font-medium leading-snug drop-shadow-sm select-none">
-                      {renderInteractiveBody(post.body, post.targetLanguage)}
-                    </div>
-                  </div>
+                    {/* Right Side: Interactions */}
+                    <div className="flex flex-col items-center gap-5 pb-4 pointer-events-auto shrink-0">
+                      <div className="relative mb-2">
+                        <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white">
+                          <img
+                            src={authorImg}
+                            alt="Profile"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-rose-500 rounded-full w-5 h-5 flex items-center justify-center border border-white cursor-pointer active:scale-90 transition-transform">
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="white"
+                          >
+                            <path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path>
+                          </svg>
+                        </div>
+                      </div>
 
-                  {/* Right Side: Interactions */}
-                  <div className="flex flex-col items-center gap-5 pb-4 pointer-events-auto shrink-0">
-                    <div className="relative mb-2">
-                      <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white">
-                        <img
-                          src={authorImg}
-                          alt="Profile"
-                          className="w-full h-full object-cover"
+                      <button
+                        onClick={() => handleLike(post.id)}
+                        className="flex flex-col items-center gap-1 group"
+                      >
+                        <Heart
+                          className={cn(
+                            "w-9 h-9 group-active:scale-90 transition-all drop-shadow-lg",
+                            isLiked
+                              ? "text-rose-500 fill-rose-500"
+                              : "text-slate-600 dark:text-white",
+                          )}
                         />
-                      </div>
-                      <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-rose-500 rounded-full w-5 h-5 flex items-center justify-center border border-white cursor-pointer active:scale-90 transition-transform">
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          fill="white"
-                        >
-                          <path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path>
-                        </svg>
-                      </div>
+                        <span className="text-xs font-bold text-slate-600 dark:text-white drop-shadow-md">
+                          {formatNumber(likeCount)}
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={() => handleSave(post.id)}
+                        className="flex flex-col items-center gap-1 group"
+                      >
+                        <Bookmark
+                          className={cn(
+                            "w-9 h-9 group-active:scale-90 transition-all drop-shadow-lg",
+                            isSaved
+                              ? "text-amber-500 dark:text-amber-400 fill-amber-500 dark:fill-amber-400"
+                              : "text-slate-600 dark:text-white fill-slate-200 dark:fill-white/20",
+                          )}
+                        />
+                        <span className="text-xs font-bold text-slate-600 dark:text-white drop-shadow-md">
+                          Save
+                        </span>
+                      </button>
+
+                      <button
+                        onClick={() => openShareModal(post.id)}
+                        className="flex flex-col items-center gap-1 group"
+                      >
+                        <Share2 className="w-9 h-9 text-slate-600 dark:text-white group-active:scale-90 transition-transform drop-shadow-lg fill-slate-200 dark:fill-white/20" />
+                        <span className="text-xs font-bold text-slate-600 dark:text-white drop-shadow-md">
+                          {formatNumber(shareCount)}
+                        </span>
+                      </button>
                     </div>
-
-                    <button
-                      onClick={() => handleLike(post.id)}
-                      className="flex flex-col items-center gap-1 group"
-                    >
-                      <Heart
-                        className={cn(
-                          "w-9 h-9 group-active:scale-90 transition-all drop-shadow-lg",
-                          isLiked
-                            ? "text-rose-500 fill-rose-500"
-                            : "text-slate-600 dark:text-white",
-                        )}
-                      />
-                      <span className="text-xs font-bold text-slate-600 dark:text-white drop-shadow-md">
-                        {formatNumber(likeCount)}
-                      </span>
-                    </button>
-
-                    <button
-                      onClick={() => handleSave(post.id)}
-                      className="flex flex-col items-center gap-1 group"
-                    >
-                      <Bookmark
-                        className={cn(
-                          "w-9 h-9 group-active:scale-90 transition-all drop-shadow-lg",
-                          isSaved
-                            ? "text-amber-500 dark:text-amber-400 fill-amber-500 dark:fill-amber-400"
-                            : "text-slate-600 dark:text-white fill-slate-200 dark:fill-white/20",
-                        )}
-                      />
-                      <span className="text-xs font-bold text-slate-600 dark:text-white drop-shadow-md">
-                        Save
-                      </span>
-                    </button>
-
-                    <button
-                      onClick={() => openShareModal(post.id)}
-                      className="flex flex-col items-center gap-1 group"
-                    >
-                      <Share2 className="w-9 h-9 text-slate-600 dark:text-white group-active:scale-90 transition-transform drop-shadow-lg fill-slate-200 dark:fill-white/20" />
-                      <span className="text-xs font-bold text-slate-600 dark:text-white drop-shadow-md">
-                        {formatNumber(shareCount)}
-                      </span>
-                    </button>
                   </div>
                 </div>
-              </div>
-            );
-          })
+              );
+            })}
+
+            {/* Append the End of Feed card at the very bottom so users can scroll to it */}
+            {endOfFeedCard}
+          </>
         )}
       </div>
 
