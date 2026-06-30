@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { generateTutorResponse } from "@/app/practice/conversation/actions";
 
 export function getLangCode(language: string) {
@@ -17,12 +18,11 @@ export function getLangCode(language: string) {
 }
 
 export function useVoiceTutor(activeLanguage: string) {
+  const t = useTranslations("practice");
   const [isRecording, setIsRecording] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [userTranscript, setUserTranscript] = useState("");
-  const [aiResponse, setAiResponse] = useState(
-    "Olá! Pronta para começar? Toca no microfone em baixo!",
-  );
+  const [aiResponse, setAiResponse] = useState("");
   const [status, setStatus] = useState<
     "idle" | "listening" | "thinking" | "speaking" | "error"
   >("idle");

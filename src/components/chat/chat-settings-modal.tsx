@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   X,
@@ -91,6 +92,7 @@ export const ChatSettingsModal = ({
   isPartnerOnline,
   groupImageUrl,
 }: ChatSettingsModalProps) => {
+  const t = useTranslations("chat");
   const router = useRouter();
   const { userId: currentUserId } = useAuth();
   const [isMuted, setIsMuted] = useState(false);
@@ -120,8 +122,8 @@ export const ChatSettingsModal = ({
   const handleClearHistory = () => {
     startTransition(() => {
       clearHistory(conversationId)
-        .then(() => toast.success("Histórico limpo!"))
-        .catch(() => toast.error("Erro ao limpar histórico"));
+        .then(() => toast.success(t("toast_clear_success")))
+        .catch(() => toast.error(t("toast_clear_error")));
     });
   };
 
@@ -131,7 +133,7 @@ export const ChatSettingsModal = ({
 
     // We only accept images
     if (!file.type.startsWith("image/")) {
-      toast.error("Por favor, seleciona uma imagem válida.");
+      toast.error(t("toast_invalid_image"));
       return;
     }
 
@@ -181,10 +183,10 @@ export const ChatSettingsModal = ({
     startTransition(() => {
       updateGroupInfo(conversationId, editGroupName, editGroupImageUrl)
         .then(() => {
-          toast.success("Grupo atualizado!");
+          toast.success(t("toast_update_success"));
           setViewMode("settings");
         })
-        .catch(() => toast.error("Erro ao atualizar grupo"));
+        .catch(() => toast.error(t("toast_update_error")));
     });
   };
 
@@ -219,11 +221,11 @@ export const ChatSettingsModal = ({
       startTransition(() => {
         promoteToAdmin(conversationId, confirmState.targetId!)
           .then(() => {
-            toast.success("Membro promovido a Administrador!");
+            toast.success(t("toast_promote_success"));
             setManagingUserId(null);
             setConfirmState(null);
           })
-          .catch(() => toast.error("Erro ao promover membro"));
+          .catch(() => toast.error(t("toast_promote_error")));
       });
     }
 
@@ -269,11 +271,11 @@ export const ChatSettingsModal = ({
 
           // 6. Execute Kick & Rotation
           await kickParticipant(conversationId, targetUserId, newKeys);
-          toast.success("Membro expulso e chave de segurança rodada!");
+          toast.success(t("toast_kick_success"));
           setConfirmState(null);
         } catch (error) {
           console.error(error);
-          toast.error("Erro ao expulsar membro");
+          toast.error(t("toast_kick_error"));
         }
       });
     }
@@ -282,11 +284,11 @@ export const ChatSettingsModal = ({
       startTransition(() => {
         leaveGroup(conversationId)
           .then(() => {
-            toast.success("Saíste do grupo.");
+            toast.success(t("toast_leave_success"));
             setConfirmState(null);
             router.push("/messages");
           })
-          .catch(() => toast.error("Erro ao sair do grupo"));
+          .catch(() => toast.error(t("toast_leave_error")));
       });
     }
   };
@@ -303,7 +305,7 @@ export const ChatSettingsModal = ({
         )) || {};
       const currentRoomKey = localRoomKeys[conversationId];
 
-      if (!currentRoomKey) throw new Error("Chave de segurança não encontrada");
+      if (!currentRoomKey) throw new Error(t("error_key_not_found"));
 
       // 2. Fetch public keys of selected friends
       const publicKeys = await getE2EPublicKeys(selectedFriends);
@@ -329,12 +331,12 @@ export const ChatSettingsModal = ({
 
       // 4. Send to backend
       await addParticipants(conversationId, newParticipantsWithKeys);
-      toast.success("Membros adicionados com sucesso!");
+      toast.success(t("toast_add_members_success"));
       setViewMode("settings");
       setSelectedFriends([]);
     } catch (error) {
       console.error(error);
-      toast.error("Erro ao adicionar membros");
+      toast.error(t("toast_add_members_error"));
     } finally {
       setIsSubmittingMembers(false);
     }
@@ -390,7 +392,7 @@ export const ChatSettingsModal = ({
       }}
     >
       <DialogContent className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] h-[100dvh] sm:h-[90vh] w-full sm:w-[500px] md:w-[600px] max-w-full p-0 sm:rounded-[2.5rem] border-0 sm:border-4 sm:border-white dark:sm:border-slate-800 flex flex-col overflow-hidden bg-[#f4f6f8] dark:bg-slate-950 shadow-[0_0_80px_rgba(0,0,0,0.15)] z-[100] duration-300 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]">
-        <DialogTitle className="sr-only">Definições da Conversa</DialogTitle>
+        <DialogTitle className="sr-only">{t("title")}</DialogTitle>
 
         {confirmState && (
           <div className="absolute inset-0 bg-[#f4f6f8]/80 dark:bg-slate-950/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-6 animate-in fade-in duration-200">
@@ -410,18 +412,12 @@ export const ChatSettingsModal = ({
                 )}
               </div>
               <h2 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-2">
-                {confirmState.type === "promote"
-                  ? "Promover Membro?"
-                  : confirmState.type === "kick"
-                    ? "Expulsar Membro?"
-                    : "Sair do Grupo?"}
+                {t(`confirm.${confirmState.type}.title`)}
               </h2>
               <p className="text-sm text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold mb-8">
-                {confirmState.type === "promote"
-                  ? `Queres promover ${confirmState.targetName} a Administrador? Ele terá os mesmos poderes que tu.`
-                  : confirmState.type === "kick"
-                    ? `Queres mesmo expulsar ${confirmState.targetName}? As chaves de segurança serão atualizadas.`
-                    : "Tens a certeza que queres sair deste grupo? O membro mais antigo será promovido a Administrador se fores o único."}
+                {t.rich(`confirm.${confirmState.type}.message`, {
+                  target: confirmState.targetName || "",
+                })}
               </p>
               <div className="flex w-full gap-3">
                 <button

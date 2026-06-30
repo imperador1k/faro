@@ -2,6 +2,7 @@
 
 import { Copy, Share2, QrCode, X } from "lucide-react";
 import QRCode from "react-qr-code";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +20,7 @@ export const ShareProfileModal = ({
   children: React.ReactNode;
   userId: string;
 }) => {
+  const t = useTranslations("modals");
   const { toast } = useCustomToast();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -32,7 +34,7 @@ export const ShareProfileModal = ({
 
   const handleCopy = () => {
     navigator.clipboard.writeText(profileLink).then(() => {
-      toast("Link copiado para a área de transferência!");
+      toast(t("link_copied"));
     });
   };
 
@@ -43,8 +45,8 @@ export const ShareProfileModal = ({
     }
     navigator
       .share({
-        title: "O meu perfil no MyDuolingo",
-        text: "Vem aprender idiomas comigo e acompanha a minha ofensiva!",
+        title: t("share_title"),
+        text: t("share_text"),
         url: profileLink,
       })
       .catch((err) => {
@@ -57,23 +59,23 @@ export const ShareProfileModal = ({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-sm p-0 border-0 bg-transparent shadow-none [&>button]:hidden">
         <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col p-8 items-center text-center">
-          {/* Custom Close Button */}
           <DialogClose className="absolute right-6 top-6 h-10 w-10 flex items-center justify-center rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-600 dark:text-slate-300 transition-colors active:scale-95 z-50">
             <X className="w-5 h-5" />
           </DialogClose>
 
-          <DialogTitle className="sr-only">Partilhar Perfil</DialogTitle>
+          <DialogTitle className="sr-only">
+            {t("share_profile_title")}
+          </DialogTitle>
 
           <div className="w-20 h-20 bg-blue-100 text-[#1CB0F6] rounded-[2rem] flex items-center justify-center mb-6 rotate-[-5deg]">
             <QrCode className="w-10 h-10" />
           </div>
 
           <h2 className="text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight mb-2">
-            Partilha o Teu Perfil!
+            {t("share_profile_heading")}
           </h2>
           <p className="text-sm font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 mb-8">
-            Vem aprender idiomas comigo e acompanha a minha ofensiva no
-            MyDuolingo.
+            {t("share_profile_description")}
           </p>
 
           <div className="bg-white dark:bg-slate-900 p-4 rounded-3xl border-2 border-stone-100 shadow-sm relative group mb-8">
@@ -94,7 +96,7 @@ export const ShareProfileModal = ({
             >
               <Copy className="h-5 w-5" />
               <span className="text-[10px] uppercase tracking-widest">
-                Copiar
+                {t("copy_button")}
               </span>
             </button>
             <button
@@ -103,7 +105,7 @@ export const ShareProfileModal = ({
             >
               <Share2 className="h-5 w-5" />
               <span className="text-sm uppercase tracking-widest">
-                Partilhar
+                {t("share_button")}
               </span>
             </button>
           </div>

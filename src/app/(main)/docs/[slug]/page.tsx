@@ -3,9 +3,10 @@
 import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { DOCS_ARTICLES } from "@/constants/docs";
+import { getDocsArticles } from "@/constants/docs";
 import * as LucideIcons from "lucide-react";
 import DOMPurify from "dompurify";
+import { useTranslations } from "next-intl";
 
 function DynamicIcon({
   name,
@@ -25,12 +26,15 @@ function DynamicIcon({
 }
 
 export default function ArticlePage({ params }: { params: { slug: string } }) {
+  const t = useTranslations("docs");
   const [feedbackGiven, setFeedbackGiven] = useState(false);
   const [sanitizedContent, setSanitizedContent] = useState("");
 
+  const docsArticles = useMemo(() => getDocsArticles(t), [t]);
+
   const article = useMemo(() => {
-    return DOCS_ARTICLES.find((a) => a.slug === params.slug);
-  }, [params.slug]);
+    return docsArticles.find((a) => a.slug === params.slug);
+  }, [docsArticles, params.slug]);
 
   useEffect(() => {
     if (article?.content) {
@@ -66,10 +70,10 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
   }
 
   const relatedArticles = useMemo(() => {
-    return DOCS_ARTICLES.filter(
-      (a) => a.category === article.category && a.slug !== article.slug,
-    ).slice(0, 3);
-  }, [article]);
+    return docsArticles
+      .filter((a) => a.category === article.category && a.slug !== article.slug)
+      .slice(0, 3);
+  }, [docsArticles, article]);
 
   const handleFeedback = (isHelpful: boolean) => {
     console.log(
@@ -88,7 +92,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           <div className="w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 flex items-center justify-center group-hover:border-[#58cc02] group-hover:text-[#58cc02] transition-all group-active:translate-y-1 group-active:border-b-0">
             <LucideIcons.ArrowLeft className="w-5 h-5" />
           </div>
-          Voltar para a Base de Conhecimento
+          {t("back_to_kb")}
         </Link>
 
         <div className="bg-[#58cc02] text-white border-2 border-[#46a302] border-b-8 rounded-[2rem] p-8 md:p-12 mb-8 relative overflow-hidden shadow-sm shadow-[#58cc02]/20">
@@ -102,11 +106,20 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                 href="/docs"
                 className="hover:text-white transition-colors bg-white/10 px-3 py-1.5 rounded-xl border border-white/20"
               >
-                AJUDA
+                {t("help_label")}
               </Link>
               <span>/</span>
               <span className="bg-white/10 px-3 py-1.5 rounded-xl border border-white/20">
-                {article.category}
+                {(() => {
+                  const categoryKeys: Record<string, string> = {
+                    "Mecânicas Base": "base",
+                    "Gamificação & Loja": "gamification",
+                    "Competição & Social": "social",
+                    "Modo Arcade": "arcade",
+                    "Conta & Configurações": "settings",
+                  };
+                  return t(`categories.${categoryKeys[article.category]}`);
+                })()}
               </span>
             </div>
 
@@ -129,15 +142,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
         <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-8 md:p-12 mb-8 shadow-sm">
           <div
-            className="text-stone-700 dark:text-slate-200 font-medium text-lg md:text-xl leading-loose
-                                   [&>p]:mb-6 last:[&>p]:mb-0
-                                   [&>ul]:list-none [&>ul]:pl-0 [&>ul]:mb-8
-                                   [&>ul>li]:relative [&>ul>li]:pl-8 [&>ul>li]:mb-4
-                                   [&>ul>li::before]:content-[''] [&>ul>li::before]:absolute [&>ul>li::before]:left-0 [&>ul>li::before]:top-2.5
-                                   [&>ul>li::before]:w-3.5 [&>ul>li::before]:h-3.5 [&>ul>li::before]:bg-[#58cc02] [&>ul>li::before]:rounded-full [&>ul>li::before]:shadow-sm
-                                   [&>strong]:text-stone-900 [&>strong]:font-[1000]
-                                   [&>em]:text-stone-500 dark:text-slate-400 [&>em]:font-bold
-                                   [&>a]:text-[#58cc02] [&>a]:underline [&>a]:decoration-2 [&>a]:underline-offset-4 [&>a:hover]:text-[#46a302]"
+            className="text-stone-700 dark:text-slate-200 font-medium text-lg md:text-xl leading-loose [&>p]:mb-6 last:[&>p]:mb-0 [&>ul]:list-none [&>ul]:pl-0 [&>ul]:mb-8 [&>ul>li]:relative [&>ul>li]:pl-8 [&>ul>li]:mb-4 [&>ul>li::before]:content-[''] [&>ul>li::before]:absolute [&>ul>li::before]:left-0 [&>ul>li::before]:top-2.5 [&>ul>li::before]:w-3.5 [&>ul>li::before]:h-3.5 [&>ul>li::before]:bg-[#58cc02] [&>ul>li::before]:rounded-full [&>ul>li::before]:shadow-sm [&>strong]:text-stone-900 [&>strong]:font-[1000] [&>em]:text-stone-500 dark:text-slate-400 [&>em]:font-bold [&>a]:text-[#58cc02] [&>a]:underline [&>a]:decoration-2 [&>a]:underline-offset-4 [&>a:hover]:text-[#46a302]"
             dangerouslySetInnerHTML={{ __html: sanitizedContent }}
           />
         </div>
@@ -146,7 +151,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           {!feedbackGiven ? (
             <div className="animate-in fade-in zoom-in duration-300 w-full">
               <h3 className="text-xl md:text-2xl font-[1000] text-[#46a302] mb-8">
-                Este artigo ajudou-te a dominar o jogo?
+                {t("feedback_question")}
               </h3>
               <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 w-full max-w-lg mx-auto">
                 <button
@@ -156,7 +161,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                   <span className="text-2xl group-hover:scale-125 transition-transform">
                     👍
                   </span>{" "}
-                  SIM
+                  {t("yes_option")}
                 </button>
                 <button
                   onClick={() => handleFeedback(false)}
@@ -165,7 +170,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                   <span className="text-2xl group-hover:scale-125 transition-transform">
                     👎
                   </span>{" "}
-                  NÃO
+                  {t("no_option")}
                 </button>
               </div>
             </div>
@@ -175,11 +180,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                 <LucideIcons.Check className="w-8 h-8" />
               </div>
               <h3 className="text-2xl font-[1000] text-[#46a302] mb-2">
-                Obrigado pelo teu feedback! 💚
+                {t("thanks_feedback")}
               </h3>
-              <p className="text-[#46a302]/70 font-bold">
-                A nossa equipa de Produto agradece (e a tua Ofensiva também).
-              </p>
+              <p className="text-[#46a302]/70 font-bold">{t("thanks_note")}</p>
             </div>
           )}
         </div>
@@ -188,7 +191,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       <div className="w-full lg:w-80 shrink-0">
         <div className="sticky top-6 flex flex-col gap-6">
           <h3 className="text-xl font-[1000] text-stone-800 dark:text-slate-100 border-b-2 border-stone-100 pb-4">
-            Também na secção <br />
+            {t("also_in_section")} <br />
             <span className="text-[#58cc02]">{article.category}</span>
           </h3>
 
@@ -220,7 +223,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           ) : (
             <div className="bg-stone-50 dark:bg-slate-950 border-2 border-dashed border-stone-200 dark:border-slate-800 rounded-2xl p-6 text-center">
               <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
-                Este é atualmente o único artigo soberano desta categoria.
+                {t("no_related_articles")}
               </p>
             </div>
           )}
@@ -229,7 +232,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             href="/docs"
             className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-4 text-center font-black text-[#58cc02] hover:bg-stone-50 dark:bg-slate-950 hover:border-emerald-300 active:translate-y-1 active:border-b-2 transition-all mt-4 flex items-center justify-center gap-2"
           >
-            <LucideIcons.ArrowLeft className="w-5 h-5" /> Explorar Tudo
+            <LucideIcons.ArrowLeft className="w-5 h-5" /> {t("explore_all")}
           </Link>
         </div>
       </div>

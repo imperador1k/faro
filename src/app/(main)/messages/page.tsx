@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { EmptyLottie } from "./empty-lottie";
 import type { ChatMessage } from "@/hooks/use-realtime-messages";
 import type { ConversationWithDetails } from "@/types";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   searchParams: {
@@ -33,6 +34,7 @@ export default function MessagesPage({ searchParams }: Props) {
 }
 
 async function MessagesData({ searchParams }: Props) {
+  const t = await getTranslations("messages");
   const { userId } = await auth();
   if (!userId) redirect("/");
 
@@ -58,7 +60,6 @@ async function MessagesData({ searchParams }: Props) {
 
   return (
     <>
-      {/* Sidebar Container */}
       <div
         className={cn(
           "w-full md:w-[380px] flex-shrink-0 md:border-r-2 border-stone-100 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 z-10 animate-in fade-in duration-500",
@@ -68,7 +69,6 @@ async function MessagesData({ searchParams }: Props) {
         <ChatSidebar conversations={conversationsList} />
       </div>
 
-      {/* Window Container */}
       <div
         className={cn(
           "flex-1 flex flex-col bg-[#f8fafc] dark:bg-slate-900 relative animate-in fade-in duration-500",
@@ -95,10 +95,10 @@ async function MessagesData({ searchParams }: Props) {
             </div>
             <div className="text-center space-y-2">
               <p className="font-black text-3xl text-stone-800 dark:text-slate-100 uppercase tracking-tighter">
-                As Tuas Conversas
+                {t("your_conversations")}
               </p>
               <p className="text-lg font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 max-w-sm">
-                Seleciona um amigo ou grupo para começares a interagir no Vault.
+                {t("select_to_start")}
               </p>
             </div>
           </div>
@@ -108,7 +108,6 @@ async function MessagesData({ searchParams }: Props) {
   );
 }
 
-// --- SKELETON FALLBACK ---
 const MessagesSkeleton = ({
   activeConversationId,
 }: {
@@ -116,7 +115,6 @@ const MessagesSkeleton = ({
 }) => {
   return (
     <>
-      {/* Sidebar Skeleton */}
       <div
         className={cn(
           "w-full md:w-[380px] flex-shrink-0 md:border-r-2 border-stone-100 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 z-10 p-4",
@@ -124,14 +122,11 @@ const MessagesSkeleton = ({
         )}
       >
         <div className="w-full flex flex-col gap-4 animate-pulse">
-          {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <div className="h-8 w-32 bg-stone-200 dark:bg-slate-700 rounded-xl" />
             <div className="h-10 w-10 bg-stone-200 dark:bg-slate-700 rounded-full" />
           </div>
-          {/* Search */}
           <div className="h-12 w-full bg-stone-200 dark:bg-slate-700 rounded-2xl mb-4" />
-          {/* Chat Items */}
           {[1, 2, 3, 4, 5].map((i) => (
             <div
               key={i}
@@ -146,8 +141,6 @@ const MessagesSkeleton = ({
           ))}
         </div>
       </div>
-
-      {/* Window Skeleton */}
       <div
         className={cn(
           "flex-1 flex flex-col bg-[#f8fafc] dark:bg-slate-900 relative",
@@ -158,18 +151,15 @@ const MessagesSkeleton = ({
       >
         {activeConversationId ? (
           <div className="w-full h-full flex flex-col animate-pulse">
-            {/* Header */}
             <div className="h-20 w-full bg-white dark:bg-slate-900 border-b-2 border-stone-200 dark:border-slate-800 px-6 flex items-center gap-4 shrink-0">
               <div className="w-10 h-10 rounded-full bg-stone-200 dark:bg-slate-700" />
               <div className="h-5 w-32 bg-stone-200 dark:bg-slate-700 rounded-md" />
             </div>
-            {/* Messages Area */}
             <div className="flex-1 p-6 flex flex-col gap-6 justify-end">
               <div className="w-3/4 h-16 bg-stone-200 dark:bg-slate-700 rounded-2xl self-start" />
               <div className="w-1/2 h-16 bg-stone-200 dark:bg-slate-700 rounded-2xl self-start" />
               <div className="w-2/3 h-20 bg-sky-100 dark:bg-sky-900 rounded-2xl self-end" />
             </div>
-            {/* Input */}
             <div className="h-24 w-full bg-white dark:bg-slate-900 border-t-2 border-stone-200 dark:border-slate-800 p-4 shrink-0">
               <div className="w-full h-full bg-stone-100 dark:bg-slate-800 rounded-2xl" />
             </div>

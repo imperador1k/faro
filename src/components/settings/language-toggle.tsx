@@ -1,7 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
+import { useTranslations, useLocale } from "next-intl";
+import { syncNativeLanguage } from "@/actions/user-progress";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const LANGUAGES = [
   { code: "pt", name: "Português", flag: "🇵🇹" },
@@ -17,23 +21,52 @@ const LANGUAGES = [
 ];
 
 export const LanguageToggle = () => {
-  // Mock state (defaults to native language in the future)
-  const [currentLang, setCurrentLang] = useState("pt");
+  const t = useTranslations("settings_components");
+  const locale = useLocale();
+  const router = useRouter();
+  const [currentLang, setCurrentLang] = useState(locale);
+  const [isPending, startTransition] = useTransition();
 
   const handleLanguageChange = (code: string) => {
+    if (code === currentLang) return;
     setCurrentLang(code);
-    // TODO: In the future, this will call the next-intl setCookie action
-    // and potentially reload the router to apply translations!
+
+    startTransition(() => {
+      syncNativeLanguage(code)
+        .then((res) => {
+          if (res.success) {
+            toast.success(
+              t("language_updated", {
+                defaultValue: "Language updated successfully!",
+              }),
+            );
+            router.refresh(); // Triggers a reload from the server with the new locale
+          } else {
+            toast.error(
+              t("language_error", {
+                defaultValue: "Failed to update language",
+              }),
+            );
+            setCurrentLang(locale); // Revert on failure
+          }
+        })
+        .catch(() => {
+          toast.error(
+            t("language_error", { defaultValue: "Failed to update language" }),
+          );
+          setCurrentLang(locale); // Revert on failure
+        });
+    });
   };
 
   return (
     <div className="flex flex-col gap-4 p-4 border-2 border-stone-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 mt-6">
       <div>
         <h3 className="font-bold text-stone-700 dark:text-slate-200 text-lg">
-          Idioma da App (Em breve)
+          {t("app_language_title")}
         </h3>
         <p className="text-stone-500 dark:text-slate-400 text-sm">
-          Escolhe a língua em que queres explorar o MyDuolingo.
+          {t("app_language_description")}
         </p>
       </div>
 

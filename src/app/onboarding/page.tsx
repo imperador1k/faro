@@ -1,7 +1,9 @@
 import { getCourses } from "@/db/queries/courses";
 import { OnboardingClient } from "./_components/onboarding-client";
+import { getTranslations } from "next-intl/server";
 
 export default async function OnboardingPage() {
+  const t = await getTranslations("Onboarding");
   const coursesData = await getCourses();
 
   // Map the DB data to the shape expected by the client component
@@ -12,7 +14,5 @@ export default async function OnboardingPage() {
     studentCount: Number(course.studentCount),
   }));
 
-  return (
-    <OnboardingClient courses={courses} />
-  );
+  return <OnboardingClient courses={courses} />;
 }

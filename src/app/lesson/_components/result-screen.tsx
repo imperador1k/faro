@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StreakModal } from "@/components/modals/streak-modal";
@@ -24,12 +25,13 @@ export const ResultScreen = ({
   onContinue,
   onShowStreakModalChange,
 }: ResultScreenProps) => {
+  const t = useTranslations("lesson");
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white dark:bg-slate-900 px-6">
       <div className="w-full max-w-[400px] text-center flex flex-col items-center">
         <div className="mb-10 pt-10">
           <h1 className="text-3xl font-extrabold text-amber-400 uppercase tracking-widest">
-            Prática Concluída!
+            {t("practice_completed")}
           </h1>
         </div>
 
@@ -40,7 +42,7 @@ export const ResultScreen = ({
         <div className="grid grid-cols-3 gap-4 w-full mb-12">
           <div className="flex flex-col items-center overflow-hidden rounded-2xl border-2 border-amber-400 bg-amber-400">
             <div className="w-full bg-amber-400 p-1 text-center text-xs font-bold text-white uppercase">
-              Total XP
+              {t("total_xp")}
             </div>
             <div className="flex w-full flex-col items-center justify-center bg-white dark:bg-slate-900 p-3">
               <Zap className="h-6 w-6 text-amber-400 mb-1 fill-amber-400" />
@@ -52,7 +54,7 @@ export const ResultScreen = ({
 
           <div className="flex flex-col items-center overflow-hidden rounded-2xl border-2 border-sky-400 bg-sky-400">
             <div className="w-full bg-sky-400 p-1 text-center text-xs font-bold text-white uppercase">
-              Tempo
+              {t("time")}
             </div>
             <div className="flex w-full flex-col items-center justify-center bg-white dark:bg-slate-900 p-3">
               <svg
@@ -78,7 +80,7 @@ export const ResultScreen = ({
 
           <div className="flex flex-col items-center overflow-hidden rounded-2xl border-2 border-green-400 bg-green-400">
             <div className="w-full bg-green-400 p-1 text-center text-xs font-bold text-white uppercase">
-              Precisão
+              {t("accuracy")}
             </div>
             <div className="flex w-full flex-col items-center justify-center bg-white dark:bg-slate-900 p-3">
               <svg
@@ -110,7 +112,7 @@ export const ResultScreen = ({
             className="w-full h-12 text-lg uppercase tracking-wide"
             onClick={onContinue}
           >
-            Continuar
+            {t("continue")}
           </Button>
         </div>
       </div>

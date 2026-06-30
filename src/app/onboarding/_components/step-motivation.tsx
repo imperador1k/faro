@@ -13,60 +13,61 @@ import {
   Check,
 } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const MOTIVATIONS = [
   {
     id: "career",
-    title: "Carreira",
-    description: "Impulsionar o meu currículo",
+    // title: "Carreira", // Will be replaced by t()
+    // description: "Impulsionar o meu currículo", // Will be replaced by t()
     icon: <Briefcase className="w-6 h-6 sm:w-8 sm:h-8" />,
     color: "bg-blue-100",
     accent: "text-blue-600",
   },
   {
     id: "travel",
-    title: "Viagens",
-    description: "Preparar-me para aventuras",
+    // title: "Viagens", // Will be replaced by t()
+    // description: "Preparar-me para aventuras", // Will be replaced by t()
     icon: <Plane className="w-6 h-6 sm:w-8 sm:h-8" />,
     color: "bg-orange-100",
     accent: "text-orange-600",
   },
   {
     id: "school",
-    title: "Educação",
-    description: "Apoio escolar ou académico",
+    // title: "Educação", // Will be replaced by t()
+    // description: "Apoio escolar ou académico", // Will be replaced by t()
     icon: <GraduationCap className="w-6 h-6 sm:w-8 sm:h-8" />,
     color: "bg-green-100",
     accent: "text-green-600",
   },
   {
     id: "brain",
-    title: "Mente Afiada",
-    description: "Exercitar o cérebro",
+    // title: "Mente Afiada", // Will be replaced by t()
+    // description: "Exercitar o cérebro", // Will be replaced by t()
     icon: <Brain className="w-6 h-6 sm:w-8 sm:h-8" />,
     color: "bg-purple-100",
     accent: "text-purple-600",
   },
   {
     id: "family",
-    title: "Família e Amigos",
-    description: "Conectar-me com pessoas",
+    // title: "Família e Amigos", // Will be replaced by t()
+    // description: "Conectar-me com pessoas", // Will be replaced by t()
     icon: <Users className="w-6 h-6 sm:w-8 sm:h-8" />,
     color: "bg-pink-100",
     accent: "text-pink-600",
   },
   {
     id: "culture",
-    title: "Cultura",
-    description: "Música, filmes e lazer",
+    // title: "Cultura", // Will be replaced by t()
+    // description: "Música, filmes e lazer", // Will be replaced by t()
     icon: <Music className="w-6 h-6 sm:w-8 sm:h-8" />,
     color: "bg-yellow-100",
     accent: "text-yellow-600",
   },
   {
     id: "other",
-    title: "Outro",
-    description: "Um objetivo diferente",
+    // title: "Outro", // Will be replaced by t()
+    // description: "Um objetivo diferente", // Will be replaced by t()
     icon: <MoreHorizontal className="w-6 h-6 sm:w-8 sm:h-8" />,
     color: "bg-gray-100",
     accent: "text-gray-600",
@@ -75,6 +76,7 @@ const MOTIVATIONS = [
 
 export const StepMotivation = () => {
   const { motivation, setMotivation } = useOnboardingStore();
+  const t = useTranslations("Onboarding");
 
   const container = {
     hidden: { opacity: 0 },
@@ -111,7 +113,7 @@ export const StepMotivation = () => {
           className="relative bg-white dark:bg-slate-900 border-2 border-gray-200 rounded-3xl p-5 shadow-sm"
         >
           <p className="text-lg font-black text-[#4b4b4b] leading-tight">
-            Boa escolha! Agora diz-me, o que te trouxe até aqui? 🧐
+            {t("step_motivation_bubble_text")}
           </p>
           <div className="absolute left-[-12px] top-1/2 -translate-y-1/2 w-6 h-6 bg-white dark:bg-slate-900 border-l-2 border-b-2 border-gray-200 rotate-45 rounded-bl-lg" />
         </motion.div>
@@ -119,14 +121,16 @@ export const StepMotivation = () => {
 
       <div className="text-center md:text-left w-full space-y-2 px-2">
         <h1 className="text-3xl font-black text-[#042c60] tracking-tight">
-          Qual é o teu{" "}
-          <span className="text-sky-500 underline decoration-sky-100">
-            objetivo
-          </span>
-          ?
+          {t.rich("step_motivation_title", {
+            span: (chunks) => (
+              <span className="text-sky-500 underline decoration-sky-100">
+                {chunks}
+              </span>
+            ),
+          })}
         </h1>
         <p className="text-gray-500 font-bold text-lg">
-          Personaliza a tua jornada escolhendo a tua motivação.
+          {t("step_motivation_subtitle")}
         </p>
       </div>
 
@@ -165,10 +169,10 @@ export const StepMotivation = () => {
                 <span
                   className={`font-black text-lg sm:text-xl leading-none mb-1 ${isSelected ? "text-[#58cc02]" : "text-[#042c60]"}`}
                 >
-                  {itemObj.title}
+                  {t(`motivation_${itemObj.id}_title`)}
                 </span>
                 <span className="text-sm font-bold text-gray-400 line-clamp-1">
-                  {itemObj.description}
+                  {t(`motivation_${itemObj.id}_description`)}
                 </span>
               </div>
 
@@ -187,7 +191,7 @@ export const StepMotivation = () => {
       </motion.div>
 
       <p className="text-gray-400 font-bold text-sm italic pt-4">
-        * Vamos ajustar as lições com base na tua escolha.
+        {t("step_motivation_footer_note")}
       </p>
     </div>
   );

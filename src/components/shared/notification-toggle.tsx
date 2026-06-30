@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useTransition, useState } from "react";
 import { updateNotificationPreference } from "@/actions/user-progress";
 import { useCustomToast } from "@/components/ui/custom-toast";
@@ -11,6 +13,7 @@ type Props = {
 };
 
 export const NotificationToggle = ({ initialEnabled }: Props) => {
+  const t = useTranslations("shared");
   const { toast: customToast } = useCustomToast();
   const [isPending, startTransition] = useTransition();
   const [enabled, setEnabled] = useState(initialEnabled);
@@ -24,14 +27,10 @@ export const NotificationToggle = ({ initialEnabled }: Props) => {
     startTransition(() => {
       updateNotificationPreference(newValue)
         .then(() => {
-          customToast(
-            newValue
-              ? "As tuas preferências foram guardadas com sucesso!"
-              : "As notificações foram desativadas.",
-          );
+          customToast(newValue ? t("success_enabled") : t("success_disabled"));
         })
         .catch(() => {
-          customToast.error("Erro ao atualizar definições.");
+          customToast.error(t("error_update"));
           setEnabled(!newValue); // Revert on error
         });
     });
@@ -56,10 +55,10 @@ export const NotificationToggle = ({ initialEnabled }: Props) => {
         </div>
         <div className="flex flex-col">
           <h3 className="font-black text-stone-700 dark:text-slate-200 text-lg uppercase tracking-tight leading-tight">
-            Notificações Push
+            {t("title")}
           </h3>
           <p className="text-sm text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold mt-1">
-            Recebe alertas.
+            {t("description")}
           </p>
         </div>
       </div>
@@ -77,7 +76,7 @@ export const NotificationToggle = ({ initialEnabled }: Props) => {
         role="switch"
         aria-checked={enabled}
       >
-        <span className="sr-only">Ativar notificações</span>
+        <span className="sr-only">{t("switch_label")}</span>
         <span
           className={cn(
             "pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white dark:bg-slate-900 shadow-sm ring-0 transition duration-300 ease-in-out border-b-2 border-stone-100",

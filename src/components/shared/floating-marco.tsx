@@ -10,6 +10,7 @@ import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { useAuth } from "@clerk/nextjs";
 import { useDebounce } from "@/hooks/use-debounce";
+import { useTranslations } from "next-intl";
 
 type Message = {
   id: string;
@@ -17,25 +18,26 @@ type Message = {
   content: string;
 };
 
-const SLASH_COMMANDS = [
-  { cmd: "/suporte", icon: "🛠️", desc: "Reportar um erro", color: "blue" },
-  { cmd: "/docs", icon: "📖", desc: "Aprender sobre a app", color: "indigo" },
-  { cmd: "/reviews", icon: "⭐", desc: "Deixar uma avaliação", color: "pink" },
-  {
-    cmd: "/cultura",
-    icon: "🌍",
-    desc: "Curiosidade cultural",
-    color: "purple",
-  },
-  { cmd: "/dica", icon: "🧠", desc: "Dica de estudo rápida", color: "yellow" },
-  { cmd: "/traduzir", icon: "🗣️", desc: "Traduzir...", color: "green" },
-];
-
 export const FloatingMarco = () => {
+  const t = useTranslations("shared");
+  const SLASH_COMMANDS = [
+    { cmd: "/suporte", icon: "🛠️", desc: t("report_error"), color: "blue" },
+    { cmd: "/docs", icon: "📖", desc: t("learn_about_app"), color: "indigo" },
+    { cmd: "/reviews", icon: "⭐", desc: t("leave_review"), color: "pink" },
+    {
+      cmd: "/cultura",
+      icon: "🌍",
+      desc: t("cultural_curiosity"),
+      color: "purple",
+    },
+    { cmd: "/dica", icon: "🧠", desc: t("quick_study_tip"), color: "yellow" },
+    { cmd: "/traduzir", icon: "🗣️", desc: t("translate"), color: "green" },
+  ];
+
   const pathname = usePathname();
   const { userId, isLoaded } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [input, setInput] = useState(""); // Used to trigger slash menu filter mode
+  const [input, setInput] = useState("");
   const [isEmpty, setIsEmpty] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +45,6 @@ export const FloatingMarco = () => {
   const editorRef = useRef<HTMLDivElement>(null);
   const debouncedInput = useDebounce(input, 150);
 
-  // Ensure Placeholder CSS is injected manually if needed
   useEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = `
@@ -66,20 +67,16 @@ export const FloatingMarco = () => {
     };
   }, []);
 
-  // Auto-scroll to bottom of chat
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, isLoading, isOpen]);
 
-  // CRITICAL: Route & Auth Protection
   if (!isLoaded || !userId) {
-    return null; // Oculta se não estiver logado
+    return null;
   }
 
-  // Whitelist: Apenas renderiza o Marco nestas rotas principais.
-  // Isto previne automaticamente que ele apareça em páginas de Erro 404 ou 500.
   const ALLOWED_PATHS = [
     "/learn",
     "/leaderboard",
@@ -142,7 +139,7 @@ export const FloatingMarco = () => {
     setIsLoading(true);
 
     try {
-      const contextLanguage = "Vários Idiomas"; // You can make this dynamic if needed
+      const contextLanguage = "Vários Idiomas";
       const response = await askMarco(textToSend, contextLanguage);
       const marcoMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -154,7 +151,7 @@ export const FloatingMarco = () => {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "marco",
-        content: "Oops! Tive um soluço mental. Podes tentar de novo?",
+        content: t("mental_hiccup_error"),
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -175,8 +172,6 @@ export const FloatingMarco = () => {
       editorRef.current.textContent?.trim() === "" &&
         editorRef.current.children.length === 0,
     );
-
-    // Check for Slash Menu Invocation
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
@@ -185,7 +180,6 @@ export const FloatingMarco = () => {
         const beforeCursor = textNodesText.slice(0, range.startOffset);
         const words = beforeCursor.split(/\s/);
         const currentWord = words[words.length - 1];
-
         if (currentWord.startsWith("/")) {
           setInput(currentWord);
         } else {
@@ -200,22 +194,18 @@ export const FloatingMarco = () => {
   const handleCommandClick = (cmd: (typeof SLASH_COMMANDS)[0]) => {
     if (!editorRef.current) return;
     editorRef.current.focus();
-
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
-
       if (range.startContainer.nodeType === Node.TEXT_NODE) {
         const textContent = range.startContainer.textContent || "";
         const beforeCursor = textContent.slice(0, range.startOffset);
         const lastSlashIndex = beforeCursor.lastIndexOf("/");
-
         if (lastSlashIndex !== -1) {
           range.setStart(range.startContainer, lastSlashIndex);
           range.deleteContents();
         }
       }
-
       const chip = document.createElement("span");
       chip.contentEditable = "false";
       chip.className =
@@ -227,13 +217,10 @@ export const FloatingMarco = () => {
       const cmdSpan = document.createTextNode(cmd.cmd);
       chip.appendChild(iconSpan);
       chip.appendChild(cmdSpan);
-
       range.insertNode(chip);
-
       const space = document.createTextNode("\u00A0");
       range.setStartAfter(chip);
       range.insertNode(space);
-
       range.setStartAfter(space);
       range.collapse(true);
       selection.removeAllRanges();
@@ -252,7 +239,6 @@ export const FloatingMarco = () => {
       chip.appendChild(cmdSpan);
       editorRef.current.appendChild(chip);
       editorRef.current.appendChild(document.createTextNode("\u00A0"));
-
       const newRange = document.createRange();
       newRange.selectNodeContents(editorRef.current);
       newRange.collapse(false);
@@ -260,13 +246,11 @@ export const FloatingMarco = () => {
       sel?.removeAllRanges();
       sel?.addRange(newRange);
     }
-
     setInput("");
     setIsEmpty(false);
   };
 
   const renderUserMessage = (text: string) => {
-    // Find commands inside the string and wrap them in pill components matching our token style
     return text.split(/(\/\w+)/g).map((part, index) => {
       if (part.startsWith("/")) {
         const cmd = SLASH_COMMANDS.find((c) => c.cmd === part);
@@ -288,7 +272,6 @@ export const FloatingMarco = () => {
 
   return (
     <>
-      {/* The Trigger Button (FAB) */}
       <div
         className={cn(
           "fixed z-50 bottom-32 right-4 md:bottom-10 md:right-10 flex flex-col items-end pointer-events-none transition-all duration-300 transform",
@@ -298,7 +281,7 @@ export const FloatingMarco = () => {
         <button
           onClick={() => setIsOpen(true)}
           className="pointer-events-auto w-16 h-16 bg-[#58CC02] rounded-full border-2 border-[#46A302] border-b-8 flex items-center justify-center text-white shadow-[0_10px_25px_rgba(88,204,2,0.4)] hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(88,204,2,0.5)] active:translate-y-2 active:border-b-0 active:shadow-none transition-all duration-200 group cursor-pointer relative"
-          aria-label="Abrir chat do Marco"
+          aria-label={t("open_chat_aria")}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -314,15 +297,12 @@ export const FloatingMarco = () => {
               fill="#FFDC80"
             />
           </svg>
-
           <span className="absolute top-0 right-0 flex h-4 w-4">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF4B4B] opacity-75"></span>
             <span className="relative inline-flex rounded-full h-4 w-4 bg-[#FF4B4B] border-2 border-white shadow-sm"></span>
           </span>
         </button>
       </div>
-
-      {/* The Bento Box Chat */}
       <div
         className={cn(
           "pointer-events-auto z-50 origin-bottom-right transition-all duration-300 ease-out transform",
@@ -333,7 +313,6 @@ export const FloatingMarco = () => {
             : "scale-95 opacity-0 translate-y-20 pointer-events-none",
         )}
       >
-        {/* Header */}
         <div className="bg-[#58CC02] border-b-4 border-[#46a302] px-4 py-3 flex items-center justify-between shadow-sm relative z-20 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center overflow-hidden border-2 border-white/20 shadow-sm relative">
@@ -355,8 +334,6 @@ export const FloatingMarco = () => {
             <X className="w-6 h-6 text-white" />
           </button>
         </div>
-
-        {/* Chat Area */}
         <div
           ref={scrollRef}
           className="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar"
@@ -364,9 +341,7 @@ export const FloatingMarco = () => {
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center text-center mt-8 md:mt-12 space-y-4 animate-in fade-in zoom-in-95 duration-700">
               <div className="relative w-24 h-24 md:w-32 md:h-32 mb-2">
-                {/* Subtle bouncing shadow */}
                 <div className="absolute inset-x-4 -bottom-2 h-3 bg-stone-300/50 rounded-[100%] blur-sm animate-pulse" />
-                {/* Floating avatar */}
                 <Image
                   src="/marco.png"
                   alt="Marco"
@@ -375,20 +350,18 @@ export const FloatingMarco = () => {
                 />
               </div>
               <h3 className="font-extrabold text-2xl text-stone-700 dark:text-slate-200">
-                Salut! 🥖
+                {t("hello_marco")}
               </h3>
-
               <div className="mt-6 w-full max-w-sm mx-auto bg-stone-50 dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-2xl p-4 text-left">
                 <h4 className="text-sm font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
-                  Como usar o Marco:
+                  {t("how_to_use")}
                 </h4>
-
                 <div className="flex items-center gap-3 mb-2">
                   <span className="bg-blue-100 text-blue-600 font-bold px-2 py-1 rounded-lg text-xs border-b-2 border-blue-200">
                     /suporte
                   </span>
                   <span className="text-sm font-bold text-stone-600 dark:text-slate-300">
-                    Reportar um erro
+                    {t("report_error")}
                   </span>
                 </div>
                 <div className="flex items-center gap-3 mb-2">
@@ -396,7 +369,7 @@ export const FloatingMarco = () => {
                     /cultura
                   </span>
                   <span className="text-sm font-bold text-stone-600 dark:text-slate-300">
-                    Curiosidade cultural
+                    {t("cultural_curiosity")}
                   </span>
                 </div>
                 <div className="flex items-center gap-3 mb-2">
@@ -404,7 +377,7 @@ export const FloatingMarco = () => {
                     /dica
                   </span>
                   <span className="text-sm font-bold text-stone-600 dark:text-slate-300">
-                    Dica de estudo
+                    {t("quick_study_tip")}
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
@@ -412,7 +385,7 @@ export const FloatingMarco = () => {
                     /traduzir
                   </span>
                   <span className="text-sm font-bold text-stone-600 dark:text-slate-300">
-                    Traduzir frase
+                    {t("translate_sentence")}
                   </span>
                 </div>
               </div>
@@ -443,42 +416,39 @@ export const FloatingMarco = () => {
                           props.href === "/support" &&
                           props.children?.toString() ===
                             "ABRIR TICKET DE SUPORTE"
-                        ) {
+                        )
                           return (
                             <Link
                               href="/support"
                               className="block mt-4 bg-[#ea2b2b] text-white font-black text-center py-3 px-6 rounded-2xl border-2 border-[#b21c1c] border-b-[6px] active:translate-y-1 active:border-b-0 transition-all no-underline w-full shadow-sm"
                             >
-                              🛠️ CONTACTAR O MIGUEL
+                              {t("contact_miguel")}
                             </Link>
                           );
-                        }
                         if (
                           props.href === "/docs" &&
                           props.children?.toString() === "LER DOCUMENTAÇÃO"
-                        ) {
+                        )
                           return (
                             <Link
                               href="/docs"
                               className="block mt-4 bg-[#58CC02] text-white font-black text-center py-3 px-6 rounded-2xl border-2 border-[#46A302] border-b-[6px] active:translate-y-1 active:border-b-0 transition-all no-underline w-full shadow-sm"
                             >
-                              📖 ABRIR DOCUMENTAÇÃO
+                              {t("open_docs")}
                             </Link>
                           );
-                        }
                         if (
                           props.href === "/reviews" &&
                           props.children?.toString() === "DEIXAR AVALIAÇÃO"
-                        ) {
+                        )
                           return (
                             <Link
                               href="/reviews"
                               className="block mt-4 bg-[#FF9600] text-white font-black text-center py-3 px-6 rounded-2xl border-2 border-[#CC7A00] border-b-[6px] active:translate-y-1 active:border-b-0 transition-all no-underline w-full shadow-sm"
                             >
-                              ⭐ DEIXAR AVALIAÇÃO
+                              {t("leave_review")}
                             </Link>
                           );
-                        }
                         return (
                           <a
                             {...props}
@@ -488,28 +458,23 @@ export const FloatingMarco = () => {
                       },
                       code: ({ node, className, children, ...props }) => {
                         const content = children?.toString() || "";
-                        const isInline = !className; // In react-markdown v9+, inline code usually has no className
-                        if (isInline && content.startsWith("/")) {
+                        if (!className && content.startsWith("/"))
                           return (
                             <button
                               onClick={() => {
                                 const cmdObj = SLASH_COMMANDS.find(
                                   (c) => c.cmd === content,
                                 );
-                                if (cmdObj) {
-                                  handleCommandClick(cmdObj);
-                                } else {
-                                  // Fallback if not in predefined list
-                                  if (editorRef.current) {
-                                    editorRef.current.focus();
-                                    const selection = window.getSelection();
-                                    const range = selection?.getRangeAt(0);
-                                    if (range) {
-                                      range.insertNode(
-                                        document.createTextNode(content + " "),
-                                      );
-                                      range.collapse(false);
-                                    }
+                                if (cmdObj) handleCommandClick(cmdObj);
+                                else if (editorRef.current) {
+                                  editorRef.current.focus();
+                                  const selection = window.getSelection();
+                                  const range = selection?.getRangeAt(0);
+                                  if (range) {
+                                    range.insertNode(
+                                      document.createTextNode(content + " "),
+                                    );
+                                    range.collapse(false);
                                   }
                                 }
                               }}
@@ -518,7 +483,6 @@ export const FloatingMarco = () => {
                               {content}
                             </button>
                           );
-                        }
                         return (
                           <code
                             className={cn(
@@ -560,10 +524,7 @@ export const FloatingMarco = () => {
             </div>
           )}
         </div>
-
-        {/* Input Area */}
         <div className="p-4 bg-white dark:bg-slate-900 border-t-2 border-stone-100 dark:border-slate-800 flex flex-col shrink-0 mb-safe relative">
-          {/* Slash Commands Pop-over */}
           {debouncedInput === "/" && (
             <div className="absolute bottom-full left-4 mb-2 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-2xl shadow-xl overflow-hidden z-30 w-64 animate-in slide-in-from-bottom-2 fade-in">
               {SLASH_COMMANDS.map((cmd) => (
@@ -585,7 +546,6 @@ export const FloatingMarco = () => {
               ))}
             </div>
           )}
-
           <div className="flex items-center gap-3 relative">
             <div className="flex-1 relative">
               <div
@@ -594,7 +554,7 @@ export const FloatingMarco = () => {
                 suppressContentEditableWarning
                 onInput={handleInput}
                 onKeyDown={handleKeyDown}
-                data-placeholder="Escreve a tua dúvida..."
+                data-placeholder={t("type_your_question")}
                 className="marco-rich-input w-full min-h-[48px] max-h-[120px] overflow-y-auto bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-700 border-b-4 rounded-2xl px-4 py-3 text-stone-700 dark:text-slate-200 font-bold focus:outline-none focus:border-[#58CC02] focus:ring-4 focus:ring-[#58CC02]/20 focus:bg-white dark:focus:bg-slate-900 transition-all pr-12 cursor-text"
               ></div>
             </div>

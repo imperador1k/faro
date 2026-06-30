@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { VOCAB_DICTIONARY } from "@/constants/dictionary";
 import { useUISounds } from "@/hooks/use-ui-sounds";
 import { addArcadePoints } from "@/actions/user-progress";
@@ -22,12 +23,12 @@ type ActiveMeteor = {
   body: Matter.Body;
 };
 
-// Physics Constants
-const GAME_WIDTH = 400; // Fixed logic width mapped to screen
+const GAME_WIDTH = 400;
 const GAME_HEIGHT = 650;
 const SENSOR_Y = GAME_HEIGHT - 20;
 
 export default function MeteorGame() {
+  const t = useTranslations("arcade");
   const router = useRouter();
   const { playClick, playReward, playPop, playFahh } = useUISounds();
 
@@ -40,14 +41,11 @@ export default function MeteorGame() {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
 
-  // State sync of active bodies so we can render HTML overlays on top of Matter bodies
   const [activeMeteors, setActiveMeteors] = useState<ActiveMeteor[]>([]);
 
-  // Bottom interaction options based on currently lowest meteor
   const [options, setOptions] = useState<string[]>([]);
   const [targetMeteorId, setTargetMeteorId] = useState<number | null>(null);
 
-  // Dynamic difficulty refs to bypass stale closures
   const scoreRef = useRef(0);
   const spawnTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -55,7 +53,6 @@ export default function MeteorGame() {
     scoreRef.current = score;
   }, [score]);
 
-  // Update bottom interactable buttons based on lowest actual meteor
   useEffect(() => {
     if (status !== "playing" || activeMeteors.length === 0) {
       setOptions([]);
@@ -63,14 +60,12 @@ export default function MeteorGame() {
       return;
     }
 
-    // Find the lowest meteor (max Y)
     const lowestMeteor = activeMeteors.reduce((lowest, current) => {
       return current.body.position.y > lowest.body.position.y
         ? current
         : lowest;
     });
 
-    // Don't reconstruct options if we are already targeting this meteor
     if (targetMeteorId === lowestMeteor.id) return;
 
     setTargetMeteorId(lowestMeteor.id);
@@ -85,12 +80,10 @@ export default function MeteorGame() {
       fakes = VOCAB_DICTIONARY.filter((w) => w.pt !== correctPt);
     }
 
-    // Shuffle and pick 2 fakes
     const shuffledFakes = [...fakes]
       .sort(() => 0.5 - Math.random())
       .slice(0, 2);
 
-    // Final options array shuffled
     const finalOptions = [
       correctPt,
       shuffledFakes[0].pt,
@@ -99,22 +92,15 @@ export default function MeteorGame() {
     setOptions(finalOptions);
   }, [activeMeteors, status, targetMeteorId]);
 
-  // INIT PHYSICS ENGINE
   useEffect(() => {
     if (!sceneRef.current) return;
 
-    // Reset
     const engine = Matter.Engine.create();
     const world = engine.world;
     engineRef.current = engine;
 
-    // Configure dynamic gravity start
     engine.gravity.y = 0.5;
 
-    // Custom render to sync with React instead of drawing on Canvas directly
-    // We will just use the Engine to calculate math, and react state for visual rendering.
-    // But for debug/bounding boxes we can mount a hidden render or wireframe one.
-    // Actually, rendering a transparent canvas is good for bounding constraints mapping.
     const render = Matter.Render.create({
       element: sceneRef.current,
       engine: engine,
@@ -123,13 +109,11 @@ export default function MeteorGame() {
         height: GAME_HEIGHT,
         wireframes: false,
         background: "transparent",
-        // We hide the bodies in the native canvas because we'll render custom HTML divs on top
         showAngleIndicator: false,
       },
     });
     renderRef.current = render;
 
-    // Boundaries
     const leftWall = Matter.Bodies.rectangle(
       -25,
       GAME_HEIGHT / 2,
@@ -145,7 +129,6 @@ export default function MeteorGame() {
       { isStatic: true },
     );
 
-    // Bottom Sensor (The lava)
     const sensor = Matter.Bodies.rectangle(
       GAME_WIDTH / 2,
       SENSOR_Y + 50,
@@ -160,7 +143,6 @@ export default function MeteorGame() {
 
     Matter.World.add(world, [leftWall, rightWall, sensor]);
 
-    // Collision Event
     Matter.Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
       for (let i = 0; i < pairs.length; i++) {
@@ -170,17 +152,13 @@ export default function MeteorGame() {
         if (bodyA.label === "lava" || bodyB.label === "lava") {
           const meteorBody = bodyA.label === "lava" ? bodyB : bodyA;
 
-          // Meteor hit the bottom!
           playFahh();
 
-          // Remove from physics world
           Matter.World.remove(world, meteorBody);
 
-          // Remove from react state and lose a life
-          setActiveMeteors((prev) => {
-            const newMeteors = prev.filter((m) => m.id !== meteorBody.id);
-            return newMeteors;
-          });
+          setActiveMeteors((prev) =>
+            prev.filter((m) => m.id !== meteorBody.id),
+          );
 
           setLives((prev) => {
             const p = prev - 1;
@@ -191,9 +169,7 @@ export default function MeteorGame() {
       }
     });
 
-    // Sync physics body positions to React State for 60fps rendering
     Matter.Events.on(engine, "afterUpdate", () => {
-      // Force a react state update to paint new coords
       setActiveMeteors((prev) => [...prev]);
     });
 
@@ -209,9 +185,8 @@ export default function MeteorGame() {
       Matter.World.clear(world, false);
       Matter.Engine.clear(engine);
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
-  // Game Spawner Loop
   useEffect(() => {
     if (status !== "playing" || !engineRef.current) return;
 
@@ -221,25 +196,21 @@ export default function MeteorGame() {
       const engine = engineRef.current;
       if (!engine) return;
 
-      // Difficulty: spawn interval gets faster, gravity gets heavier
       const currentScore = scoreRef.current;
       engine.world.gravity.y = 0.5 + currentScore / 100;
 
       const randomSource =
         VOCAB_DICTIONARY[Math.floor(Math.random() * VOCAB_DICTIONARY.length)];
 
-      // Random X between 50 and 350
       const startX = 60 + Math.random() * (GAME_WIDTH - 120);
 
-      // We make the body transparent in native canvas because React renders it above
       const body = Matter.Bodies.rectangle(startX, -50, 140, 60, {
-        restitution: 0.2, // bounciness
-        frictionAir: 0.05, // drag (keeps them slightly floating)
+        restitution: 0.2,
+        frictionAir: 0.05,
         label: "meteor",
-        render: { visible: false }, // Hidden in canvas, rendered in HTML
+        render: { visible: false },
       });
 
-      // Initial Spin
       Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.1);
 
       Matter.World.add(engine.world, body);
@@ -249,7 +220,6 @@ export default function MeteorGame() {
         { id: body.id, word: randomSource, body },
       ]);
 
-      // Next spawn
       const nextInterval = Math.max(800, 3000 - currentScore * 15);
       spawnTimerRef.current = setTimeout(spawnMeteor, nextInterval);
     };
@@ -261,7 +231,6 @@ export default function MeteorGame() {
     };
   }, [status]);
 
-  // Interaction
   const handleButtonClick = (selectedPt: string) => {
     if (status !== "playing" || !targetMeteorId) return;
 
@@ -269,13 +238,11 @@ export default function MeteorGame() {
     if (!targetMeteor) return;
 
     if (targetMeteor.word.pt === selectedPt) {
-      // Correct Hit!
       playReward();
 
       const x = targetMeteor.body.position.x;
       const y = targetMeteor.body.position.y;
 
-      // Map coordinates to viewport roughly
       const rect = sceneRef.current?.getBoundingClientRect();
       if (rect) {
         const confOriginX = (rect.left + x) / window.innerWidth;
@@ -289,18 +256,15 @@ export default function MeteorGame() {
         });
       }
 
-      // Remove from physicist world
       if (engineRef.current) {
         Matter.World.remove(engineRef.current.world, targetMeteor.body);
       }
 
-      // Remove from state
       setActiveMeteors((prev) => prev.filter((m) => m.id !== targetMeteorId));
 
       setScore((prev) => prev + 1);
       addArcadePoints(1).catch(console.error);
     } else {
-      // Wrong hit! Lose life early? For now just shake or lose life.
       playFahh();
       setLives((prev) => {
         const p = prev - 1;
@@ -316,12 +280,12 @@ export default function MeteorGame() {
         <div className="bg-sky-100 border-2 border-sky-300 border-b-8 rounded-3xl p-8 w-full flex flex-col items-center shadow-sm">
           <ShieldAlert className="h-20 w-20 text-sky-500 fill-sky-200 mb-6 drop-shadow-md" />
           <h1 className="text-4xl font-black text-sky-700 uppercase mb-2 text-center leading-none tracking-tight">
-            Escudos Destruídos
+            {t("game_over")}
           </h1>
 
           <div className="bg-white dark:bg-slate-900 rounded-2xl w-full p-6 flex flex-col items-center border-2 border-sky-200 border-b-4 mb-8 mt-6">
             <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-sm mb-2">
-              Meteoros Destruídos
+              {t("destroyed_meteors")}
             </span>
             <span className="text-6xl font-black text-sky-500">{score}</span>
           </div>
@@ -330,7 +294,7 @@ export default function MeteorGame() {
             onClick={() => router.push("/arcade")}
             className="w-full py-4 bg-sky-500 hover:bg-sky-600 text-white font-black text-xl uppercase tracking-widest rounded-2xl border-2 border-sky-600 border-b-8 active:border-b-2 active:translate-y-[6px] transition-all"
           >
-            Voltar à Base
+            {t("back_to_base")}
           </button>
         </div>
       </div>
@@ -339,13 +303,12 @@ export default function MeteorGame() {
 
   return (
     <div className="max-w-[400px] mx-auto py-4 px-2 flex flex-col h-[85vh] md:h-[90vh] overflow-hidden select-none">
-      {/* Header */}
       <div className="flex items-center justify-between mb-4 z-10 px-2 shrink-0">
         <button
           onClick={() => router.push("/arcade")}
           className="text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 font-bold uppercase text-sm tracking-wider"
         >
-          &larr; Sair
+          &larr; {t("exit")}
         </button>
         <div className="flex gap-3">
           <div className="flex items-center gap-1 bg-rose-100 text-rose-500 px-3 py-1.5 rounded-xl border-2 border-rose-200">
@@ -359,19 +322,14 @@ export default function MeteorGame() {
         </div>
       </div>
 
-      {/* Matter.js Arena */}
       <div
         className="flex-1 relative bg-stone-900 rounded-3xl border-2 border-stone-800 border-b-8 overflow-hidden shadow-inner flex flex-col"
         style={{ width: "100%", maxWidth: `${GAME_WIDTH}px` }}
       >
-        {/* Starry background effect */}
         <div className="absolute inset-0 bg-[url('/sparkles.svg')] opacity-20 pointer-events-none" />
-
-        {/* Sensor Line (Lava visual) */}
         <div className="absolute bottom-4 inset-x-0 h-4 bg-rose-500/50 blur-md pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-4 bg-rose-500 border-t-2 border-rose-400 pointer-events-none" />
 
-        {/* The React-Rendered Meteor Bodies over the Matter.js Engine */}
         <div
           className="absolute inset-0 z-10 pointer-events-none overflow-hidden"
           ref={sceneRef}
@@ -396,7 +354,6 @@ export default function MeteorGame() {
         </div>
       </div>
 
-      {/* Fixed Control Buttons (The Missiles) */}
       <div className="h-32 mt-4 shrink-0 grid grid-cols-3 gap-2 px-1">
         {options.map((opt, i) => (
           <button
@@ -411,7 +368,7 @@ export default function MeteorGame() {
         ))}
         {options.length === 0 && (
           <div className="col-span-3 flex items-center justify-center text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-sm animate-pulse">
-            Aguardar radar...
+            {t("waiting_radar")}
           </div>
         )}
       </div>

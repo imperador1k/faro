@@ -3,8 +3,11 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Sparkles, Star, Heart, Languages } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export const StepWelcome = () => {
+  const t = useTranslations("Onboarding");
+
   return (
     <div className="w-full min-h-full flex flex-col items-center justify-center py-6">
       {/* Background Decor */}
@@ -64,14 +67,18 @@ export const StepWelcome = () => {
                 <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
                   <Sparkles className="text-yellow-400 w-5 h-5" />
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
-                    Novo Amigo
+                    {t("new_friend_badge")}
                   </span>
                 </div>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#042c60] leading-none">
-                  Olá! Eu sou o <br />
-                  <span className="text-[#58cc02] inline-block mt-2">
-                    Marco!
-                  </span>
+                  {t.rich("marco_intro_welcome", {
+                    brTag: () => <br />,
+                    spanTag: (chunks) => (
+                      <span className="text-[#58cc02] inline-block mt-2">
+                        {chunks}
+                      </span>
+                    ),
+                  })}
                 </h1>
               </div>
 
@@ -87,14 +94,16 @@ export const StepWelcome = () => {
             className="space-y-4 md:pl-4"
           >
             <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-500 leading-snug">
-              Vou ajudar-te a dominar um{" "}
-              <span className="text-sky-500 font-black">novo idioma</span> de
-              forma divertida e eficaz.
+              {t.rich("marco_help_description", {
+                spanTag: (chunks) => (
+                  <span className="text-sky-500 font-black">{chunks}</span>
+                ),
+              })}
             </p>
             <div className="flex items-center justify-center md:justify-start gap-3 text-[#58cc02]">
               <Heart size={18} fill="currentColor" />
               <span className="text-xs font-black uppercase tracking-widest">
-                Pronto para começar?
+                {t("ready_to_start")}
               </span>
               <Heart size={18} fill="currentColor" />
             </div>

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { getNotifications, getUserProgress } from "@/db/queries";
 import { NotificationInbox } from "@/components/shared/notification-inbox";
 import { redirect } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +34,7 @@ async function NotificationsData() {
 
 // --- SKELETON FALLBACK ---
 const NotificationsSkeleton = () => {
+  const t = useTranslations("notifications");
   return (
     <div className="flex flex-col gap-8 w-full animate-in fade-in duration-500">
       {/* Header Skeleton */}

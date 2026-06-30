@@ -6,6 +6,7 @@ import { X, Send, AlertTriangle, CheckCircle2 } from "lucide-react";
 import { submitUGCPost } from "@/actions/creator";
 import { HappyStarLottie } from "@/components/ui/lottie-animation";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type CreatePostModalProps = {
   isOpen: boolean;
@@ -18,6 +19,7 @@ export function CreatePostModal({
   onClose,
   targetLanguage,
 }: CreatePostModalProps) {
+  const t = useTranslations("feed_components");
   const [content, setContent] = useState("");
   const [isPending, startTransition] = useTransition();
   const [result, setResult] = useState<{
@@ -88,11 +90,10 @@ export function CreatePostModal({
 
                 <div className="relative z-10">
                   <h2 className="text-2xl font-black tracking-tight mt-2">
-                    Criar Curiosidade
+                    {t("create_curiosity")}
                   </h2>
                   <p className="text-sky-100 text-sm mt-2 font-medium max-w-[250px] mx-auto">
-                    A nossa Inteligência Artificial vai rever e aprovar o teu
-                    post!
+                    {t("ai_review_notice")}
                   </p>
                 </div>
 
@@ -124,7 +125,7 @@ export function CreatePostModal({
                         onClick={() => setResult(null)}
                         className="mt-2 text-sm font-bold underline"
                       >
-                        Tentar novamente
+                        {t("try_again")}
                       </button>
                     )}
                   </div>
@@ -134,7 +135,7 @@ export function CreatePostModal({
                       <textarea
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        placeholder="Ex: Sabias que a Torre Eiffel pode ser 15 cm mais alta no verão?"
+                        placeholder={t("textarea_placeholder")}
                         rows={4}
                         disabled={isPending}
                         maxLength={500}
@@ -154,7 +155,7 @@ export function CreatePostModal({
                         <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
                       ) : (
                         <>
-                          <Send className="w-5 h-5" /> Enviar para Moderação
+                          <Send className="w-5 h-5" /> {t("submit_moderation")}
                         </>
                       )}
                     </button>

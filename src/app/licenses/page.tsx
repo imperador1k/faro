@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   Code,
   Atom,
@@ -10,16 +11,21 @@ import {
   Sparkles,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Licenças de Software",
-  description:
-    "Créditos e licenças das tecnologias de código aberto utilizadas na construção do MyDuolingo.",
-  alternates: {
-    canonical: "/licenses",
-  },
-};
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("licenses");
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: "/licenses",
+    },
+  };
+}
 
 export default function LicensesPage() {
+  const t = useTranslations("licenses");
   return (
     <div className="min-h-screen bg-[#fbf9f8] dark:bg-slate-950 py-12 px-4">
       <div className="max-w-3xl mx-auto">
@@ -28,21 +34,19 @@ export default function LicensesPage() {
             <Code className="w-8 h-8" />
           </div>
           <h1 className="text-4xl md:text-5xl font-black text-stone-700 dark:text-slate-200 tracking-tight">
-            Licenças de Software
+            {t("title")}
           </h1>
           <div className="bg-stone-200 dark:bg-slate-700 text-stone-500 dark:text-slate-400 font-bold text-xs px-4 py-2 rounded-full uppercase tracking-widest mt-4">
-            Créditos de Código Aberto
+            {t("open_source_credits")}
           </div>
         </div>
 
         <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 md:p-8 mb-8">
           <h2 className="text-xl font-black text-stone-700 dark:text-slate-200 mb-6">
-            Tecnologias Utilizadas
+            {t("technologies_used")}
           </h2>
           <p className="text-stone-500 dark:text-slate-400 font-medium mb-8">
-            A MyDuolingo é construída sobre os ombros de gigantes. Agradecemos
-            às comunidades de código aberto responsáveis por estas fantásticas
-            ferramentas.
+            {t("intro_text")}
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -60,8 +64,7 @@ export default function LicensesPage() {
                 </span>
               </div>
               <p className="text-sm text-stone-500 dark:text-slate-400 font-medium">
-                A biblioteca principal para a construção da interface do
-                utilizador iterativa e baseada em componentes.
+                {t("react_desc")}
               </p>
             </div>
 
@@ -79,8 +82,7 @@ export default function LicensesPage() {
                 </span>
               </div>
               <p className="text-sm text-stone-500 dark:text-slate-400 font-medium">
-                Framework React que providencia renderização do lado do servidor
-                (SSR) e estrutura da aplicação.
+                {t("nextjs_desc")}
               </p>
             </div>
 
@@ -98,8 +100,7 @@ export default function LicensesPage() {
                 </span>
               </div>
               <p className="text-sm text-stone-500 dark:text-slate-400 font-medium">
-                Framework CSS de classes utilitárias focado em designs
-                extremamente rápidos e customizáveis.
+                {t("tailwind_desc")}
               </p>
             </div>
 
@@ -117,8 +118,7 @@ export default function LicensesPage() {
                 </span>
               </div>
               <p className="text-sm text-stone-500 dark:text-slate-400 font-medium">
-                A interface para a base de dados relacional, totalmente tipada
-                com TypeScript.
+                {t("drizzle_desc")}
               </p>
             </div>
 
@@ -132,12 +132,11 @@ export default function LicensesPage() {
                   </h3>
                 </div>
                 <span className="bg-stone-200 dark:bg-slate-700 text-stone-600 dark:text-slate-300 font-bold text-xs px-2 py-1 rounded-md">
-                  Proprietário
+                  {t("proprietary")}
                 </span>
               </div>
               <p className="text-sm text-stone-500 dark:text-slate-400 font-medium">
-                A plataforma de Gestão de Utilizadores e Autenticação
-                (Login/Registo).
+                {t("clerk_desc")}
               </p>
             </div>
 
@@ -151,12 +150,11 @@ export default function LicensesPage() {
                   </h3>
                 </div>
                 <span className="bg-stone-200 dark:bg-slate-700 text-stone-600 dark:text-slate-300 font-bold text-xs px-2 py-1 rounded-md">
-                  Proprietário
+                  {t("proprietary")}
                 </span>
               </div>
               <p className="text-sm text-stone-500 dark:text-slate-400 font-medium">
-                O modelo de inteligência artificial generativa subjacente ao
-                mascote Marco AI.
+                {t("gemini_desc")}
               </p>
             </div>
           </div>
@@ -167,7 +165,7 @@ export default function LicensesPage() {
             href="/settings"
             className="bg-stone-200 dark:bg-slate-700 text-stone-500 dark:text-slate-400 border-b-4 border-stone-300 dark:border-slate-700 active:translate-y-1 active:border-b-0 hover:bg-stone-300 dark:bg-slate-600 rounded-2xl px-12 py-5 font-black uppercase tracking-widest text-center block w-full md:w-auto transition-all"
           >
-            VOLTAR
+            {t("back_button")}
           </Link>
         </div>
       </div>

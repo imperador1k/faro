@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-    title: "Apoio ao Estudante",
-    description:
-        "Centro de suporte do MyDuolingo. Consulta a nossa base de conhecimento, entra em contacto com a equipa ou submete um ticket de suporte.",
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("support_page");
+  return {
+    title: t("title"),
+    description: t("description"),
     alternates: {
-        canonical: "/support",
+      canonical: "/support",
     },
-};
+  };
+}
 
 export { default } from "./page";

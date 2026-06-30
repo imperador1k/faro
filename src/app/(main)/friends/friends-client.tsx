@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
@@ -75,6 +77,7 @@ export const FriendsClient = ({
   following,
   feedActivities,
 }: Props) => {
+  const t = useTranslations("friends");
   const [activeTab, setActiveTab] = useState<"feed" | "friends" | "search">(
     query ? "search" : "feed",
   );
@@ -98,19 +101,19 @@ export const FriendsClient = ({
 
   const handleCopy = () => {
     navigator.clipboard.writeText(profileLink);
-    toast("Código partilhado copiado!");
+    toast(t("copy_success"));
   };
 
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `Segue-me!`,
-          text: `Junta-te a mim e vamos aprender juntos!`,
+          title: t("share_title"),
+          text: t("share_text"),
           url: profileLink,
         });
       } catch (err) {
-        console.log("Erro a partilhar", err);
+        console.log(t("share_error"), err);
       }
     } else {
       handleCopy();
@@ -142,7 +145,7 @@ export const FriendsClient = ({
 
   const handleFollowByCode = () => {
     if (!friendCode || friendCode.length < 4) {
-      toast("Código inválido! Por favor verifica o código do teu amigo.");
+      toast(t("invalid_code"));
       return;
     }
 
@@ -151,7 +154,7 @@ export const FriendsClient = ({
     // Simulated API call / follow logic
     setTimeout(() => {
       setIsSubmittingCode(false);
-      toast("Utilizador não encontrado! Verifica se o código está correto.");
+      toast(t("user_not_found"));
       setFriendCode("");
     }, 1200);
   };
@@ -286,15 +289,15 @@ export const FriendsClient = ({
             </p>
             {amFollowingVal && isFollowerVal ? (
               <span className="text-[10px] font-black bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full w-fit">
-                Amigos
+                {t("status_friends")}
               </span>
             ) : isFollowerVal ? (
               <span className="text-[10px] font-black bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full w-fit">
-                Segue-te
+                {t("status_follows_you")}
               </span>
             ) : amFollowingVal ? (
               <span className="text-[10px] font-black bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 px-2 py-0.5 rounded-full w-fit">
-                A Seguir
+                {t("status_following")}
               </span>
             ) : null}
           </div>
@@ -314,7 +317,7 @@ export const FriendsClient = ({
         onScan={(scannedId) => {
           setFriendCode(scannedId);
           toast(
-            "Código detetado com sucesso! Clique em 'Adicionar Amigo' se os dados estiverem corretos.",
+            "Código detetado com sucesso! Clique em '{t('add_button')} Amigo' se os dados estiverem corretos.",
           );
         }}
       />
@@ -338,7 +341,7 @@ export const FriendsClient = ({
                 <X className="w-6 h-6" />
               </button>
               <h2 className="text-2xl font-black text-stone-800 dark:text-slate-100 mb-6 mt-2 text-center">
-                O teu ID Secreto
+                {t("secret_id")}
               </h2>
               <div className="bg-white dark:bg-slate-900 p-2 rounded-2xl border-4 border-stone-100 w-full aspect-square flex items-center justify-center">
                 <QRCode
@@ -349,13 +352,13 @@ export const FriendsClient = ({
                 />
               </div>
               <p className="text-stone-500 dark:text-slate-400 font-bold text-center mt-6 leading-relaxed">
-                Mostra este código para um amigo te adicionar instantaneamente!
+                {t("show_code_desc")}
               </p>
               <button
                 onClick={() => setIsQrModalOpen(false)}
                 className="mt-6 w-full py-4 bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-black rounded-xl border-b-4 border-stone-200 dark:border-slate-800 active:translate-y-1 active:border-b-0 transition-all uppercase tracking-wide"
               >
-                Fechar
+                {t("close")}
               </button>
             </div>
           </div>,
@@ -365,16 +368,16 @@ export const FriendsClient = ({
       {/* ── Header ── */}
       <div className="flex items-center gap-4 mb-8">
         <h1 className="text-4xl font-extrabold text-stone-800 dark:text-slate-100">
-          Amigos
+          {t("title")}
         </h1>
       </div>
 
       {/* ── Tactile Tab Switcher (Segmented Control) ── */}
       <div className="bg-stone-200 dark:bg-slate-700 p-1.5 rounded-2xl flex items-center max-w-3xl w-full mx-auto mb-10 overflow-x-auto no-scrollbar shadow-inner">
         {[
-          { id: "feed", label: "FEED" },
-          { id: "friends", label: "AMIGOS" },
-          { id: "search", label: "ADICIONAR" },
+          { id: "feed", label: t("tabs.feed") },
+          { id: "friends", label: t("tabs.friends") },
+          { id: "search", label: t("tabs.add") },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -398,9 +401,9 @@ export const FriendsClient = ({
         <div className="space-y-4 max-w-3xl mx-auto">
           {localActivities.length === 0 ? (
             <EmptyState
-              title="O teu feed está vazio!"
-              description="Aprender é melhor com companhia! Aqui aparecerão as conquistas épicas (como dias de ofensiva e subidas de liga) das pessoas que segues."
-              actionText="Encontrar Amigos"
+              title={t("empty_feed.title")}
+              description={t("empty_feed.desc")}
+              actionText={t("empty_feed.action")}
               onAction={() => setActiveTab("search")}
             />
           ) : (
@@ -460,7 +463,9 @@ export const FriendsClient = ({
                     ) : (
                       <span className="text-xl">✋</span>
                     )}
-                    {activity.hasHighFived ? "Já Deste!" : "Dar High-Five"}
+                    {activity.hasHighFived
+                      ? t("already_highfived")
+                      : t("give_highfive")}
                   </button>
                 </div>
               );
@@ -469,7 +474,7 @@ export const FriendsClient = ({
 
           <div className="text-center pt-8 pb-4">
             <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
-              Mostrando as atividades mais recentes.
+              {t("recent_activities")}
             </p>
           </div>
         </div>
@@ -480,9 +485,9 @@ export const FriendsClient = ({
         <div className="max-w-2xl mx-auto">
           {allFriends.length === 0 ? (
             <EmptyState
-              title="Ainda não tens amigos aqui"
-              description="Partilha o teu código ou encontra outros estudantes para iniciarem a jornada contigo!"
-              actionText="Adicionar Amigos"
+              title={t("empty_friends.title")}
+              description={t("empty_friends.desc")}
+              actionText={t("empty_friends.action")}
               onAction={() => setActiveTab("search")}
             />
           ) : (
@@ -507,10 +512,10 @@ export const FriendsClient = ({
                 <Sparkles className="w-24 h-24 text-blue-500 dark:text-sky-500/20" />
               </div>
               <h2 className="text-2xl font-black text-blue-950 dark:text-sky-100 mb-2 relative z-10">
-                Tens o código de <br /> um amigo?
+                {t.rich("have_code_title", { br: () => <br /> })}
               </h2>
               <p className="text-blue-800/80 dark:text-sky-300/80 font-bold text-sm mb-6 relative z-10">
-                Introduz o ID para segui-lo no momento!
+                {t("have_code_desc")}
               </p>
 
               <div className="w-full relative z-10">
@@ -531,7 +536,7 @@ export const FriendsClient = ({
                     {isSubmittingCode && (
                       <Loader2 className="w-5 h-5 animate-spin" />
                     )}
-                    Adicionar
+                    {t("add_button")}
                   </button>
 
                   {/* Action button to open Scanner */}
@@ -548,10 +553,10 @@ export const FriendsClient = ({
 
             <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-8 flex flex-col items-center justify-center text-center shadow-sm">
               <h2 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-2">
-                O teu ID Secreto
+                {t("secret_id")}
               </h2>
               <p className="text-stone-500 dark:text-slate-400 font-bold text-sm mb-6">
-                Dá isto a um amigo para te adicionar!
+                {t("give_code_desc")}
               </p>
 
               <div
@@ -571,13 +576,13 @@ export const FriendsClient = ({
                   onClick={handleCopy}
                   className="flex-1 flex items-center justify-center gap-2 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-extrabold uppercase rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-4 py-3 active:translate-y-1 active:border-b-2 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-600 dark:text-slate-300 transition-all text-sm"
                 >
-                  <Copy className="w-4 h-4" /> Copiar
+                  <Copy className="w-4 h-4" /> {t("copy")}
                 </button>
                 <button
                   onClick={handleShare}
                   className="flex-1 flex items-center justify-center gap-2 bg-[#58CC02] text-white font-extrabold uppercase rounded-xl border-2 border-[#58AA02] border-b-4 py-3 active:translate-y-1 active:border-b-2 hover:bg-[#46A302] transition-all text-sm"
                 >
-                  <Share2 className="w-4 h-4" /> Partilhar
+                  <Share2 className="w-4 h-4" /> {t("share")}
                 </button>
               </div>
             </div>
@@ -591,10 +596,10 @@ export const FriendsClient = ({
               </div>
               <div>
                 <h2 className="text-xl font-black text-stone-800 dark:text-slate-100">
-                  Procurar na Comunidade
+                  {t("search_community_title")}
                 </h2>
                 <p className="text-stone-500 dark:text-slate-400 font-bold text-sm">
-                  Procura pelo nome exato ou ign.
+                  {t("search_community_desc")}
                 </p>
               </div>
             </div>
@@ -605,11 +610,11 @@ export const FriendsClient = ({
               {query ? (
                 <div>
                   <h2 className="text-lg font-black text-stone-600 dark:text-slate-300 mb-4 uppercase tracking-widest">
-                    Resultados
+                    {t("search_results")}
                   </h2>
                   {searchResults.length === 0 ? (
                     <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-center py-6">
-                      Ninguém encontrado com esse nome.
+                      {t("no_results")}
                     </p>
                   ) : (
                     searchResults.map((user) =>
@@ -625,7 +630,7 @@ export const FriendsClient = ({
                 suggestions.length > 0 && (
                   <div>
                     <h2 className="text-lg font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 mb-6 uppercase tracking-widest flex items-center gap-2">
-                      <Sparkles className="w-5 h-5" /> Sugestões para Seguir
+                      <Sparkles className="w-5 h-5" /> {t("suggestions_title")}
                     </h2>
                     {suggestions
                       .filter((s) => s.userId !== currentUserId)

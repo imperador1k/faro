@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -16,6 +17,8 @@ export const LegalLayout = ({
   children,
   backHref = "/settings",
 }: LegalLayoutProps) => {
+  const t = useTranslations("shared");
+
   return (
     <div className="min-h-screen bg-[#fbf9f8] dark:bg-slate-950 py-12 px-4">
       <div className="max-w-3xl mx-auto">
@@ -29,7 +32,7 @@ export const LegalLayout = ({
                 {title}
               </h1>
               <div className="mt-2 inline-block bg-stone-200 dark:bg-slate-700 text-stone-500 dark:text-slate-400 font-bold text-xs px-3 py-1 rounded-full uppercase tracking-widest">
-                Atualizado: {lastUpdated}
+                {t("updated_at", { date: lastUpdated })}
               </div>
             </div>
           </div>
@@ -42,7 +45,7 @@ export const LegalLayout = ({
             href={backHref}
             className="bg-stone-200 dark:bg-slate-700 text-stone-500 dark:text-slate-400 border-b-4 border-stone-300 dark:border-slate-700 active:translate-y-1 active:border-b-0 hover:bg-stone-300 dark:bg-slate-600 rounded-2xl px-12 py-4 font-black uppercase tracking-widest text-center block w-full md:w-auto transition-all"
           >
-            VOLTAR
+            {t("go_back")}
           </Link>
         </div>
       </div>

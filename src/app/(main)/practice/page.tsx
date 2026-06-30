@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 import { Suspense } from "react";
 import {
   Dumbbell,
@@ -21,6 +23,7 @@ import { PracticeHeader } from "@/components/practice/practice-header";
 export const dynamic = "force-dynamic";
 
 export default function PracticePage() {
+  const t = useTranslations("practice");
   return (
     <div className="flex flex-col gap-8 px-4 sm:px-6 py-8 max-w-[1056px] mx-auto w-full">
       {/* ── Header (Client Component with Modal) ── */}
@@ -34,6 +37,8 @@ export default function PracticePage() {
 }
 
 async function PracticeData() {
+  const { getTranslations } = await import("next-intl/server");
+  const t = await getTranslations("practice_page");
   const userProgress = await getUserProgress();
   const hasFullHearts = userProgress?.hearts === 5;
   const isPro = await checkSubscription();
@@ -52,11 +57,10 @@ async function PracticeData() {
             </div>
             <div>
               <h3 className="text-2xl font-black text-stone-400 dark:text-slate-500 dark:text-slate-400">
-                Clínica de Corações
+                {t("heart_clinic")}
               </h3>
               <p className="mt-2 font-medium text-stone-400 dark:text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-                Tens as vidas no máximo! Volta aqui quando precisares de
-                recuperar corações.
+                {t("hearts_full")}
               </p>
             </div>
           </div>
@@ -71,15 +75,15 @@ async function PracticeData() {
               </div>
               <div>
                 <h3 className="text-2xl font-black text-stone-700 dark:text-slate-200">
-                  Clínica de Corações
+                  {t("heart_clinic")}
                 </h3>
                 <p className="mt-2 font-medium text-stone-500 dark:text-slate-400 max-w-sm mx-auto">
-                  Recupera vidas a rever os exercícios que erraste recentemente.
+                  {t("hearts_recover")}
                 </p>
               </div>
               <div className="pt-2">
                 <span className="inline-flex items-center gap-2 bg-red-500 text-white px-6 py-3 rounded-2xl font-bold uppercase tracking-widest border-b-4 border-red-600">
-                  Praticar para ganhar +1 ❤️
+                  {t("practice_to_gain_heart")}
                 </span>
               </div>
             </div>
@@ -101,11 +105,10 @@ async function PracticeData() {
               </div>
               <div>
                 <h3 className="text-xl font-black text-stone-700 dark:text-slate-200">
-                  Escrita
+                  {t("writing")}
                 </h3>
                 <p className="mt-2 text-stone-500 dark:text-slate-400 font-medium leading-relaxed">
-                  Recebe um tema e escreve um texto. A AI vai corrigir a tua
-                  gramática e ortografia.
+                  {t("writing_desc")}
                 </p>
               </div>
             </Link>
@@ -120,11 +123,10 @@ async function PracticeData() {
               </div>
               <div>
                 <h3 className="text-xl font-black text-stone-700 dark:text-slate-200">
-                  Fala
+                  {t("speaking")}
                 </h3>
                 <p className="mt-2 text-stone-500 dark:text-slate-400 font-medium leading-relaxed">
-                  Recebe uma pergunta e responde falando. A AI vai analisar a
-                  tua resposta e dar dicas.
+                  {t("speaking_desc")}
                 </p>
               </div>
             </Link>
@@ -139,11 +141,10 @@ async function PracticeData() {
               </div>
               <div>
                 <h3 className="text-xl font-black text-stone-700 dark:text-slate-200">
-                  Leitura
+                  {t("reading")}
                 </h3>
                 <p className="mt-2 text-stone-500 dark:text-slate-400 font-medium leading-relaxed">
-                  Lê um texto gerado pela AI e debate sobre o tema. Melhora a
-                  tua compreensão.
+                  {t("reading_desc")}
                 </p>
               </div>
             </Link>
@@ -158,11 +159,10 @@ async function PracticeData() {
               </div>
               <div>
                 <h3 className="text-xl font-black text-stone-700 dark:text-slate-200">
-                  Escuta
+                  {t("listening")}
                 </h3>
                 <p className="mt-2 text-stone-500 dark:text-slate-400 font-medium leading-relaxed">
-                  Ouve um áudio gerado pela AI e analisa o conteúdo. Treina o
-                  teu ouvido.
+                  {t("listening_desc")}
                 </p>
               </div>
             </Link>
@@ -177,14 +177,13 @@ async function PracticeData() {
               </div>
               <div>
                 <h3 className="text-xl font-black text-stone-700 dark:text-slate-200 flex items-center gap-2">
-                  Modo Sobrevivência{" "}
+                  {t("survival_mode")}{" "}
                   <span className="bg-sky-500 text-white text-[10px] px-2 py-0.5 rounded-md uppercase tracking-wider">
-                    Novo
+                    {t("new")}
                   </span>
                 </h3>
                 <p className="mt-2 text-stone-500 dark:text-slate-400 font-medium leading-relaxed">
-                  Enfrenta cenários caóticos com NPCs reais num roleplay
-                  imersivo por chat!
+                  {t("survival_mode_desc")}
                 </p>
               </div>
             </Link>
@@ -194,18 +193,17 @@ async function PracticeData() {
           <div className="bg-stone-100 dark:bg-slate-800 rounded-3xl p-8 sm:p-12 relative border-2 border-stone-200 dark:border-slate-800 overflow-hidden flex flex-col md:flex-row items-center gap-8 mt-4">
             <div className="flex-1 text-center md:text-left z-10">
               <div className="inline-flex items-center gap-2 bg-indigo-100 text-indigo-600 px-4 py-1.5 rounded-xl font-bold text-sm mb-4 uppercase tracking-wider">
-                <Sparkles className="w-4 h-4" /> Novidade
+                <Sparkles className="w-4 h-4" /> {t("new")}
               </div>
               <h3 className="text-3xl font-black text-stone-800 dark:text-slate-100 mb-3">
-                Pratica Conversação Fluída
+                {t("fluent_conversation")}
               </h3>
               <p className="text-stone-500 dark:text-slate-400 font-medium text-lg max-w-md mb-8">
-                Simula conversas do dia a dia com a nossa Inteligência
-                Artificial por voz, sem interrupções.
+                {t("fluent_conversation_desc")}
               </p>
               <Link href="/practice/conversation">
                 <span className="inline-block bg-[#58cc02] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest border-b-8 border-[#46a302] active:border-b-4 active:translate-y-1 transition-all hover:bg-[#61da02]">
-                  COMEÇAR AGORA
+                  {t("start_now")}
                 </span>
               </Link>
             </div>
@@ -246,12 +244,10 @@ async function PracticeData() {
           </div>
 
           <h3 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-200 via-white to-fuchsia-200 mb-4 relative z-10 drop-shadow-lg uppercase tracking-tight">
-            Prática com IA Bloqueada
+            {t("ia_practice_locked")}
           </h3>
           <p className="text-indigo-200/80 font-bold text-lg max-w-xl mb-10 relative z-10 leading-relaxed">
-            Eleva o teu nível com o plano MyDuolingo PRO e acede à nossa
-            Inteligência Artificial sem limites. A derradeira experiência de
-            aprendizagem.
+            {t("pro_upgrade_desc")}
           </p>
 
           <div className="flex flex-col gap-4 text-left bg-black/30 backdrop-blur-md p-8 rounded-[2rem] border-2 border-white/10 mb-12 w-full max-w-lg relative z-10 shadow-xl">
@@ -260,7 +256,7 @@ async function PracticeData() {
                 <HeartPulse className="w-5 h-5 text-white" strokeWidth={3} />
               </div>
               <span className="font-black text-white tracking-wide">
-                Vidas Ilimitadas
+                {t("unlimited_hearts")}
               </span>
             </div>
             <div className="flex items-center gap-4 bg-white/5 p-3 rounded-2xl border border-white/5">
@@ -268,7 +264,7 @@ async function PracticeData() {
                 <Bot className="w-5 h-5 text-white" strokeWidth={3} />
               </div>
               <span className="font-black text-white tracking-wide">
-                Prática Ilimitada com IA
+                {t("unlimited_ai_practice")}
               </span>
             </div>
             <div className="flex items-center gap-4 bg-white/5 p-3 rounded-2xl border border-white/5">
@@ -276,14 +272,14 @@ async function PracticeData() {
                 <Sparkles className="w-5 h-5 text-white" strokeWidth={3} />
               </div>
               <span className="font-black text-white tracking-wide">
-                Experiência Sem Anúncios
+                {t("ad_free_experience")}
               </span>
             </div>
           </div>
 
           <Link href="/shop" className="w-full sm:w-auto relative z-10">
             <span className="inline-flex w-full min-w-[280px] bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest border-b-8 border-indigo-900 active:border-b-0 active:translate-y-[8px] transition-all hover:brightness-110 shadow-[0_0_30px_rgba(79,70,229,0.5)] justify-center text-lg animate-pulse hover:animate-none">
-              DESBLOQUEAR PRO
+              {t("unlock_pro")}
             </span>
           </Link>
         </div>

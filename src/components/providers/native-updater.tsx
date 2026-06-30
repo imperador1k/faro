@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import {
   check,
@@ -10,6 +11,7 @@ import {
 import { relaunch } from "@tauri-apps/plugin-process";
 
 export function NativeUpdater() {
+  const t = useTranslations("providers");
   const [updateInfo, setUpdateInfo] = useState<Update | null>(null);
   const [currentVersion, setCurrentVersion] = useState<string>("");
   const [status, setStatus] = useState<
@@ -18,13 +20,11 @@ export function NativeUpdater() {
   const [downloadProgress, setDownloadProgress] = useState(0);
 
   useEffect(() => {
-    // Use UserAgent detection — same strategy as all other files
     const isTauri =
       typeof window !== "undefined" &&
       navigator.userAgent.includes("TauriDesktop");
     if (!isTauri) return;
 
-    // Desativar botão direito para parecer app nativa
     const handleContextMenu = (e: MouseEvent) => {
       if (process.env.NODE_ENV === "production") {
         e.preventDefault();
@@ -34,7 +34,6 @@ export function NativeUpdater() {
 
     async function setupUpdater() {
       try {
-        // Obter versão atual
         const { getVersion } = await import("@tauri-apps/api/app");
         const version = await getVersion();
         setCurrentVersion(version);
@@ -90,10 +89,8 @@ export function NativeUpdater() {
     }
   };
 
-  // Don't render anything when idle or still checking (avoids the 1-second flash)
   if (status === "idle" || status === "checking") return null;
 
-  // ─── Estilos Extraídos do Instalador ─────────────────────────────────────
   const overlayStyle: React.CSSProperties = {
     position: "fixed",
     inset: 0,
@@ -157,7 +154,6 @@ export function NativeUpdater() {
   return (
     <div style={overlayStyle}>
       <div style={cardStyle}>
-        {/* Header com Logo */}
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <div
             style={{
@@ -195,7 +191,7 @@ export function NativeUpdater() {
                 letterSpacing: "0.1em",
               }}
             >
-              ATUALIZAÇÃO DISPONÍVEL
+              {t("update_available_label")}
             </span>
             <span style={{ fontSize: "24px", fontWeight: 800 }}>
               v{currentVersion} → v{updateInfo?.version}
@@ -203,7 +199,6 @@ export function NativeUpdater() {
           </div>
         </div>
 
-        {/* Content */}
         <div style={{ flex: 1 }}>
           {status === "available" && (
             <p
@@ -213,9 +208,7 @@ export function NativeUpdater() {
                 fontSize: "15px",
               }}
             >
-              Uma nova versão está pronta para ser instalada. Descarregue agora
-              para obter as funcionalidades mais recentes e melhorias de
-              performance.
+              {t("update_available_description")}
             </p>
           )}
 
@@ -233,8 +226,8 @@ export function NativeUpdater() {
               >
                 <span>
                   {status === "ready"
-                    ? "Download Concluído!"
-                    : "A baixar atualização..."}
+                    ? t("download_finished")
+                    : t("downloading_update")}
                 </span>
                 <span>{downloadProgress}%</span>
               </div>
@@ -261,25 +254,24 @@ export function NativeUpdater() {
           )}
         </div>
 
-        {/* Actions */}
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {status === "available" && (
             <>
               <button style={buttonStyle(false)} onClick={handleUpdate}>
-                Atualizar Agora
+                {t("update_now")}
               </button>
               <button
                 style={buttonStyle(false, true)}
                 onClick={() => setStatus("idle")}
               >
-                Lembrar mais tarde
+                {t("remind_later")}
               </button>
             </>
           )}
 
           {status === "ready" && (
             <button style={buttonStyle(false)} onClick={() => relaunch()}>
-              Reiniciar para Aplicar
+              {t("restart_to_apply")}
             </button>
           )}
 
@@ -291,8 +283,7 @@ export function NativeUpdater() {
                 textAlign: "center",
               }}
             >
-              Ocorreu um erro ao descarregar a atualização. Por favor, tente
-              novamente mais tarde.
+              {t("update_error_message")}
             </p>
           )}
         </div>

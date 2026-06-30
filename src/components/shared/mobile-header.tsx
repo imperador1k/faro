@@ -4,9 +4,10 @@ import { InfinityIcon, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { TedyLottie } from "@/components/ui/lottie-animation";
+import { getTranslations } from "next-intl/server";
 
 export const MobileHeader = async () => {
-    // Hidden as per user request: "EM dispositivos mobile, eu tenho um header onde têm o xp, streak e vidas. ELIMINA isso por favor"
-    return null;
+  const t = await getTranslations("shared");
+  // Hidden as per user request: "EM dispositivos mobile, eu tenho um header onde têm o xp, streak e vidas. ELIMINA isso por favor"
+  return null;
 };
-

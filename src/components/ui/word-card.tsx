@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState } from "react";
 import {
   Activity,
@@ -59,6 +61,7 @@ export const WordCard = ({
   strength,
   index,
 }: WordCardProps) => {
+  const t = useTranslations("ui");
   const [isRevealed, setIsRevealed] = useState(false);
 
   const info = strengthInfo[strength] || strengthInfo[1];
@@ -96,7 +99,7 @@ export const WordCard = ({
                   ? "bg-indigo-100 text-indigo-500 border-b-indigo-200 hover:border-b-indigo-300 hover:bg-indigo-200"
                   : "bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-b-stone-200 dark:border-b-slate-800 hover:border-b-sky-200 hover:bg-sky-50 hover:text-sky-500",
               )}
-              title={isRevealed ? "Esconder Spoiler" : "Mostrar Spoiler"}
+              title={isRevealed ? t("hide_spoiler") : t("show_spoiler")}
             >
               {isRevealed ? (
                 <EyeOff className="w-4 h-4" />
@@ -154,7 +157,7 @@ export const WordCard = ({
               <div className="bg-sky-50 border-2 border-sky-100 border-b-[4px] rounded-2xl p-4 flex flex-col gap-2 relative shadow-sm">
                 <div className="absolute top-0 right-4 -translate-y-1/2 bg-sky-500 text-white px-3 py-1 rounded-full border-2 border-sky-600 shadow-sm">
                   <span className="text-[10px] font-black uppercase tracking-widest text-white shrink-0">
-                    Cena do Contexto
+                    {t("context_scene")}
                   </span>
                 </div>
                 <div className="flex items-start gap-3 mt-1">
@@ -188,7 +191,7 @@ export const WordCard = ({
           >
             <Eye className="w-6 h-6 group-hover/reveal:scale-110 transition-transform" />
             <span className="text-[11px] font-black uppercase tracking-widest">
-              Tocar para Revelar Detalhes
+              {t("tap_to_reveal")}
             </span>
           </div>
         )}

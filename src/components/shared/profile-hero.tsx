@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { ReactNode, useState } from "react";
 import Image from "next/image";
 import { BadgeCheck, Camera, Loader2 } from "lucide-react";
@@ -34,6 +36,7 @@ export const ProfileHero = ({
   bannerImageUrl,
   isOwner = false,
 }: Props) => {
+  const t = useTranslations("profile");
   const [uploading, setUploading] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -64,16 +67,16 @@ export const ProfileHero = ({
         const result = await updateUserBanner(data.publicUrl);
         if (!result.success) {
           const errorMessage =
-            "message" in result ? result.message : "Erro ao guardar o banner.";
+            "message" in result ? result.message : t("upload_error_default");
           toast.error(errorMessage);
         } else {
-          toast.success("Capa atualizada com sucesso!");
+          toast.success(t("upload_success"));
         }
         setUploading(false);
       });
     } catch (error) {
       console.error(error);
-      toast.error("Erro ao enviar a imagem.");
+      toast.error(t("upload_error_general"));
       setUploading(false);
     } finally {
       e.target.value = ""; // Reset input
@@ -93,7 +96,7 @@ export const ProfileHero = ({
         {bannerImageUrl ? (
           <Image
             src={bannerImageUrl}
-            alt="Capa"
+            alt={t("banner_alt")}
             fill
             className="object-cover"
             priority
@@ -129,7 +132,7 @@ export const ProfileHero = ({
             {imageUrl ? (
               <Image
                 src={imageUrl}
-                alt="Avatar"
+                alt={t("avatar_alt")}
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-700"
               />
@@ -146,7 +149,7 @@ export const ProfileHero = ({
           <div className="flex flex-col gap-1 w-full">
             <h1 className="text-3xl lg:text-4xl font-black text-stone-700 dark:text-slate-200 tracking-tight drop-shadow-sm uppercase break-words line-clamp-2 xl:line-clamp-none flex flex-col sm:flex-row items-center justify-center lg:justify-start">
               <span className="truncate">
-                {name || username || "Estudante"}
+                {name || username || t("default_name")}
               </span>
               {isPro && (
                 <BadgeCheck
@@ -164,7 +167,7 @@ export const ProfileHero = ({
             <div className="bg-stone-100 dark:bg-slate-800 px-4 py-1.5 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-4 flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse shrink-0" />
               <p className="text-[10px] font-black text-stone-500 dark:text-slate-400 uppercase tracking-widest leading-none truncate">
-                Membro desde {new Date(createdAt).getFullYear()}
+                {t("member_since", { year: new Date(createdAt).getFullYear() })}
               </p>
             </div>
           </div>

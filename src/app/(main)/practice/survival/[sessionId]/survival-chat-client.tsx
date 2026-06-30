@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   Send,
   ArrowLeft,
@@ -31,6 +32,7 @@ export default function SurvivalChatClient({
   sessionId: string;
   scenario: any;
 }) {
+  const t = useTranslations("practice");
   const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -41,7 +43,6 @@ export default function SurvivalChatClient({
   const [isMissionCompleted, setIsMissionCompleted] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
 
-  // Onboarding state
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [onboardingStep, setOnboardingStep] = useState(1);
   const [mounted, setMounted] = useState(false);
@@ -57,7 +58,6 @@ export default function SurvivalChatClient({
     setHasStarted(true);
     setIsLoading(true);
 
-    // AI first move
     try {
       const res = await fetch("/api/practice/survival", {
         method: "POST",
@@ -74,9 +74,7 @@ export default function SurvivalChatClient({
       setMessages([{ role: "assistant", content: data.message }]);
     } catch (error) {
       console.error(error);
-      setMessages([
-        { role: "assistant", content: "Oops, a minha IA está offline..." },
-      ]);
+      setMessages([{ role: "assistant", content: t("ai_offline_error") }]);
     } finally {
       setIsLoading(false);
     }
@@ -117,7 +115,7 @@ export default function SurvivalChatClient({
       console.error(error);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Oops, a minha IA está offline..." },
+        { role: "assistant", content: t("ai_offline_error") },
       ]);
     } finally {
       setIsLoading(false);
@@ -126,16 +124,13 @@ export default function SurvivalChatClient({
 
   return (
     <div className="absolute inset-0 z-50 flex flex-col bg-slate-50 dark:bg-slate-950 font-sans overflow-hidden">
-      {/* Onboarding Overlay */}
       {showOnboarding &&
         mounted &&
         createPortal(
           <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
             <div className="bg-slate-950 w-full max-w-2xl rounded-3xl p-6 md:p-10 shadow-[0_0_60px_-15px_rgba(225,29,72,0.3)] border border-rose-900/50 flex flex-col items-center relative max-h-[85vh] overflow-hidden">
-              {/* Chaotic Background Pattern */}
               <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-900 via-slate-900 to-black"></div>
 
-              {/* Progress Bar */}
               <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-900">
                 <div
                   className="h-full bg-rose-600 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(225,29,72,0.8)]"
@@ -158,7 +153,7 @@ export default function SurvivalChatClient({
                       </div>
                     </div>
                     <h3 className="text-sm uppercase tracking-widest font-bold text-slate-500 mb-2 text-center">
-                      Situação Crítica
+                      {t("critical_situation")}
                     </h3>
                     <p className="text-slate-200 font-medium leading-relaxed text-center text-lg">
                       {scenario.storyContext || scenario.description}
@@ -174,7 +169,7 @@ export default function SurvivalChatClient({
                       </div>
                     </div>
                     <h3 className="text-sm uppercase tracking-widest font-bold text-rose-500 mb-2 text-center">
-                      O Teu Alvo
+                      {t("your_target")}
                     </h3>
                     <p className="text-rose-200 font-bold text-center text-xl bg-rose-950/30 p-4 rounded-2xl border-2 border-rose-900/50 shadow-inner">
                       {scenario.userRole}
@@ -190,7 +185,7 @@ export default function SurvivalChatClient({
                       </div>
                     </div>
                     <h3 className="text-sm uppercase tracking-widest font-bold text-amber-500 mb-2 text-center">
-                      Instinto de Sobrevivência
+                      {t("survival_instinct")}
                     </h3>
                     <div className="text-amber-200 font-medium text-center text-lg bg-amber-950/20 p-5 rounded-2xl border-2 border-amber-900/40 shadow-inner">
                       {scenario.hint}
@@ -205,7 +200,7 @@ export default function SurvivalChatClient({
                     onClick={() => setOnboardingStep((s) => s + 1)}
                     className="w-full h-14 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-black text-lg border-2 border-slate-700 border-b-4 active:border-b-2 active:translate-y-[2px] transition-all uppercase tracking-widest"
                   >
-                    Continuar
+                    {t("continue")}
                     <ChevronRight className="w-6 h-6 ml-1" />
                   </Button>
                 ) : (
@@ -214,7 +209,7 @@ export default function SurvivalChatClient({
                     className="w-full h-14 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-black text-lg border-2 border-rose-800 border-b-4 active:border-b-2 active:translate-y-[2px] transition-all uppercase tracking-widest shadow-[0_0_20px_rgba(225,29,72,0.4)] group"
                   >
                     <PlayCircle className="w-6 h-6 mr-2 group-hover:scale-110 transition-transform" />
-                    Ir para a Zona
+                    {t("go_to_zone")}
                   </Button>
                 )}
               </div>
@@ -223,7 +218,6 @@ export default function SurvivalChatClient({
           document.body,
         )}
 
-      {/* Header */}
       <header className="flex items-center p-4 border-b border-rose-200 dark:border-rose-900/50 bg-white dark:bg-slate-950 shrink-0 shadow-sm relative z-10">
         <Button
           variant="ghost"
@@ -249,17 +243,14 @@ export default function SurvivalChatClient({
             setShowOnboarding(true);
           }}
           className="ml-2 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:text-rose-600 dark:hover:text-rose-400 shrink-0"
-          title="Ver Missão"
+          title={t("view_mission")}
         >
           <Info className="w-6 h-6" />
         </Button>
       </header>
 
-      {/* Main Content Area: NPC View (Top) + Chat (Bottom) */}
       <main className="flex-1 overflow-hidden flex flex-col md:flex-row relative">
-        {/* Left/Top: NPC Canvas */}
         <div className="flex-1 bg-slate-100 dark:bg-[#0a0a0a] border-b border-rose-200 dark:border-rose-900/50 md:border-b-0 md:border-r flex items-center justify-center relative overflow-hidden shrink-0 min-h-[220px] max-h-[35vh] md:max-h-none md:min-h-[300px]">
-          {/* Chaotic overlay grid/gradient */}
           <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-500 via-transparent to-transparent"></div>
           <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
 
@@ -273,9 +264,7 @@ export default function SurvivalChatClient({
           </div>
         </div>
 
-        {/* Right/Bottom: Chat Area */}
         <div className="flex-1 flex flex-col bg-slate-50 dark:bg-slate-950 max-h-full">
-          {/* Chat Messages */}
           <div className="flex-1 overflow-y-auto p-4 md:p-6 custom-scrollbar flex flex-col gap-4">
             {messages.map((msg, i) => (
               <div
@@ -316,18 +305,17 @@ export default function SurvivalChatClient({
             <div ref={bottomRef} />
           </div>
 
-          {/* Chat Input or Victory Banner */}
           <div className="p-4 bg-white dark:bg-slate-950 border-t border-rose-200 dark:border-rose-900/50 relative z-10">
             {isMissionCompleted ? (
               <div className="flex flex-col items-center gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-6 py-3 rounded-xl font-black text-lg uppercase tracking-widest border-2 border-green-300 dark:border-green-800 shadow-sm">
-                  🎉 Sobreviveste!
+                  {t("you_survived")}
                 </div>
                 <Button
                   onClick={() => router.push("/practice/survival")}
                   className="w-full h-14 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-black text-lg border-2 border-slate-900 border-b-4 active:border-b-2 active:translate-y-[2px] transition-all uppercase tracking-widest"
                 >
-                  Voltar à Segurança
+                  {t("back_to_safety")}
                 </Button>
               </div>
             ) : !hasStarted && messages.length === 0 ? (
@@ -337,7 +325,7 @@ export default function SurvivalChatClient({
                 className="w-full h-14 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-black text-lg border-2 border-rose-800 border-b-4 active:border-b-2 active:translate-y-[2px] transition-all uppercase tracking-widest shadow-[0_0_20px_rgba(225,29,72,0.4)] group animate-pulse hover:animate-none"
               >
                 <PlayCircle className="w-6 h-6 mr-2 group-hover:scale-110 transition-transform" />
-                {isLoading ? "A Ligar..." : "Começar Missão"}
+                {isLoading ? t("connecting") : t("start_mission")}
               </Button>
             ) : (
               <div className="flex items-center gap-2">
@@ -346,7 +334,7 @@ export default function SurvivalChatClient({
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                  placeholder="A tua resposta..."
+                  placeholder={t("your_answer")}
                   className="flex-1 min-w-0 h-14 bg-slate-100 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-2xl px-4 text-lg font-bold text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-rose-400 dark:focus:border-rose-600 transition-colors shadow-inner"
                   disabled={isLoading || showOnboarding}
                 />

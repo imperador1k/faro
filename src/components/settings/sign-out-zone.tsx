@@ -1,11 +1,15 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { LogOut } from "lucide-react";
-import { SignOutButton } from "@clerk/nextjs";
+import { SignOutButton, useClerk } from "@clerk/nextjs";
 
 export const SignOutZone = ({ trigger }: { trigger?: React.ReactNode }) => {
+  const t = useTranslations("settings");
+  const { signOut } = useClerk();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -38,25 +42,24 @@ export const SignOutZone = ({ trigger }: { trigger?: React.ReactNode }) => {
         </div>
 
         <h2 className="text-2xl font-black text-slate-800 mb-3 tracking-tight">
-          Terminar Sessão?
+          {t("title")}
         </h2>
 
         <p className="text-slate-500 dark:text-slate-400 font-medium mb-8 leading-relaxed">
-          Tens a certeza que queres sair da tua conta? Terás de fazer login
-          novamente para acederes ao teu perfil.
+          {t("description")}
         </p>
 
         <div className="flex flex-col gap-3">
           <SignOutButton>
             <button className="w-full bg-rose-500 text-white font-black uppercase tracking-wider py-4 rounded-2xl border-2 border-rose-600 border-b-4 hover:bg-rose-400 active:translate-y-1 active:border-b-0 transition-all">
-              Sim, Terminar Sessão
+              {t("confirm")}
             </button>
           </SignOutButton>
           <button
             onClick={handleClose}
             className="w-full bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider py-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 border-b-4 hover:bg-slate-50 dark:bg-slate-950 hover:text-slate-600 active:translate-y-1 active:border-b-0 transition-all"
           >
-            Cancelar
+            {t("cancel")}
           </button>
         </div>
       </div>
@@ -77,7 +80,7 @@ export const SignOutZone = ({ trigger }: { trigger?: React.ReactNode }) => {
           onClick={() => setIsModalOpen(true)}
           className="w-full md:w-auto mx-auto block bg-rose-500 hover:bg-rose-400 text-white border-2 border-b-4 border-rose-600 rounded-2xl px-8 py-4 font-black uppercase tracking-wider active:translate-y-[2px] active:border-b-2 transition-all text-center"
         >
-          Terminar Sessão
+          {t("trigger_label")}
         </button>
       )}
 

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { useState, useTransition, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -96,6 +97,7 @@ const LEVEL_LABELS: Record<string, string> = {
 // ============================================================
 
 export default function EvaluationPage() {
+  const t = useTranslations("evaluation");
   // Phase management
   const [phase, setPhase] = useState<Phase>("welcome");
   const [isLoading, startTransition] = useTransition();
@@ -638,10 +640,10 @@ export default function EvaluationPage() {
               <div className="flex-1 flex items-center justify-between">
                 <div className="flex flex-col">
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1CB0F6] dark:text-[#39c4ff]">
-                    Portal de Acesso
+                    {t("access_portal")}
                   </span>
                   <span className="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
-                    Avaliação de Proficiência
+                    {t("proficiency_evaluation")}
                   </span>
                 </div>
                 <div className="hidden sm:flex items-center gap-3">
@@ -656,7 +658,7 @@ export default function EvaluationPage() {
                     ))}
                   </div>
                   <span className="text-xs font-bold text-slate-400 italic">
-                    Mais de 10k alunos testados
+                    {t("students_tested_counter")}
                   </span>
                 </div>
               </div>
@@ -674,13 +676,13 @@ export default function EvaluationPage() {
               <Sparkles className="h-5 w-5 text-amber-400 absolute -top-1 -right-1 animate-bounce" />
             </div>
             <p className="text-lg font-bold text-slate-600">
-              {phase === "welcome" && "A gerar o teu teste..."}
-              {phase === "grammar" && "A preparar exercícios de leitura..."}
-              {phase === "reading" && "A preparar exercícios de audição..."}
-              {phase === "listening" && "A criar tema de escrita..."}
-              {phase === "writing" && "A IA está a avaliar a tua redação..."}
+              {phase === "welcome" && t("generating_test")}
+              {phase === "grammar" && t("preparing_reading_exercises")}
+              {phase === "reading" && t("preparing_listening_exercises")}
+              {phase === "listening" && t("creating_writing_topic")}
+              {phase === "writing" && t("ai_grading_writing")}
             </p>
-            <p className="text-sm text-slate-400">Desenvolvido por IA ✨</p>
+            <p className="text-sm text-slate-400">${t("ai_powered_by")}</p>
           </div>
         </div>
       )}
@@ -724,14 +726,15 @@ export default function EvaluationPage() {
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-2">
                       <span className="inline-flex items-center gap-1.5 text-[#58CC02] bg-[#58CC02]/10 border border-[#58CC02]/20 text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full">
-                        <Sparkles className="w-3 h-3" /> Avaliação CEFR
+                        <Sparkles className="w-3 h-3" />
+                        {t("cefr_evaluation")}
                       </span>
                     </div>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-800 dark:text-slate-100 tracking-tight leading-tight">
-                      Avaliação de
+                      {t("evaluation_of")}
                       <br />
                       <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#58CC02] to-[#1CB0F6] dark:from-[#7cf022] dark:to-[#39c4ff]">
-                        Nível
+                        {t("level")}
                       </span>
                     </h1>
                     <p className="text-slate-500 dark:text-slate-300 font-medium text-base md:text-lg max-w-md leading-relaxed">
@@ -746,10 +749,10 @@ export default function EvaluationPage() {
                     <div className="relative">
                       <div className="bg-gradient-to-b from-[#58CC02] to-[#46a302] rounded-2xl px-6 py-4 border-b-[6px] border-[#378200] shadow-[0_8px_24px_rgba(88,204,2,0.15),inset_0_1px_0_rgba(255,255,255,0.2)] flex flex-col items-center gap-0.5">
                         <span className="text-white/80 text-[10px] font-black uppercase tracking-widest">
-                          Nível
+                          {t("level")}
                         </span>
                         <span className="text-white text-2xl font-black tracking-tight leading-none">
-                          Iniciante
+                          {t("beginner")}
                         </span>
                         <span className="text-[#d7ffb8] text-sm font-black tracking-widest">
                           A1
@@ -774,9 +777,9 @@ export default function EvaluationPage() {
                   {[
                     {
                       icon: GraduationCap,
-                      label: "Gramática",
-                      desc: "Avalia a tua estrutura gramatical e vocabulário.",
-                      time: "15 questões · ~5 min",
+                      label: t("grammar"),
+                      desc: t("grammar_description"),
+                      time: t("grammar_time_estimate"),
                       bg: "from-[#58CC02] to-[#46a302]",
                       border: "border-[#378200]",
                       iconBg: "bg-[#58CC02]",
@@ -785,9 +788,9 @@ export default function EvaluationPage() {
                     },
                     {
                       icon: BookOpen,
-                      label: "Leitura",
-                      desc: "Verifica a tua compreensão de textos escritos.",
-                      time: "3 textos · ~5 min",
+                      label: t("reading"),
+                      desc: t("reading_description"),
+                      time: t("reading_time_estimate"),
                       bg: "from-[#1CB0F6] to-[#0092D6]",
                       border: "border-[#006fa3]",
                       iconBg: "bg-[#1CB0F6]",
@@ -796,9 +799,9 @@ export default function EvaluationPage() {
                     },
                     {
                       icon: Headphones,
-                      label: "Audição",
-                      desc: "Verifica a tua compreensão auditiva em contexto.",
-                      time: "3 áudios · ~4 min",
+                      label: t("listening"),
+                      desc: t("listening_description"),
+                      time: t("listening_time_estimate"),
                       bg: "from-[#CE82FF] to-[#A547D9]",
                       border: "border-[#8330b5]",
                       iconBg: "bg-[#CE82FF]",
@@ -807,9 +810,9 @@ export default function EvaluationPage() {
                     },
                     {
                       icon: PenTool,
-                      label: "Escrita",
-                      desc: "Demonstra a tua capacidade de escrita livre.",
-                      time: "1 redação · ~5 min",
+                      label: t("writing"),
+                      desc: t("writing_description"),
+                      time: t("writing_time_estimate"),
                       bg: "from-[#FF9600] to-[#D67B00]",
                       border: "border-[#b56200]",
                       iconBg: "bg-[#FF9600]",
@@ -899,10 +902,10 @@ export default function EvaluationPage() {
                   </motion.div>
                   <div className="relative z-10 mt-4 text-center">
                     <span className="text-slate-700 dark:text-slate-100 font-black text-sm">
-                      Marco diz:
+                      {t("mascot_says")}
                     </span>
                     <p className="text-slate-500 dark:text-slate-300 text-xs font-medium mt-1 leading-relaxed">
-                      «Estás pronto para descobrires o teu nível?»
+                      {t("ready_to_discover_level")}
                     </p>
                   </div>
                 </motion.div>
@@ -932,16 +935,16 @@ export default function EvaluationPage() {
                     </div>
                     <div>
                       <span className="text-[10px] font-black text-[#1CB0F6] uppercase tracking-[0.2em]">
-                        Framework Europeu
+                        {t("european_framework")}
                       </span>
                       <h3 className="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
-                        Progressão CEFR
+                        {t("cefr_progression")}
                       </h3>
                     </div>
                   </div>
                   <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-950 rounded-full border border-slate-100 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#58CC02] animate-pulse" />
-                    Tempo Real
+                    {t("real_time")}
                   </div>
                 </div>
 
@@ -949,42 +952,42 @@ export default function EvaluationPage() {
                   {[
                     {
                       level: "A1",
-                      label: "Iniciante",
+                      label: t("beginner"),
                       h: "30%",
                       from: "#58CC02",
                       to: "#46a302",
                     },
                     {
                       level: "A2",
-                      label: "Básico",
+                      label: t("basic"),
                       h: "45%",
                       from: "#22c55e",
                       to: "#16a34a",
                     },
                     {
                       level: "B1",
-                      label: "Intermédio",
+                      label: t("intermediate"),
                       h: "60%",
                       from: "#1CB0F6",
                       to: "#1899d6",
                     },
                     {
                       level: "B2",
-                      label: "Avançado",
+                      label: t("advanced"),
                       h: "75%",
                       from: "#3b82f6",
                       to: "#2563eb",
                     },
                     {
                       level: "C1",
-                      label: "Proficiente",
+                      label: t("proficient"),
                       h: "85%",
                       from: "#8b5cf6",
                       to: "#7c3aed",
                     },
                     {
                       level: "C2",
-                      label: "Maestria",
+                      label: t("mastery"),
                       h: "100%",
                       from: "#a855f7",
                       to: "#9333ea",
@@ -1064,10 +1067,10 @@ export default function EvaluationPage() {
                   </div>
                   <div className="hidden sm:block text-left">
                     <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-0.5">
-                      Língua Alvo
+                      {t("target_language")}
                     </p>
                     <p className="text-sm font-bold text-slate-700 dark:text-slate-200 leading-none">
-                      O teu Idioma
+                      {t("your_language")}
                     </p>
                   </div>
                 </div>
@@ -1176,17 +1179,18 @@ export default function EvaluationPage() {
                 )}
                 {isLoading || statusLoading ? (
                   <>
-                    <Loader2 className="h-7 w-7 animate-spin" />A PREPARAR...
+                    <Loader2 className="h-7 w-7 animate-spin" />
+                    {t("preparing")}
                   </>
                 ) : evalStatus && !evalStatus.canTakeTest ? (
                   <>
                     <Zap className="h-7 w-7 stroke-[3] fill-current opacity-50" />
-                    INDISPONÍVEL
+                    {t("unavailable")}
                   </>
                 ) : (
                   <>
                     <Zap className="h-7 w-7 stroke-[3] fill-white/20" />
-                    COMEÇAR AVALIAÇÃO
+                    {t("start_evaluation")}
                     <ChevronRight className="h-7 w-7 stroke-[3]" />
                   </>
                 )}
@@ -1207,7 +1211,7 @@ export default function EvaluationPage() {
                   </div>
                   <div>
                     <h2 className="border-2 border-slate-200 dark:border-slate-800 rounded-full px-3 py-1 font-semibold text-xs text-slate-600 tracking-wide uppercase">
-                      Fase 1: Gramática / Vocabulário
+                      {t("phase_1_grammar")}
                     </h2>
                     <p className="text-xs text-slate-400">
                       Questão {questionsAnswered + 1} de{" "}
@@ -1331,7 +1335,7 @@ export default function EvaluationPage() {
                   </div>
                   <div>
                     <h2 className="font-bold text-slate-700 dark:text-slate-200">
-                      Fase 2: Leitura
+                      {t("phase_2_reading")}
                     </h2>
                     <p className="text-xs text-slate-400">
                       Texto {readingExIdx + 1} de {readingExercises.length} · Q
@@ -1442,7 +1446,7 @@ export default function EvaluationPage() {
                   </div>
                   <div>
                     <h2 className="font-bold text-slate-700 dark:text-slate-200">
-                      Fase 3: Audição
+                      {t("phase_3_listening")}
                     </h2>
                     <p className="text-xs text-slate-400">
                       Áudio {listeningExIdx + 1} de {listeningExercises.length}{" "}
@@ -1463,7 +1467,7 @@ export default function EvaluationPage() {
                       Passagem de Áudio {listeningExIdx + 1}
                     </p>
                     <p className="text-xs text-indigo-200 mt-1">
-                      Toca para ouvir. Podes repetir.
+                      {t("tap_to_listen_instruction")}
                     </p>
                   </div>
                   <button
@@ -1583,7 +1587,7 @@ export default function EvaluationPage() {
                 </div>
                 <div>
                   <h2 className="font-bold text-slate-700 dark:text-slate-200">
-                    Fase 4: Escrita
+                    {t("phase_4_writing")}
                   </h2>
                   <p className="text-xs text-slate-400">
                     Escreve aproximadamente 50 palavras em {targetLanguage}
@@ -1595,7 +1599,7 @@ export default function EvaluationPage() {
                 <div className="flex items-center gap-2 mb-3 text-amber-500">
                   <Sparkles className="h-4 w-4" />
                   <span className="text-xs font-bold uppercase tracking-wider">
-                    Tema
+                    {t("topic")}
                   </span>
                 </div>
                 <div className="text-xl font-bold text-slate-800 mb-2">
@@ -1625,9 +1629,7 @@ export default function EvaluationPage() {
                     {writingText.trim().split(/\s+/).filter(Boolean).length}{" "}
                     palavras
                   </p>
-                  <p className="text-xs text-slate-400">
-                    Objetivo: ~50 palavras
-                  </p>
+                  <p className="text-xs text-slate-400">{t("word_goal")}</p>
                 </div>
               </div>
 
@@ -1638,7 +1640,8 @@ export default function EvaluationPage() {
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
-                    <Loader2 className="h-5 w-5 animate-spin" /> A avaliar...
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    {t("grading")}
                   </span>
                 ) : (
                   <span className="flex items-center justify-center gap-2">
@@ -1748,7 +1751,7 @@ export default function EvaluationPage() {
                     </div>
 
                     <h1 className="text-4xl font-black text-slate-800 mb-2">
-                      Parabéns!
+                      {t("congratulations")}
                     </h1>
                     <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
                       Concluíste a avaliação oficial. O teu domínio de{" "}
@@ -1768,7 +1771,7 @@ export default function EvaluationPage() {
                       <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Home className="h-6 w-6" />
                       </div>
-                      Início
+                      {t("home")}
                     </Link>
                     <Link
                       href="/practice"
@@ -1777,7 +1780,7 @@ export default function EvaluationPage() {
                       <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <ArrowRight className="h-6 w-6" />
                       </div>
-                      Praticar
+                      {t("practice")}
                     </Link>
                   </div>
                 </div>
@@ -1788,7 +1791,7 @@ export default function EvaluationPage() {
                     {[
                       {
                         icon: GraduationCap,
-                        label: "Gramática",
+                        label: t("grammar"),
                         detail: `${grammarAnswers.filter((a) => a.correct).length}/${GRAMMAR_QUESTION_COUNT} questões`,
                         score: phaseResults.grammar.score,
                         color: "text-emerald-500",
@@ -1796,7 +1799,7 @@ export default function EvaluationPage() {
                       },
                       {
                         icon: BookOpen,
-                        label: "Leitura",
+                        label: t("reading"),
                         detail: `${phaseResults.reading.correctCount}/${phaseResults.reading.totalCount} questões`,
                         score: phaseResults.reading.score,
                         color: "text-sky-500",
@@ -1804,7 +1807,7 @@ export default function EvaluationPage() {
                       },
                       {
                         icon: Headphones,
-                        label: "Audição",
+                        label: t("listening"),
                         detail: `${phaseResults.listening.correctCount}/${phaseResults.listening.totalCount} questões`,
                         score: phaseResults.listening.score,
                         color: "text-indigo-500",
@@ -1812,8 +1815,8 @@ export default function EvaluationPage() {
                       },
                       {
                         icon: PenTool,
-                        label: "Escrita",
-                        detail: "Avaliação por IA",
+                        label: t("writing"),
+                        detail: t("ai_evaluation"),
                         score: phaseResults.writing.score || 100,
                         color: "text-amber-500",
                         bg: "bg-amber-50",
@@ -1879,7 +1882,9 @@ export default function EvaluationPage() {
                           <div className="w-10 h-10 bg-[#58CC02] rounded-xl flex items-center justify-center shadow-lg shadow-green-900/20">
                             <Sparkles className="h-5 w-5 text-white" />
                           </div>
-                          <h3 className="text-xl font-black">Feedback da IA</h3>
+                          <h3 className="text-xl font-black">
+                            {t("ai_feedback")}
+                          </h3>
                         </div>
                         <p className="text-slate-300 leading-relaxed font-medium italic">
                           "{gradeResult.feedback}"
@@ -1915,7 +1920,7 @@ export default function EvaluationPage() {
                     : "bg-[#E5E5E5] text-[#AFAFAF] border-b-[8px] border-[#d4d4d4] pointer-events-none",
                 )}
               >
-                Verificar
+                {t("verify")}
               </button>
             </div>
           </div>
@@ -1985,7 +1990,9 @@ export default function EvaluationPage() {
                           feedbackIsCorrect ? "text-green-700" : "text-red-700",
                         )}
                       >
-                        {feedbackIsCorrect ? "Correto! 🎉" : "Incorreto 😔"}
+                        {feedbackIsCorrect
+                          ? t("correct_exclamation")
+                          : t("incorrect_exclamation")}
                       </p>
                       <p
                         className={cn(
@@ -1994,8 +2001,8 @@ export default function EvaluationPage() {
                         )}
                       >
                         {feedbackIsCorrect
-                          ? "Bom trabalho! Continua!"
-                          : "Não te preocupes, continua!"}
+                          ? t("good_job_message")
+                          : t("dont_worry_message")}
                       </p>
                     </div>
                   </div>
@@ -2055,10 +2062,10 @@ export default function EvaluationPage() {
                   </div>
                   <div>
                     <h2 className="text-2xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
-                      Sobre a Avaliação
+                      {t("about_evaluation")}
                     </h2>
                     <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">
-                      Metodologia e Algoritmo
+                      {t("methodology_and_algorithm")}
                     </p>
                   </div>
                 </div>
@@ -2076,13 +2083,13 @@ export default function EvaluationPage() {
                   {/* Introduction */}
                   <section>
                     <h3 className="text-lg font-black text-slate-800 dark:text-slate-100 mb-3 flex items-center gap-2">
-                      <Zap className="w-5 h-5 text-amber-500" /> Como funciona?
+                      <Zap className="w-5 h-5 text-amber-500" />
+                      {t("how_it_works")}
                     </h3>
                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-                      A nossa avaliação utiliza um **sistema adaptativo
-                      inteligente** para medir a tua proficiência em tempo real.
-                      O teste está dividido em 4 pilares fundamentais que cobrem
-                      todas as competências do quadro CEFR.
+                      {t.rich("intro_paragraph", {
+                        b: (chunks) => <strong>{chunks}</strong>,
+                      })}
                     </p>
                   </section>
 
@@ -2091,26 +2098,26 @@ export default function EvaluationPage() {
                     {[
                       {
                         icon: GraduationCap,
-                        title: "Gramática",
-                        desc: "15 questões adaptativas que ajustam a dificuldade com base nas tuas respostas.",
+                        title: t("grammar"),
+                        desc: t("grammar_extended_desc"),
                         color: "bg-[#58CC02]",
                       },
                       {
                         icon: BookOpen,
-                        title: "Leitura",
-                        desc: "Análise de compreensão de texto e vocabulário contextual.",
+                        title: t("reading"),
+                        desc: t("reading_extended_desc"),
                         color: "bg-[#1CB0F6]",
                       },
                       {
                         icon: Headphones,
-                        title: "Audição",
-                        desc: "Exercícios de escuta ativa e transcrição para avaliar o teu 'listening'.",
+                        title: t("listening"),
+                        desc: t("listening_extended_desc"),
                         color: "bg-[#CE82FF]",
                       },
                       {
                         icon: PenTool,
-                        title: "Escrita",
-                        desc: "Redação livre avaliada instantaneamente pela nossa IA avançada.",
+                        title: t("writing"),
+                        desc: t("writing_extended_desc"),
                         color: "bg-[#FF9600]",
                       },
                     ].map((item, i) => (
@@ -2144,14 +2151,12 @@ export default function EvaluationPage() {
                     <div className="relative z-10">
                       <h3 className="text-lg font-black mb-3 flex items-center gap-2">
                         <Star className="w-5 h-5 text-[#58CC02] fill-[#58CC02]" />{" "}
-                        Avaliação por IA
+                        {t("ai_evaluation")}
                       </h3>
                       <p className="text-sm text-slate-300 leading-relaxed font-medium">
-                        O nosso algoritmo não conta apenas erros. Ele analisa a
-                        **complexidade das tuas frases**, a **variedade do
-                        vocabulário** e a **naturalidade da escrita**. Ao fim do
-                        teste, cruzamos os dados de todas as fases para te
-                        atribuir um nível CEFR (A1 a C2) extremamente preciso.
+                        {t.rich("ai_section", {
+                          b: (chunks) => <strong>{chunks}</strong>,
+                        })}
                       </p>
                     </div>
                   </section>
@@ -2164,7 +2169,7 @@ export default function EvaluationPage() {
                   onClick={() => setIsInfoModalOpen(false)}
                   className="w-full py-4 bg-[#58CC02] border-b-[6px] border-[#46a302] rounded-2xl text-white font-black text-lg hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all"
                 >
-                  Entendido!
+                  {t("understood")}
                 </button>
               </div>
             </motion.div>

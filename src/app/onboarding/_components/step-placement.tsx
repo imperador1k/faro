@@ -9,12 +9,14 @@ import {
 } from "@/actions/onboarding";
 import Image from "next/image";
 import { Check, X, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface StepPlacementProps {
   courseTitle: string;
 }
 
 export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
+  const t = useTranslations("Onboarding");
   const { selectedCourse, setPlacementResults, nextStep } =
     useOnboardingStore();
   const [questions, setQuestions] = useState<PlacementQuestion[]>([]);
@@ -76,10 +78,10 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
         </motion.div>
         <div className="text-center">
           <h2 className="text-2xl font-black text-[#042c60]">
-            Gerei um teste para ti!
+            {t("placement_test_title")}
           </h2>
           <p className="text-gray-500 font-bold">
-            O Marco está a pensar em boas perguntas...
+            {t("placement_test_subtitle")}
           </p>
         </div>
       </div>
@@ -87,7 +89,7 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
   }
 
   if (questions.length === 0) {
-    return <div>Erro ao carregar o teste.</div>;
+    return <div>{t("error_loading_test")}</div>;
   }
 
   const currentQuestion = questions[currentIndex];
@@ -96,9 +98,12 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
     <div className="flex flex-col w-full max-w-xl mx-auto space-y-8">
       <div className="w-full space-y-2">
         <div className="flex justify-between items-center text-sm font-black text-gray-400 uppercase tracking-widest">
-          <span>Teste de Nivelamento</span>
+          <span>{t("placement_test_heading")}</span>
           <span>
-            {currentIndex + 1} de {questions.length}
+            {t("current_question_count", {
+              current: currentIndex + 1,
+              total: questions.length,
+            })}
           </span>
         </div>
         <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
@@ -128,8 +133,16 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
                     ? "border-[#1cb0f6] bg-[#ddf4ff] text-[#1cb0f6]"
                     : "border-gray-200 hover:bg-gray-50 text-gray-700"
                 }
-                ${isCorrect !== null && index === currentQuestion.correctIndex ? "border-[#58cc02] bg-[#d7ffb8] text-[#58cc02]" : ""}
-                ${isCorrect === false && index === selectedOption ? "border-[#ff4b4b] bg-[#ffdbdb] text-[#ff4b4b]" : ""}
+                ${
+                  isCorrect !== null && index === currentQuestion.correctIndex
+                    ? "border-[#58cc02] bg-[#d7ffb8] text-[#58cc02]"
+                    : ""
+                }
+                ${
+                  isCorrect === false && index === selectedOption
+                    ? "border-[#ff4b4b] bg-[#ffdbdb] text-[#ff4b4b]"
+                    : ""
+                }
               `}
             >
               {option}
@@ -150,7 +163,7 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
             }
           `}
         >
-          Verificar
+          {t("check_button")}
         </button>
       </div>
 
@@ -161,7 +174,11 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             className={`fixed bottom-0 left-0 right-0 p-6 z-[60] flex flex-col md:flex-row items-center gap-4 border-t-2
-              ${isCorrect ? "bg-[#d7ffb8] border-[#58cc02]" : "bg-[#ffdbdb] border-[#ff4b4b]"}
+              ${
+                isCorrect
+                  ? "bg-[#d7ffb8] border-[#58cc02]"
+                  : "bg-[#ffdbdb] border-[#ff4b4b]"
+              }
             `}
           >
             <div
@@ -177,7 +194,9 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
               <h3
                 className={`text-xl font-black ${isCorrect ? "text-[#46a302]" : "text-[#ea2b2b]"}`}
               >
-                {isCorrect ? "Excelente!" : "Ups, quase!"}
+                {isCorrect
+                  ? t("correct_feedback_title")
+                  : t("incorrect_feedback_title")}
               </h3>
               <p
                 className={`font-bold ${isCorrect ? "text-[#58cc02]" : "text-[#ff4b4b]"}`}

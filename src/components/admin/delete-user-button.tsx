@@ -6,41 +6,53 @@ import { deleteUserAction } from "@/actions/admin-users";
 import { toast } from "sonner";
 
 interface DeleteUserButtonProps {
-    userId: string;
-    userName: string;
+  userId: string;
+  userName: string;
 }
 
 export function DeleteUserButton({ userId, userName }: DeleteUserButtonProps) {
-    const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
-    const handleDelete = () => {
-        const confirmDelete = window.confirm(
-            `ATENÇÃO!\n\nEstás prestes a eliminar DEFINITIVAMENTE o utilizador "${userName}" (${userId}).\n\nIsto destruirá a sua conta Clerk e apagará o seu XP, Atividade e Ligas. Tudo!\n\nQueres mesmo prosseguir?`
-        );
+  const handleDelete = () => {
+    const confirmDelete = window.confirm(
+      `ATENÇÃO!
 
-        if (!confirmDelete) return;
+Estás prestes a eliminar DEFINITIVAMENTE o utilizador "${userName}" (${userId}).
 
-        startTransition(() => {
-            deleteUserAction(userId)
-                .then((result) => {
-                    if (result.success) {
-                        toast.success("Utilizador purgado com sucesso de todos os sistemas.");
-                    } else {
-                        toast.error((result as any).message || "Operação abortada.");
-                    }
-                })
-                .catch(() => toast.error("Falha ao comunicar com o servidor."));
-        });
-    };
+Isto destruirá a sua conta Clerk e apagará o seu XP, Atividade e Ligas. Tudo!
 
-    return (
-        <button
-            onClick={handleDelete}
-            disabled={isPending}
-            className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors flex items-center justify-center disabled:opacity-50"
-            title="Eliminar utilizador"
-        >
-            {isPending ? <Loader2 className="w-5 h-5 animate-spin text-red-500" /> : <Trash2 className="w-5 h-5" />}
-        </button>
+Queres mesmo prosseguir?`,
     );
+
+    if (!confirmDelete) return;
+
+    startTransition(() => {
+      deleteUserAction(userId)
+        .then((result) => {
+          if (result.success) {
+            toast.success(
+              "Utilizador purgado com sucesso de todos os sistemas.",
+            );
+          } else {
+            toast.error((result as any).message || "Operação abortada.");
+          }
+        })
+        .catch(() => toast.error("Falha ao comunicar com o servidor."));
+    });
+  };
+
+  return (
+    <button
+      onClick={handleDelete}
+      disabled={isPending}
+      className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors flex items-center justify-center disabled:opacity-50"
+      title="Eliminar utilizador"
+    >
+      {isPending ? (
+        <Loader2 className="w-5 h-5 animate-spin text-red-500" />
+      ) : (
+        <Trash2 className="w-5 h-5" />
+      )}
+    </button>
+  );
 }

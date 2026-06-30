@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
@@ -14,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 
 export const EditProfileButton = () => {
+  const t = useTranslations("profile");
   const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -64,14 +67,12 @@ export const EditProfileButton = () => {
         await user.setProfileImage({ file: selectedFile });
       }
 
-      toast.success("Perfil atualizado com sucesso!");
+      toast.success(t("success_message"));
       setIsOpen(false);
     } catch (error: any) {
       console.error(error);
-      toast.error("Erro ao atualizar o perfil", {
-        description:
-          error.errors?.[0]?.message ||
-          "Verifica os teus dados e tenta novamente.",
+      toast.error(t("error_title"), {
+        description: error.errors?.[0]?.message || t("error_description"),
       });
     } finally {
       setIsSaving(false);
@@ -84,7 +85,7 @@ export const EditProfileButton = () => {
         onClick={handleOpen}
         className="bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-bold px-5 py-3 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 active:translate-y-1 active:border-b-0 transition-all uppercase tracking-wide"
       >
-        Editar Perfil
+        {t("edit_profile")}
       </button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -106,7 +107,7 @@ export const EditProfileButton = () => {
               </div>
               <DialogHeader>
                 <DialogTitle className="text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight">
-                  O teu Perfil
+                  {t("your_profile")}
                 </DialogTitle>
               </DialogHeader>
             </div>
@@ -138,7 +139,7 @@ export const EditProfileButton = () => {
                   onChange={handleImageChange}
                 />
                 <span className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-                  Alterar Foto
+                  {t("change_photo")}
                 </span>
               </div>
 
@@ -146,7 +147,7 @@ export const EditProfileButton = () => {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <label className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1">
-                    Nome
+                    {t("first_name")}
                   </label>
                   <input
                     type="text"
@@ -154,13 +155,13 @@ export const EditProfileButton = () => {
                     onChange={(e) => setFirstName(e.target.value)}
                     disabled={isSaving}
                     className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 rounded-2xl px-4 py-4 text-base font-bold text-stone-700 dark:text-slate-200 outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 transition-all"
-                    placeholder="O teu nome principal"
+                    placeholder={t("first_name_placeholder")}
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1">
-                    Apelido (Opcional)
+                    {t("last_name")}
                   </label>
                   <input
                     type="text"
@@ -168,14 +169,14 @@ export const EditProfileButton = () => {
                     onChange={(e) => setLastName(e.target.value)}
                     disabled={isSaving}
                     className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 rounded-2xl px-4 py-4 text-base font-bold text-stone-700 dark:text-slate-200 outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 transition-all"
-                    placeholder="Opcional"
+                    placeholder={t("last_name_placeholder")}
                   />
                 </div>
 
                 <div className="space-y-2 opacity-60">
                   <label className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1 flex justify-between">
-                    <span>Email</span>
-                    <span className="text-[#1CB0F6]">Principal</span>
+                    <span>{t("email")}</span>
+                    <span className="text-[#1CB0F6]">{t("primary")}</span>
                   </label>
                   <input
                     type="text"
@@ -198,7 +199,7 @@ export const EditProfileButton = () => {
                   ) : (
                     <>
                       <Save className="w-5 h-5" />
-                      Gravar Alterações
+                      {t("save_changes")}
                     </>
                   )}
                 </button>

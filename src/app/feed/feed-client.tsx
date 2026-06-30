@@ -25,6 +25,7 @@ import {
   markPostAsRead,
 } from "@/actions/feed";
 import { translateWord } from "@/actions/translate";
+import { useTranslations } from "next-intl";
 
 // Types
 type Post = {
@@ -51,6 +52,7 @@ export default function FeedClient({
   initialPosts?: any[];
 }) {
   const router = useRouter();
+  const t = useTranslations("Feed");
   const [posts] = useState<Post[]>(initialPosts);
 
   const [isLoadingOld, setIsLoadingOld] = useState(false);
@@ -134,7 +136,7 @@ export default function FeedClient({
     if (!cleanWord) return;
 
     setSelectedWord(cleanWord);
-    setTranslation("..."); // Loading state
+    setTranslation(t("loading_translation_indicator")); // Loading state
 
     // Get the user's device language dynamically (fallback to 'pt' if undefined)
     const deviceLang =
@@ -146,7 +148,7 @@ export default function FeedClient({
     if (result) {
       setTranslation(result);
     } else {
-      setTranslation("[Erro]");
+      setTranslation(t("translation_error"));
     }
 
     setTimeout(() => {
@@ -237,11 +239,10 @@ export default function FeedClient({
         <HappyStarLottie />
       </div>
       <h2 className="text-2xl font-black mb-2 text-center drop-shadow-sm dark:drop-shadow-md z-10 text-slate-800 dark:text-white">
-        Chegaste ao fim das novidades!
+        {t("end_of_feed_title")}
       </h2>
       <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-[280px] text-center font-medium leading-relaxed z-10">
-        Já viste todos os factos de hoje. Volta amanhã para mais curiosidades
-        fresquinhas.
+        {t("end_of_feed_description")}
       </p>
       <button
         onClick={() => {
@@ -251,13 +252,15 @@ export default function FeedClient({
         disabled={isLoadingOld}
         className="z-10 bg-[#1CB0F6] hover:bg-[#1899D6] active:bg-[#1582B7] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-wider transition-all border-b-4 border-[#0092d6] active:border-b-0 active:translate-y-[4px]"
       >
-        {isLoadingOld ? "A carregar..." : "Rever Posts Antigos"}
+        {isLoadingOld
+          ? t("loading_old_posts_button")
+          : t("review_old_posts_button")}
       </button>
       <button
         onClick={() => router.push("/learn")}
         className="z-10 mt-6 text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider text-sm hover:text-slate-600 dark:hover:text-white transition-colors"
       >
-        Voltar às Aulas
+        {t("back_to_lessons_button")}
       </button>
     </div>
   );
@@ -487,7 +490,7 @@ export default function FeedClient({
                           )}
                         />
                         <span className="text-xs font-bold text-slate-600 dark:text-white drop-shadow-md">
-                          Save
+                          {t("save_button")}
                         </span>
                       </button>
 
@@ -530,7 +533,7 @@ export default function FeedClient({
             >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-black text-slate-900 dark:text-white">
-                  Partilhar com Amigos
+                  {t("share_modal_title")}
                 </h3>
                 <button
                   onClick={() => setIsShareModalOpen(false)}
@@ -543,7 +546,7 @@ export default function FeedClient({
               <div className="flex-1 overflow-y-auto pr-2 space-y-4 custom-scrollbar">
                 {loadingFriends ? (
                   <div className="flex items-center justify-center h-full text-slate-400">
-                    Loading friends...
+                    {t("loading_friends")}
                   </div>
                 ) : friends.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-center px-4">
@@ -551,11 +554,10 @@ export default function FeedClient({
                       <Share2 className="w-8 h-8 text-slate-400" />
                     </div>
                     <p className="text-slate-700 dark:text-slate-300 font-medium mb-2">
-                      No mutual friends yet.
+                      {t("no_mutual_friends_yet")}
                     </p>
                     <p className="text-slate-500 text-sm">
-                      Follow people and get them to follow you back to share
-                      directly.
+                      {t("follow_people_to_share_message")}
                     </p>
                   </div>
                 ) : (
@@ -583,7 +585,7 @@ export default function FeedClient({
                           <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                         ) : (
                           <>
-                            Enviar <Send className="w-4 h-4" />
+                            {t("send_button")} <Send className="w-4 h-4" />
                           </>
                         )}
                       </button>

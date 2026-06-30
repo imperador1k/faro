@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { generatePracticePrompt, analyzeWriting } from "@/actions/gemini";
 import { savePracticeSession } from "@/actions/practice";
 import { Button } from "@/components/ui/button";
 import { AILoadingScreen } from "@/components/ui/ai-loading-screen";
-import { Textarea } from "../../../../components/ui/textarea"; // Correct relative path
+import { Textarea } from "../../../../components/ui/textarea";
 import {
   Loader2,
   RefreshCw,
@@ -24,6 +25,7 @@ import { PracticeSetup } from "@/components/shared/practice-setup";
 import { InteractiveText } from "@/components/ui/interactive-text";
 
 export default function WritingPracticePage() {
+  const t = useTranslations("practice");
   const [promptData, setPromptData] = useState<{
     scenario: string;
     translation: string;
@@ -114,15 +116,14 @@ export default function WritingPracticePage() {
   if (isGeneratingPrompt) {
     return (
       <AILoadingScreen
-        message="A criar Módulo de Escrita..."
-        submessage="A IA está a preparar o teu desafio"
+        message={t("creating_module")}
+        submessage={t("ai_preparing_challenge")}
       />
     );
   }
 
   return (
     <div className="flex flex-col min-h-screen bg-stone-50 dark:bg-slate-950 w-full overflow-x-hidden pb-10">
-      {/* ── Top Progress Header ── */}
       <header className="w-full sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b-2 border-stone-200 dark:border-slate-800 px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button
@@ -134,7 +135,6 @@ export default function WritingPracticePage() {
             <X className="w-7 h-7" strokeWidth={3} />
           </Button>
           <div className="hidden sm:block h-4 w-48 md:w-64 bg-stone-100 dark:bg-slate-800 rounded-full overflow-hidden border-2 border-stone-200 dark:border-slate-800">
-            {/* Fake progress for Dojo feel */}
             <div className="h-full bg-[#58cc02] w-[35%] rounded-full opacity-50 relative overflow-hidden">
               <div className="absolute inset-0 bg-white/20 w-full rounded-full animate-pulse"></div>
             </div>
@@ -148,9 +148,7 @@ export default function WritingPracticePage() {
       </header>
 
       <main className="flex-1 w-full max-w-7xl mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
-        {/* ── Left Column: Challenge & Editor (Spans 8 cols) ── */}
         <div className="lg:col-span-8 flex flex-col gap-6 md:gap-8">
-          {/* The Challenge Area */}
           <section className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col sm:flex-row items-start gap-4 md:gap-6 relative overflow-visible z-10 transition-all hover:-translate-y-1 hover:border-b-[10px] hover:mb-[-2px]">
             <div className="w-14 h-14 md:w-20 md:h-20 shrink-0 bg-sky-100 rounded-[1.5rem] border-b-4 border-sky-200 flex items-center justify-center shadow-inner">
               <Sparkles
@@ -169,11 +167,11 @@ export default function WritingPracticePage() {
                 {promptData?.translation}
               </p>
 
-              {/* Rules / Constraints */}
               {promptData?.rules && promptData.rules.length > 0 && (
                 <div className="mt-2 pt-4 border-t-2 border-stone-100 w-full flex flex-col gap-3">
                   <span className="text-xs font-black tracking-widest uppercase text-amber-500 flex items-center gap-2">
-                    <Target className="w-4 h-4 md:w-5 md:h-5" /> Regras do Dojo
+                    <Target className="w-4 h-4 md:w-5 md:h-5" />{" "}
+                    {t("dojo_rules")}
                   </span>
                   <ul className="flex flex-wrap gap-2 md:gap-3">
                     {promptData.rules.map((rule, i) => (
@@ -191,14 +189,12 @@ export default function WritingPracticePage() {
             </div>
           </section>
 
-          {/* The Draft Pad */}
           <section className="relative group z-0">
-            {/* Label */}
             <div className="absolute -top-4 left-6 bg-indigo-500 text-white text-xs font-black uppercase tracking-widest px-4 py-1 rounded-xl shadow border-2 border-indigo-600 z-10 flex items-center gap-2">
-              <MessageSquareText className="w-3.5 h-3.5" /> A TUA TAREFA
+              <MessageSquareText className="w-3.5 h-3.5" /> {t("task_label")}
             </div>
             <Textarea
-              placeholder="Escreve a tua resposta aqui no idioma de destino..."
+              placeholder={t("textarea_placeholder")}
               className={cn(
                 "w-full min-h-[350px] md:min-h-[450px] bg-white dark:bg-slate-900 border-2 border-b-8 rounded-[2rem] p-6 md:p-8 pt-10 text-lg md:text-xl font-medium focus-visible:ring-0 transition-all resize-y shadow-sm outline-none",
                 feedback
@@ -212,7 +208,6 @@ export default function WritingPracticePage() {
               disabled={isAnalyzing || !!feedback}
               style={{ lineHeight: "1.8" }}
             />
-            {/* Dynamic Word Count - Dojo Style */}
             {!feedback && !isAnalyzing && (
               <div className="absolute bottom-6 right-6 hidden md:flex items-center gap-2 px-4 py-2 bg-stone-100 dark:bg-slate-800 rounded-[1rem] border-2 border-stone-200 dark:border-slate-800 font-black text-stone-500 dark:text-slate-400 text-xs tracking-widest uppercase shadow-sm">
                 <span
@@ -225,12 +220,11 @@ export default function WritingPracticePage() {
                     ? userResponse.trim().split(/\s+/).length
                     : 0}
                 </span>
-                PALAVRAS
+                {t("words_label")}
               </div>
             )}
           </section>
 
-          {/* Feedback Area */}
           {feedback && (
             <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 mt-4">
               <div
@@ -266,7 +260,7 @@ export default function WritingPracticePage() {
                     >
                       <CheckCircle2 className="h-7 w-7" strokeWidth={3} />
                     </div>
-                    Análise da AI
+                    {t("ai_analysis")}
                   </h2>
                   <div
                     className={cn(
@@ -278,7 +272,7 @@ export default function WritingPracticePage() {
                           : "bg-red-100/50 border-red-300 text-red-700",
                     )}
                   >
-                    SCORE: {feedback.score}%
+                    {t("score_label", { score: feedback.score })}
                   </div>
                 </div>
 
@@ -289,7 +283,7 @@ export default function WritingPracticePage() {
                 {feedback.corrections.length > 0 && (
                   <div className="space-y-4">
                     <h3 className="font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-sm mb-4">
-                      Correções Sugeridas
+                      {t("suggested_corrections")}
                     </h3>
                     <div className="grid grid-cols-1 gap-4">
                       {feedback.corrections.map((correction, idx) => (
@@ -310,7 +304,7 @@ export default function WritingPracticePage() {
                           </div>
                           <p className="text-sm font-medium text-stone-500 dark:text-slate-400 bg-stone-50 dark:bg-slate-950 px-4 py-2.5 rounded-xl border border-stone-100">
                             <span className="font-bold text-indigo-500">
-                              Motivo:
+                              {t("reason_label")}
                             </span>{" "}
                             {correction.explication}
                           </p>
@@ -322,7 +316,7 @@ export default function WritingPracticePage() {
 
                 {feedback.corrections.length === 0 && (
                   <div className="text-center p-8 bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-green-200 text-green-700 font-black text-xl shadow-sm">
-                    🎉 Trabalho Perfeito! Não há correções a fazer.
+                    🎉 {t("perfect_job")}
                   </div>
                 )}
               </div>
@@ -330,16 +324,14 @@ export default function WritingPracticePage() {
           )}
         </div>
 
-        {/* ── Right Column: Toolbelt & Submit (Spans 4 cols) ── */}
         <aside className="lg:col-span-4 flex flex-col gap-6 lg:sticky lg:top-24">
-          {/* Vocabulary Card */}
           {promptData?.hints && promptData.hints.length > 0 && (
             <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col gap-4">
               <h3 className="text-sm font-black uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center gap-3">
                 <div className="p-2 bg-indigo-50 text-indigo-500 rounded-xl">
                   <BookOpen className="w-5 h-5" />
                 </div>
-                Arsenal de Palavras
+                {t("vocabulary_arsenal")}
               </h3>
               <div className="flex flex-wrap gap-2 mt-2">
                 {promptData.hints.map((hint, i) => (
@@ -354,7 +346,6 @@ export default function WritingPracticePage() {
             </div>
           )}
 
-          {/* Submit Area */}
           <div className="mt-8 lg:mt-0 flex flex-col gap-4 w-full">
             {!feedback ? (
               <button
@@ -364,10 +355,12 @@ export default function WritingPracticePage() {
               >
                 {isAnalyzing ? (
                   <>
-                    <span className="animate-pulse">A AVALIAR...</span>
+                    <span className="animate-pulse">
+                      {t("evaluating_status")}
+                    </span>
                   </>
                 ) : (
-                  <>ENVIAR</>
+                  <>{t("send_button")}</>
                 )}
               </button>
             ) : (
@@ -375,13 +368,13 @@ export default function WritingPracticePage() {
                 onClick={() => handleGeneratePrompt()}
                 className="w-full h-20 md:h-24 bg-sky-400 text-white text-xl md:text-2xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-sky-500 hover:bg-sky-500 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
               >
-                NOVO DESAFIO
+                {t("new_challenge")}
                 <RefreshCw className="w-7 h-7" strokeWidth={3} />
               </button>
             )}
 
             <p className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2">
-              A AI vai avaliar a tua gramática e fluxo
+              {t("ai_footer_disclaimer")}
             </p>
           </div>
         </aside>

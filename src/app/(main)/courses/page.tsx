@@ -4,10 +4,13 @@ import { CoursesList } from "./courses-list";
 import { BookOpen, Flame, Target, Trophy, Sparkles } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
 
-export default function CoursesPage() {
+export default async function CoursesPage() {
+  const t = await getTranslations("courses");
+
   return (
     <div className="pb-12 px-4 lg:px-0 max-w-[1056px] mx-auto pt-6 space-y-10">
       {/* Gamified Worlds Header (Synchronous) */}
@@ -20,10 +23,10 @@ export default function CoursesPage() {
           </div>
         </div>
         <h1 className="text-4xl lg:text-5xl font-black text-slate-700 dark:text-slate-200 tracking-tight uppercase">
-          Os Teus Mundos
+          {t("your_worlds")}
         </h1>
         <p className="text-lg text-slate-500 dark:text-slate-400 font-bold max-w-xl">
-          Escolhe a tua próxima aventura linguística.
+          {t("choose_adventure")}
         </p>
       </div>
 
@@ -35,6 +38,7 @@ export default function CoursesPage() {
 }
 
 async function CoursesData() {
+  const t = await getTranslations("courses");
   const courses = await getCourses();
   const userProgress = await getUserProgress();
 
@@ -48,7 +52,8 @@ async function CoursesData() {
       {userProgress?.activeCourseId && activeCourse && (
         <div className="flex flex-col gap-4 mb-4 animate-in fade-in duration-500">
           <h2 className="text-xl font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest pl-2 flex items-center gap-2">
-            <span className="text-2xl drop-shadow-sm">🔥</span> O Teu Percurso
+            <span className="text-2xl drop-shadow-sm">🔥</span>{" "}
+            {t("your_journey")}
           </h2>
           <Link href="/learn" className="block w-full" prefetch>
             <div className="w-full bg-white dark:bg-slate-900 rounded-[32px] border-2 border-slate-200 dark:border-slate-800 border-b-[10px] p-6 lg:p-8 flex flex-col md:flex-row items-center gap-6 lg:gap-8 transition-transform hover:-translate-y-1 active:translate-y-1 active:border-b-[2px] cursor-pointer shadow-sm relative group overflow-hidden">
@@ -90,7 +95,7 @@ async function CoursesData() {
                   </div>
                   <span className="text-[13px] font-black text-slate-400 uppercase tracking-widest items-center flex gap-1">
                     <Flame className="w-4 h-4 text-orange-400 fill-orange-400 inline-block mb-0.5" />
-                    O teu foco diário
+                    {t("daily_focus")}
                   </span>
                 </div>
               </div>
@@ -101,7 +106,7 @@ async function CoursesData() {
                   className="w-full md:w-auto px-8 lg:px-12 py-4 rounded-2xl bg-[#58cc02] text-white font-black text-xl lg:text-2xl tracking-widest uppercase border-2 border-transparent border-b-[8px] flex items-center justify-center shadow-sm pointer-events-none"
                   style={{ borderBottomColor: "#46a302" }}
                 >
-                  Continuar
+                  {t("continue_learning")}
                 </button>
               </div>
             </div>

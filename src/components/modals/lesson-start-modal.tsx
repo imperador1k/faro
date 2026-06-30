@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -24,6 +26,7 @@ type Props = {
 import { useUISounds } from "@/hooks/use-ui-sounds";
 
 export const LessonStartModal = ({ lesson, isOpen, onClose }: Props) => {
+  const t = useTranslations("lesson");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { playStart } = useUISounds();
@@ -106,7 +109,7 @@ export const LessonStartModal = ({ lesson, isOpen, onClose }: Props) => {
                     {lesson.challengeCount}
                   </span>
                   <span className="text-[#3b82f6]/80 font-bold text-[9px] uppercase tracking-tighter truncate w-full">
-                    Questões
+                    {t("questions")}
                   </span>
                 </div>
               </div>
@@ -121,7 +124,7 @@ export const LessonStartModal = ({ lesson, isOpen, onClose }: Props) => {
                     +{lesson.xpReward}
                   </span>
                   <span className="text-[#f59e0b]/80 font-bold text-[9px] uppercase tracking-tighter truncate w-full">
-                    XP
+                    {t("xp")}
                   </span>
                 </div>
               </div>
@@ -136,7 +139,7 @@ export const LessonStartModal = ({ lesson, isOpen, onClose }: Props) => {
                     {estimatedMin}m
                   </span>
                   <span className="text-[#10b981]/80 font-bold text-[9px] uppercase tracking-tighter truncate w-full">
-                    Tempo
+                    {t("time")}
                   </span>
                 </div>
               </div>
@@ -156,7 +159,7 @@ export const LessonStartModal = ({ lesson, isOpen, onClose }: Props) => {
                 {isLoading ? (
                   <div className="h-6 w-6 animate-spin rounded-full border-4 border-white/30 border-t-white" />
                 ) : (
-                  <>COMEÇAR</>
+                  <>{t("start")}</>
                 )}
               </button>
 
@@ -165,7 +168,7 @@ export const LessonStartModal = ({ lesson, isOpen, onClose }: Props) => {
                 disabled={isLoading}
                 className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-center mt-3 hover:text-stone-600 dark:text-slate-300 transition-colors cursor-pointer w-full uppercase py-2 active:scale-95 disabled:opacity-50 tracking-wide text-sm"
               >
-                TALVEZ MAIS TARDE
+                {t("later")}
               </button>
             </div>
           </div>

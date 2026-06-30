@@ -1,14 +1,18 @@
+import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title: "CEFR Placement Test - MyDuolingo",
-    description: "Descobre o teu nível CEFR com o nosso teste de nivelamento adaptativo.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("evaluation");
+  return {
+    title: t("meta_title"),
+    description: t("meta_description"),
+  };
+}
 
 export default function EvaluationLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return <>{children}</>;
+  return <>{children}</>;
 }

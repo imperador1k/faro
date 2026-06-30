@@ -10,6 +10,7 @@ import {
   Sparkles,
   Wand2,
   ArrowLeft,
+  Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SUPPORTED_LANGUAGES } from "@/lib/constants";
@@ -20,6 +21,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CatLottie } from "@/components/ui/lottie-animation";
+import { useTranslations } from "next-intl";
 
 type PracticeConfig = {
   language: string;
@@ -33,6 +35,7 @@ type Props = {
 };
 
 export function PracticeSetup({ type, onStart }: Props) {
+  const t = useTranslations("shared");
   const [language, setLanguage] = useState(SUPPORTED_LANGUAGES[0].value);
   const [level, setLevel] = useState("B1");
   const [mode, setMode] = useState<"random" | "focus">("random");
@@ -42,7 +45,6 @@ export function PracticeSetup({ type, onStart }: Props) {
   } | null>(null);
   const router = useRouter();
 
-  // Initial load: Fetch active language
   useEffect(() => {
     getActiveLanguage().then((lang) => {
       if (lang) {
@@ -54,7 +56,6 @@ export function PracticeSetup({ type, onStart }: Props) {
     });
   }, []);
 
-  // Check user's evaluated level
   useEffect(() => {
     if (!language) return;
     getUserLevelForLanguage(language).then((res) => {
@@ -65,40 +66,39 @@ export function PracticeSetup({ type, onStart }: Props) {
   const getTitle = () => {
     switch (type) {
       case "writing":
-        return "Módulo de Escrita AI";
+        return t("writing_module_title");
       case "speaking":
-        return "Sintetizador de Voz";
+        return t("speaking_synthesizer_title");
       case "reading":
-        return "Análise de Texto AI";
+        return t("reading_analysis_title");
       case "listening":
-        return "Treino Auditivo AI";
+        return t("listening_training_title");
     }
   };
 
   const getDescription = () => {
     switch (type) {
       case "writing":
-        return "Gera cenários imersivos para escreveres ensaios ou respostas.";
+        return t("writing_description");
       case "speaking":
-        return "Simula conversas nativas para testar a tua fluência.";
+        return t("speaking_description");
       case "reading":
-        return "Processa textos complexos criados sob medida para o teu nível.";
+        return t("reading_description");
       case "listening":
-        return "Cria áudios nativos dinâmicos gerados em tempo real.";
+        return t("listening_description");
     }
   };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] py-10 px-4 md:px-6 animate-in fade-in zoom-in-95 duration-500 w-full mb-20 relative">
-      {/* ── Back Button ── */}
       <button
         onClick={() => router.push("/practice")}
         className="absolute top-4 left-4 md:top-8 md:left-8 px-4 py-2 bg-white dark:bg-slate-900 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-4 text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-xs md:text-sm hover:bg-stone-50 dark:bg-slate-950 hover:text-stone-600 dark:text-slate-300 active:border-b-0 active:translate-y-1 active:mb-1 transition-all flex items-center gap-2 shadow-sm z-50"
       >
         <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
-        <span className="hidden sm:inline">Voltar</span>
+        <span className="hidden sm:inline">{t("back")}</span>
       </button>
 
-      {/* ── Header ── */}
       <div className="text-center mb-10 md:mb-16">
         <div className="inline-flex items-center justify-center w-24 h-24 bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 shadow-sm mb-6">
           <CatLottie className="w-20 h-20 scale-[1.35]" />
@@ -111,15 +111,12 @@ export function PracticeSetup({ type, onStart }: Props) {
         </p>
       </div>
 
-      {/* ── Main Layout: 3 Columns on Large Screens ── */}
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 items-start relative z-10">
-        {/* ── Left/Middle: Setup Controls (Spans 2 columns) ── */}
         <div className="lg:col-span-2 space-y-6 md:space-y-8">
-          {/* Language Selector */}
           <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col gap-4">
             <label className="text-sm font-black uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center gap-2">
               <Languages className="h-5 w-5 text-indigo-400" />
-              Idioma de Treino
+              {t("training_language")}
             </label>
             <div className="relative">
               <select
@@ -133,7 +130,6 @@ export function PracticeSetup({ type, onStart }: Props) {
                   </option>
                 ))}
               </select>
-              {/* Custom caret */}
               <div className="absolute inset-y-0 right-6 flex items-center pointer-events-none">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -152,11 +148,10 @@ export function PracticeSetup({ type, onStart }: Props) {
             </div>
           </div>
 
-          {/* Difficulty Grid */}
           <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col gap-4">
             <label className="text-sm font-black uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center gap-2">
               <Signal className="h-5 w-5 text-amber-500" />
-              Nível de Dificuldade
+              {t("difficulty_level")}
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-5">
               {["A1", "A2", "B1", "B2", "C1", "C2"].map((l) => {
@@ -187,7 +182,7 @@ export function PracticeSetup({ type, onStart }: Props) {
                             : "bg-indigo-100 text-indigo-600 border-indigo-200",
                         )}
                       >
-                        {isEvaluated ? "O TEU NÍVEL" : "SUGESTÃO"}
+                        {isEvaluated ? t("your_level") : t("suggestion")}
                       </span>
                     )}
                   </button>
@@ -197,13 +192,11 @@ export function PracticeSetup({ type, onStart }: Props) {
           </div>
         </div>
 
-        {/* ── Right Column: Goal & Launch (Spans 1 column) ── */}
         <div className="lg:col-span-1 space-y-6 md:space-y-8 h-full flex flex-col">
-          {/* Mode Toggle */}
           <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col gap-4 flex-1">
             <label className="text-sm font-black uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center gap-2">
               <Target className="h-5 w-5 text-sky-500" />
-              Modo de Foco
+              {t("focus_mode")}
             </label>
             <div className="grid grid-cols-2 lg:grid-cols-1 gap-4 md:gap-5 flex-1">
               <button
@@ -217,7 +210,7 @@ export function PracticeSetup({ type, onStart }: Props) {
               >
                 <Shuffle className="h-7 w-7 md:h-8 md:w-8" />
                 <span className="text-sm font-black uppercase tracking-wider">
-                  Aleatório
+                  {t("random")}
                 </span>
               </button>
               <button
@@ -231,24 +224,23 @@ export function PracticeSetup({ type, onStart }: Props) {
               >
                 <Target className="h-7 w-7 md:h-8 md:w-8" />
                 <span className="text-sm font-black uppercase tracking-wider">
-                  Foco na Unidade
+                  {t("unit_focus")}
                 </span>
               </button>
             </div>
           </div>
 
-          {/* Launch Button Area */}
           <div className="flex flex-col gap-4 mt-auto pt-2">
             <button
               onClick={() => onStart({ language, level, mode })}
               className="w-full h-20 md:h-24 rounded-2xl bg-[#58cc02] text-white border-2 border-transparent border-b-8 border-b-[#46a302] flex items-center justify-center gap-3 text-xl md:text-2xl font-black uppercase tracking-widest transition-all active:border-b-0 active:mt-2 active:mb-[-8px] hover:bg-[#61da02]"
             >
-              <Sparkles className="h-6 w-6 md:h-8 md:w-8 fill-white" /> INICIAR
-              SESSÃO
+              <Sparkles className="h-6 w-6 md:h-8 md:w-8 fill-white" />{" "}
+              {t("start_session")}
             </button>
             <p className="text-center text-xs font-bold uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2 mb-2">
               <Zap className="h-4 w-4 fill-amber-400 text-amber-400" /> 1
-              Crédito AI
+              {t("ai_credit")}
             </p>
           </div>
         </div>
@@ -256,6 +248,3 @@ export function PracticeSetup({ type, onStart }: Props) {
     </div>
   );
 }
-
-// Just importing Zap locally since it's used in the footer
-import { Zap } from "lucide-react";

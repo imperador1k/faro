@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 import {
   X,
   Volume2,
@@ -65,6 +67,7 @@ export const LessonHeader = ({
   onExit,
   isPro,
 }: HeaderProps) => {
+  const t = useTranslations("lesson");
   return (
     <header className="mx-auto flex w-full max-w-[1140px] shrink-0 items-center justify-between gap-x-4 px-6 pt-6 lg:pt-12">
       <button
@@ -86,7 +89,7 @@ export const LessonHeader = ({
               ? "bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200"
               : "bg-sky-50 text-sky-500 hover:bg-sky-100",
           )}
-          title={isAudioMuted ? "Ativar som" : "Silenciar"}
+          title={isAudioMuted ? t("enable_sound") : t("mute")}
         >
           {isAudioMuted ? (
             <VolumeX className="h-5 w-5" />

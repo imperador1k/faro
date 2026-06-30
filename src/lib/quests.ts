@@ -10,10 +10,10 @@ export type Quest = {
   borderColor: string;
 };
 
-export const QUESTS_POOL: Quest[] = [
+export const getQuestsPool = (t: any): Quest[] => [
   {
     id: "xp_15",
-    title: "Ganha 15 XP",
+    title: t("daily.xp_15"),
     type: "xp",
     target: 15,
     iconType: "zap",
@@ -22,7 +22,7 @@ export const QUESTS_POOL: Quest[] = [
   },
   {
     id: "xp_30",
-    title: "Ganha 30 XP",
+    title: t("daily.xp_30"),
     type: "xp",
     target: 30,
     iconType: "flame",
@@ -31,7 +31,7 @@ export const QUESTS_POOL: Quest[] = [
   },
   {
     id: "xp_50",
-    title: "Ganha 50 XP",
+    title: t("daily.xp_50"),
     type: "xp",
     target: 50,
     iconType: "star",
@@ -40,7 +40,7 @@ export const QUESTS_POOL: Quest[] = [
   },
   {
     id: "xp_100",
-    title: "Desafio: 100 XP",
+    title: t("daily.xp_100"),
     type: "xp",
     target: 100,
     iconType: "crown",
@@ -49,7 +49,7 @@ export const QUESTS_POOL: Quest[] = [
   },
   {
     id: "lessons_1",
-    title: "Completa 1 lição",
+    title: t("daily.lessons_1"),
     type: "lessons",
     target: 1,
     iconType: "book",
@@ -58,7 +58,7 @@ export const QUESTS_POOL: Quest[] = [
   },
   {
     id: "lessons_2",
-    title: "Faz 2 lições",
+    title: t("daily.lessons_2"),
     type: "lessons",
     target: 2,
     iconType: "book",
@@ -67,7 +67,7 @@ export const QUESTS_POOL: Quest[] = [
   },
   {
     id: "lessons_3",
-    title: "O Atleta: 3 Lições",
+    title: t("daily.lessons_3"),
     type: "lessons",
     target: 3,
     iconType: "target",
@@ -76,7 +76,7 @@ export const QUESTS_POOL: Quest[] = [
   },
   {
     id: "lessons_5",
-    title: "Lendário: 5 Lições",
+    title: t("daily.lessons_5"),
     type: "lessons",
     target: 5,
     iconType: "shield",
@@ -85,7 +85,7 @@ export const QUESTS_POOL: Quest[] = [
   },
   {
     id: "xp_20",
-    title: "Aquecimento: 20 XP",
+    title: t("daily.xp_20"),
     type: "xp",
     target: 20,
     iconType: "zap",
@@ -94,7 +94,7 @@ export const QUESTS_POOL: Quest[] = [
   },
   {
     id: "lessons_4",
-    title: "Consistência: 4 lições",
+    title: t("daily.lessons_4"),
     type: "lessons",
     target: 4,
     iconType: "target",
@@ -103,7 +103,12 @@ export const QUESTS_POOL: Quest[] = [
   },
 ];
 
-export function getDailyQuests(userId: string, dateStr: string): Quest[] {
+export function getDailyQuests(
+  userId: string,
+  dateStr: string,
+  t: any,
+): Quest[] {
+  const QUESTS_POOL = getQuestsPool(t);
   // Generate a simple deterministic hash from userId + date
   const seedString = `${userId}-${dateStr}`;
   let hash = 0;

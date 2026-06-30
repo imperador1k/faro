@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import {
   Dialog,
   DialogContent,
@@ -22,6 +24,7 @@ export const NotificationSettingsModal = ({
   children,
   initialEnabled,
 }: Props) => {
+  const t = useTranslations("modals");
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -40,13 +43,15 @@ export const NotificationSettingsModal = ({
               <Settings className="h-12 w-12 text-emerald-500 animate-[spin_6s_linear_infinite]" />
             </div>
             <DialogTitle className="text-3xl md:text-4xl font-black text-center text-stone-700 dark:text-slate-200 tracking-tight leading-tight uppercase">
-              Preferências
+              {t("title")}
             </DialogTitle>
             <div className="h-2 w-16 bg-emerald-400 rounded-full mx-auto my-6" />
             <DialogDescription className="text-center text-stone-500 dark:text-slate-400 font-bold text-lg md:text-xl leading-relaxed px-2">
-              Personaliza a forma como o{" "}
-              <span className="text-emerald-600">MyDuolingo</span> comunica
-              contigo.
+              {t.rich("description", {
+                span: (chunks) => (
+                  <span className="text-emerald-600">{chunks}</span>
+                ),
+              })}
             </DialogDescription>
           </DialogHeader>
 
@@ -56,8 +61,7 @@ export const NotificationSettingsModal = ({
             </div>
 
             <p className="text-center text-stone-400 dark:text-slate-500 dark:text-slate-400 text-sm font-bold px-4">
-              Podes alterar estas definições a qualquer momento para pausar os
-              lembretes.
+              {t("footer")}
             </p>
           </div>
         </div>

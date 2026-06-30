@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { claimDailyChestReward } from "@/actions/user-progress";
 import { toast } from "sonner";
 import { useUISounds } from "@/hooks/use-ui-sounds";
+import { useTranslations } from "next-intl";
 
 type Props = {
   completedQuestsCount: number;
@@ -15,6 +16,7 @@ type Props = {
 export const ChestClient = ({ completedQuestsCount, chestClaimed }: Props) => {
   const [isClaiming, setIsClaiming] = useState(false);
   const { playClick } = useUISounds();
+  const t = useTranslations("quests");
 
   const handleClaimReward = async () => {
     if (completedQuestsCount < 3 || chestClaimed || isClaiming) return;
@@ -55,7 +57,7 @@ export const ChestClient = ({ completedQuestsCount, chestClaimed }: Props) => {
         }
       };
       frame();
-      toast.success(`Ganhaste ${result.reward} XP!`);
+      toast.success(t("reward_gained", { xp: result.reward }));
     }
 
     setIsClaiming(false);
@@ -70,10 +72,10 @@ export const ChestClient = ({ completedQuestsCount, chestClaimed }: Props) => {
         </div>
         <div className="flex-1 text-center sm:text-left">
           <h2 className="text-2xl md:text-3xl font-black text-stone-500 dark:text-slate-400 mb-2">
-            Baú Aberto
+            {t("chest_opened")}
           </h2>
           <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm md:text-base">
-            Volta amanhã para mais missões!
+            {t("come_back_tomorrow")}
           </p>
         </div>
       </div>
@@ -93,10 +95,10 @@ export const ChestClient = ({ completedQuestsCount, chestClaimed }: Props) => {
         <div className="flex-1 text-center sm:text-left flex flex-col gap-3 items-center sm:items-start">
           <div>
             <h2 className="text-2xl md:text-3xl font-black text-amber-500 dark:text-amber-400 mb-1">
-              Baú Pronto!
+              {t("chest_ready")}
             </h2>
             <p className="text-amber-600/80 dark:text-amber-200/80 font-bold text-sm md:text-base">
-              Completaste todas as missões.
+              {t("completed_all_quests")}
             </p>
           </div>
           <button
@@ -104,7 +106,7 @@ export const ChestClient = ({ completedQuestsCount, chestClaimed }: Props) => {
             disabled={isClaiming}
             className="w-full sm:w-auto px-8 py-3 bg-[#FFC800] dark:bg-amber-500 border-2 border-amber-500 dark:border-amber-700 border-b-4 active:border-b-0 active:translate-y-[4px] hover:bg-[#fca311] dark:hover:bg-amber-400 font-black text-white uppercase tracking-wider rounded-2xl transition-all text-lg"
           >
-            {isClaiming ? "A ABRIR..." : "ABRIR BAÚ"}
+            {isClaiming ? t("opening") : t("open_chest")}
           </button>
         </div>
       </div>
@@ -119,10 +121,10 @@ export const ChestClient = ({ completedQuestsCount, chestClaimed }: Props) => {
       </div>
       <div className="flex-1 text-center sm:text-left">
         <h2 className="text-2xl md:text-3xl font-black text-stone-700 dark:text-slate-200 mb-2">
-          Baú Diário
+          {t("daily_chest")}
         </h2>
         <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm md:text-base">
-          Completa 3 missões para abrir o teu tesouro do dia!
+          {t("complete_quests_to_unlock")}
         </p>
         <div className="flex items-center justify-center sm:justify-start gap-2 mt-5">
           {[1, 2, 3].map((step) => (

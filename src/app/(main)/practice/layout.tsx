@@ -3,6 +3,7 @@ import { Lock, Crown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { getTranslations } from "next-intl/server";
 
 export default async function PracticeLayout({
   children,
@@ -10,6 +11,7 @@ export default async function PracticeLayout({
   children: React.ReactNode;
 }) {
   const isPro = await checkSubscription();
+  const t = await getTranslations("practice");
 
   if (!isPro) {
     return (
@@ -30,12 +32,14 @@ export default async function PracticeLayout({
 
           <div className="space-y-4 w-full">
             <h2 className="text-3xl md:text-4xl font-black text-stone-700 dark:text-slate-200 tracking-tight">
-              Prática com IA Bloqueada
+              {t("title")}
             </h2>
             <p className="text-lg font-medium text-stone-500 dark:text-slate-400 leading-relaxed max-w-md mx-auto">
-              Eleva o teu nível com o plano{" "}
-              <span className="font-bold text-amber-500">MyDuolingo PRO</span> e
-              acede à nossa Inteligência Artificial sem limites.
+              {t.rich("description", {
+                strong: (chunks) => (
+                  <span className="font-bold text-amber-500">{chunks}</span>
+                ),
+              })}
             </p>
           </div>
 
@@ -45,7 +49,7 @@ export default async function PracticeLayout({
                 <span className="text-xl">❤️</span>
               </div>
               <span className="font-bold text-stone-600 dark:text-slate-300 text-sm md:text-base">
-                Vidas Ilimitadas
+                {t("unlimited_lives")}
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -53,7 +57,7 @@ export default async function PracticeLayout({
                 <span className="text-xl">🤖</span>
               </div>
               <span className="font-bold text-stone-600 dark:text-slate-300 text-sm md:text-base">
-                Prática Ilimitada com IA (Fala, Escrita e mais)
+                {t("unlimited_ai")}
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -61,7 +65,7 @@ export default async function PracticeLayout({
                 <span className="text-xl">✨</span>
               </div>
               <span className="font-bold text-stone-600 dark:text-slate-300 text-sm md:text-base">
-                Experiência Sem Anúncios
+                {t("ad_free")}
               </span>
             </div>
           </div>
@@ -70,7 +74,7 @@ export default async function PracticeLayout({
             <Link href="/shop" className="w-full">
               <Button className="w-full h-14 bg-amber-400 hover:bg-amber-300 border-b-4 border-amber-500 active:border-b-0 active:translate-y-1 text-white font-black uppercase tracking-widest text-lg flex items-center justify-center gap-2 rounded-2xl transition-all">
                 <Crown className="w-6 h-6 fill-white" />
-                DESBLOQUEAR PRO
+                {t("unlock_pro")}
               </Button>
             </Link>
             <Link href="/learn" className="w-full block mt-4">
@@ -78,7 +82,7 @@ export default async function PracticeLayout({
                 variant="ghost"
                 className="w-full h-12 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-500 dark:text-slate-400 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 font-bold uppercase tracking-widest rounded-2xl transition-colors"
               >
-                Voltar Atrás
+                {t("go_back")}
               </Button>
             </Link>
           </div>

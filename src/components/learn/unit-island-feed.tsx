@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useCallback, useState, useTransition } from "react";
 import { Trophy, ArrowUpCircle, Award, Loader2 } from "lucide-react";
 import { BearDanceLottie } from "@/components/ui/lottie-animation";
@@ -44,6 +46,7 @@ export const UnitIslandFeed = ({
   noHearts: boolean;
   activeCourseId: number;
 }) => {
+  const t = useTranslations("learn");
   const { openModal } = useLessonModalStore();
   const { openModal: openHeartsModal } = useHeartsModalStore();
   const router = useRouter();
@@ -54,11 +57,11 @@ export const UnitIslandFeed = ({
       issueCertificate(activeCourseId)
         .then((res) => {
           if (res.success) {
-            toast.success("Certificado Emitido com Sucesso!");
+            toast.success(t("certificate_success"));
             router.push(`/certificate/${res.certificateId}`);
           }
         })
-        .catch(() => toast.error("Erro ao emitir o certificado."));
+        .catch(() => toast.error(t("certificate_error")));
     });
   };
 
@@ -171,10 +174,10 @@ export const UnitIslandFeed = ({
                 {/* Main Plaque */}
                 <div className="bg-gradient-to-b from-rose-500 to-red-600 px-10 py-5 rounded-2xl border-4 border-rose-300 border-b-[8px] border-b-red-800 shadow-2xl text-center relative w-full">
                   <h2 className="font-black text-white uppercase tracking-[0.2em] text-2xl sm:text-3xl drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] mb-1">
-                    Épico!
+                    {t("epic")}
                   </h2>
                   <p className="font-bold text-rose-100 text-sm sm:text-base drop-shadow-sm uppercase tracking-wider">
-                    Completaste o Curso
+                    {t("completed_course")}
                   </p>
                 </div>
               </div>
@@ -195,7 +198,7 @@ export const UnitIslandFeed = ({
                     ) : (
                       <Award className="w-6 h-6" strokeWidth={3} />
                     )}
-                    Reivindicar Diploma
+                    {t("claim_certificate")}
                   </button>
                 </div>
               )}
@@ -215,7 +218,7 @@ export const UnitIslandFeed = ({
                 className="mt-12 flex flex-col items-center gap-2 group/btn z-20"
               >
                 <span className="font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-sm group-hover/btn:text-sky-500 transition-colors">
-                  Voltar ao início?
+                  {t("back_to_top")}
                 </span>
                 <ArrowUpCircle
                   className="w-10 h-10 text-stone-300 group-hover/btn:text-sky-500 group-hover/btn:-translate-y-2 transition-all duration-300"

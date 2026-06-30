@@ -32,8 +32,9 @@ import {
 import { useFormStatus, useFormState } from "react-dom";
 import { submitSupportTicket } from "@/actions/support";
 import { getLatestReviewsAction } from "@/actions/user-reviews";
-import { DOCS_ARTICLES } from "@/constants/docs";
+import { getDocsArticles, DocArticle } from "@/constants/docs";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
 const initialState = {
@@ -42,7 +43,7 @@ const initialState = {
   success: false,
 };
 
-function SubmitButton() {
+function SubmitButton({ t }: { t: any }) {
   const { pending } = useFormStatus();
 
   return (
@@ -58,16 +59,18 @@ function SubmitButton() {
     >
       {pending ? (
         <>
-          <Loader2 className="w-6 h-6 animate-spin mr-3" />A ENVIAR...
+          <Loader2 className="w-6 h-6 animate-spin mr-3" />
+          {t("sending")}
         </>
       ) : (
-        "ENVIAR MENSAGEM"
+        t("send_message")
       )}
     </button>
   );
 }
 
 export default function SupportPage() {
+  const t = useTranslations("support");
   const [state, formAction] = useFormState(
     submitSupportTicket,
     initialState as any,
@@ -86,7 +89,7 @@ export default function SupportPage() {
 
   // Smart Search State
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<typeof DOCS_ARTICLES>([]);
+  const [searchResults, setSearchResults] = useState<DocArticle[]>([]);
   const [placeholderText, setPlaceholderText] = useState(
     "Procurar no Mural...",
   );
@@ -94,9 +97,9 @@ export default function SupportPage() {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
-        setPlaceholderText("Procurar...");
+        setPlaceholderText(t("search_placeholder_short"));
       } else {
-        setPlaceholderText("Procurar por Ligas, XP, Ofensivas...");
+        setPlaceholderText(t("search_placeholder_long"));
       }
     };
 
@@ -117,13 +120,17 @@ export default function SupportPage() {
     const query = e.target.value;
     setSearchQuery(query);
 
+    const docsArticles = getDocsArticles(t);
+
     if (query.trim().length > 1) {
       const lowerQuery = query.toLowerCase();
-      const filtered = DOCS_ARTICLES.filter(
-        (article) =>
-          article.title.toLowerCase().includes(lowerQuery) ||
-          article.summary.toLowerCase().includes(lowerQuery),
-      ).slice(0, 5); // Limit to top 5 results
+      const filtered = docsArticles
+        .filter(
+          (article: DocArticle) =>
+            article.title.toLowerCase().includes(lowerQuery) ||
+            article.summary.toLowerCase().includes(lowerQuery),
+        )
+        .slice(0, 5); // Limit to top 5 results
       setSearchResults(filtered);
     } else {
       setSearchResults([]);
@@ -132,7 +139,7 @@ export default function SupportPage() {
 
   const copyContactEmail = () => {
     navigator.clipboard.writeText("contacto@miguelweb.dev");
-    toast.success("Endereço de email copiado para a área de transferência!");
+    toast.success(t("copy_email_toast"));
   };
 
   return (
@@ -153,7 +160,7 @@ export default function SupportPage() {
           {/* System Status Indicator */}
           <div
             className="hidden sm:flex items-center gap-3 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl px-5 py-3 shadow-sm font-bold text-sm text-stone-600 dark:text-slate-300 cursor-help hover:-translate-y-1 transition-transform"
-            title="Última verificação há 2 minutos"
+            title={t("last_check")}
           >
             <span className="relative flex h-3.5 w-3.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -174,14 +181,14 @@ export default function SupportPage() {
 
           <div className="relative z-20 flex flex-col items-center justify-center text-center gap-8">
             <div className="bg-white/10 backdrop-blur-xl border border-white/20 text-white font-black tracking-widest uppercase text-xs sm:text-sm px-5 py-2.5 rounded-full flex items-center gap-2 shadow-lg">
-              <LifeBuoy className="w-4 h-4" /> Centro de Apoio ao Estudante
+              <LifeBuoy className="w-4 h-4" /> {t("student_support_center")}
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight drop-shadow-xl max-w-4xl">
-              Como podemos{" "}
+              {t("how_can_we")}{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-400 drop-shadow-sm">
-                ajudar-te
+                {t("help_you")}
               </span>{" "}
-              hoje?
+              {t("today")}
             </h1>
 
             {/* Interactive Search Bar */}
@@ -202,7 +209,7 @@ export default function SupportPage() {
                     href="/docs"
                     className="bg-gradient-to-b from-indigo-500 to-indigo-600 text-white font-bold rounded-full px-4 sm:px-6 py-3 hover:from-indigo-400 hover:to-indigo-500 transition-all h-full flex items-center justify-center shadow-md active:scale-95 border-b-4 border-indigo-700 aspect-square sm:aspect-auto"
                   >
-                    <span className="hidden sm:block">Ler Tudo</span>
+                    <span className="hidden sm:block">{t("read_all")}</span>
                     <ArrowRight className="w-5 h-5 sm:hidden" strokeWidth={3} />
                   </Link>
                 </div>
@@ -211,7 +218,7 @@ export default function SupportPage() {
               {/* Dropdown Results */}
               {searchQuery.trim().length > 1 && searchResults.length > 0 && (
                 <div className="absolute top-full left-0 right-0 mt-4 w-full bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-[100] overflow-hidden flex flex-col text-left animate-in slide-in-from-top-4 fade-in duration-200">
-                  {searchResults.map((result) => (
+                  {searchResults.map((result: DocArticle) => (
                     <Link
                       key={result.id}
                       href={"/docs/" + result.slug}
@@ -232,11 +239,10 @@ export default function SupportPage() {
               {searchQuery.trim().length > 1 && searchResults.length === 0 && (
                 <div className="absolute top-full left-0 right-0 mt-4 w-full bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-[100] p-8 text-center animate-in slide-in-from-top-4 fade-in duration-200">
                   <p className="text-stone-500 dark:text-slate-400 font-bold text-lg">
-                    Nenhum resultado encontrado para "{searchQuery}"
+                    {t("no_results", { query: searchQuery })}
                   </p>
                   <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-medium text-sm mt-1">
-                    Tenta usar termos como "XP", "Ligas", ou navega pelo Mural
-                    Central.
+                    {t("try_using_terms")}
                   </p>
                 </div>
               )}
@@ -257,15 +263,13 @@ export default function SupportPage() {
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div className="max-w-2xl">
               <div className="flex items-center gap-2 text-white/90 font-black text-xs uppercase tracking-widest mb-4">
-                <Sparkles className="w-4 h-4" /> Base de Conhecimento Oficial
+                <Sparkles className="w-4 h-4" /> {t("official_knowledge_base")}
               </div>
               <h2 className="text-3xl md:text-5xl font-[1000] text-white leading-tight mb-3 drop-shadow-sm">
-                A Enciclopédia Académica.
+                {t("academic_encyclopedia")}
               </h2>
               <p className="text-[#d7ffb8] font-bold text-lg lg:text-xl leading-relaxed drop-shadow-sm">
-                Tens dúvidas sobre o motor do jogo? Explora a nossa biblioteca
-                completa de tutoriais de Corações, Ligas, Ofensivas (Streak) e
-                muito mais.
+                {t("encyclopedia_desc")}
               </p>
             </div>
             <div className="w-16 h-16 md:w-20 md:h-20 bg-white dark:bg-slate-900 rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center shrink-0 border-b-4 border-stone-200 dark:border-slate-800 group-hover:bg-[#d7ffb8] group-hover:border-[#b3ffc7] transition-colors shadow-sm cursor-pointer">
@@ -288,15 +292,13 @@ export default function SupportPage() {
               </div>
               <div className="flex flex-col">
                 <span className="bg-emerald-200 text-emerald-800 text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full w-fit mb-2">
-                  Suporte Rápido AI
+                  {t("fast_ai_support")}
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-black text-emerald-800 mb-2 leading-tight">
-                  Fala com o Marco
+                  {t("talk_to_marco")}
                 </h3>
                 <p className="text-emerald-700 font-medium text-base sm:text-lg leading-relaxed">
-                  Resolução instantânea em 99% das questões do dia a dia. Usa o
-                  balão de chat flutuante e tira as tuas dúvidas de forma
-                  interativa.
+                  {t("marco_desc")}
                 </p>
               </div>
             </div>
@@ -308,18 +310,18 @@ export default function SupportPage() {
               <Mail className="w-7 h-7 text-[#1CB0F6]" />
             </div>
             <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-2">
-              Email Direto
+              {t("direct_email")}
             </h3>
             <p className="text-stone-500 dark:text-slate-400 font-medium text-sm mb-6 flex-grow">
-              Problemas complexos? Fala diretamente com os engenheiros humanos
-              da plataforma.
+              {t("direct_email_desc")}
             </p>
 
             <button
               onClick={copyContactEmail}
               className="w-full bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 text-stone-600 dark:text-slate-300 font-bold border-2 border-stone-200 dark:border-slate-800 border-b-4 active:border-b-2 active:translate-y-[2px] rounded-xl py-3 px-4 flex items-center justify-center gap-2 transition-all outline-none"
             >
-              <Copy className="w-4 h-4" /> Copiar Email
+              <Copy className="w-4 h-4" />
+              {t("copy_email")}
             </button>
           </div>
 
@@ -336,8 +338,11 @@ export default function SupportPage() {
               <div className="relative z-10 flex justify-between items-start">
                 <div className="space-y-1">
                   <h3 className="text-2xl font-[1000] text-stone-800 dark:text-slate-100 leading-tight tracking-tight">
-                    Mural da <br />
-                    <span className="text-amber-600">Comunidade</span>
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: t.raw("community_wall"),
+                      }}
+                    />
                   </h3>
                   <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-[0.2em]">
                     Hall of Fame
@@ -400,8 +405,8 @@ export default function SupportPage() {
                   </div>
                   <span className="text-stone-500 dark:text-slate-400 font-bold text-xs mt-1 truncate">
                     {realReviews.length === 1
-                      ? "1 Aluno Avaliou"
-                      : `${realReviews.length || 0} Alunos Avaliaram`}
+                      ? t("one_student_reviewed")
+                      : `${realReviews.length || 0} {t("students_reviewed")}`}
                   </span>
                 </div>
               </div>
@@ -410,8 +415,8 @@ export default function SupportPage() {
                 <div className="flex items-center justify-between bg-stone-50 dark:bg-slate-950 group-hover:bg-amber-50 p-4 rounded-2xl border-2 border-stone-100 group-hover:border-amber-200 transition-colors">
                   <span className="text-stone-600 dark:text-slate-300 group-hover:text-amber-700 font-black text-xs uppercase tracking-widest">
                     {realReviews.length > 0
-                      ? "Ver Avaliações"
-                      : "Dar Primeira Review"}
+                      ? t("view_reviews")
+                      : t("give_first_review")}
                   </span>
                   <ArrowLeft className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-amber-500 rotate-180 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -426,28 +431,28 @@ export default function SupportPage() {
           <div className="flex flex-col gap-6">
             <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6">
               <h3 className="text-base font-black uppercase text-stone-400 dark:text-slate-500 dark:text-slate-400 tracking-widest mb-4 flex items-center gap-2">
-                <FolderKey /> Recursos Oficiais
+                <FolderKey /> {t("official_resources")}
               </h3>
               <div className="flex flex-col gap-2">
                 <LegalLink
                   href="/terms"
                   icon={<FileText />}
-                  text="Termos de Uso"
+                  text={t("terms_of_use")}
                 />
                 <LegalLink
                   href="/privacy"
                   icon={<ShieldCheck />}
-                  text="Privacidade"
+                  text={t("privacy")}
                 />
                 <LegalLink
                   href="/licenses"
                   icon={<Scale />}
-                  text="Licenças (EULA)"
+                  text={t("licenses_eula")}
                 />
                 <LegalLink
                   href="/settings/creator"
                   icon={<UserCircle />}
-                  text="O Criador"
+                  text={t("the_creator")}
                 />
               </div>
             </div>
@@ -463,7 +468,7 @@ export default function SupportPage() {
               <div className="space-y-4 relative z-10">
                 <div>
                   <span className="text-indigo-200 text-xs font-bold block mb-1">
-                    Status do Motor IA
+                    {t("ai_engine_status")}
                   </span>
                   <div className="flex items-center gap-2 text-emerald-300 font-bold border-l-2 border-emerald-400 pl-3">
                     Online (v3.0.4)
@@ -471,7 +476,7 @@ export default function SupportPage() {
                 </div>
                 <div>
                   <span className="text-indigo-200 text-xs font-bold block mb-1">
-                    Uptime Global
+                    {t("global_uptime")}
                   </span>
                   <div className="flex items-center gap-2 text-white font-bold border-l-2 border-indigo-400 pl-3">
                     99.98%
@@ -489,17 +494,16 @@ export default function SupportPage() {
                   <Check className="w-12 h-12 text-green-500 stroke-[4]" />
                 </div>
                 <h2 className="text-3xl font-extrabold text-green-700 mb-3 tracking-tight">
-                  Recebido!
+                  {t("received")}
                 </h2>
                 <p className="text-green-700/80 font-medium text-lg leading-relaxed mb-8">
-                  {state.message} A nossa equipa de engenharia já colocou o teu
-                  reporte na linha de prioridade.
+                  {state.message} {t("received_desc")}
                 </p>
                 <Link
                   href="/learn"
                   className="bg-[#58CC02] text-white border-b-8 border-[#46a302] active:border-b-0 active:translate-y-2 rounded-2xl w-full py-5 font-black text-xl uppercase tracking-widest block transition-all hover:bg-[#68e003]"
                 >
-                  VOLTAR PARA A APP
+                  {t("back_to_app")}
                 </Link>
               </div>
             ) : (
@@ -508,15 +512,14 @@ export default function SupportPage() {
                   <div className="inline-flex items-center gap-2 bg-[#1CB0F6]/10 px-3 py-1.5 rounded-xl border border-[#1CB0F6]/20 mb-4">
                     <div className="w-2 h-2 rounded-full bg-[#1CB0F6] animate-pulse" />
                     <span className="text-[#1CB0F6] font-bold text-xs uppercase tracking-widest">
-                      Portal Seguro
+                      {t("secure_portal")}
                     </span>
                   </div>
                   <h2 className="text-3xl font-black text-stone-800 dark:text-slate-100 mb-2 leading-tight">
-                    Submeter Ticket
+                    {t("submit_ticket")}
                   </h2>
                   <p className="text-stone-500 dark:text-slate-400 font-medium text-lg">
-                    Reporta bugs graves ou sugere melhorias profundas
-                    preenchendo os dados abaixo.
+                    {t("submit_ticket_desc")}
                   </p>
                 </div>
 
@@ -527,11 +530,10 @@ export default function SupportPage() {
                     </div>
                     <div>
                       <h4 className="text-red-800 font-black mb-1">
-                        Ação Requerida
+                        {t("action_required")}
                       </h4>
                       <p className="text-red-700 font-medium text-sm leading-relaxed">
-                        {state.message ||
-                          "Verifica os campos que ficaram por preencher ou incorretos."}
+                        {state.message || t("verify_fields")}
                       </p>
                     </div>
                   </div>
@@ -544,7 +546,7 @@ export default function SupportPage() {
                   tabIndex={-1}
                 >
                   <label htmlFor="user_contact_number">
-                    Número de Telefone Pessoal
+                    {t("personal_phone")}
                   </label>
                   <input
                     type="text"
@@ -561,14 +563,14 @@ export default function SupportPage() {
                       htmlFor="subject"
                       className="text-xs font-black uppercase text-stone-500 dark:text-slate-400 block tracking-widest ml-1 bg-white dark:bg-slate-900 w-fit px-1"
                     >
-                      Título do Problema
+                      {t("problem_title")}
                     </label>
                     <div className="relative">
                       <input
                         type="text"
                         id="subject"
                         name="subject"
-                        placeholder="Resumo em 5 palavras..."
+                        placeholder={t("title_placeholder")}
                         className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-5 pl-12 text-stone-800 dark:text-slate-100 font-bold placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 focus:outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 transition-all text-lg"
                       />
                       <Activity className="absolute top-1/2 -translate-y-1/2 left-4 w-5 h-5 text-stone-300 pointer-events-none" />
@@ -586,13 +588,13 @@ export default function SupportPage() {
                       htmlFor="message"
                       className="text-xs font-black uppercase text-stone-500 dark:text-slate-400 block tracking-widest ml-1 bg-white dark:bg-slate-900 w-fit px-1"
                     >
-                      Descrição Técnica / Passo a Passo
+                      {t("technical_desc")}
                     </label>
                     <textarea
                       id="message"
                       name="message"
                       rows={5}
-                      placeholder="O que esperavas que acontecesse e o que realmente aconteceu?"
+                      placeholder={t("desc_placeholder")}
                       className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-5 text-stone-700 dark:text-slate-200 font-medium placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 focus:outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 resize-none text-base leading-relaxed transition-all"
                     />
                     {state?.errors?.message && (
@@ -604,7 +606,7 @@ export default function SupportPage() {
                   </div>
                 </div>
 
-                <SubmitButton />
+                <SubmitButton t={t} />
               </form>
             )}
           </div>
@@ -613,34 +615,35 @@ export default function SupportPage() {
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-6 border-b-2 border-stone-200 dark:border-slate-800 pb-4">
               <h2 className="text-2xl font-black text-stone-800 dark:text-slate-100 flex items-center gap-2">
-                <HeartHandshake className="w-6 h-6 text-rose-500" /> Autoajuda
+                <HeartHandshake className="w-6 h-6 text-rose-500" />
+                {t("self_help")}
               </h2>
               <span className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 bg-stone-200 dark:bg-slate-700 px-2 py-1 rounded-md">
-                FAQ's TOP 5
+                {t("faq_top_5")}
               </span>
             </div>
 
             <div className="flex flex-col gap-4">
               <FaqItem
-                question="Como subo nas Ligas de Divisão?"
-                answer="Ganha XP (Pontos de Experiência) ao completares com sucesso as tuas lições. No fim da semana, os utilizadores na zona de promoção (luz verde) sobem à próxima Liga global."
+                question={t("faq_1_q")}
+                answer={t("faq_1_a")}
                 icon={
                   <ArrowLeft className="w-4 h-4 text-emerald-500 rotate-90" />
                 }
               />
               <FaqItem
-                question="Porque perdi os meus Copas (Vidas)?"
-                answer="Durante as lições guiadas, respostas incorretas penalizam o teu progresso subtraindo vidas (-1). Se perderes todas as vidas, deves praticar exercícios de revisão anteriores (Corações) ou comprá-las na Store."
+                question={t("faq_2_q")}
+                answer={t("faq_2_a")}
                 icon={<HeartHandshake className="w-4 h-4 text-rose-500" />}
               />
               <FaqItem
-                question="O que é a Ofensiva (Streak)?"
-                answer="A chama dourada mede a quantidade de dias seguidos que concluiste pelo menos uma lição. Caso não possas praticar num dia, ativa um Freeze na loja antecipadamente."
+                question={t("faq_3_q")}
+                answer={t("faq_3_a")}
                 icon={<Zap className="w-4 h-4 text-orange-500" />}
               />
               <FaqItem
-                question="Como ativo o Dark Mode nativo?"
-                answer="Esta versão está imersa numa paleta de luz adaptada aos padrões de educação. O Dark mode encontra-se em desenvolvimento fechado pelos engenheiros."
+                question={t("faq_4_q")}
+                answer={t("faq_4_a")}
                 icon={<Bot className="w-4 h-4 text-indigo-500" />}
               />
             </div>
@@ -649,11 +652,10 @@ export default function SupportPage() {
               <PhoneCall className="w-8 h-8 text-[#1CB0F6] shrink-0" />
               <div>
                 <h4 className="font-black text-stone-800 dark:text-slate-100 text-lg">
-                  Suporte Prioritário
+                  {t("priority_support")}
                 </h4>
                 <p className="text-stone-600 dark:text-slate-300 font-medium text-sm mt-1">
-                  Garantimos resposta em até 2 horas úteis caso reportes bugs de
-                  bloqueios totais de conta.
+                  {t("priority_support_desc")}
                 </p>
               </div>
             </div>

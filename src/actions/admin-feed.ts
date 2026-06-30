@@ -59,7 +59,8 @@ export const updatePostStatus = async (
             },
             {
               role: "user",
-              content: `Title: ${originalPost.title}\nBody: ${originalPost.body}`,
+              content: `Title: ${originalPost.title}
+Body: ${originalPost.body}`,
             },
           ],
           temperature: 0.1,

@@ -5,7 +5,8 @@ import { db } from "@/db/drizzle";
 import { userProgress, userDailyStats } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { getDailyQuests, getQuestProgress } from "@/lib/quests";
-import { ACHIEVEMENTS } from "@/constants/achievements";
+import { getAchievements } from "@/constants/achievements";
+import { getTranslations } from "next-intl/server";
 
 import {
   BookOpen,
@@ -21,7 +22,6 @@ import { cn } from "@/lib/utils";
 import { ChestClient } from "./chest-client";
 import { QuestsHeader } from "@/components/quests/quests-header";
 
-// Map string icon references to Lucide components
 const IconMap: Record<string, React.ElementType> = {
   zap: Zap,
   target: Target,
@@ -37,7 +37,6 @@ export const dynamic = "force-dynamic";
 export default function QuestsPage() {
   return (
     <div className="max-w-5xl mx-auto py-10 px-4 space-y-16 pb-32">
-      {/* Header (Client Component with Modal) */}
       <QuestsHeader />
 
       <Suspense fallback={<QuestsSkeleton />}>
@@ -48,13 +47,13 @@ export default function QuestsPage() {
 }
 
 async function QuestsData() {
+  const t = await getTranslations("quests");
   const { userId } = await auth();
 
   if (!userId) {
     redirect("/");
   }
 
-  // Fetch user progress
   const progress = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
   });
@@ -63,7 +62,6 @@ async function QuestsData() {
     redirect("/");
   }
 
-  // Fetch today's stats for Daily Quests
   const todayStr = new Date().toISOString().split("T")[0];
   const todayStats = await db.query.userDailyStats.findFirst({
     where: and(
@@ -72,8 +70,7 @@ async function QuestsData() {
     ),
   });
 
-  // 1. Generate Deterministic Daily Quests
-  const dailyQuests = getDailyQuests(userId, todayStr).map((quest) => {
+  const dailyQuests = getDailyQuests(userId, todayStr, t).map((quest) => {
     const current = getQuestProgress(
       quest.type,
       (todayStats as any) ?? undefined,
@@ -88,15 +85,13 @@ async function QuestsData() {
     (q) => q.current >= q.target,
   ).length;
 
-  // 2. Evaluate Achievements
-  const evaluatedAchievements = ACHIEVEMENTS.map((achievement) => {
+  const evaluatedAchievements = getAchievements(t).map((achievement) => {
     return {
       ...achievement,
       unlocked: achievement.condition(progress),
     };
   });
 
-  // Sort achievements: Unlocked first, then by title (or keep original order for locked)
   const sortedAchievements = [...evaluatedAchievements].sort((a, b) => {
     if (a.unlocked === b.unlocked) return 0;
     return a.unlocked ? -1 : 1;
@@ -104,16 +99,13 @@ async function QuestsData() {
 
   return (
     <>
-      {/* Section 1: Daily Quests */}
       <section className="space-y-6">
         <div className="bg-gradient-to-b from-stone-50 to-white dark:from-slate-900 dark:to-slate-950 border-4 border-stone-200 dark:border-slate-800 border-b-[12px] rounded-[2.5rem] p-6 md:p-8 relative overflow-hidden shadow-sm">
-          {/* Baú Header (Client Interactive Component) */}
           <ChestClient
             completedQuestsCount={completedQuestsCount}
             chestClaimed={todayStats?.chestClaimed ?? false}
           />
 
-          {/* Quest Items list */}
           <div className="flex flex-col">
             {dailyQuests.map((quest, idx) => {
               const isCompleted = quest.current >= quest.target;
@@ -216,12 +208,11 @@ async function QuestsData() {
         </div>
       </section>
 
-      {/* Section 2: Trophy Room */}
       <section className="space-y-6 pt-4">
         <div className="flex items-center gap-3 px-2 mb-8 mt-12">
           <Crown className="h-10 w-10 text-amber-500 fill-amber-200" />
           <h2 className="text-3xl font-black text-stone-700 dark:text-slate-200 uppercase tracking-tight">
-            Sala de Troféus
+            {t("trophy_room_title")}
           </h2>
         </div>
 
@@ -233,12 +224,10 @@ async function QuestsData() {
                   key={index}
                   className="bg-gradient-to-b from-yellow-50 to-amber-100 dark:from-amber-950/40 dark:to-amber-900/40 border-4 border-amber-200 dark:border-amber-800 border-b-[12px] rounded-[2.5rem] p-6 flex flex-col items-center text-center transition-all hover:-translate-y-2 hover:shadow-xl cursor-pointer group shadow-sm relative overflow-hidden"
                 >
-                  {/* Background Glow */}
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-amber-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 group-hover:opacity-60 transition-opacity pointer-events-none"></div>
 
                   <div className="text-6xl mb-4 drop-shadow-[0_4px_10px_rgba(251,191,36,0.6)] group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300 relative z-10">
                     {trophy.icon}
-                    {/* Sparkles effect container */}
                     <div className="absolute inset-0 bg-[url('/sparkles.svg')] opacity-0 group-hover:opacity-100 animate-pulse bg-cover pointer-events-none mix-blend-screen" />
                   </div>
                   <h3 className="font-black text-xl md:text-2xl text-amber-800 dark:text-amber-500 tracking-tight leading-tight mb-2 relative z-10">
@@ -263,7 +252,7 @@ async function QuestsData() {
                   </h3>
                   <div className="mt-auto px-4 py-2 bg-stone-200 dark:bg-slate-700 rounded-[1rem] border-b-4 border-stone-300 dark:border-slate-700">
                     <p className="text-[10px] uppercase tracking-widest font-black text-stone-500 dark:text-slate-400 leading-tight">
-                      Bloqueado
+                      {t("locked_status")}
                     </p>
                   </div>
                 </div>
@@ -276,21 +265,17 @@ async function QuestsData() {
   );
 }
 
-// --- SKELETON FALLBACK ---
 const QuestsSkeleton = () => {
   return (
     <div className="animate-in fade-in duration-500 w-full space-y-6">
-      {/* Daily Quests Skeleton */}
       <section className="space-y-6">
         <div className="bg-stone-50 dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 md:p-8 relative overflow-hidden shadow-sm">
-          {/* Chest Header Skeleton */}
           <div className="flex flex-col items-center justify-center mb-8 border-b-2 border-stone-100 pb-8">
             <div className="w-24 h-24 bg-stone-200 dark:bg-slate-700 rounded-3xl mb-4 animate-pulse" />
             <div className="h-6 w-48 bg-stone-200 dark:bg-slate-700 rounded-lg animate-pulse mb-2" />
             <div className="h-4 w-32 bg-stone-200 dark:bg-slate-700 rounded-md animate-pulse" />
           </div>
 
-          {/* Quest Items list Skeleton */}
           <div className="flex flex-col">
             {[1, 2, 3].map((i) => (
               <div
@@ -313,7 +298,6 @@ const QuestsSkeleton = () => {
         </div>
       </section>
 
-      {/* Trophy Room Skeleton */}
       <section className="space-y-6 pt-4">
         <div className="flex items-center gap-3 px-2 mb-8">
           <div className="h-8 w-8 rounded-full bg-stone-200 dark:bg-slate-700 animate-pulse" />

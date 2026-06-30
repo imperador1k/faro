@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 type Props = {
   title: string;
@@ -19,6 +20,8 @@ export const EmptyState = ({
   actionText,
   onAction,
 }: Props) => {
+  const t = useTranslations("ui");
+
   return (
     <div className="flex flex-col items-center justify-center p-8 text-center bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] shadow-sm max-w-2xl mx-auto my-8 animate-in fade-in zoom-in duration-300">
       <motion.div
@@ -32,7 +35,12 @@ export const EmptyState = ({
         }}
         className="relative w-48 h-48 mb-8"
       >
-        <Image src={imageSrc} alt="Mascot" fill className="object-contain" />
+        <Image
+          src={imageSrc}
+          alt={t("mascot_alt")}
+          fill
+          className="object-contain"
+        />
       </motion.div>
 
       <h2 className="text-3xl font-black text-stone-700 dark:text-slate-200 mb-4 tracking-tight">

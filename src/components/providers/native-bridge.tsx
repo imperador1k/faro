@@ -6,6 +6,7 @@ import { App } from "@capacitor/app";
 import { Browser } from "@capacitor/browser";
 import { Capacitor } from "@capacitor/core";
 import { syncNativeLanguage } from "@/actions/user-progress";
+import { useTranslations } from "next-intl";
 
 /**
  * NativeBridge — Handles Android-specific behaviors:
@@ -18,6 +19,7 @@ import { syncNativeLanguage } from "@/actions/user-progress";
  */
 export function NativeBridge() {
   const pathname = usePathname();
+  const t = useTranslations("providers");
 
   useEffect(() => {
     // ── Native Language Sync ─────────────────────────────────────────
@@ -31,10 +33,7 @@ export function NativeBridge() {
           if (res?.success) {
             localStorage.setItem("myduolingo_native_lang", currentLang);
             if (process.env.NODE_ENV !== "production") {
-              console.log(
-                "[NativeBridge] Synced native language:",
-                currentLang,
-              );
+              console.log(t("native_bridge_sync_success"), currentLang);
             }
           }
         } catch (e) {
@@ -43,7 +42,7 @@ export function NativeBridge() {
       }
     };
     syncLang();
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     const isCapacitor = Capacitor.isNativePlatform();
@@ -61,7 +60,7 @@ export function NativeBridge() {
       // --- Tauri Desktop Handler ---
       if (isTauri) {
         if (process.env.NODE_ENV !== "production")
-          console.log("[NativeBridge] Tauri Desktop environment detected.");
+          console.log(t("tauri_env_detected"));
 
         // Listen for deep link events (single instance intercept)
         const { listen } = await import("@tauri-apps/api/event");
@@ -79,7 +78,7 @@ export function NativeBridge() {
 
             if (window.location.href !== targetUrl) {
               if (process.env.NODE_ENV !== "production")
-                console.log("[Tauri] Bouncing to:", targetUrl);
+                console.log(t("tauri_bounce_to"), targetUrl);
               window.location.href = targetUrl;
             }
           }
@@ -88,7 +87,7 @@ export function NativeBridge() {
         // Listen for direct deep link opens
         onOpenUrlTauri((urls) => {
           if (process.env.NODE_ENV !== "production")
-            console.log("[Tauri] Deep link received:", urls);
+            console.log(t("tauri_deep_link_received"), urls);
           const url = urls.find((u) => u.startsWith("myduolingo://"));
           if (url) {
             const currentOrigin = window.location.origin;
@@ -97,7 +96,7 @@ export function NativeBridge() {
 
             if (window.location.href !== targetUrl) {
               if (process.env.NODE_ENV !== "production")
-                console.log("[Tauri] Bouncing to:", targetUrl);
+                console.log(t("tauri_bounce_to"), targetUrl);
               window.location.href = targetUrl;
             }
           }
@@ -108,7 +107,7 @@ export function NativeBridge() {
       if (Capacitor.isNativePlatform()) {
         await App.addListener("appUrlOpen", async (data) => {
           if (process.env.NODE_ENV !== "production")
-            console.log("[NativeBridge] App opened with URL:", data.url);
+            console.log(t("capacitor_app_opened"), data.url);
 
           Browser.close().catch(() => {});
 
@@ -119,9 +118,7 @@ export function NativeBridge() {
             const path = "/" + fakeUrl.pathname.replace(/^\/+/, "");
             const targetUrl = `${window.location.origin}${path}${fakeUrl.search}${fakeUrl.hash}`;
             if (process.env.NODE_ENV !== "production")
-              console.log(
-                `[NativeBridge] OAuth bounce → full reload: ${targetUrl}`,
-              );
+              console.log(t("capacitor_oauth_bounce"));
             window.location.href = targetUrl;
             return;
           }
@@ -130,7 +127,7 @@ export function NativeBridge() {
             const url = new URL(data.url);
             window.location.href = url.pathname + url.search + url.hash;
           } catch {
-            console.error("[NativeBridge] Failed to parse URL:", data.url);
+            console.error(t("capacitor_url_parse_error"), data.url);
           }
         });
       }
@@ -161,7 +158,7 @@ export function NativeBridge() {
         App.removeAllListeners();
       }
     };
-  }, [pathname]);
+  }, [pathname, t]);
 
   return null;
 }

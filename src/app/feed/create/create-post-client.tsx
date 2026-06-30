@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { createUserPost } from "@/actions/create-post";
 import { Upload, X, Send, Image as ImageIcon, ChevronLeft } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export const CreatePostClient = () => {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const t = useTranslations("Feed");
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -25,7 +27,7 @@ export const CreatePostClient = () => {
 
     if (file.size > 5 * 1024 * 1024) {
       // 5MB limit
-      setError("A imagem não pode ter mais de 5MB.");
+      setError(t("image_size_error"));
       return;
     }
 
@@ -40,13 +42,13 @@ export const CreatePostClient = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !body) {
-      setError("O título e o texto são obrigatórios.");
+      setError(t("title_body_required_error"));
       return;
     }
 
     const wordCount = body.trim().split(/\s+/).length;
     if (wordCount < 10) {
-      setError("O post tem de ter no mínimo 10 palavras.");
+      setError(t("min_words_error"));
       return;
     }
 
@@ -69,7 +71,7 @@ export const CreatePostClient = () => {
         router.push("/feed");
       }, 3000);
     } else {
-      setError(res.error || "Erro desconhecido.");
+      setError(res.error || t("unknown_error"));
     }
   };
 
@@ -80,11 +82,10 @@ export const CreatePostClient = () => {
           <Send className="w-10 h-10" />
         </div>
         <h2 className="text-3xl font-black text-slate-800 dark:text-white mb-4">
-          Post Enviado!
+          {t("post_sent_title")}
         </h2>
         <p className="text-slate-500 dark:text-slate-400 font-medium">
-          O teu post foi enviado para moderação. Assim que for aprovado, vai
-          aparecer no Feed para toda a gente!
+          {t("post_sent_description")}
         </p>
       </div>
     );
@@ -101,11 +102,10 @@ export const CreatePostClient = () => {
         </button>
         <div>
           <h1 className="text-3xl font-black text-slate-800 dark:text-white">
-            Criar Nova Curiosidade
+            {t("create_new_curiosity_title")}
           </h1>
           <p className="text-slate-500 dark:text-slate-400 mt-2 font-medium">
-            Partilha uma curiosidade incrível com a comunidade. Todos os posts
-            são validados antes de aparecerem.
+            {t("create_new_curiosity_description")}
           </p>
         </div>
       </div>
@@ -120,7 +120,7 @@ export const CreatePostClient = () => {
         {/* Image Upload Area */}
         <div className="flex flex-col gap-y-2">
           <label className="text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-            Imagem de Fundo (Opcional)
+            {t("background_image_label")}
           </label>
           <input
             type="file"
@@ -144,14 +144,14 @@ export const CreatePostClient = () => {
                   onClick={() => fileInputRef.current?.click()}
                   className="bg-white text-slate-900 px-4 py-2 rounded-xl font-bold text-sm hover:scale-105 transition-transform"
                 >
-                  Mudar
+                  {t("change_image_button")}
                 </button>
                 <button
                   type="button"
                   onClick={() => setImageBase64(null)}
                   className="bg-rose-500 text-white px-4 py-2 rounded-xl font-bold text-sm hover:scale-105 transition-transform"
                 >
-                  Remover
+                  {t("remove_image_button")}
                 </button>
               </div>
             </div>
@@ -164,32 +164,32 @@ export const CreatePostClient = () => {
               <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-full shadow-sm flex items-center justify-center">
                 <Upload className="w-8 h-8" />
               </div>
-              <span className="font-bold">Clica para enviar uma imagem</span>
+              <span className="font-bold">{t("upload_image_placeholder")}</span>
             </button>
           )}
         </div>
 
         <div className="flex flex-col gap-y-2">
           <label className="text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-            Título
+            {t("title_label")}
           </label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Ex: O segredo da Torre Eiffel"
+            placeholder={t("title_placeholder")}
             className="w-full bg-stone-100 dark:bg-slate-800 border-2 border-transparent focus:border-sky-500 rounded-xl px-4 py-4 font-bold text-slate-800 dark:text-white outline-none transition-colors"
           />
         </div>
 
         <div className="flex flex-col gap-y-2">
           <label className="text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-            Texto (Curiosidade)
+            {t("body_label")}
           </label>
           <textarea
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            placeholder="Sabias que a Torre Eiffel encolhe cerca de 15 cm no inverno por causa do frio?"
+            placeholder={t("body_placeholder")}
             rows={4}
             className="w-full bg-stone-100 dark:bg-slate-800 border-2 border-transparent focus:border-sky-500 rounded-xl px-4 py-4 font-bold text-slate-800 dark:text-white outline-none transition-colors resize-none"
           />
@@ -198,18 +198,18 @@ export const CreatePostClient = () => {
         <div>
           <div className="flex flex-col gap-y-2">
             <label className="text-sm font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-              Categoria
+              {t("category_label")}
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="w-full bg-stone-100 dark:bg-slate-800 border-2 border-transparent focus:border-sky-500 rounded-xl px-4 py-4 font-bold text-slate-800 dark:text-white outline-none transition-colors cursor-pointer"
             >
-              <option value="Curiosidade">Curiosidade</option>
-              <option value="História">História</option>
-              <option value="Ciência">Ciência</option>
-              <option value="Cultura">Cultura</option>
-              <option value="Tecnologia">Tecnologia</option>
+              <option value="Curiosidade">{t("category_curiosity")}</option>
+              <option value="História">{t("category_history")}</option>
+              <option value="Ciência">{t("category_science")}</option>
+              <option value="Cultura">{t("category_culture")}</option>
+              <option value="Tecnologia">{t("category_technology")}</option>
             </select>
           </div>
         </div>
@@ -219,7 +219,7 @@ export const CreatePostClient = () => {
           disabled={isSubmitting}
           className="w-full mt-4 bg-[#1CB0F6] hover:bg-[#1899D6] active:bg-[#1582B7] text-white px-8 py-5 rounded-2xl font-black uppercase tracking-wider transition-all border-b-4 border-[#0092d6] active:border-b-0 active:translate-y-[4px] disabled:opacity-50 flex items-center justify-center gap-x-2"
         >
-          {isSubmitting ? "A Enviar..." : "Enviar para Aprovação"}
+          {isSubmitting ? t("submitting_button_text") : t("submit_button_text")}
         </button>
       </form>
     </div>

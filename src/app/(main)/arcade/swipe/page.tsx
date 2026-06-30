@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { VOCAB_DICTIONARY } from "@/constants/dictionary";
 import { cn } from "@/lib/utils";
@@ -20,6 +22,7 @@ type CardData = {
 const GAME_TIME = 60; // seconds
 
 export default function VocabularySwipe() {
+  const t = useTranslations("arcade");
   const router = useRouter();
   const { playClick, playReward, playPop, playFahh } = useUISounds();
 
@@ -157,15 +160,15 @@ export default function VocabularySwipe() {
         <div className="bg-amber-100 border-2 border-amber-300 border-b-8 rounded-3xl p-8 w-full flex flex-col items-center">
           <Trophy className="h-20 w-20 text-amber-500 fill-amber-300 mb-6 drop-shadow-md" />
           <h1 className="text-4xl font-black text-amber-700 uppercase mb-2">
-            Tempo Esgotado!
+            {t("time_out")}
           </h1>
           <p className="font-bold text-amber-600/80 mb-8">
-            Bom treino reflexo!
+            {t("reflex_training")}
           </p>
 
           <div className="bg-white dark:bg-slate-900 rounded-2xl w-full p-6 flex flex-col items-center border-2 border-amber-200 border-b-4 mb-8">
             <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-sm mb-2">
-              Pontuação Total
+              {t("total_score")}
             </span>
             <span className="text-6xl font-black text-amber-500">{score}</span>
           </div>
@@ -174,7 +177,7 @@ export default function VocabularySwipe() {
             onClick={() => router.push("/arcade")}
             className="w-full py-4 bg-amber-500 hover:bg-amber-600 text-white font-black text-xl uppercase tracking-widest rounded-2xl border-2 border-amber-600 border-b-8 active:border-b-2 active:translate-y-[6px] transition-all"
           >
-            Voltar ao Arcade
+            {t("back_to_arcade")}
           </button>
         </div>
       </div>
@@ -198,12 +201,12 @@ export default function VocabularySwipe() {
           onClick={() => router.push("/arcade")}
           className="text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 font-bold uppercase text-sm tracking-wider"
         >
-          &larr; Sair
+          &larr; {t("exit")}
         </button>
         <div className="flex gap-3">
           <div className="flex flex-col items-center bg-stone-100 dark:bg-slate-800 px-4 py-2 rounded-2xl border-2 border-stone-200 dark:border-slate-800">
             <span className="text-[10px] font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase">
-              Tempo
+              {t("time")}
             </span>
             <span
               className={cn(
@@ -219,7 +222,7 @@ export default function VocabularySwipe() {
           {combo > 1 && (
             <div className="flex flex-col items-center bg-orange-100 px-4 py-2 rounded-2xl border-2 border-orange-200 animate-in zoom-in">
               <span className="text-[10px] font-black text-orange-400 uppercase flex items-center gap-1">
-                <Flame className="h-3 w-3 fill-orange-400" /> Combo
+                <Flame className="h-3 w-3 fill-orange-400" /> {t("combo")}
               </span>
               <span className="font-black text-xl text-orange-500">
                 x{combo}
@@ -318,8 +321,8 @@ export default function VocabularySwipe() {
       {/* Instruction Footer */}
       <div className="text-center">
         <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm tracking-wide">
-          Mentira (Esquerda) <span className="mx-2">&bull;</span> Verdade
-          (Direita)
+          {t("false_left")} <span className="mx-2">&bull;</span>{" "}
+          {t("true_right")}
         </p>
       </div>
     </div>

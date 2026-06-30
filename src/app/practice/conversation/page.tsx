@@ -4,27 +4,29 @@ import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { CallRoomClient } from "./CallRoomClient";
+import { getTranslations } from "next-intl/server";
 
-export const metadata = {
-    title: "Sessão de Conversação | Duolingo Clone",
-};
+export async function generateMetadata() {
+  const t = await getTranslations("practice_page");
+  return {
+    title: t("conversation_title"),
+  };
+}
 
 export default async function ConversationPage() {
-    const { userId } = await auth();
+  const { userId } = await auth();
 
-    if (!userId) {
-        redirect("/");
-    }
+  if (!userId) {
+    redirect("/");
+  }
 
-    const progress = await db.query.userProgress.findFirst({
-        where: eq(userProgress.userId, userId),
-    });
+  const progress = await db.query.userProgress.findFirst({
+    where: eq(userProgress.userId, userId),
+  });
 
-    if (!progress) {
-        redirect("/");
-    }
+  if (!progress) {
+    redirect("/");
+  }
 
-    return (
-        <CallRoomClient activeLanguage={progress.activeLanguage} />
-    );
+  return <CallRoomClient activeLanguage={progress.activeLanguage} />;
 }

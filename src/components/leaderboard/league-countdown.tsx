@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useEffect } from "react";
 import { Hourglass, Clock, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -43,6 +45,7 @@ type Props = {
 };
 
 export function LeagueCountdown({ variant = "card" }: Props) {
+  const t = useTranslations("leaderboard");
   // Start as null to prevent SSR/hydration mismatch
   const [timeLeft, setTimeLeft] = useState<ReturnType<
     typeof getTimeUntilSunday
@@ -144,7 +147,7 @@ export function LeagueCountdown({ variant = "card" }: Props) {
                   : "text-stone-400 dark:text-slate-500 dark:text-slate-400",
               )}
             >
-              Contagem Decrescente
+              {t("countdown")}
             </span>
             <h3
               className={cn(
@@ -154,7 +157,7 @@ export function LeagueCountdown({ variant = "card" }: Props) {
                   : "text-stone-600 dark:text-slate-300",
               )}
             >
-              A Liga termina em:
+              {t("league_ends")}
             </h3>
           </div>
         </div>
@@ -168,18 +171,18 @@ export function LeagueCountdown({ variant = "card" }: Props) {
               {timeLeft.days > 0 && (
                 <TimeSegment
                   value={timeLeft.days}
-                  label="dias"
+                  label={t("days")}
                   urgent={isUrgent}
                 />
               )}
               <TimeSegment
                 value={timeLeft.hours}
-                label="horas"
+                label={t("hours")}
                 urgent={isUrgent}
               />
               <TimeSegment
                 value={timeLeft.minutes}
-                label="min"
+                label={t("minutes")}
                 urgent={isUrgent}
               />
             </>
@@ -190,7 +193,7 @@ export function LeagueCountdown({ variant = "card" }: Props) {
           <div className="mt-2 flex items-center gap-1.5 px-3 py-1 bg-rose-500 rounded-full border-b-2 border-rose-700 animate-bounce">
             <Zap className="h-3 w-3 text-white fill-white" />
             <span className="text-[9px] font-black text-white uppercase tracking-widest">
-              Corrida Final!
+              {t("final_race")}
             </span>
           </div>
         )}

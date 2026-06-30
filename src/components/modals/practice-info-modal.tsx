@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export const PracticeInfoModal = ({ isOpen, onOpenChange }: Props) => {
+  const t = useTranslations("modals");
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -50,18 +52,18 @@ export const PracticeInfoModal = ({ isOpen, onOpenChange }: Props) => {
             </div>
 
             <DialogTitle className="text-3xl font-black text-white text-center tracking-tight drop-shadow-md relative z-10 uppercase">
-              Área de Prática
+              {t("practice_area")}
             </DialogTitle>
           </DialogHeader>
 
           {/* Content Area */}
           <div className="flex flex-col items-center justify-center gap-6 p-8 w-full -mt-6 bg-white dark:bg-slate-900 rounded-t-[2.5rem] relative z-20">
             <p className="text-[15px] font-bold text-stone-500 dark:text-slate-400 text-center leading-relaxed">
-              Descobre o poder da nossa{" "}
-              <span className="text-indigo-500 font-black">
-                Inteligência Artificial
-              </span>{" "}
-              e acelera a tua fluência com exercícios direcionados:
+              {t.rich("description", {
+                highlight: (chunks) => (
+                  <span className="text-indigo-500 font-black">{chunks}</span>
+                ),
+              })}
             </p>
 
             <div className="flex flex-col gap-3 w-full">
@@ -72,10 +74,10 @@ export const PracticeInfoModal = ({ isOpen, onOpenChange }: Props) => {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-sky-700 uppercase tracking-wider text-sm">
-                    Escrita & Leitura
+                    {t("writing_reading_title")}
                   </span>
                   <span className="text-xs font-bold text-sky-600/70">
-                    A IA corrige os teus textos e analisa a tua compreensão.
+                    {t("writing_reading_desc")}
                   </span>
                 </div>
               </div>
@@ -87,10 +89,10 @@ export const PracticeInfoModal = ({ isOpen, onOpenChange }: Props) => {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-rose-700 uppercase tracking-wider text-sm">
-                    Fala & Escuta
+                    {t("listening_speaking_title")}
                   </span>
                   <span className="text-xs font-bold text-rose-600/70">
-                    Treina o ouvido e recebe dicas de pronúncia.
+                    {t("listening_speaking_desc")}
                   </span>
                 </div>
               </div>
@@ -102,10 +104,10 @@ export const PracticeInfoModal = ({ isOpen, onOpenChange }: Props) => {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-indigo-700 uppercase tracking-wider text-sm">
-                    Conversação Fluída
+                    {t("fluent_conv_title")}
                   </span>
                   <span className="text-xs font-bold text-indigo-600/70">
-                    Fala em tempo real como se estivesses com um nativo!
+                    {t("fluent_conv_desc")}
                   </span>
                 </div>
               </div>
@@ -116,7 +118,7 @@ export const PracticeInfoModal = ({ isOpen, onOpenChange }: Props) => {
                 onClick={() => onOpenChange(false)}
                 className="w-full py-4 bg-[#1CB0F6] hover:bg-[#1899D6] text-white font-black text-[15px] uppercase tracking-widest rounded-2xl border-b-4 border-[#1899D6] active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center"
               >
-                VAMOS PRATICAR!
+                {t("lets_practice")}
               </button>
             </div>
           </div>

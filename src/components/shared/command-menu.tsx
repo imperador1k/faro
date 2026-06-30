@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Command } from "cmdk";
+import { useTranslations } from "next-intl";
 import {
   Home,
   BookOpen,
@@ -25,6 +26,7 @@ import {
 export function CommandMenu() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const t = useTranslations("shared");
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -48,7 +50,7 @@ export function CommandMenu() {
     <Command.Dialog
       open={open}
       onOpenChange={setOpen}
-      label="Menu de Navegação Global"
+      label={t("navigation_menu_label")}
       className="fixed inset-0 z-overlay flex items-start justify-center px-4 py-4 md:py-[15vh] bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300"
     >
       <div className="w-full max-w-xl bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl rounded-[2rem] shadow-[0_0_50px_-12px_rgba(0,0,0,0.25)] overflow-hidden border-2 border-slate-200/60 dark:border-slate-800/60 antialiased font-sans flex flex-col animate-in zoom-in-95 slide-in-from-top-4 duration-300">
@@ -56,7 +58,7 @@ export function CommandMenu() {
           <Search className="w-6 h-6 text-slate-400 mr-3 shrink-0" />
           <Command.Input
             autoFocus
-            placeholder="Pesquisa rápida... (Aprender, Loja, Perfil)"
+            placeholder={t("search_placeholder")}
             className="w-full flex-1 bg-transparent py-4 outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 font-bold text-lg"
           />
           <div className="hidden md:flex items-center gap-1 ml-2">
@@ -73,17 +75,17 @@ export function CommandMenu() {
             </div>
             <div>
               <p className="text-slate-800 dark:text-slate-100 font-bold text-lg">
-                Nada encontrado por aqui
+                {t("no_results_title")}
               </p>
               <p className="text-slate-500 dark:text-slate-400 font-medium text-sm">
-                Tenta pesquisar por "Loja" ou "Estatísticas"
+                {t("no_results_subtitle")}
               </p>
             </div>
           </Command.Empty>
 
           <div className="flex flex-col gap-2">
             <Command.Group
-              heading="Aprender"
+              heading={t("group_learn")}
               className="text-[11px] font-black text-slate-400 uppercase tracking-[0.1em] px-3 py-3"
             >
               <CommandItem
@@ -92,7 +94,7 @@ export function CommandMenu() {
                 color="text-sky-500"
                 bgColor="bg-sky-50 dark:bg-sky-500/20"
               >
-                Início / Aprender
+                {t("nav_start_learn")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/practice"))}
@@ -100,7 +102,7 @@ export function CommandMenu() {
                 color="text-emerald-500"
                 bgColor="bg-emerald-50 dark:bg-emerald-500/20"
               >
-                Praticar AI
+                {t("nav_practice")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/courses"))}
@@ -108,7 +110,7 @@ export function CommandMenu() {
                 color="text-amber-500"
                 bgColor="bg-amber-50 dark:bg-amber-500/20"
               >
-                Meus Cursos
+                {t("nav_my_courses")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/arcade"))}
@@ -116,7 +118,7 @@ export function CommandMenu() {
                 color="text-pink-500"
                 bgColor="bg-pink-50 dark:bg-pink-500/20"
               >
-                Arcade / Jogos
+                {t("nav_arcade")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/evaluation"))}
@@ -124,12 +126,12 @@ export function CommandMenu() {
                 color="text-indigo-500"
                 bgColor="bg-indigo-50 dark:bg-indigo-500/20"
               >
-                Avaliação
+                {t("nav_evaluation")}
               </CommandItem>
             </Command.Group>
 
             <Command.Group
-              heading="O Teu Progresso"
+              heading={t("group_progress")}
               className="text-[11px] font-black text-slate-400 uppercase tracking-[0.1em] px-3 py-3 mt-2"
             >
               <CommandItem
@@ -138,7 +140,7 @@ export function CommandMenu() {
                 color="text-orange-500"
                 bgColor="bg-orange-50 dark:bg-orange-500/20"
               >
-                O meu Perfil
+                {t("nav_profile")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/analytics"))}
@@ -146,7 +148,7 @@ export function CommandMenu() {
                 color="text-purple-500"
                 bgColor="bg-purple-50 dark:bg-purple-500/20"
               >
-                Estatísticas Detalhadas
+                {t("nav_analytics")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/leaderboard"))}
@@ -154,7 +156,7 @@ export function CommandMenu() {
                 color="text-yellow-500"
                 bgColor="bg-yellow-50 dark:bg-yellow-500/20"
               >
-                Ranking / Classificação
+                {t("nav_leaderboard")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/quests"))}
@@ -162,7 +164,7 @@ export function CommandMenu() {
                 color="text-rose-500"
                 bgColor="bg-rose-50 dark:bg-rose-500/20"
               >
-                Missões / Quests
+                {t("nav_quests")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/vocabulary"))}
@@ -170,12 +172,12 @@ export function CommandMenu() {
                 color="text-rose-500"
                 bgColor="bg-rose-50 dark:bg-rose-500/20"
               >
-                Cofre de Vocabulário
+                {t("nav_vocabulary")}
               </CommandItem>
             </Command.Group>
 
             <Command.Group
-              heading="Comunidade & Configurações"
+              heading={t("group_community")}
               className="text-[11px] font-black text-slate-400 uppercase tracking-[0.1em] px-3 py-3 mt-2"
             >
               <CommandItem
@@ -184,7 +186,7 @@ export function CommandMenu() {
                 color="text-blue-500"
                 bgColor="bg-blue-50 dark:bg-blue-500/20"
               >
-                Amigos & Desafios
+                {t("nav_friends")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/notifications"))}
@@ -192,7 +194,7 @@ export function CommandMenu() {
                 color="text-pink-500"
                 bgColor="bg-pink-50 dark:bg-pink-500/20"
               >
-                Notificações
+                {t("nav_notifications")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/messages"))}
@@ -200,7 +202,7 @@ export function CommandMenu() {
                 color="text-cyan-500"
                 bgColor="bg-cyan-50 dark:bg-cyan-500/20"
               >
-                Mensagens Privadas
+                {t("nav_messages")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/shop"))}
@@ -208,7 +210,7 @@ export function CommandMenu() {
                 color="text-violet-500"
                 bgColor="bg-violet-50 dark:bg-violet-500/20"
               >
-                Loja de Itens
+                {t("nav_shop")}
               </CommandItem>
               <CommandItem
                 onSelect={() => runCommand(() => router.push("/settings"))}
@@ -216,7 +218,7 @@ export function CommandMenu() {
                 color="text-slate-600"
                 bgColor="bg-slate-100 dark:bg-slate-800"
               >
-                Definições da Conta
+                {t("nav_settings")}
               </CommandItem>
             </Command.Group>
           </div>
@@ -228,16 +230,16 @@ export function CommandMenu() {
               <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded shadow-sm">
                 ↑↓
               </kbd>{" "}
-              Navegar
+              {t("hint_navigate")}
             </span>
             <span className="flex items-center gap-1.5">
               <kbd className="px-1.5 py-0.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded shadow-sm">
                 ENTER
               </kbd>{" "}
-              Selecionar
+              {t("hint_select")}
             </span>
           </div>
-          <span className="mr-2">Duolingo Smart Search</span>
+          <span className="mr-2">{t("brand_footer")}</span>
         </div>
       </div>
     </Command.Dialog>

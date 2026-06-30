@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Flame } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   open: boolean;
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export const StreakModal = ({ open, onOpenChange, streak, variant }: Props) => {
+  const t = useTranslations("modals");
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
 
@@ -31,25 +33,29 @@ export const StreakModal = ({ open, onOpenChange, streak, variant }: Props) => {
 
   if (!isClient) return null;
 
-  const title =
-    variant === "gained" ? "Streak estendida!" : "Streak perdida...";
+  const title = variant === "gained" ? t("streak_extended") : t("streak_lost");
   const description =
-    variant === "gained"
-      ? "Estás a queimar! 🔥 Continua assim para bateres o teu recorde."
-      : "Oh não! Esqueceste-te de praticar ontem. A tua streak voltou a 0.";
+    variant === "gained" ? t("streak_gained_desc") : t("streak_lost_desc");
 
   const flameColor =
     variant === "gained" ? "text-orange-500" : "text-slate-400";
   const flameFill = variant === "gained" ? "fill-orange-500" : "fill-slate-200";
 
-  const days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  const days = [
+    t("sun"),
+    t("mon"),
+    t("tue"),
+    t("wed"),
+    t("thu"),
+    t("fri"),
+    t("sat"),
+  ];
   const todayIndex = new Date().getDay();
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800">
         <div className="flex flex-col items-center gap-6 py-6 text-center text-slate-700 dark:text-slate-200">
-          {/* Visual: Flame + Count */}
           <div className="relative flex flex-col items-center justify-center">
             <div
               className={`relative mb-2 ${variant === "gained" ? "animate-bounce" : ""}`}
@@ -64,16 +70,13 @@ export const StreakModal = ({ open, onOpenChange, streak, variant }: Props) => {
                 {streak}
               </span>
               <span className="text-xl font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                Dias de Streak
+                {t("days_streak")}
               </span>
             </div>
           </div>
 
-          {/* Week Row */}
           <div className="flex w-full justify-between px-4">
             {days.map((day, i) => {
-              // Simple logic: if today, highlight.
-              // In a real app, we'd check history.
               const isActive = i <= todayIndex && variant === "gained";
               const isToday = i === todayIndex;
 
@@ -110,7 +113,7 @@ export const StreakModal = ({ open, onOpenChange, streak, variant }: Props) => {
             size="lg"
             onClick={() => onOpenChange(false)}
           >
-            Continuar
+            {t("continue")}
           </Button>
         </DialogFooter>
       </DialogContent>

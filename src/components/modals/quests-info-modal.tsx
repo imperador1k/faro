@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useEffect, useState } from "react";
 import {
   Dialog,
@@ -16,6 +18,7 @@ interface Props {
 }
 
 export const QuestsInfoModal = ({ isOpen, onOpenChange }: Props) => {
+  const t = useTranslations("quests");
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -42,15 +45,14 @@ export const QuestsInfoModal = ({ isOpen, onOpenChange }: Props) => {
             </div>
 
             <DialogTitle className="text-3xl font-black text-white text-center tracking-tight drop-shadow-md relative z-10 uppercase">
-              Missões e Troféus
+              {t("title")}
             </DialogTitle>
           </DialogHeader>
 
           {/* Content Area */}
           <div className="flex flex-col items-center justify-center gap-6 p-8 w-full -mt-6 bg-white dark:bg-slate-900 rounded-t-[2.5rem] relative z-20">
             <p className="text-[15px] font-bold text-stone-500 dark:text-slate-400 text-center leading-relaxed">
-              Aqui podes acompanhar o teu progresso diário e as tuas conquistas
-              a longo prazo.
+              {t("description")}
             </p>
 
             <div className="flex flex-col gap-3 w-full">
@@ -61,10 +63,10 @@ export const QuestsInfoModal = ({ isOpen, onOpenChange }: Props) => {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-sky-700 uppercase tracking-wider text-sm">
-                    Missões Diárias
+                    {t("daily_quests")}
                   </span>
                   <span className="text-xs font-bold text-sky-600/70">
-                    Completa tarefas todos os dias para ganhar baús de XP!
+                    {t("daily_quests_desc")}
                   </span>
                 </div>
               </div>
@@ -76,10 +78,10 @@ export const QuestsInfoModal = ({ isOpen, onOpenChange }: Props) => {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-amber-700 uppercase tracking-wider text-sm">
-                    Sala de Troféus
+                    {t("trophies")}
                   </span>
                   <span className="text-xs font-bold text-amber-600/70">
-                    Desbloqueia conquistas raras e mostra o teu valor.
+                    {t("trophies_desc")}
                   </span>
                 </div>
               </div>
@@ -90,7 +92,7 @@ export const QuestsInfoModal = ({ isOpen, onOpenChange }: Props) => {
                 onClick={() => onOpenChange(false)}
                 className="w-full py-4 bg-[#1CB0F6] hover:bg-[#1899D6] text-white font-black text-[15px] uppercase tracking-widest rounded-2xl border-b-4 border-[#1899D6] active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center"
               >
-                ENTENDIDO!
+                {t("understood")}
               </button>
             </div>
           </div>

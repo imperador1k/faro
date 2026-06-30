@@ -81,50 +81,76 @@ import { UISoundsProvider } from "@/components/providers/ui-sound-provider";
 export const dynamic = "force-dynamic";
 
 import { Analytics } from "@vercel/analytics/react";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
     <ClerkProvider localization={ptBR}>
-      <html lang="pt" suppressHydrationWarning>
+      <html lang={locale} suppressHydrationWarning>
         <body
           className={`${nunito.className} bg-slate-50 dark:bg-slate-950 transition-colors duration-300`}
         >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <CustomToastProvider>
-              <UISoundsProvider>
-                <Toaster richColors />
-                <OneSignalProvider />
-                <NativeBridge />
-                <NativeUpdater />
+          <NextIntlClientProvider messages={messages}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <CustomToastProvider>
+                <UISoundsProvider>
+                  <Toaster
+                    position="top-center"
+                    closeButton
+                    toastOptions={{
+                      classNames: {
+                        toast:
+                          "group flex items-center border-2 border-b-[6px] rounded-2xl p-4 sm:p-5 shadow-2xl transition-all hover:-translate-y-1 hover:shadow-xl",
+                        title:
+                          "text-[16px] sm:text-[17px] font-black tracking-widest uppercase text-white drop-shadow-sm",
+                        description: "text-white/90 text-[14px] font-bold mt-1",
+                        success: "bg-[#58cc02] border-[#58a700] text-white",
+                        error: "bg-[#ff4b4b] border-[#ea2b2b] text-white",
+                        info: "bg-[#1cb0f6] border-[#1899d6] text-white",
+                        warning: "bg-[#ffc800] border-[#e5b400] text-white",
+                        closeButton:
+                          "bg-black/10 hover:bg-black/20 text-white border-2 border-transparent hover:border-black/20 rounded-xl hover:scale-110 active:scale-95 transition-all !right-4 !top-1/2 !-translate-y-1/2",
+                        icon: "w-8 h-8 mr-4 text-white drop-shadow-sm",
+                      },
+                    }}
+                  />
+                  <OneSignalProvider />
+                  <NativeBridge />
+                  <NativeUpdater />
 
-                <ClerkLoading>
-                  <div className="fixed inset-0 z-above-modal bg-white dark:bg-slate-950 flex items-center justify-center">
-                    <LoadingScreen />
-                  </div>
-                </ClerkLoading>
+                  <ClerkLoading>
+                    <div className="fixed inset-0 z-above-modal bg-white dark:bg-slate-950 flex items-center justify-center">
+                      <LoadingScreen />
+                    </div>
+                  </ClerkLoading>
 
-                <ClerkLoaded>
-                  <GlobalPresenceProvider>
-                    <OnboardingSync />
-                    <TTSUnlocker />
-                    <ReviewModal />
-                    {children}
-                    <FloatingMarco />
-                  </GlobalPresenceProvider>
-                </ClerkLoaded>
-              </UISoundsProvider>
-            </CustomToastProvider>
-            <Analytics />
-          </ThemeProvider>
+                  <ClerkLoaded>
+                    <GlobalPresenceProvider>
+                      <OnboardingSync />
+                      <TTSUnlocker />
+                      <ReviewModal />
+                      {children}
+                      <FloatingMarco />
+                    </GlobalPresenceProvider>
+                  </ClerkLoaded>
+                </UISoundsProvider>
+              </CustomToastProvider>
+              <Analytics />
+            </ThemeProvider>
+          </NextIntlClientProvider>
         </body>
       </html>
     </ClerkProvider>

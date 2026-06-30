@@ -4,8 +4,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useDebounce } from "@/hooks/use-debounce";
+import { useTranslations } from "next-intl";
 
 export const UserSearch = () => {
+  const t = useTranslations("shared");
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -22,7 +24,6 @@ export const UserSearch = () => {
       params.delete("q");
     }
 
-    // Prevent unnecessary pushes if nothing changed
     const currentQuery = searchParams.get("q") || "";
     if (currentQuery !== debouncedSearchTerm) {
       replace(`${pathname}?${params.toString()}`);
@@ -34,7 +35,7 @@ export const UserSearch = () => {
       <Search className="h-6 w-6 text-stone-400 dark:text-slate-500 dark:text-slate-400 shrink-0 mr-3" />
       <input
         className="flex-1 bg-transparent border-none outline-none text-stone-700 dark:text-slate-200 placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-lg"
-        placeholder="Procurar por nome..."
+        placeholder={t("search_placeholder")}
         onChange={(e) => setSearchTerm(e.target.value)}
         value={searchTerm}
       />

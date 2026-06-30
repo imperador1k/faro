@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { AuthenticateWithRedirectCallback } from "@clerk/nextjs";
 import { Capacitor } from "@capacitor/core";
 import { LottieAnimation } from "@/components/ui/lottie-animation";
+import { useTranslations } from "next-intl";
 
 /**
  * SSO Callback Page
@@ -11,6 +12,7 @@ import { LottieAnimation } from "@/components/ui/lottie-animation";
  * and then redirects to /mobile-auth-complete?desktop=true which handles the deep link.
  */
 export default function SSOCallbackPage() {
+  const t = useTranslations("SsoCallback");
   const [mounted, setMounted] = useState(false);
   const [isDesktopBounce, setIsDesktopBounce] = useState(false);
 
@@ -25,7 +27,7 @@ export default function SSOCallbackPage() {
       <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-900 flex-col gap-4">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-green-500 border-t-transparent" />
         <p className="text-slate-500 dark:text-slate-400 font-bold">
-          A carregar...
+          {t("loading")}
         </p>
       </div>
     );
@@ -52,7 +54,7 @@ export default function SSOCallbackPage() {
         </div>
 
         <h1 className="text-2xl lg:text-3xl font-black text-slate-800 tracking-tight uppercase mb-2">
-          A Autenticar...
+          {t("authenticating")}
         </h1>
 
         <div className="w-16 h-1.5 bg-slate-200 rounded-full my-4 overflow-hidden">
@@ -60,7 +62,7 @@ export default function SSOCallbackPage() {
         </div>
 
         <p className="text-slate-500 dark:text-slate-400 font-bold max-w-xs mx-auto">
-          A garantir a segurança da tua conta.
+          {t("security_message")}
         </p>
 
         <style jsx>{`

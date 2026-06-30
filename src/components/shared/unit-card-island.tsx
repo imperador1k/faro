@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 import {
   Cat,
   Mic,
@@ -74,6 +76,7 @@ export const UnitCardIsland = memo(function UnitCardIsland({
   noHearts,
   onLessonClick,
 }: UnitCardIslandProps) {
+  const t = useTranslations("shared");
   const isLockedUnit = !isActive && !isCompleted;
 
   // Define Soft Solid Backgrounds & Text Colors purely for modern flat UI
@@ -127,7 +130,7 @@ export const UnitCardIsland = memo(function UnitCardIsland({
                 : "text-white/80",
             )}
           >
-            Capítulo {unitIndex + 1}
+            {t("chapter", { index: unitIndex + 1 })}
           </span>
         </div>
         <h3
@@ -276,7 +279,7 @@ export const UnitCardIsland = memo(function UnitCardIsland({
                         >
                           <div className="bg-gradient-to-b from-[#58CC02] to-[#4eb801] text-white font-black uppercase text-base px-8 py-3.5 rounded-2xl border-2 border-white/20 border-b-[6px] border-b-[#46a302] active:border-b-0 transition-all whitespace-nowrap flex items-center gap-2 relative overflow-hidden group/btn">
                             <span className="drop-shadow-[0_2px_2px_rgba(0,0,0,0.2)]">
-                              Começar
+                              {t("start")}
                             </span>
                             <motion.div
                               animate={{
@@ -337,7 +340,7 @@ export const UnitCardIsland = memo(function UnitCardIsland({
                             fill="currentColor"
                             style={{ color: theme.text }}
                           />{" "}
-                          +10 XP
+                          {t("xp_reward", { amount: 10 })}
                         </div>
                       </div>
                     </div>

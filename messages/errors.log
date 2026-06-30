@@ -1,0 +1,57 @@
+[2026-06-28T20:16:53.943Z] Erro no ficheiro: src\app\(main)\shop\shop-items.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-28T20:17:26.231Z] Erro no ficheiro: src\app\(main)\profile\page.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:18:39.260Z] Erro no ficheiro: src\app\(main)\friends\friends-client.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:19:54.482Z] Erro no ficheiro: src\app\(main)\vocabulary\dashboard.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:21:57.645Z] Erro no ficheiro: src\app\(main)\quests\chest-client.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:22:14.560Z] Erro no ficheiro: src\app\(main)\quests\page.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:23:10.315Z] Erro no ficheiro: src\app\(main)\shop\support-card.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:23:39.713Z] Erro no ficheiro: src\app\(main)\profile\[userId]\page.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:25:10.187Z] Erro no ficheiro: src\app\(main)\friends\friends-client.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-28T20:26:05.738Z] Erro no ficheiro: src\app\(main)\reviews\page.tsx | Motivo: JSON Parse error: Unable to parse JSON string
+[2026-06-28T20:26:26.052Z] Erro no ficheiro: src\app\(main)\vocabulary\dashboard.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:26:42.263Z] Erro no ficheiro: src\app\(main)\vocabulary\page.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:28:13.765Z] Erro no ficheiro: src\app\(main)\arcade\swipe\page.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:29:17.564Z] Erro no ficheiro: src\app\(main)\practice\listening\page.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-28T20:29:38.545Z] Erro no ficheiro: src\app\(main)\practice\page.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:32:19.782Z] Erro no ficheiro: src\app\lesson\lesson-client.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-28T20:33:01.028Z] Erro no ficheiro: src\app\lesson\_components\header.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:34:18.313Z] Erro no ficheiro: src\app\(main)\docs\page.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-28T20:35:07.368Z] Erro no ficheiro: src\app\support\page.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-28T20:36:01.917Z] Erro no ficheiro: src\components\ui\button.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-28T20:36:12.191Z] Erro no ficheiro: src\components\ui\custom-toast.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:36:42.853Z] Erro no ficheiro: src\components\ui\flashcard.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:38:01.220Z] Erro no ficheiro: src\components\ui\word-card.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:38:24.969Z] Erro no ficheiro: src\components\shared\ai-tutor-feedback.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:39:04.314Z] Erro no ficheiro: src\components\shared\edit-profile-button.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:40:06.383Z] Erro no ficheiro: src\components\shared\lesson-map.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:41:18.849Z] Erro no ficheiro: src\components\shared\notification-list.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-28T20:41:29.000Z] Erro no ficheiro: src\components\shared\notification-toggle.tsx | Motivo: JSON Parse error: Unable to parse JSON string
+[2026-06-28T20:42:07.579Z] Erro no ficheiro: src\components\shared\profile-hero.tsx | Motivo: JSON Parse error: Unable to parse JSON string
+[2026-06-28T20:42:42.563Z] Erro no ficheiro: src\components\shared\sidebar.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:43:26.495Z] Erro no ficheiro: src\components\shared\unit-card-island.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:44:15.127Z] Erro no ficheiro: src\components\modals\arcade-info-modal.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:44:28.510Z] Erro no ficheiro: src\components\modals\create-group-modal.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:44:47.414Z] Erro no ficheiro: src\components\modals\hearts-modal.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:45:14.376Z] Erro no ficheiro: src\components\modals\lesson-start-modal.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:45:27.247Z] Erro no ficheiro: src\components\modals\new-chat-modal.tsx | Motivo: JSON Parse error: Unable to parse JSON string
+[2026-06-28T20:45:37.225Z] Erro no ficheiro: src\components\modals\notification-settings-modal.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:46:02.862Z] Erro no ficheiro: src\components\modals\pro-modal.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:46:13.749Z] Erro no ficheiro: src\components\modals\purchase-success-modal.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:46:24.731Z] Erro no ficheiro: src\components\modals\quests-info-modal.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:46:36.845Z] Erro no ficheiro: src\components\modals\review-modal.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-28T20:47:09.505Z] Erro no ficheiro: src\components\modals\unit-search-modal.tsx | Motivo: JSON Parse error: Unable to parse JSON string
+[2026-06-28T20:48:10.392Z] Erro no ficheiro: src\components\learn\unit-island-feed.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:48:23.721Z] Erro no ficheiro: src\components\leaderboard\league-countdown.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:48:37.931Z] Erro no ficheiro: src\components\leaderboard\league-info-modal.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:48:49.689Z] Erro no ficheiro: src\components\leaderboard\league-journey.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:49:09.318Z] Erro no ficheiro: src\components\practice\practice-header.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:49:34.500Z] Erro no ficheiro: src\components\chat\chat-settings-modal.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-28T20:50:16.844Z] Erro no ficheiro: src\components\chat\chat-window.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:50:42.555Z] Erro no ficheiro: src\components\chat\message-item.tsx | Motivo: JSON Parse error: Unrecognized token '\'
+[2026-06-28T20:51:32.367Z] Erro no ficheiro: src\components\settings\active-sessions.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:51:45.379Z] Erro no ficheiro: src\components\settings\connected-accounts.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:51:56.968Z] Erro no ficheiro: src\components\settings\danger-zone.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:52:39.821Z] Erro no ficheiro: src\components\settings\sign-out-zone.tsx | Motivo: A resposta da IA não devolveu a estrutura correta.
+[2026-06-28T20:52:51.493Z] Erro no ficheiro: src\components\settings\subscription-card.tsx | Motivo: JSON Parse error: Unable to parse JSON string
+[2026-06-28T20:53:00.983Z] Erro no ficheiro: src\components\settings\theme-toggle.tsx | Motivo: JSON Parse error: Unterminated string
+[2026-06-29T10:11:47.805Z] Erro no ficheiro: src\app\evaluation\page.tsx | Motivo: Unterminated string in JSON at position 28704 (line 2 column 28703)

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronLeft, Trash2, BookmarkCheck, ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 import { toggleSave } from "@/actions/feed";
 
@@ -14,6 +15,7 @@ export default function SavedPostsClient({
 }) {
   const router = useRouter();
   const [savedPosts, setSavedPosts] = useState(initialSavedPosts);
+  const t = useTranslations("Feed");
 
   const handleRemove = async (id: string) => {
     // Optimistic UI Removal
@@ -53,10 +55,10 @@ export default function SavedPostsClient({
           <div>
             <h1 className="text-3xl font-black flex items-center gap-2">
               <BookmarkCheck className="w-8 h-8 text-amber-500" />
-              Cofre de Conhecimento
+              {t("saved_posts_title")}
             </h1>
             <p className="text-slate-500 dark:text-slate-400 font-medium">
-              As tuas curiosidades guardadas para reveres mais tarde.
+              {t("saved_posts_subtitle")}
             </p>
           </div>
         </div>
@@ -65,16 +67,15 @@ export default function SavedPostsClient({
         {savedPosts.length === 0 ? (
           <div className="text-center py-20 bg-white/50 dark:bg-slate-900/50 rounded-[32px] border-4 border-slate-300 dark:border-slate-800 border-dashed backdrop-blur-sm">
             <BookmarkCheck className="w-16 h-16 text-slate-400 dark:text-slate-600 mx-auto mb-4" />
-            <h3 className="text-xl font-bold mb-2">O teu cofre está vazio!</h3>
+            <h3 className="text-xl font-bold mb-2">{t("empty_vault_title")}</h3>
             <p className="text-slate-500 dark:text-slate-500 mb-6 max-w-sm mx-auto">
-              Volta ao Feed e clica no ícone de guardar para guardares os factos
-              mais interessantes aqui.
+              {t("empty_vault_description")}
             </p>
             <button
               onClick={() => router.push("/feed")}
               className="bg-sky-500 hover:bg-sky-400 text-white font-black py-3 px-8 rounded-2xl transition-all active:scale-95 border-b-4 border-sky-600 active:border-b-0 active:translate-y-1"
             >
-              Explorar Feed
+              {t("explore_feed_button")}
             </button>
           </div>
         ) : (
@@ -116,7 +117,7 @@ export default function SavedPostsClient({
                     <button
                       onClick={() => handleRemove(post.id)}
                       className="p-3 bg-white/50 dark:bg-white/10 backdrop-blur-md rounded-2xl hover:bg-rose-500 hover:text-white text-slate-500 dark:text-white/50 transition-all border-b-4 border-black/10 dark:border-black/20 hover:border-rose-700 active:scale-95 active:border-b-0 active:translate-y-1 shrink-0"
-                      title="Remover do Cofre"
+                      title={t("remove_from_vault_button_title")}
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>
@@ -139,7 +140,8 @@ export default function SavedPostsClient({
                     </div>
 
                     <button className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-800 dark:text-white/70 dark:hover:text-white transition-colors">
-                      Ler original <ExternalLink className="w-4 h-4" />
+                      {t("read_original_button")}{" "}
+                      <ExternalLink className="w-4 h-4" />
                     </button>
                   </div>
                 </motion.div>

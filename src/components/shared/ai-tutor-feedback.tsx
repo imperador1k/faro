@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState } from "react";
 import { getErrorExplanation } from "@/actions/ai-tutor";
 import { Loader2, Sparkles, Bot } from "lucide-react";
@@ -21,6 +23,7 @@ export const AITutorFeedback = ({
   targetLanguage,
   className,
 }: AITutorFeedbackProps) => {
+  const t = useTranslations("shared");
   const [status, setStatus] = useState<"idle" | "loading" | "resolved">("idle");
   const [explanation, setExplanation] = useState<string | null>(null);
 
@@ -38,9 +41,7 @@ export const AITutorFeedback = ({
       setExplanation(explanationText);
       setStatus("resolved");
     } catch (error) {
-      setExplanation(
-        "Aconteceu um erro ao tentar contactar o tutor. Tenta novamente mais tarde.",
-      );
+      setExplanation(t("error_message"));
       setStatus("resolved");
     }
   };
@@ -55,7 +56,7 @@ export const AITutorFeedback = ({
         )}
       >
         <Bot className="h-5 w-5" />
-        Explica-me o erro 🪄
+        {t("explain_button")}
       </button>
     );
   }
@@ -69,8 +70,8 @@ export const AITutorFeedback = ({
         )}
       >
         <div className="flex items-center gap-2 font-bold text-slate-500 dark:text-slate-400 animate-pulse">
-          <Loader2 className="h-5 w-5 animate-spin text-purple-400" />O Marco
-          está a analisar...
+          <Loader2 className="h-5 w-5 animate-spin text-purple-400" />
+          {t("loading")}
         </div>
       </div>
     );
@@ -88,7 +89,7 @@ export const AITutorFeedback = ({
 
       <h4 className="font-extrabold text-purple-600 flex items-center gap-2 mb-2 relative z-10 w-full shrink-0">
         <Sparkles className="h-4 w-4 shrink-0" />
-        <span className="truncate">Aviso do Marco</span>
+        <span className="truncate">{t("feedback_title")}</span>
       </h4>
 
       <div className="text-stone-700 dark:text-slate-200 font-medium leading-relaxed relative z-10 text-sm whitespace-normal break-words">

@@ -5,6 +5,7 @@ import { generateReadingText, analyzeReading } from "@/actions/gemini";
 import { savePracticeSession } from "@/actions/practice";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useTranslations } from "next-intl";
 import {
   Loader2,
   RefreshCw,
@@ -23,7 +24,6 @@ import {
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 
-// Types for the new C2 Exam Structure
 interface Question {
   question: string;
   options: { text: string; correct: boolean }[];
@@ -41,11 +41,9 @@ interface ExamData {
 import { PracticeSetup } from "@/components/shared/practice-setup";
 import { AILoadingScreen } from "@/components/ui/ai-loading-screen";
 
-// ... Types ...
-
 export default function ReadingPracticePage() {
+  const t = useTranslations("practice");
   const [examData, setExamData] = useState<ExamData | null>(null);
-  // Setup State
   const [isSetupComplete, setIsSetupComplete] = useState(false);
   const [config, setConfig] = useState<{
     language: string;
@@ -53,7 +51,6 @@ export default function ReadingPracticePage() {
     mode: "random" | "focus";
   } | null>(null);
 
-  // Exam State
   const [currentStep, setCurrentStep] = useState<
     "mcq" | "review" | "essay" | "analysis"
   >("mcq");
@@ -84,7 +81,6 @@ export default function ReadingPracticePage() {
   const handleGenerateExam = (cfg = config) => {
     if (!cfg) return;
     startGenerationTransition(async () => {
-      // Reset State
       setExamData(null);
       setCurrentStep("mcq");
       setMcqAnswers([]);
@@ -113,7 +109,7 @@ export default function ReadingPracticePage() {
 
   const handleSubmitMcq = () => {
     if (mcqAnswers.includes(-1)) {
-      alert("Please answer all questions before submitting.");
+      alert(t("alert_answer_all"));
       return;
     }
     setShowMcqResults(true);
@@ -161,15 +157,14 @@ export default function ReadingPracticePage() {
   if (isGenerating) {
     return (
       <AILoadingScreen
-        message="A Gerar Exame de Leitura..."
-        submessage="A compilar o artigo e os desafios correspondentes..."
+        message={t("loading_exam")}
+        submessage={t("compiling_challenge")}
       />
     );
   }
 
   return (
     <div className="flex flex-col min-h-screen bg-stone-50 dark:bg-slate-950 w-full overflow-x-hidden pb-10">
-      {/* ── Top Progress Header ── */}
       <header className="w-full sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b-2 border-stone-200 dark:border-slate-800 px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button
@@ -181,7 +176,6 @@ export default function ReadingPracticePage() {
             <X className="w-7 h-7" strokeWidth={3} />
           </Button>
           <div className="hidden sm:block h-4 w-48 md:w-64 bg-stone-100 dark:bg-slate-800 rounded-full overflow-hidden border-2 border-stone-200 dark:border-slate-800">
-            {/* Fake progress for Dojo feel */}
             <div className="h-full bg-emerald-500 w-[75%] rounded-full opacity-50 relative overflow-hidden">
               <div className="absolute inset-0 bg-white/20 w-full rounded-full animate-pulse"></div>
             </div>
@@ -195,18 +189,16 @@ export default function ReadingPracticePage() {
       </header>
 
       <main className="flex-1 w-full max-w-[1440px] mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
-        {/* ── Left Column: The Article ── */}
         <div className="flex flex-col gap-6 w-full lg:sticky lg:top-24 h-max lg:max-h-[calc(100vh-140px)]">
           {!examData ? (
             <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 p-12 flex items-center justify-center text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest shadow-sm border-b-8">
-              A carregar artigo...
+              {t("loading_article")}
             </div>
           ) : (
             <section className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-10 flex flex-col h-full shadow-sm relative transition-all hover:border-b-[10px] hover:-translate-y-1 hover:mb-[-2px]">
               <div className="absolute -top-4 left-8 bg-emerald-500 text-white text-xs font-black uppercase tracking-widest px-4 py-1 rounded-xl shadow border-2 border-emerald-600 z-10 flex items-center gap-2">
-                <BookOpen className="w-3.5 h-3.5" /> LEITURA NATIVA
+                <BookOpen className="w-3.5 h-3.5" /> {t("reading_native")}
               </div>
-
               <div className="overflow-y-auto pr-2 md:pr-4 scrollbar-thin scrollbar-thumb-stone-200 scrollbar-track-transparent h-full pb-4 pt-2">
                 <article className="prose prose-stone lg:prose-lg max-w-none">
                   <h1 className="text-3xl md:text-4xl font-black text-stone-800 dark:text-slate-100 mb-8 leading-tight tracking-tight">
@@ -221,14 +213,12 @@ export default function ReadingPracticePage() {
           )}
         </div>
 
-        {/* ── Right Column: The Exam Tasks ── */}
         <div className="flex flex-col gap-6 w-full lg:pb-12 h-max">
-          {/* Steps Indicator Dojo Style */}
           <div className="bg-stone-100/80 p-2 rounded-[1.5rem] border-2 border-stone-200 dark:border-slate-800 flex items-center justify-between shadow-inner">
             {[
-              { id: "mcq", label: "Parte 1", icon: HelpCircle },
-              { id: "essay", label: "Redação", icon: PenTool },
-              { id: "analysis", label: "Resultados", icon: FileText },
+              { id: "mcq", label: t("part_1"), icon: HelpCircle },
+              { id: "essay", label: t("essay"), icon: PenTool },
+              { id: "analysis", label: t("results"), icon: FileText },
             ].map((step, idx) => {
               const isActive =
                 currentStep === step.id ||
@@ -237,7 +227,6 @@ export default function ReadingPracticePage() {
                 (step.id === "mcq" &&
                   (currentStep === "essay" || currentStep === "analysis")) ||
                 (step.id === "essay" && currentStep === "analysis");
-
               return (
                 <div
                   key={step.id}
@@ -262,7 +251,6 @@ export default function ReadingPracticePage() {
             })}
           </div>
 
-          {/* PHASE 1: MCQs */}
           {(currentStep === "mcq" || currentStep === "review") && examData && (
             <div className="animate-in fade-in slide-in-from-right-4 space-y-6">
               <div className="bg-sky-50 border-2 border-sky-100 border-b-4 p-5 rounded-[1.5rem] flex items-center gap-4 text-sky-700 font-bold">
@@ -270,11 +258,11 @@ export default function ReadingPracticePage() {
                   <AlertCircle className="h-6 w-6" />
                 </div>
                 <p className="text-sm md:text-base leading-snug">
-                  <b>Tarefa 1:</b> Lê o texto com atenção e responde às questões
-                  de inferência. Cuidado com as armadilhas!
+                  {t.rich("mcq_instruction", {
+                    b: (chunks) => <b>{chunks}</b>,
+                  })}
                 </p>
               </div>
-
               {examData.questions?.map((q, qIdx) => (
                 <div
                   key={qIdx}
@@ -286,15 +274,12 @@ export default function ReadingPracticePage() {
                     </span>
                     <span className="mt-1">{q.question}</span>
                   </h3>
-
                   <div className="space-y-3 pl-0 md:pl-14">
                     {q.options.map((opt, oIdx) => {
                       const isSelected = mcqAnswers[qIdx] === oIdx;
                       const isCorrect = opt.correct;
-
                       let style =
                         "border-stone-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-stone-50 dark:bg-slate-950 hover:border-stone-300 dark:border-slate-700 text-stone-600 dark:text-slate-300 active:bg-stone-100 dark:bg-slate-800 cursor-pointer hover:border-b-4 border-b-4";
-
                       if (showMcqResults) {
                         if (isCorrect)
                           style =
@@ -305,12 +290,11 @@ export default function ReadingPracticePage() {
                         else
                           style =
                             "border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950 border-b-2 text-stone-400 dark:text-slate-500 dark:text-slate-400 opacity-60 translate-y-0";
-                        style += " pointer-events-none"; // lock edits
+                        style += " pointer-events-none";
                       } else if (isSelected) {
                         style =
                           "border-emerald-500 bg-emerald-50 border-b-emerald-600 text-emerald-700 font-bold border-b-4 translate-y-[-2px] shadow-sm";
                       }
-
                       return (
                         <div
                           key={oIdx}
@@ -325,18 +309,16 @@ export default function ReadingPracticePage() {
                       );
                     })}
                   </div>
-
                   {showMcqResults && (
                     <div className="ml-0 md:ml-14 mt-4 p-4 md:p-5 bg-indigo-50/50 rounded-2xl border-2 border-indigo-100 text-sm md:text-base text-indigo-800 leading-relaxed shadow-inner">
                       <span className="font-black uppercase tracking-widest text-xs flex items-center gap-2 mb-2 text-indigo-500">
-                        <Info className="w-4 h-4" /> Explicação
+                        <Info className="w-4 h-4" /> {t("explanation")}
                       </span>
                       {q.explanation}
                     </div>
                   )}
                 </div>
               ))}
-
               <div className="pt-4 sticky bottom-4 z-20 pb-4 w-full">
                 {!showMcqResults ? (
                   <button
@@ -344,14 +326,14 @@ export default function ReadingPracticePage() {
                     disabled={mcqAnswers.includes(-1)}
                     className="w-full h-16 md:h-20 bg-sky-400 text-white text-xl font-black rounded-[2rem] border-2 border-transparent border-b-8 border-b-sky-500 hover:bg-sky-500 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm disabled:opacity-50 disabled:grayscale"
                   >
-                    VERIFICAR RESPOSTAS
+                    {t("submit_answers")}
                   </button>
                 ) : (
                   <button
                     onClick={handleProceedToEssay}
                     className="w-full h-16 md:h-20 bg-emerald-500 text-white text-xl font-black rounded-[2rem] border-2 border-transparent border-b-8 border-b-emerald-600 hover:bg-emerald-400 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
                   >
-                    AVANÇAR PARA REDAÇÃO{" "}
+                    {t("proceed_to_essay")}{" "}
                     <Send className="w-6 h-6" strokeWidth={3} />
                   </button>
                 )}
@@ -359,7 +341,6 @@ export default function ReadingPracticePage() {
             </div>
           )}
 
-          {/* PHASE 2: ESSAY */}
           {(currentStep === "essay" || currentStep === "analysis") &&
             examData && (
               <div className="animate-in fade-in slide-in-from-right-4 space-y-6">
@@ -368,32 +349,31 @@ export default function ReadingPracticePage() {
                     <PenTool className="h-6 w-6" />
                   </div>
                   <p className="text-sm md:text-base leading-snug">
-                    <b>Tarefa 2:</b> Redação Crítica. Argumenta a tua oposição
-                    ou concordância baseada no artigo.
+                    {t.rich("essay_instruction", {
+                      b: (chunks) => <b>{chunks}</b>,
+                    })}
                   </p>
                 </div>
-
                 <section className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col gap-6 shadow-sm">
                   <div className="flex flex-col gap-2">
                     <h3 className="text-sm font-black uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center gap-3">
                       <div className="p-2 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 rounded-xl">
                         <HelpCircle className="w-5 h-5" />
                       </div>
-                      Desafio Criativo
+                      {t("creative_challenge")}
                     </h3>
                     <p className="text-lg md:text-xl text-stone-700 dark:text-slate-200 font-medium italic border-l-4 border-emerald-500 pl-4 py-2 mt-2 bg-stone-50/50 rounded-r-2xl">
                       "{examData.essay_prompt}"
                     </p>
                   </div>
-
                   {currentStep === "essay" ? (
                     <>
                       <div className="relative">
                         <div className="absolute -top-3 left-6 bg-stone-200 dark:bg-slate-700 text-stone-500 dark:text-slate-400 text-[10px] md:text-xs font-black uppercase tracking-widest px-3 py-1 rounded-lg border-2 border-stone-300 dark:border-slate-700 z-10 flex items-center gap-2">
-                          <PenTool className="w-3 h-3" /> A TUA TRIBUNA
+                          <PenTool className="w-3 h-3" /> {t("your_platform")}
                         </div>
                         <Textarea
-                          placeholder="Escreve a tua redação aqui (mínimo de 150 palavras recomendado)..."
+                          placeholder={t("essay_placeholder")}
                           value={userEssay}
                           onChange={(e) => setUserEssay(e.target.value)}
                           className="min-h-[300px] text-lg font-medium text-stone-700 dark:text-slate-200 p-6 md:p-8 pt-10 resize-none rounded-[1.5rem] border-2 border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950 focus-visible:ring-indigo-500 focus-visible:bg-white dark:bg-slate-900 shadow-inner placeholder:text-stone-300 placeholder:italic transition-all"
@@ -404,12 +384,11 @@ export default function ReadingPracticePage() {
                               {userEssay.trim()
                                 ? userEssay.trim().split(/\s+/).length
                                 : 0}
-                            </span>
-                            PALAVRAS
+                            </span>{" "}
+                            {t("words")}
                           </div>
                         )}
                       </div>
-
                       <button
                         disabled={isAnalyzing || !userEssay.trim()}
                         onClick={handleSubmitEssay}
@@ -417,11 +396,11 @@ export default function ReadingPracticePage() {
                       >
                         {isAnalyzing ? (
                           <span className="animate-pulse">
-                            A AVALIAR PROEFICIÊNCIA...
+                            {t("evaluating_proficiency")}
                           </span>
                         ) : (
                           <>
-                            AVALIAR REDAÇÃO{" "}
+                            {t("evaluate_essay")}{" "}
                             <FileText className="w-7 h-7" strokeWidth={3} />
                           </>
                         )}
@@ -431,13 +410,12 @@ export default function ReadingPracticePage() {
                     <div className="flex flex-col gap-6">
                       <div className="relative">
                         <div className="absolute -top-3 left-6 bg-stone-200 dark:bg-slate-700 text-stone-500 dark:text-slate-400 text-[10px] md:text-xs font-black uppercase tracking-widest px-3 py-1 rounded-lg border-2 border-stone-300 dark:border-slate-700 z-10 flex items-center gap-2">
-                          <Target className="w-3 h-3" /> A TUA REDAÇÃO
+                          <Target className="w-3 h-3" /> {t("your_essay")}
                         </div>
                         <div className="p-6 md:p-8 pt-10 bg-white dark:bg-slate-900 rounded-[1.5rem] border-2 border-stone-200 dark:border-slate-800 text-stone-500 dark:text-slate-400 font-medium text-base max-h-48 overflow-y-auto italic shadow-inner">
                           {userEssay}
                         </div>
                       </div>
-
                       {essayFeedback && (
                         <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 mt-4 space-y-6">
                           <div
@@ -476,7 +454,7 @@ export default function ReadingPracticePage() {
                                     strokeWidth={3}
                                   />
                                 </div>
-                                Análise da Redação C2
+                                {t("analysis_c2")}
                               </h2>
                               <div
                                 className={cn(
@@ -488,19 +466,17 @@ export default function ReadingPracticePage() {
                                       : "bg-red-100/50 border-red-300 text-red-700",
                                 )}
                               >
-                                SCORE: {essayFeedback.score}%
+                                {t("score")} {essayFeedback.score}%
                               </div>
                             </div>
-
                             <p className="text-stone-700 dark:text-slate-200 font-medium text-lg leading-relaxed mb-8 bg-white/50 p-6 rounded-2xl border border-stone-200/50">
                               {essayFeedback.feedback}
                             </p>
-
                             <div className="grid gap-6 md:grid-cols-2 mt-8">
                               <div className="rounded-[1.5rem] bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 p-6 shadow-sm">
                                 <h3 className="flex items-center gap-2 mb-4 text-sm font-black uppercase tracking-widest text-emerald-500">
-                                  <CheckCircle2 className="h-5 w-5 shrink-0" />
-                                  Pontos Fortes
+                                  <CheckCircle2 className="h-5 w-5 shrink-0" />{" "}
+                                  {t("strengths")}
                                 </h3>
                                 <ul className="flex flex-col gap-3">
                                   {essayFeedback.strengths.map((s, i) => (
@@ -516,8 +492,8 @@ export default function ReadingPracticePage() {
                               </div>
                               <div className="rounded-[1.5rem] bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 p-6 shadow-sm">
                                 <h3 className="flex items-center gap-2 mb-4 text-sm font-black uppercase tracking-widest text-amber-500">
-                                  <Target className="h-5 w-5 shrink-0" />A
-                                  Melhorar
+                                  <Target className="h-5 w-5 shrink-0" />{" "}
+                                  {t("improvements")}
                                 </h3>
                                 <ul className="flex flex-col gap-3">
                                   {essayFeedback.improvements.map((s, i) => (
@@ -532,12 +508,11 @@ export default function ReadingPracticePage() {
                                 </ul>
                               </div>
                             </div>
-
                             <button
                               onClick={() => handleGenerateExam()}
                               className="w-full mt-8 h-16 md:h-20 bg-sky-400 text-white text-xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-sky-500 hover:bg-sky-500 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
                             >
-                              NOVO EXAME
+                              {t("new_exam")}{" "}
                               <RefreshCw className="w-6 h-6" strokeWidth={3} />
                             </button>
                           </div>

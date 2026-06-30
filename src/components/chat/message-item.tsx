@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CheckCheck, Reply, FileText, BadgeCheck } from "lucide-react";
@@ -51,6 +53,7 @@ export const MessageItem = memo(
     formatTimestamp,
     isGroup = false,
   }: MessageItemProps) => {
+    const t = useTranslations("chat");
     const isMe = msg.senderId === userId;
     const isTemp = msg.id?.toString().startsWith("temp-");
     const isGif = (content: string) => content.includes("giphy.com/media");
@@ -111,8 +114,7 @@ export const MessageItem = memo(
             if (isMounted) setDecryptedText(text);
           } catch (e) {
             console.error("Decryption failed", e);
-            if (isMounted)
-              setDecryptedText("🔒 Mensagem encriptada (Erro de Chave)");
+            if (isMounted) setDecryptedText(t("error_key_decryption"));
           } finally {
             if (isMounted) setIsDecrypting(false);
           }
@@ -125,7 +127,7 @@ export const MessageItem = memo(
       } else {
         setDecryptedText(null); // Reset if not encrypted
       }
-    }, [msg.content, msg.id, msg.conversationId]);
+    }, [msg.content, msg.id, msg.conversationId, msg.type, t]);
 
     const isOldSignalMsg =
       msg.type === "text" && msg.content.startsWith("[e2ee]:");
@@ -253,7 +255,7 @@ export const MessageItem = memo(
                 >
                   <Reply className="w-4 h-4 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
                   <span className="text-xs font-black text-stone-600 dark:text-slate-300 uppercase tracking-widest">
-                    Responder
+                    {t("reply")}
                   </span>
                 </button>
               </motion.div>
@@ -262,7 +264,7 @@ export const MessageItem = memo(
 
           {isDecrypting ? (
             <div className="px-5 py-3 font-bold text-stone-500 dark:text-slate-400 italic animate-pulse">
-              A desencriptar...
+              {t("decrypting")}
             </div>
           ) : isImage ? (
             <div className="relative group overflow-hidden rounded-2xl">
@@ -285,7 +287,7 @@ export const MessageItem = memo(
               />
               <div className="flex flex-col">
                 <span className="truncate font-black text-base max-w-[150px]">
-                  {msg.fileName || "Ficheiro"}
+                  {msg.fileName || t("file")}
                 </span>
                 <a
                   href={displayContent}
@@ -296,7 +298,7 @@ export const MessageItem = memo(
                     isMe ? "text-sky-100" : "text-sky-500",
                   )}
                 >
-                  Transferir
+                  {t("download")}
                 </a>
               </div>
             </div>
@@ -363,7 +365,7 @@ export const MessageItem = memo(
             )}
             {isMe && i === actualLastMyMessageIndex && msg.read && (
               <span className="ml-1 text-[#58CC02] flex items-center gap-1">
-                <CheckCheck className="w-3 h-3" /> Visto
+                <CheckCheck className="w-3 h-3" /> {t("read")}
               </span>
             )}
           </div>

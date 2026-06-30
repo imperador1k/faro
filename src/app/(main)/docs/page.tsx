@@ -1,8 +1,10 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState } from "react";
 import Link from "next/link";
-import { DOCS_ARTICLES, DocCategory } from "@/constants/docs";
+import { getDocsArticles, DocCategory } from "@/constants/docs";
 import * as LucideIcons from "lucide-react";
 import {
   Search,
@@ -67,22 +69,33 @@ const CATEGORY_THEMES: Record<
   },
 };
 
+const categoryKeys: Record<DocCategory, string> = {
+  "Mecânicas Base": "base_mechanics",
+  "Gamificação & Loja": "gamification",
+  "Competição & Social": "competition",
+  "Modo Arcade": "arcade",
+  "Conta & Configurações": "account",
+};
+
 export default function DocsHubPage() {
+  const t = useTranslations("docs");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const groupedArticles = DOCS_ARTICLES.reduce(
+  const docsArticles = getDocsArticles(t);
+
+  const groupedArticles = docsArticles.reduce(
     (acc, article) => {
       if (!acc[article.category]) acc[article.category] = [];
       acc[article.category].push(article);
       return acc;
     },
-    {} as Record<DocCategory, typeof DOCS_ARTICLES>,
+    {} as Record<DocCategory, typeof docsArticles>,
   );
 
   const categories = Object.keys(groupedArticles) as DocCategory[];
 
   // "Quick Answers" or Trending
-  const trendingDocs = DOCS_ARTICLES.filter((a) =>
+  const trendingDocs = docsArticles.filter((a) =>
     ["o-que-e-xp", "a-ofensiva-streak", "como-funcionam-os-coracoes"].includes(
       a.slug,
     ),
@@ -91,7 +104,7 @@ export default function DocsHubPage() {
   // Live search filtering
   const filteredDocs =
     searchQuery.trim().length > 1
-      ? DOCS_ARTICLES.filter(
+      ? docsArticles.filter(
           (a) =>
             a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             a.summary.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -119,20 +132,19 @@ export default function DocsHubPage() {
           <div className="bg-white/20 backdrop-blur-md rounded-2xl px-4 py-2 border border-white/30 flex items-center gap-2 mb-6 shadow-sm">
             <LifeBuoy className="w-5 h-5 text-white" />
             <span className="text-white font-black tracking-widest uppercase text-sm">
-              Biblioteca de Apoio
+              {t("hero.support_lib")}
             </span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-[1000] text-white tracking-tighter leading-none mb-8 drop-shadow-sm flex flex-col items-center">
-            <div>Pesquisa, Aprende e</div>
+            <div>{t("hero.title_1")}</div>
             <span className="inline-block mt-3 px-6 py-2 bg-white dark:bg-slate-900 text-[#58cc02] rounded-3xl rotate-[-2deg] hover:rotate-0 transition-transform shadow-xl">
-              Domina o Jogo.
+              {t("hero.title_2")}
             </span>
           </h1>
 
           <p className="text-white font-extrabold text-xl md:text-2xl max-w-2xl mb-12 drop-shadow-sm leading-relaxed">
-            De dicas secretas sobre mecânicas a truques vitais para as Ligas. O
-            teu manual de sucesso mora aqui.
+            {t("hero.description")}
           </p>
 
           {/* Dedicated Inner Search Bar */}
@@ -144,7 +156,7 @@ export default function DocsHubPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Pesquisa por 'Freezes', 'XP', 'Avaliações'..."
+              placeholder={t("search_placeholder")}
               className="relative z-10 w-full bg-white dark:bg-slate-900 text-stone-800 dark:text-slate-100 font-bold text-xl rounded-full py-6 pl-16 pr-6 shadow-[0_20px_60px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-[6px] focus:ring-[#58cc02]/50 transition-all border-none placeholder:text-stone-300"
             />
 
@@ -177,7 +189,7 @@ export default function DocsHubPage() {
                 ) : (
                   <div className="p-8 text-center">
                     <p className="text-stone-500 dark:text-slate-400 font-bold text-lg">
-                      Não encontrámos nada para "{searchQuery}"
+                      {t("no_results", { query: searchQuery })}
                     </p>
                   </div>
                 )}
@@ -206,7 +218,7 @@ export default function DocsHubPage() {
                     />
                   </div>
                   <span className="bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-bold text-[10px] uppercase tracking-widest px-2 py-1 rounded-lg">
-                    Popular
+                    {t("popular")}
                   </span>
                 </div>
                 <h3 className="font-black text-xl text-stone-800 dark:text-slate-100 mb-2 leading-tight group-hover:text-blue-600 transition-colors">
@@ -231,11 +243,10 @@ export default function DocsHubPage() {
               </div>
               <div className="flex-1 text-center md:text-left">
                 <h2 className="text-2xl md:text-3xl font-[1000] text-stone-800 dark:text-slate-100 tracking-tight mb-2">
-                  O Caminho do Iniciante
+                  {t("beginner.title")}
                 </h2>
                 <p className="text-stone-500 dark:text-slate-400 font-bold mb-6 text-lg">
-                  Acabaste de chegar? Segue este guia simples de 3 passos para
-                  dominares a plataforma em 5 minutos mágicos.
+                  {t("beginner.description")}
                 </p>
 
                 <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center md:justify-start">
@@ -246,7 +257,7 @@ export default function DocsHubPage() {
                     <span className="w-6 h-6 bg-stone-200 dark:bg-slate-700 text-stone-600 dark:text-slate-300 rounded-full flex items-center justify-center text-xs">
                       1
                     </span>
-                    Entender o XP
+                    {t("beginner.step_1")}
                   </Link>
                   <Link
                     href="/docs/sistema-de-divisoes"
@@ -255,7 +266,7 @@ export default function DocsHubPage() {
                     <span className="w-6 h-6 bg-stone-200 dark:bg-slate-700 text-stone-600 dark:text-slate-300 rounded-full flex items-center justify-center text-xs">
                       2
                     </span>
-                    As Ligas
+                    {t("beginner.step_2")}
                   </Link>
                   <Link
                     href="/docs/alterar-nome-avatar"
@@ -264,7 +275,7 @@ export default function DocsHubPage() {
                     <span className="w-6 h-6 bg-stone-200 dark:bg-slate-700 text-stone-600 dark:text-slate-300 rounded-full flex items-center justify-center text-xs">
                       3
                     </span>
-                    Configurar Perfil
+                    {t("beginner.step_3")}
                   </Link>
                 </div>
               </div>
@@ -274,7 +285,7 @@ export default function DocsHubPage() {
             <div className="flex items-center gap-4 mb-8 opacity-50">
               <div className="h-0.5 bg-stone-300 dark:bg-slate-600 flex-1 rounded-full"></div>
               <span className="text-stone-500 dark:text-slate-400 font-black uppercase tracking-widest">
-                Biblioteca Enciclopédica
+                {t("encyclopedia.title")}
               </span>
               <div className="h-0.5 bg-stone-300 dark:bg-slate-600 flex-1 rounded-full"></div>
             </div>
@@ -299,7 +310,7 @@ export default function DocsHubPage() {
                         <h2
                           className={`text-2xl font-[1000] text-stone-800 dark:text-slate-100 tracking-tight`}
                         >
-                          {category}
+                          {t(`categories.${categoryKeys[category]}`)}
                         </h2>
                       </div>
 
@@ -338,13 +349,10 @@ export default function DocsHubPage() {
               </div>
               <div className="relative z-10 flex-1 text-center md:text-left">
                 <h2 className="text-3xl md:text-4xl font-[1000] text-blue-950 tracking-tighter mb-4 leading-tight">
-                  Ainda não encontraste <br className="hidden md:block" /> o que
-                  procuravas?
+                  {t("cta.title")}
                 </h2>
                 <p className="text-blue-600 font-bold text-lg max-w-lg mb-8 leading-relaxed">
-                  A nossa equipa de suporte humano foi treinada para iluminar o
-                  teu caminho (e dorme as horas necessárias). Abre um ticket à
-                  vontade!
+                  {t("cta.description")}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start">
@@ -352,13 +360,13 @@ export default function DocsHubPage() {
                     href="/support"
                     className="bg-[#1CB0F6] text-white font-[1000] uppercase tracking-widest border-b-[6px] border-[#1899D6] hover:bg-sky-400 active:border-b-0 active:translate-y-[6px] rounded-2xl px-6 py-4 transition-all w-full sm:w-auto text-center shadow-sm text-sm"
                   >
-                    Falar com Suporte
+                    {t("cta.btn_support")}
                   </Link>
                   <Link
                     href="/reviews"
                     className="bg-white dark:bg-slate-900 text-blue-600 font-[1000] uppercase tracking-widest border-2 border-stone-200 dark:border-slate-800 border-b-[6px] hover:bg-stone-50 dark:bg-slate-950 hover:border-blue-200 active:border-b-2 active:translate-y-[4px] rounded-2xl px-6 py-4 transition-all w-full sm:w-auto text-center shadow-sm text-sm"
                   >
-                    Ler Comunidade
+                    {t("cta.btn_community")}
                   </Link>
                 </div>
               </div>

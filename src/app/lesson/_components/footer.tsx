@@ -1,6 +1,7 @@
 import { Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import {
   StarAngryLottie,
   BearDanceLottie,
@@ -54,6 +55,7 @@ export const LessonFooter = ({
   userAnswer,
   canSkip,
 }: FooterProps) => {
+  const t = useTranslations("lesson");
   return (
     <footer
       className={cn(
@@ -79,7 +81,7 @@ export const LessonFooter = ({
               )}
             >
               <div className="flex flex-col items-center">
-                <span>Saltar</span>
+                <span>{t("skip")}</span>
                 {currentChallenge.skipCount !== undefined &&
                   currentChallenge.skipCount > 0 && (
                     <span className="text-[10px] font-black opacity-60 mt-0.5">
@@ -98,7 +100,7 @@ export const LessonFooter = ({
                   : "bg-[#58CC02] border-b-4 border-[#46a302] text-white active:translate-y-1 active:border-b-0 shadow-sm",
               )}
             >
-              Verificar
+              {t("check")}
             </button>
           </div>
         )}
@@ -111,7 +113,7 @@ export const LessonFooter = ({
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-2xl font-black text-[#58CC02] tracking-tight">
-                  Correto!
+                  {t("correct")}
                 </p>
                 {currentChallenge.explanation && (
                   <div className="flex items-center gap-2 mt-1">
@@ -139,7 +141,7 @@ export const LessonFooter = ({
               disabled={isPending}
               className="bg-[#58CC02] border-b-4 border-[#46a302] text-white uppercase font-extrabold text-base tracking-widest px-10 py-3.5 rounded-2xl w-full sm:w-auto transition-all active:translate-y-1 active:border-b-0 shadow-sm shrink-0"
             >
-              Continuar
+              {t("continue")}
             </button>
           </div>
         )}
@@ -152,10 +154,10 @@ export const LessonFooter = ({
               </div>
               <div className="flex flex-col min-w-0">
                 <p className="text-xl md:text-2xl font-black text-[#ea2b2b] tracking-tight">
-                  Incorreto.
+                  {t("incorrect")}
                 </p>
                 <p className="text-base md:text-lg text-[#ff4b4b] whitespace-normal break-words">
-                  Resposta:{" "}
+                  {t("answer")}:{" "}
                   <span className="font-bold">
                     {
                       currentChallenge.challengeOptions.find((o) => o.correct)
@@ -170,7 +172,7 @@ export const LessonFooter = ({
               {userAnswer && currentChallenge.question && (
                 <AITutorFeedback
                   className="w-full md:w-auto max-w-full py-2.5 px-3 md:py-4 md:px-4"
-                  question={currentChallenge.question || "Tradução"}
+                  question={currentChallenge.question || t("translation")}
                   userAnswer={userAnswer}
                   correctAnswer={
                     currentChallenge.challengeOptions.find((o) => o.correct)
@@ -178,10 +180,10 @@ export const LessonFooter = ({
                   }
                   targetLanguage={
                     languageCode === "en"
-                      ? "Inglês"
+                      ? t("english")
                       : languageCode === "es"
-                        ? "Espanhol"
-                        : "outro idioma"
+                        ? t("spanish")
+                        : t("other_language")
                   }
                 />
               )}
@@ -190,13 +192,12 @@ export const LessonFooter = ({
                 disabled={isPending}
                 className="w-full md:w-auto md:min-w-[150px] shrink-0 bg-[#ff4b4b] text-white border-b-4 border-[#ea2b2b] hover:bg-[#ff5f5f] active:border-b-0 active:translate-y-1 py-3 px-6 rounded-2xl font-bold uppercase tracking-widest transition-all shadow-sm"
               >
-                {hearts === 0 ? "Terminar" : "Continuar"}
+                {hearts === 0 ? t("finish") : t("continue")}
               </button>
             </div>
           </div>
         )}
       </div>
-      {/* Safe Area padding for very bottom text if needed on mobile devices without home buttons */}
       <div className="h-safe w-full bg-transparent" />
     </footer>
   );
