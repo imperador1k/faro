@@ -8,6 +8,7 @@ import { Trophy, Star, Crown, Zap, Shield, Gem } from "lucide-react";
 import useSound from "use-sound";
 import { cn } from "@/lib/utils";
 import { clearLeagueResult } from "@/actions/clear-league-result";
+import { useTranslations } from "next-intl";
 
 type ResultData = {
   league: string;
@@ -45,6 +46,7 @@ const LEAGUE_CONFIG: Record<string, any> = {
 };
 
 export function LeagueResultModal({ result }: Props) {
+  const t = useTranslations("modals");
   const [isOpen, setIsOpen] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -84,10 +86,8 @@ export function LeagueResultModal({ result }: Props) {
   const handleClose = async () => {
     if (!isOpen) return;
 
-    // 1. Close the UI immediately and unconditionally
     setIsOpen(false);
 
-    // 2. Clear the server-side state in the background
     try {
       await clearLeagueResult();
     } catch (err) {
@@ -100,27 +100,33 @@ export function LeagueResultModal({ result }: Props) {
   const currentCfg = LEAGUE_CONFIG[result.league] || LEAGUE_CONFIG.BRONZE;
   const Icon = currentCfg.icon;
 
-  let title = "Resultados da Semana!";
+  let title = t("results_title");
   let message = "";
   let gradient = "from-amber-500/10 to-transparent";
   let accentColor = "text-amber-500";
   let buttonColor = "bg-sky-500 border-sky-600";
 
   if (result.status === "PROMOTED") {
-    title = "INCRÍVEL!";
-    message = `Ficaste em ${result.rank}º lugar e subiste para a Liga ${currentCfg.label}! 🏆`;
+    title = t("incredible");
+    message = t("promoted_message", {
+      rank: result.rank,
+      label: currentCfg.label,
+    });
     gradient = "from-emerald-500/20 via-emerald-50/10 to-transparent";
     accentColor = "text-emerald-500";
     buttonColor = "bg-emerald-500 border-emerald-600 hover:bg-emerald-600";
   } else if (result.status === "DEMOTED") {
-    title = "OH NÃO...";
-    message = `Caíste para a Liga ${currentCfg.label}. Esta semana vamos recuperar! 💪`;
+    title = t("oh_no");
+    message = t("demoted_message", { label: currentCfg.label });
     gradient = "from-rose-500/20 via-rose-50/10 to-transparent";
     accentColor = "text-rose-500";
     buttonColor = "bg-rose-500 border-rose-600 hover:bg-rose-600";
   } else {
-    title = "RESULTADOS";
-    message = `Ficaste em ${result.rank}º lugar e mantiveste-te na Liga ${currentCfg.label}. Continua assim! 🔥`;
+    title = t("results");
+    message = t("stayed_message", {
+      rank: result.rank,
+      label: currentCfg.label,
+    });
     gradient = "from-sky-500/10 to-transparent";
     accentColor = "text-sky-500";
     buttonColor = "bg-sky-500 border-sky-600 hover:bg-sky-600";
@@ -135,7 +141,6 @@ export function LeagueResultModal({ result }: Props) {
           animate="animate"
           exit="exit"
         >
-          {/* Backdrop */}
           <motion.div
             className="absolute inset-0 bg-stone-900/80 backdrop-blur-md"
             initial={{ opacity: 0 }}
@@ -144,7 +149,6 @@ export function LeagueResultModal({ result }: Props) {
             onClick={handleClose}
           />
 
-          {/* Modal Content */}
           <motion.div
             className={cn(
               "relative w-full max-w-[440px] bg-white dark:bg-slate-900 rounded-[3rem] border-2 border-stone-200 dark:border-slate-800 border-b-[12px] shadow-2xl p-8 flex flex-col items-center text-center overflow-hidden pointer-events-auto",
@@ -156,10 +160,8 @@ export function LeagueResultModal({ result }: Props) {
             exit={{ scale: 0.8, opacity: 0, y: 100 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
-            {/* Decorative Shimmer */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer" />
 
-            {/* Floating Badge Container */}
             <motion.div
               className="relative mb-8 mt-4"
               animate={{ y: [0, -12, 0], rotate: [0, 5, 0, -5, 0] }}
@@ -167,7 +169,6 @@ export function LeagueResultModal({ result }: Props) {
             >
               <div className="absolute inset-0 bg-current opacity-10 blur-3xl rounded-full" />
               <div className="relative flex h-32 w-32 items-center justify-center rounded-[2.5rem] bg-white dark:bg-slate-900 border-2 border-stone-100 border-b-[10px] shadow-xl overflow-hidden group">
-                {/* Inner Shine */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
 
                 <Icon
@@ -175,7 +176,6 @@ export function LeagueResultModal({ result }: Props) {
                 />
               </div>
 
-              {/* Little Sparkles */}
               {result.status === "PROMOTED" && (
                 <motion.div
                   className="absolute -top-4 -right-4 text-yellow-400"
@@ -220,12 +220,11 @@ export function LeagueResultModal({ result }: Props) {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              Continuar a Treinar
+              {t("continue_training")}
             </motion.button>
 
-            {/* Little hint below */}
             <p className="mt-6 text-[11px] font-black text-stone-300 uppercase tracking-widest">
-              Nova Liga • Começa agora!
+              {t("new_league_start")}
             </p>
           </motion.div>
         </motion.div>

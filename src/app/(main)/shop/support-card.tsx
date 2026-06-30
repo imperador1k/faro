@@ -4,11 +4,13 @@ import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useUISounds } from "@/hooks/use-ui-sounds";
+import { useTranslations } from "next-intl";
 
 export const SupportCard = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { playReward } = useUISounds();
+  const t = useTranslations("shop");
 
   useEffect(() => {
     setMounted(true);
@@ -40,7 +42,7 @@ export const SupportCard = () => {
             <div className="h-8 bg-stone-200 dark:bg-slate-700 rounded-full flex items-center px-3 gap-2">
               <span>🔒</span>
               <span className="text-xs text-stone-500 dark:text-slate-400 font-bold hidden sm:block">
-                Pagamento Seguro (BMC)
+                {t("secure_payment")}
               </span>
             </div>
           </div>
@@ -55,9 +57,9 @@ export const SupportCard = () => {
         <div className="w-full h-full bg-stone-50 dark:bg-slate-950 flex-1 relative overflow-hidden rounded-b-3xl flex justify-center items-center">
           <iframe
             // The /widget/page/ endpoint is specifically allowed in iframes by BMC
-            src="https://www.buymeacoffee.com/widget/page/imperador1k?description=Support%20me%20on%20Buy%20me%20a%20coffee!&color=%23FFDD00"
+            src={t("bmc_url")}
             className="w-full h-full max-w-[500px] absolute !border-none"
-            title="Buy Me A Coffee"
+            title={t("buy_me_a_coffee_title")}
           />
         </div>
       </div>
@@ -67,26 +69,25 @@ export const SupportCard = () => {
   return (
     <div className="mt-12 pt-8 border-t-2 border-stone-200 dark:border-slate-800">
       <h2 className="text-2xl font-black text-black dark:text-white mb-6">
-        Apoia o Projeto
+        {t("support_project")}
       </h2>
 
       <div className="bg-gradient-to-br from-[#FFEA00]/20 to-[#FFDD00]/40 border-2 border-[#FFDD00] border-b-8 rounded-3xl p-8 text-center transition-all hover:-translate-y-1">
         <div className="text-6xl mb-4">☕</div>
 
         <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-2">
-          Paga um café ao Miguel!
+          {t("buy_coffee")}
         </h3>
 
         <p className="text-stone-600 dark:text-slate-300 font-medium mb-6">
-          Esta app é mantida com muito amor e cafeína. Se estás a gostar de
-          aprender, ajuda a manter os servidores ligados!
+          {t("support_description")}
         </p>
 
         <button
           onClick={onSupportClick}
           className="block w-full bg-[#FFDD00] text-yellow-900 border-2 border-yellow-400 border-b-8 active:translate-y-2 active:border-b-0 hover:bg-[#FFEA00] rounded-2xl py-4 font-black text-lg transition-all text-center uppercase cursor-pointer"
         >
-          APOIAR O DESENVOLVEDOR
+          {t("support_developer_btn")}
         </button>
       </div>
 

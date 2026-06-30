@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { sendMessage, markAsRead, toggleReaction } from "@/actions/messages";
 import { useRef, useEffect, useState, useMemo } from "react";
 import Image from "next/image";
@@ -84,6 +86,7 @@ export const ChatWindow = ({
   groupImageUrl,
   initialMessages,
 }: Props) => {
+  const t = useTranslations("chat");
   const { messages, addOptimisticMessage, isPartnerTyping, trackTyping } =
     useRealtimeMessages(initialMessages, userId, conversationId);
   const { isPartnerOnline: checkIsPartnerOnline } = useGlobalPresence();
@@ -305,7 +308,7 @@ export const ChatWindow = ({
       setReplyingTo(null);
     } catch (error) {
       console.error("Erro E2EE ou envio", error);
-      toast.error("Erro ao enviar mensagem");
+      toast.error(t("error_sending"));
     } finally {
       setIsSending(false);
     }
@@ -317,7 +320,7 @@ export const ChatWindow = ({
       await toggleReaction(messageId, emoji);
       setActiveMenuId(null);
     } catch (error) {
-      toast.error("Erro ao reagir");
+      toast.error(t("error_reacting"));
     }
   };
 
@@ -340,7 +343,7 @@ export const ChatWindow = ({
     try {
       await sendMessage(conversationId, gifUrl, gifUrl); // gif as image
     } catch (error) {
-      toast.error("Erro ao enviar GIF");
+      toast.error(t("error_sending_gif"));
     }
   };
 
@@ -369,7 +372,7 @@ export const ChatWindow = ({
         type === "image" ? url : undefined,
       );
     } catch (error) {
-      toast.error("Erro no upload");
+      toast.error(t("error_upload"));
     }
   };
 
@@ -393,7 +396,7 @@ export const ChatWindow = ({
       setHighlightedId(messageId);
       setTimeout(() => setHighlightedId(null), 2000);
     } else {
-      toast.info("Mensagem original já não está visível");
+      toast.info(t("message_not_visible"));
     }
   };
 
@@ -411,7 +414,7 @@ export const ChatWindow = ({
         onOpenChange={() => setSelectedImage(null)}
       >
         <DialogContent className="max-w-5xl w-full h-full sm:h-auto sm:max-h-[95vh] p-0 bg-transparent border-none shadow-none flex items-center justify-center overflow-visible [&>button]:hidden">
-          <DialogTitle className="sr-only">Visualizador de Imagem</DialogTitle>
+          <DialogTitle className="sr-only">{t("image_viewer")}</DialogTitle>
           {selectedImage && (
             <div className="relative flex flex-col items-center justify-center w-full h-full p-4 sm:p-10 animate-in fade-in zoom-in duration-300">
               <div className="relative max-w-full flex justify-center">
@@ -434,7 +437,7 @@ export const ChatWindow = ({
                 <div className="relative max-w-full min-h-[50vh] sm:min-h-[60vh] min-w-[50vw] sm:min-w-[60vw] rounded-[24px] sm:rounded-[32px] overflow-hidden border-4 border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.5)] bg-slate-900/50 backdrop-blur-sm">
                   <Image
                     src={selectedImage}
-                    alt="Enlarged media"
+                    alt={t("enlarged_media")}
                     fill
                     className="object-contain"
                   />
@@ -584,7 +587,7 @@ export const ChatWindow = ({
           <div className="flex-1 flex flex-col items-center justify-center text-stone-400 dark:text-slate-500 dark:text-slate-400 gap-4 mt-8 opacity-60">
             <div className="text-6xl animate-bounce">👋</div>
             <p className="font-black text-xl text-stone-600 dark:text-slate-300">
-              Diz olá!
+              {t("say_hello")}
             </p>
           </div>
         )}
@@ -646,7 +649,7 @@ export const ChatWindow = ({
                   <div className="w-1 h-8 bg-[#1CB0F6] rounded-full shrink-0" />
                   <div className="flex flex-col min-w-0">
                     <span className="text-[10px] font-black uppercase tracking-[0.1em] text-[#1CB0F6]">
-                      A responder a uma mensagem
+                      {t("replying_to")}
                     </span>
                     <p className="text-sm font-bold text-stone-600 dark:text-slate-300 truncate">
                       {truncate(replyingTo.content)}
@@ -668,7 +671,7 @@ export const ChatWindow = ({
           <div className="absolute bottom-24 left-6 right-6 sm:right-auto sm:left-6 z-[200] bg-white dark:bg-slate-900 p-4 rounded-[2.5rem] shadow-2xl border-2 border-stone-200 dark:border-slate-800 border-b-[8px] h-[400px] w-auto sm:w-[320px] overflow-hidden flex flex-col">
             <div className="flex justify-between items-center mb-4 shrink-0">
               <span className="font-black text-xs text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] pl-2">
-                GIPHY VAULT
+                {t("giphy_vault")}
               </span>
               <button
                 onClick={() => setShowGifPicker(false)}
@@ -710,7 +713,7 @@ export const ChatWindow = ({
               ref={textareaRef}
               name="content"
               disabled={isSending}
-              placeholder="escreve a tua mensagem..."
+              placeholder={t("write_message")}
               onChange={handleInputChange}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
@@ -735,7 +738,7 @@ export const ChatWindow = ({
               <Send className="h-5 w-5 drop-shadow-sm" />
             )}
             <span className="hidden md:inline">
-              {isSending ? "A enviar..." : "Enviar"}
+              {isSending ? t("sending") : t("send")}
             </span>
           </button>
         </form>

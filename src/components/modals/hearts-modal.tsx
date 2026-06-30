@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { StarAngryLottie } from "@/components/ui/lottie-animation";
@@ -8,6 +10,7 @@ import { useHeartsModalStore } from "@/store/use-hearts-modal-store";
 import { Button } from "@/components/ui/button";
 
 export const HeartsModal = () => {
+  const t = useTranslations("modals");
   const router = useRouter();
   const { isOpen, closeModal } = useHeartsModalStore();
 
@@ -51,11 +54,10 @@ export const HeartsModal = () => {
               </div>
             </div>
             <h2 className="text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight leading-tight">
-              Ficaste sem vidas!
+              {t("title")}
             </h2>
             <p className="text-stone-500 dark:text-slate-400 font-bold text-sm mt-3 px-2">
-              Não podes começar uma nova lição agora. Pratica para ganhar mais
-              vidas ou visita a loja.
+              {t("description")}
             </p>
           </div>
 
@@ -66,7 +68,7 @@ export const HeartsModal = () => {
               className="bg-[#58CC02] hover:bg-[#46a302] text-white border-b-4 border-[#46a302] active:border-b-0 py-6 rounded-2xl text-lg font-black tracking-widest flex items-center gap-3"
             >
               <Activity className="w-6 h-6" />
-              PRATICAR
+              {t("practice_button")}
             </Button>
 
             <Button
@@ -75,14 +77,14 @@ export const HeartsModal = () => {
               className="bg-[#1CB0F6] hover:bg-[#1899d6] text-white border-b-4 border-[#147bb0] active:border-b-0 py-6 rounded-2xl text-lg font-black tracking-widest flex items-center gap-3"
             >
               <ShoppingCart className="w-6 h-6" />
-              IR PARA A LOJA
+              {t("shop_button")}
             </Button>
 
             <button
               onClick={closeModal}
               className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-sm py-4 hover:text-stone-600 dark:text-slate-300 active:scale-95 transition-all mt-2"
             >
-              Talvez mais tarde
+              {t("later_button")}
             </button>
           </div>
         </div>

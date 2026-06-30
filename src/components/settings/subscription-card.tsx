@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useTransition } from "react";
 import { createStripeUrl } from "@/actions/user-subscription";
 import { toast } from "sonner";
@@ -18,6 +20,7 @@ type Props = {
 };
 
 export const SubscriptionCard = ({ isPro }: Props) => {
+  const t = useTranslations("settings");
   const [isPending, startTransition] = useTransition();
 
   const onClick = () => {
@@ -34,18 +37,14 @@ export const SubscriptionCard = ({ isPro }: Props) => {
             toast.error(response.message);
           }
         })
-        .catch(() =>
-          toast.error(
-            "Ocorreu um erro ao processar. Tenta novamente mais tarde.",
-          ),
-        );
+        .catch(() => toast.error(t("error_processing")));
     });
   };
 
   return (
     <div>
       <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-4">
-        Subscrição
+        {t("title")}
       </h3>
 
       {isPro ? (
@@ -56,25 +55,22 @@ export const SubscriptionCard = ({ isPro }: Props) => {
 
           <div className="flex flex-col">
             <h4 className="text-xl font-black text-amber-600 flex items-center gap-2">
-              MyDuolingo PRO
+              {t("pro_title")}
               <Crown className="h-5 w-5 fill-amber-400 text-amber-500" />
             </h4>
             <p className="mt-2 text-sm font-bold text-stone-500 dark:text-slate-400 max-w-md leading-relaxed">
-              Estás atualmente no plano PRO. Aproveita as tuas vantagens
-              exclusivas:
+              {t("pro_description")}
             </p>
             <ul className="mt-3 space-y-2 text-sm font-bold text-stone-600 dark:text-slate-300">
               <li className="flex items-center gap-2">
-                <Infinity className="h-4 w-4 text-rose-500" /> Corações
-                Ilimitados
+                <Infinity className="h-4 w-4 text-rose-500" />{" "}
+                {t("unlimited_hearts")}
               </li>
               <li className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-amber-500" /> Aprendizagem sem
-                Anúncios
+                <Zap className="h-4 w-4 text-amber-500" /> {t("ad_free")}
               </li>
               <li className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-sky-500" /> Prática de IA
-                Exclusiva
+                <Sparkles className="h-4 w-4 text-sky-500" /> {t("ai_practice")}
               </li>
             </ul>
           </div>
@@ -91,7 +87,7 @@ export const SubscriptionCard = ({ isPro }: Props) => {
             ) : (
               <Settings className="h-5 w-5 text-stone-500 dark:text-slate-400 transition-transform group-hover:rotate-45" />
             )}
-            {isPending ? "A CARREGAR..." : "GERIR SUBSCRIÇÃO"}
+            {isPending ? t("loading") : t("manage_subscription")}
           </button>
         </div>
       ) : (
@@ -99,10 +95,10 @@ export const SubscriptionCard = ({ isPro }: Props) => {
         <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:border-stone-300 dark:border-slate-700">
           <div className="flex flex-col">
             <h4 className="text-xl font-black text-stone-700 dark:text-slate-200">
-              Plano Grátis
+              {t("free_title")}
             </h4>
             <p className="mt-2 text-sm font-bold text-stone-500 dark:text-slate-400 max-w-md leading-relaxed">
-              Faz upgrade para o PRO para desbloqueares:
+              {t("free_description")}
             </p>
             <ul className="mt-3 space-y-2 text-sm font-bold text-stone-600 dark:text-slate-300">
               <li className="flex items-center gap-2">
@@ -130,7 +126,7 @@ export const SubscriptionCard = ({ isPro }: Props) => {
             ) : (
               <Crown className="h-5 w-5 fill-amber-400 text-amber-500 transition-transform group-hover:scale-110" />
             )}
-            {isPending ? "A CARREGAR..." : "FAZER UPGRADE"}
+            {isPending ? t("loading") : t("upgrade")}
           </button>
         </div>
       )}

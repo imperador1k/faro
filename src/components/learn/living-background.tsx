@@ -1,8 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 export const LivingBackground = () => {
+  const t = useTranslations("learn_components");
+
   return (
     <div className="fixed inset-0 pointer-events-none -z-20 overflow-hidden bg-white dark:bg-slate-900">
       {/* 

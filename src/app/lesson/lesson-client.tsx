@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useTransition, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
@@ -82,6 +84,7 @@ export const LessonClient = ({
   isClinic,
   isPro,
 }: Props) => {
+  const t = useTranslations("lesson");
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -478,15 +481,17 @@ export const LessonClient = ({
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-rose-500/50 to-transparent" />
 
             <h1 className="mb-4 text-4xl sm:text-5xl font-black text-white tracking-tight">
-              Oh não! <br />
+              {t("out_of_hearts_title")}
+              <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-600 italic">
-                Ficaste sem vida...
+                {t("out_of_hearts_subtitle")}
               </span>
             </h1>
 
             <p className="mb-10 text-lg font-medium text-slate-400 leading-relaxed">
-              O teu progresso foi guardado. <br className="hidden sm:block" />
-              Recarrega as energias para continuar a tua jornada!
+              {t("progress_saved")}
+              <br className="hidden sm:block" />
+              {t("refill_message")}
             </p>
 
             <div className="flex flex-col gap-4">
@@ -500,7 +505,7 @@ export const LessonClient = ({
                   className="w-full h-16 text-xl rounded-2xl bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-400 hover:to-rose-500 border-none shadow-[0_6px_0_0_#9f1239] transition-all font-black"
                   onClick={() => router.push("/shop")}
                 >
-                  RECARREGAR CORAÇÕES ❤️
+                  {t("refill_hearts_button")}
                 </Button>
               </motion.div>
 
@@ -515,7 +520,7 @@ export const LessonClient = ({
                   className="w-full h-16 text-xl rounded-2xl bg-[#58CC02] hover:bg-[#46a302] border-none shadow-[0_6px_0_0_#367c02] transition-all font-black"
                   onClick={() => router.push("/lesson?clinic=true")}
                 >
-                  PRATICAR PARA GANHAR ❤️
+                  {t("practice_hearts_button")}
                 </Button>
               </motion.div>
 
@@ -523,7 +528,7 @@ export const LessonClient = ({
                 onClick={() => router.push("/learn")}
                 className="mt-4 text-slate-500 dark:text-slate-400 font-bold hover:text-white transition-colors uppercase tracking-widest text-sm"
               >
-                Voltar para o mapa
+                {t("back_to_map")}
               </button>
             </div>
           </motion.div>
@@ -627,14 +632,14 @@ export const LessonClient = ({
                   className="w-full h-16 text-xl rounded-[2rem] tracking-wide uppercase shadow-[0_6px_0_0_#46a302] hover:shadow-[0_2px_0_0_#46a302] hover:translate-y-[4px] active:shadow-none active:translate-y-[6px] transition-all bg-[#58CC02] border-none font-black"
                   onClick={cancelExit}
                 >
-                  CONTINUAR A APRENDER
+                  {t("continue_learning")}
                 </Button>
 
                 <button
                   className="w-full h-14 text-sm font-bold text-slate-400 hover:text-rose-500 transition-colors uppercase tracking-widest"
                   onClick={confirmExit}
                 >
-                  Sair porque sou fraco
+                  {t("quit_button")}
                 </button>
               </motion.div>
             </motion.div>
@@ -660,7 +665,7 @@ export const LessonClient = ({
               <DuoAnimationLottie className="w-full h-full drop-shadow-2xl" />
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-slate-400 mt-4 animate-pulse">
-              A carregar a próxima...
+              {t("loading_next")}
             </h2>
           </div>
         )}
@@ -670,7 +675,7 @@ export const LessonClient = ({
             {currentChallenge.context && (
               <div className="w-full max-w-[600px] bg-blue-50 border-2 border-blue-100 border-b-4 rounded-2xl p-6 shadow-sm text-center mb-[-10px] relative transition-all duration-300">
                 <span className="text-[11px] font-black text-blue-400 uppercase tracking-[0.2em] mb-2 block">
-                  Contexto
+                  {t("context")}
                 </span>
                 <Button
                   variant="ghost"
@@ -763,7 +768,7 @@ export const LessonClient = ({
                   <Ear className="h-14 w-14" />
                 </button>
                 <p className="text-slate-400 text-sm font-medium">
-                  Ouve e escreve o que ouves
+                  {t("listen_and_write")}
                 </p>
                 <input
                   type="text"
@@ -780,7 +785,7 @@ export const LessonClient = ({
                     }
                   }}
                   disabled={status !== "none" || isPending}
-                  placeholder="Escreve o que ouviste..."
+                  placeholder={t("dictation_placeholder")}
                   autoFocus
                   className={cn(
                     "w-full bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-4 text-xl font-bold text-stone-700 dark:text-slate-200 focus:outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 transition-all text-center",
@@ -872,7 +877,7 @@ export const LessonClient = ({
                     }
                   }}
                   disabled={status !== "none" || isPending}
-                  placeholder="Escreve a tua resposta..."
+                  placeholder={t("insert_placeholder")}
                   autoFocus
                   className={cn(
                     "w-full bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-4 text-xl font-bold text-stone-700 dark:text-slate-200 focus:outline-none focus:border-[#1CB0F6] focus:bg-white dark:bg-slate-900 transition-all text-center",

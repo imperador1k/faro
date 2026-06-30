@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type ChallengeOption = {
   id: number;
@@ -23,12 +24,13 @@ export const MatchGrid = ({
   wrongMatchFlash,
   onSelect,
 }: MatchGridProps) => {
+  const t = useTranslations("lesson");
+
   return (
     <div className="grid w-full max-w-[800px] grid-cols-2 gap-8">
-      {/* Left Column (Portuguese) */}
       <div className="flex flex-col gap-4">
         <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center mb-2">
-          Português
+          {t("portuguese")}
         </span>
         {leftColumn.map((opt) => {
           const isSelected = selectedMatchIds.includes(opt.id);
@@ -61,10 +63,9 @@ export const MatchGrid = ({
         })}
       </div>
 
-      {/* Right Column (Target Language) */}
       <div className="flex flex-col gap-4">
         <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center mb-2">
-          Língua Alvo
+          {t("target_language")}
         </span>
         {rightColumn.map((opt) => {
           const isSelected = selectedMatchIds.includes(opt.id);

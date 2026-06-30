@@ -3,6 +3,8 @@
 import { actionError } from "@/lib/action-error";
 
 import { auth, currentUser } from "@clerk/nextjs/server";
+import { cookies } from "next/headers";
+import { getTranslations } from "next-intl/server";
 import { revalidatePath } from "next/cache";
 import { checkSubscription } from "@/lib/subscription";
 import { createNotification } from "@/lib/notifications";
@@ -46,6 +48,8 @@ export const syncNativeLanguage = async (lang: string) => {
     .update(userProgress)
     .set({ nativeLanguage: parsed.data })
     .where(eq(userProgress.userId, userId));
+
+  cookies().set("NEXT_LOCALE", parsed.data, { path: "/", maxAge: 31536000 });
 
   return { success: true, lang: parsed.data };
 };
@@ -483,6 +487,14 @@ export const onSyncUserInfo = async () => {
 
   await updateUserInfo(userName, user.imageUrl || "/duo_crying.png");
 
+  const userProgressData = await getUserProgress();
+  if (userProgressData?.nativeLanguage) {
+    cookies().set("NEXT_LOCALE", userProgressData.nativeLanguage, {
+      path: "/",
+      maxAge: 31536000,
+    });
+  }
+
   revalidatePath("/leaderboard");
   revalidatePath("/profile");
 
@@ -692,7 +704,8 @@ export const claimDailyChestReward = async () => {
   }
 
   // Verify 3 quests are completed
-  const dailyQuests = getDailyQuests(userId, todayStr).map((quest) => {
+  const t = await getTranslations("quests");
+  const dailyQuests = getDailyQuests(userId, todayStr, t).map((quest) => {
     const current = getQuestProgress(quest.type, todayStats as any);
     return {
       ...quest,

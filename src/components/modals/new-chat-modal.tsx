@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { UserPlus, Loader2, MessageSquare, X } from "lucide-react";
@@ -21,6 +23,7 @@ type Props = {
 };
 
 export const NewChatModal = ({ isOpen, onClose }: Props) => {
+  const t = useTranslations("modals");
   const router = useRouter();
   const [friends, setFriends] = useState<
     { userId: string; userName: string; userImageSrc: string | null }[]
@@ -63,8 +66,8 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
     try {
       const conversationId = await createConversation([userId], false);
 
-      toast.success("Conversa Iniciada!", {
-        description: `Já podes falar com ${userName}.`,
+      toast.success(t("toast_success_title"), {
+        description: t("toast_success_desc", { userName }),
         icon: (
           <div className="bg-blue-100 p-1.5 rounded-full">
             <MessageSquare className="w-4 h-4 text-blue-600" />
@@ -75,8 +78,8 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
       onClose();
       router.push(`/messages?conversationId=${conversationId}`);
     } catch (error) {
-      toast.error("Erro ao iniciar conversa", {
-        description: "Tenta novamente em instantes.",
+      toast.error(t("toast_error_title"), {
+        description: t("toast_error_desc"),
       });
       console.error(error);
     } finally {
@@ -103,7 +106,7 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
             </div>
             <DialogHeader>
               <DialogTitle className="text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight">
-                Nova Mensagem
+                {t("title")}
               </DialogTitle>
             </DialogHeader>
           </div>
@@ -111,7 +114,7 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
           {/* Friend Selection */}
           <div className="space-y-3">
             <label className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1">
-              Escolher Amigo
+              {t("choose_friend")}
             </label>
             <div className="max-h-80 overflow-y-auto pr-2 flex flex-col gap-2 scrollbar-hide">
               {isLoadingFriends ? (
@@ -121,7 +124,7 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
               ) : friends.length === 0 ? (
                 <div className="text-center py-12 px-4 bg-stone-50 dark:bg-slate-950 rounded-2xl border-2 border-dashed border-stone-200 dark:border-slate-800">
                   <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
-                    Segue alguns amigos para iniciares conversas diretas.
+                    {t("no_friends")}
                   </p>
                 </div>
               ) : (
@@ -161,7 +164,7 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
                           {friend.userName}
                         </span>
                         <span className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
-                          Online recentemente
+                          {t("online_recently")}
                         </span>
                       </div>
                     </div>
@@ -182,8 +185,7 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
           {/* Footer Hint */}
           <div className="mt-8 pt-6 border-t-2 border-stone-100 text-center">
             <p className="text-[13px] font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
-              Podes pesquisar outros utilizadores usando a barra de pesquisa na
-              lateral.
+              {t("search_hint")}
             </p>
           </div>
         </div>

@@ -3,14 +3,16 @@
 import { motion } from "framer-motion";
 import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { HappyStarLottie } from "@/components/ui/lottie-animation";
+import { useTranslations } from "next-intl";
 
 export const StepPlacementResult = () => {
+  const t = useTranslations("Onboarding");
   const { placementResults } = useOnboardingStore();
 
   const levelMap = {
-    A1: { section: 1, label: "Iniciante (A1)", bonus: 20 },
-    A2: { section: 2, label: "Elementar (A2)", bonus: 50 },
-    B1: { section: 3, label: "Intermédio (B1)", bonus: 100 },
+    A1: { section: 1, label: t("level_a1"), bonus: 20 },
+    A2: { section: 2, label: t("level_a2"), bonus: 50 },
+    B1: { section: 3, label: t("level_b1"), bonus: 100 },
   };
 
   const result = placementResults?.level
@@ -19,7 +21,6 @@ export const StepPlacementResult = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center sm:justify-start sm:pt-6 text-center px-4 max-w-xl mx-auto">
-      {/* Celebratory Animation */}
       <motion.div
         initial={{ scale: 0, rotate: -20 }}
         animate={{ scale: 1, rotate: 0 }}
@@ -37,25 +38,27 @@ export const StepPlacementResult = () => {
       >
         <div className="space-y-0.5">
           <h2 className="text-2xl sm:text-3xl font-black text-[#042c60] leading-tight">
-            Incrível! 🏆
+            {t("amazing_title")}
           </h2>
           <p className="text-lg sm:text-xl font-black text-[#58cc02]">
-            Já tens algum{" "}
-            <span className="underline decoration-4 underline-offset-4">
-              poder
-            </span>{" "}
-            acumulado!
+            {t.rich("power_accumulated", {
+              span: (chunks) => (
+                <span className="underline decoration-4 underline-offset-4">
+                  {chunks}
+                </span>
+              ),
+            })}
           </p>
         </div>
 
         <div className="bg-white dark:bg-slate-900 border-4 border-[#e5e5e5] rounded-3xl p-4 sm:p-6 shadow-[0_6px_0_#e5e5e5] relative overflow-hidden group hover:translate-y-[-2px] transition-transform">
-          {/* Subtle background glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent to-yellow-50/50 opacity-0 group-hover:opacity-100 transition-opacity" />
 
           <div className="space-y-4">
             <p className="text-base sm:text-lg font-bold text-gray-600 relative z-10">
-              Com base nos teus {placementResults?.score} acertos, o Marco
-              colocou-te no nível:
+              {t("placement_explanation", {
+                score: placementResults?.score ?? 0,
+              })}
             </p>
 
             <div className="text-4xl font-black text-[#1cb0f6] relative z-10">
@@ -63,23 +66,27 @@ export const StepPlacementResult = () => {
             </div>
 
             <p className="text-gray-500 font-bold text-sm">
-              Começarás na{" "}
-              <span className="text-[#042c60]">Secção {result.section}</span>.
+              {t.rich("starting_section", {
+                section: result.section,
+                span: (chunks) => (
+                  <span className="text-[#042c60]">{chunks}</span>
+                ),
+              })}
             </p>
           </div>
 
           <div className="mt-6 flex items-center justify-center gap-2 relative z-10">
             <span className="bg-amber-100 text-amber-600 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-              Atalho Ativado
+              {t("shortcut_enabled")}
             </span>
             <span className="bg-green-100 text-green-600 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-              +{result.bonus} XP Bónus
+              {t("bonus_xp", { bonus: result.bonus })}
             </span>
           </div>
         </div>
 
         <p className="text-sm sm:text-base font-bold text-gray-400 animate-pulse pt-2">
-          Estás pronto para o próximo nível? 🚀
+          {t("ready_for_next")}
         </p>
       </motion.div>
     </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { currentUser } from "@clerk/nextjs/server";
 import { getUserProgress, getCompletedLessonsCount } from "@/db/queries";
 import { getUserCertificates } from "@/actions/certificates";
-import { ACHIEVEMENTS, Achievement } from "@/constants/achievements";
+import { getAchievements, Achievement } from "@/constants/achievements";
 import { Button } from "@/components/ui/button";
 import {
   Settings,
@@ -22,6 +22,8 @@ import { NotificationToggle } from "@/components/shared/notification-toggle";
 import { ProfileHero } from "@/components/shared/profile-hero";
 import { ShareProfileModal } from "@/components/modals/share-profile-modal";
 import { SignOutZone } from "@/components/settings/sign-out-zone";
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +38,7 @@ export default function ProfilePage() {
 }
 
 async function ProfileData() {
+  const t = await getTranslations("profile");
   const user = await currentUser();
   const userProgress = await getUserProgress();
   const completedLessons = await getCompletedLessonsCount();
@@ -53,33 +56,33 @@ async function ProfileData() {
     {
       icon: <Flame className="h-8 w-8 text-orange-500" />,
       value: streak,
-      label: "Streak",
+      label: t("stats.streak"),
       color:
         "bg-orange-50 dark:bg-orange-950 border-orange-200 dark:border-orange-900",
     },
     {
       icon: <Zap className="h-8 w-8 text-amber-500" />,
       value: totalXpEarned.toLocaleString(),
-      label: "XP Total",
+      label: t("stats.total_xp"),
       color:
         "bg-amber-50 dark:bg-amber-950 border-amber-200 dark:border-amber-900",
     },
     {
       icon: <Target className="h-8 w-8 text-green-500" />,
       value: completedLessons,
-      label: "Lições",
+      label: t("stats.lessons"),
       color:
         "bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-900",
     },
     {
       icon: <Heart className="h-8 w-8 text-rose-500" />,
       value: userProgress.hearts,
-      label: "Corações",
+      label: t("stats.hearts"),
       color: "bg-rose-50 dark:bg-rose-950 border-rose-200 dark:border-rose-900",
     },
   ];
 
-  const achievements = ACHIEVEMENTS.map((achievement: Achievement) => ({
+  const achievements = getAchievements(t).map((achievement: Achievement) => ({
     title: achievement.title,
     description: achievement.description,
     icon: achievement.icon,
@@ -90,8 +93,8 @@ async function ProfileData() {
     <>
       <ProfileHero
         imageUrl={user.imageUrl}
-        name={user.firstName || userProgress.userName || "Estudante"}
-        username={userProgress.userName || "estudante"}
+        name={user.firstName || userProgress.userName || t("default_name")}
+        username={userProgress.userName || t("default_username")}
         createdAt={new Date(user.createdAt)}
         bannerImageUrl={userProgress.userBannerSrc}
         isOwner={true}
@@ -107,7 +110,7 @@ async function ProfileData() {
                 >
                   <Share2 className="h-4 w-4 md:h-5 md:w-5" />
                   <span className="uppercase tracking-widest font-black text-[11px] sm:text-[12px]">
-                    Partilhar
+                    {t("actions.share")}
                   </span>
                 </Button>
               </div>
@@ -122,7 +125,7 @@ async function ProfileData() {
               >
                 <Settings className="h-4 w-4 md:h-5 md:w-5" />
                 <span className="uppercase tracking-widest font-black text-[11px] sm:text-[12px]">
-                  Definições
+                  {t("actions.settings")}
                 </span>
               </Button>
             </Link>
@@ -135,7 +138,7 @@ async function ProfileData() {
                 >
                   <LogOut className="h-4 w-4 md:h-5 md:w-5" />
                   <span className="uppercase tracking-widest font-black text-[11px] sm:text-[12px]">
-                    Sair
+                    {t("actions.sign_out")}
                   </span>
                 </Button>
               }
@@ -144,7 +147,6 @@ async function ProfileData() {
         }
       />
 
-      {/* Stats Bento Grid */}
       <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150">
         {stats.map((stat, i) => (
           <div
@@ -167,12 +169,11 @@ async function ProfileData() {
         ))}
       </div>
 
-      {/* XP Balance Context Banner */}
       <div className="mb-12 relative flex flex-col sm:flex-row items-center justify-between overflow-hidden rounded-[2rem] border-b-4 border-amber-200 dark:border-amber-800 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 p-6 sm:px-8 sm:py-6 shadow-sm hover:shadow-md transition-shadow gap-6 sm:gap-0">
         <div className="absolute right-[-10%] top-[-50%] w-48 h-48 bg-amber-200 rounded-full blur-3xl opacity-50" />
         <div className="relative z-10 flex flex-col items-center sm:items-start gap-1">
           <p className="text-sm font-black uppercase tracking-widest text-amber-600 dark:text-amber-500">
-            O Teu Cofre
+            {t("vault.title")}
           </p>
           <div className="flex items-center gap-3">
             <Zap className="w-8 h-8 text-amber-500 fill-amber-500 animate-pulse" />
@@ -187,15 +188,13 @@ async function ProfileData() {
             size="lg"
             className="w-full sm:w-auto px-8 rounded-2xl uppercase tracking-widest font-black shadow-lg"
           >
-            Visitar Loja
+            {t("vault.visit_shop")}
           </Button>
         </Link>
       </div>
 
-      {/* Official Certifications */}
       <CertificationsList certifications={certificates as any} />
 
-      {/* Gamified Achievements List */}
       <AchievementsList
         achievements={achievements}
         userProgress={userProgress}
@@ -204,11 +203,9 @@ async function ProfileData() {
   );
 }
 
-// --- SKELETON FALLBACK ---
 const ProfileSkeleton = () => {
   return (
     <div className="animate-in fade-in duration-500 w-full">
-      {/* Profile Hero Skeleton */}
       <div className="w-full bg-stone-100 dark:bg-slate-800 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 p-6 pt-12 md:p-10 md:pt-16 mb-8 flex flex-col md:flex-row items-center md:items-start gap-6 relative overflow-hidden shadow-sm">
         <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md bg-stone-200 dark:bg-slate-700 shrink-0 z-10 animate-pulse" />
         <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left z-10 gap-3">
@@ -221,8 +218,6 @@ const ProfileSkeleton = () => {
           <div className="w-full sm:w-[160px] h-12 sm:h-14 bg-stone-200 dark:bg-slate-700 rounded-[1.5rem] animate-pulse" />
         </div>
       </div>
-
-      {/* Stats Bento Grid Skeleton */}
       <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
         {[1, 2, 3, 4].map((i) => (
           <div
@@ -235,8 +230,6 @@ const ProfileSkeleton = () => {
           </div>
         ))}
       </div>
-
-      {/* XP Balance Context Banner Skeleton */}
       <div className="mb-12 flex flex-col sm:flex-row items-center justify-between rounded-[2rem] border-b-4 border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950 p-6 sm:px-8 sm:py-6 shadow-sm gap-6 sm:gap-0 animate-pulse">
         <div className="flex flex-col items-center sm:items-start gap-2">
           <div className="h-4 w-24 bg-stone-200 dark:bg-slate-700 rounded-md" />
@@ -247,8 +240,6 @@ const ProfileSkeleton = () => {
         </div>
         <div className="w-full sm:w-[160px] h-[52px] bg-stone-200 dark:bg-slate-700 rounded-2xl" />
       </div>
-
-      {/* Achievements List Skeleton */}
       <div className="space-y-6">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 bg-stone-200 dark:bg-slate-700 rounded-full animate-pulse" />

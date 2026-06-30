@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { onSelectCourse } from "@/actions/user-progress";
 import { updateCourseDetails } from "@/actions/courses";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 type Course = {
   id: number;
@@ -95,6 +96,7 @@ const languageData: Record<
 
 export const CoursesList = ({ courses, activeCourseId }: Props) => {
   const router = useRouter();
+  const t = useTranslations("courses");
   const [isPending, startTransition] = useTransition();
   const [selectedCourse, setSelectedCourse] = useState<number | null>(
     activeCourseId || null,
@@ -132,21 +134,21 @@ export const CoursesList = ({ courses, activeCourseId }: Props) => {
     const title = formData.get("title") as string;
 
     if (!title.trim()) {
-      toast.error("O título não pode estar vazio.");
+      toast.error(t("title_empty_error"));
       return;
     }
 
     setIsSaving(true);
-    toast.loading("A guardar alterações...", { id: `edit-${courseId}` });
+    toast.loading(t("saving_changes"), { id: `edit-${courseId}` });
 
     try {
       await updateCourseDetails(courseId, formData);
-      toast.success("Curso atualizado com sucesso!", {
+      toast.success(t("course_updated_success"), {
         id: `edit-${courseId}`,
       });
       setEditingCourseId(null);
     } catch (error) {
-      toast.error("Erro ao guardar as alterações", { id: `edit-${courseId}` });
+      toast.error(t("error_saving_changes"), { id: `edit-${courseId}` });
     } finally {
       setIsSaving(false);
     }
@@ -178,8 +180,8 @@ export const CoursesList = ({ courses, activeCourseId }: Props) => {
   return (
     <div className="space-y-16">
       <h2 className="text-2xl font-black text-slate-700 dark:text-slate-200 uppercase tracking-widest pl-2 flex items-center gap-3 mb-2">
-        <span className="text-3xl drop-shadow-sm">🧭</span> Explorar Novos
-        Idiomas
+        <span className="text-3xl drop-shadow-sm">🧭</span>{" "}
+        {t("explore_new_languages")}
       </h2>
       {Object.entries(groupedCourses).map(([languageLabel, langCourses]) => {
         const data = getLanguageData(
@@ -252,7 +254,9 @@ export const CoursesList = ({ courses, activeCourseId }: Props) => {
                       </h3>
                       <div className="bg-sky-50 text-sky-500 border-2 border-sky-100 font-bold px-4 py-1.5 rounded-xl flex items-center gap-2 text-[13px] uppercase tracking-widest">
                         <span>👨‍🎓</span>{" "}
-                        {formatStudentCount(course.studentCount)} Alunos ativos
+                        {t("active_students", {
+                          count: formatStudentCount(course.studentCount),
+                        })}
                       </div>
                     </div>
 
@@ -266,7 +270,7 @@ export const CoursesList = ({ courses, activeCourseId }: Props) => {
                             : "bg-[#1CB0F6] text-white border-transparent border-b-[6px] border-b-[#0092d6]",
                         )}
                       >
-                        {isSelected || isActive ? "Selecionado" : "Começar"}
+                        {isSelected || isActive ? t("selected") : t("start")}
                       </div>
                     </div>
                   </button>

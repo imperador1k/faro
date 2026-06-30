@@ -2,8 +2,11 @@
 
 import { motion } from "framer-motion";
 import { DuoAnimationLottie } from "@/components/ui/lottie-animation";
+import { useTranslations } from "next-intl";
 
 export const StepGetReady = () => {
+  const t = useTranslations("Onboarding");
+
   return (
     <div className="w-full min-h-full flex flex-col items-center justify-center py-6 relative">
       {/* Background Decor */}
@@ -20,7 +23,7 @@ export const StepGetReady = () => {
               height: 120 + i * 30,
               right: `${Math.random() * 100}%`,
               bottom: `${Math.random() * 100}%`,
-              filter: "blur(50px)"
+              filter: "blur(50px)",
             }}
           />
         ))}
@@ -35,14 +38,14 @@ export const StepGetReady = () => {
           className="w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 shrink-0"
         >
           <motion.div
-            animate={{ 
+            animate={{
               y: [0, -15, 0],
-              rotate: [0, 2, 0, -2, 0]
+              rotate: [0, 2, 0, -2, 0],
             }}
-            transition={{ 
-              duration: 4, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
             }}
             className="w-full h-full"
           >
@@ -59,17 +62,18 @@ export const StepGetReady = () => {
             className="space-y-4"
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#042c60] leading-tight">
-              Estás preparado para <br />
-              <motion.span 
+              {t("get_ready_title_part1")} <br />
+              <motion.span
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
                 className="text-sky-400 inline-block mt-2"
               >
-                alavancar
-              </motion.span> <br />
-              o teu sucesso?
+                {t("get_ready_title_boost_word")}
+              </motion.span>{" "}
+              <br />
+              {t("get_ready_title_part2")}
             </h2>
-            
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -77,7 +81,7 @@ export const StepGetReady = () => {
               className="bg-white/80 backdrop-blur-sm border-2 border-sky-100 rounded-[2rem] p-6 md:p-8 shadow-sm relative"
             >
               <p className="text-lg sm:text-xl font-bold text-gray-500 leading-relaxed italic">
-                "Preparei algo especial para ti. Vamos começar a tua jornada épica! 🚀"
+                {t("get_ready_quote")}
               </p>
               {/* Decorative accent */}
               <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-sky-100 rounded-full blur-sm" />

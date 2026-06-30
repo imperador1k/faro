@@ -15,6 +15,7 @@ import { useUISounds } from "@/hooks/use-ui-sounds";
 import { decryptMessage, decryptConversationKey } from "@/lib/crypto";
 import { getConversationKey } from "@/actions/crypto";
 import localforage from "localforage";
+import { useTranslations } from "next-intl";
 
 type Conversation = {
   id: string;
@@ -55,6 +56,7 @@ function LastMessagePreview({
   conversationId: string;
   message: NonNullable<Conversation["lastMessage"]>;
 }) {
+  const t = useTranslations("chat");
   const [decryptedText, setDecryptedText] = useState<string | null>(null);
 
   useEffect(() => {
@@ -107,17 +109,18 @@ function LastMessagePreview({
   const isOldSignalMsg = message.content.startsWith("[e2ee]:");
   const displayContent =
     decryptedText ??
-    (isOldSignalMsg ? "🔒 Mensagem Encriptada" : message.content);
+    (isOldSignalMsg ? t("encrypted_message") : message.content);
 
   return (
     <>
-      {message.senderId === "me" && "Tu: "}
+      {message.senderId === "me" && t("you_label")}
       {displayContent}
     </>
   );
 }
 
 export const ChatSidebar = ({ conversations }: Props) => {
+  const t = useTranslations("chat");
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -159,12 +162,10 @@ export const ChatSidebar = ({ conversations }: Props) => {
 
   const [localConversations, setLocalConversations] = useState(conversations);
 
-  // Sync with server props when they change
   useEffect(() => {
     setLocalConversations(conversations);
   }, [conversations]);
 
-  // Global Realtime Listener for the Inbox
   useEffect(() => {
     let isStopped = false;
     let channel: any = null;
@@ -178,11 +179,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
 
       channel.on(
         "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "messages",
-        },
+        { event: "INSERT", schema: "public", table: "messages" },
         (payload: any) => {
           const newMsg = payload.new;
           if (!newMsg) return;
@@ -192,7 +189,6 @@ export const ChatSidebar = ({ conversations }: Props) => {
               (c) => c.id === newMsg.conversation_id,
             );
             if (convIndex === -1) {
-              // New conversation we don't know about yet. Refresh the server route.
               startTransition(() => {
                 router.refresh();
               });
@@ -201,7 +197,6 @@ export const ChatSidebar = ({ conversations }: Props) => {
 
             const updated = [...prev];
             const conv = updated[convIndex];
-
             const isFromMe = newMsg.sender_id === userId;
             const isActiveConv =
               activeConversationId === newMsg.conversation_id;
@@ -234,11 +229,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
 
       channel.on(
         "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "messages",
-        },
+        { event: "UPDATE", schema: "public", table: "messages" },
         (payload: any) => {
           const newMsg = payload.new;
           if (!newMsg || !newMsg.read) return;
@@ -251,17 +242,17 @@ export const ChatSidebar = ({ conversations }: Props) => {
 
             const updated = [...prev];
             const conv = updated[convIndex];
-
             const lm = conv.lastMessage;
             if (lm && lm.id === newMsg.id) {
               updated[convIndex] = {
                 ...conv,
                 lastMessage: {
+                  ...lm,
+                  read: true,
                   id: lm.id as number,
                   content: lm.content as string,
                   createdAt: lm.createdAt as Date,
                   senderId: lm.senderId as string,
-                  read: true,
                 },
               };
             }
@@ -281,26 +272,21 @@ export const ChatSidebar = ({ conversations }: Props) => {
     };
   }, [userId, activeConversationId, getToken, playPop, router]);
 
-  // Handle selecting an existing conversation
   const onSelectConversation = (id: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("conversationId", id);
-    params.delete("userId"); // Clean up old param if exists
+    params.delete("userId");
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}`);
     });
   };
 
-  // Handle selecting a user from search (Nova Mensagem)
   const onSelectUser = async (userId: string) => {
     setQuery("");
     setResults([]);
-
-    // Intelligent DM creation (Server Action will find existing if it exists)
     try {
       const { createConversation } = await import("@/actions/messages");
       const conversationId = await createConversation([userId], false);
-
       const params = new URLSearchParams(searchParams);
       params.set("conversationId", conversationId);
       router.push(`${pathname}?${params.toString()}`);
@@ -327,17 +313,16 @@ export const ChatSidebar = ({ conversations }: Props) => {
 
       <div className="p-6 border-b-2 border-stone-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col gap-6 z-20 relative">
         <h1 className="text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight">
-          Conversas
+          {t("title")}
         </h1>
 
-        {/* Tactile Action Buttons Row */}
         <div className="flex gap-3">
           <button
             onClick={() => setIsNewChatModalOpen(true)}
             className="flex-1 bg-[#58CC02] hover:bg-[#4eb801] active:translate-y-1 active:border-b-0 text-white font-black text-sm uppercase tracking-widest py-3 rounded-xl border-b-4 border-[#46a302] transition-all flex items-center justify-center gap-2 shadow-sm"
           >
             <UserPlus className="w-4 h-4" />
-            NOVA MENSAGEM
+            {t("new_message")}
           </button>
           <button
             onClick={() => setIsGroupModalOpen(true)}
@@ -347,17 +332,15 @@ export const ChatSidebar = ({ conversations }: Props) => {
           </button>
         </div>
 
-        {/* Search Input */}
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400 dark:text-slate-500" />
           <input
             id="chat-search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Pesquisar..."
-            className="w-full pl-11 pr-4 py-3 bg-stone-100 dark:bg-slate-800 rounded-2xl text-[15px] font-bold text-stone-700 dark:text-slate-200 placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-stone-200 dark:border-slate-800 border-b-[4px] outline-none focus:bg-white dark:bg-slate-900 focus:border-[#1CB0F6] transition-all"
+            placeholder={t("search_placeholder")}
+            className="w-full pl-11 pr-4 py-3 bg-stone-100 dark:bg-slate-800 rounded-2xl text-[15px] font-bold text-stone-700 dark:text-slate-200 placeholder:text-stone-400 dark:text-slate-500 border-2 border-stone-200 dark:border-slate-800 border-b-[4px] outline-none focus:bg-white dark:bg-slate-900 focus:border-[#1CB0F6] transition-all"
           />
-          {/* Search Results Dropdown */}
           {query && (
             <div className="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-slate-900 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] border-2 border-stone-200 dark:border-slate-800 border-b-[6px] z-50 overflow-hidden max-h-[300px] overflow-y-auto">
               {loading ? (
@@ -365,8 +348,8 @@ export const ChatSidebar = ({ conversations }: Props) => {
                   <Loader2 className="h-6 w-6 animate-spin" />
                 </div>
               ) : results.length === 0 ? (
-                <div className="p-6 text-center text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
-                  Nenhum utilizador encontrado.
+                <div className="p-6 text-center text-stone-400 dark:text-slate-500 font-bold text-sm">
+                  {t("no_users_found")}
                 </div>
               ) : (
                 results.map((user) => (
@@ -384,7 +367,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
                           className="object-cover"
                         />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center text-sm font-black text-stone-400 dark:text-slate-500 dark:text-slate-400">
+                        <div className="flex h-full w-full items-center justify-center text-sm font-black text-stone-400 dark:text-slate-500">
                           {user.userName[0]?.toUpperCase()}
                         </div>
                       )}
@@ -407,10 +390,10 @@ export const ChatSidebar = ({ conversations }: Props) => {
           <div className="p-8 text-center bg-white dark:bg-slate-900 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-4 mt-4">
             <span className="text-4xl">📭</span>
             <h3 className="text-lg font-black text-stone-700 dark:text-slate-200 mt-4">
-              Vazio
+              {t("empty_title")}
             </h3>
-            <p className="text-sm font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 mt-2">
-              Pesquisa amigos para começar.
+            <p className="text-sm font-bold text-stone-400 dark:text-slate-500 mt-2">
+              {t("empty_description")}
             </p>
           </div>
         )}
@@ -425,16 +408,11 @@ export const ChatSidebar = ({ conversations }: Props) => {
               className={cn(
                 "flex items-start gap-4 p-4 rounded-2xl border-2 border-b-4 cursor-pointer transition-all hover:-translate-y-1 active:translate-y-1 active:border-b-2",
                 isActive
-                  ? "bg-blue-50 dark:bg-sky-950 border-[#1CB0F6] border-b-[#1CB0F6] text-stone-800 dark:text-slate-100 shadow-md shadow-blue-100/50 dark:shadow-[#1CB0F6]/10"
-                  : "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 hover:bg-stone-50 dark:hover:bg-slate-800",
+                  ? "bg-blue-50 dark:bg-sky-950 border-[#1CB0F6] border-b-[#1CB0F6] text-stone-800 dark:text-slate-100 shadow-md"
+                  : "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800",
               )}
             >
-              {/* Avatar Logic */}
-              <div
-                className={cn(
-                  "h-14 w-14 shrink-0 relative flex items-center justify-center",
-                )}
-              >
+              <div className="h-14 w-14 shrink-0 relative flex items-center justify-center">
                 {conv.isGroup ? (
                   conv.groupImageUrl ? (
                     <Image
@@ -461,7 +439,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
                               className="object-cover"
                             />
                           ) : (
-                            <div className="flex h-full w-full items-center justify-center text-[10px] font-black text-stone-400 dark:text-slate-500 dark:text-slate-400">
+                            <div className="flex h-full w-full items-center justify-center text-[10px] font-black text-stone-400 dark:text-slate-500">
                               {p.userName?.[0] || "?"}
                             </div>
                           )}
@@ -496,7 +474,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
                           "text-xl font-black",
                           isActive
                             ? "text-[#1CB0F6]"
-                            : "text-stone-400 dark:text-slate-500 dark:text-slate-400",
+                            : "text-stone-400 dark:text-slate-500",
                         )}
                       >
                         {conv.partner?.userName?.[0]?.toUpperCase()}
@@ -534,7 +512,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
                       "text-xs font-bold",
                       isActive
                         ? "text-[#1CB0F6]/70"
-                        : "text-stone-400 dark:text-slate-500 dark:text-slate-400",
+                        : "text-stone-400 dark:text-slate-500",
                     )}
                   >
                     {mounted && conv.lastMessage
@@ -542,7 +520,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
                           conv.lastMessage.createdAt,
                         ).toLocaleDateString()
                       : mounted
-                        ? "Novo"
+                        ? t("new_status")
                         : ""}
                   </span>
                 </div>
@@ -555,7 +533,7 @@ export const ChatSidebar = ({ conversations }: Props) => {
                         : conv.unreadCount > 0 &&
                             conv.lastMessage?.senderId !== "me"
                           ? "text-stone-900 dark:text-slate-200"
-                          : "text-stone-400 dark:text-slate-500 dark:text-slate-400",
+                          : "text-stone-400 dark:text-slate-500",
                     )}
                   >
                     {conv.lastMessage ? (
@@ -564,16 +542,13 @@ export const ChatSidebar = ({ conversations }: Props) => {
                         message={conv.lastMessage}
                       />
                     ) : (
-                      "Começa uma conversa!"
+                      t("start_conversation")
                     )}
                   </p>
                   {conv.unreadCount > 0 && (
                     <div
                       className={cn(
-                        "flex h-6 min-w-[24px] items-center justify-center rounded-xl px-2 text-[11px] font-black shadow-sm",
-                        isActive
-                          ? "bg-[#1CB0F6] text-white"
-                          : "bg-[#1CB0F6] text-white",
+                        "flex h-6 min-w-[24px] items-center justify-center rounded-xl px-2 text-[11px] font-black shadow-sm bg-[#1CB0F6] text-white",
                       )}
                     >
                       {conv.unreadCount > 99 ? "99+" : conv.unreadCount}

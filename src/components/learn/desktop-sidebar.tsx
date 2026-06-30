@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Zap, Heart, Trophy, ChevronRight, Infinity } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -25,6 +26,7 @@ export const DesktopSidebar = ({
   totalLessons: number;
   isPro?: boolean;
 }) => {
+  const t = useTranslations("learn_components");
   const dailyGoal = 200;
   const todayXp = points % dailyGoal;
 
@@ -65,7 +67,7 @@ export const DesktopSidebar = ({
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-emerald-500 animate-[pulse_2s_ease-in-out_infinite]" />
             <h2 className="font-black text-xs uppercase tracking-[0.2em] text-slate-400">
-              O Teu Progresso
+              {t("progress_title")}
             </h2>
           </div>
         </motion.div>
@@ -111,7 +113,7 @@ export const DesktopSidebar = ({
             </div>
             <div className="relative z-10 flex flex-col items-center">
               <span className="text-[10px] font-black uppercase tracking-widest text-amber-500 flex items-center gap-1">
-                <Zap className="w-3 h-3 fill-amber-500" /> XP Diário
+                <Zap className="w-3 h-3 fill-amber-500" /> {t("daily_xp")}
               </span>
             </div>
           </motion.div>
@@ -143,7 +145,7 @@ export const DesktopSidebar = ({
                 </span>
               </div>
               <span className="relative z-10 text-[10px] font-black uppercase tracking-widest text-orange-400 mt-1 px-1">
-                Série
+                {t("streak")}
               </span>
             </motion.div>
 
@@ -172,7 +174,7 @@ export const DesktopSidebar = ({
                 />
               </div>
               <span className="relative z-10 text-[10px] font-black uppercase tracking-widest text-rose-400 mt-1 px-1">
-                Vidas
+                {t("lives")}
               </span>
             </motion.div>
           </div>
@@ -230,10 +232,10 @@ export const DesktopSidebar = ({
             </div>
             <div className="flex-1 font-sans">
               <h3 className="font-black text-sm uppercase tracking-wider text-indigo-500 leading-tight">
-                Leaderboard
+                {t("leaderboard")}
               </h3>
               <p className="text-xs font-bold text-indigo-400 opacity-80 mt-0.5">
-                Defende a tua glória
+                {t("defend_glory")}
               </p>
             </div>
             <ChevronRight

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useUISounds } from "@/hooks/use-ui-sounds";
 import { addArcadePoints } from "@/actions/user-progress";
+import { useTranslations } from "next-intl";
 
 type GameStatus = "playing" | "correct" | "wrong";
 
@@ -18,6 +19,7 @@ type WordData = {
 };
 
 export default function VocabularySprint() {
+  const t = useTranslations("arcade");
   const router = useRouter();
   const { playClick, playReward, playPop, playFahh } = useUISounds();
 
@@ -174,7 +176,7 @@ export default function VocabularySprint() {
           onClick={() => router.push("/arcade")}
           className="text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 font-bold uppercase text-sm tracking-wider"
         >
-          &larr; Sair
+          &larr; {t("exit")}
         </button>
         <div className="flex items-center gap-2 bg-amber-100 text-amber-500 px-4 py-2 rounded-2xl border-2 border-amber-200 border-b-4">
           <Zap className="h-5 w-5 fill-amber-500" />
@@ -249,10 +251,10 @@ export default function VocabularySprint() {
           )}
         >
           {status === "playing"
-            ? "VERIFICAR"
+            ? t("check")
             : status === "correct"
-              ? "EXCELENTE!"
-              : "INCORRETO"}
+              ? t("excellent")
+              : t("incorrect")}
         </button>
       </div>
     </div>

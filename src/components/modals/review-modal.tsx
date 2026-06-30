@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +14,7 @@ import { toast } from "sonner";
 import { useUISounds } from "@/hooks/use-ui-sounds";
 
 export const ReviewModal = () => {
+  const t = useTranslations("modals");
   const { isOpen, close } = useReviewModal();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -21,12 +23,12 @@ export const ReviewModal = () => {
 
   const handleSubmit = () => {
     if (rating === 0) {
-      toast.error("Por favor, escolhe uma classificação (estrelas).");
+      toast.error(t("errors.rating_required"));
       return;
     }
 
     if (comment.trim().length < 5) {
-      toast.error("Escreve um pouco mais sobre a tua experiência!");
+      toast.error(t("errors.comment_short"));
       return;
     }
 
@@ -36,16 +38,14 @@ export const ReviewModal = () => {
           try {
             playStart();
           } catch (e) {}
-          toast.success(
-            "Obrigado pelo teu feedback! Foi guardado com sucesso.",
-          );
+          toast.success(t("success"));
           setTimeout(() => {
             close();
             setRating(0);
             setComment("");
           }, 500);
         } else {
-          toast.error("Ocorreu um erro ao guardar a tua review.");
+          toast.error(t("errors.generic"));
         }
       });
     });
@@ -61,7 +61,7 @@ export const ReviewModal = () => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent className="max-w-md w-[95vw] sm:w-full p-0 bg-transparent border-none shadow-none z-modal outline-none [&>button]:hidden flex items-center justify-center">
-        <DialogTitle className="sr-only">Avalia a tua experiência</DialogTitle>
+        <DialogTitle className="sr-only">{t("title")}</DialogTitle>
 
         <div className="relative w-full bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 sm:p-8 text-center flex flex-col items-center outline-none my-16">
           {/* Custom Close Button */}
@@ -83,12 +83,11 @@ export const ReviewModal = () => {
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-black text-stone-800 dark:text-slate-100 mt-10 mb-2 tracking-tight">
-            Estás a adorar a viagem?
+            {t("heading")}
           </h2>
 
           <p className="text-stone-500 dark:text-slate-400 font-medium mb-6">
-            A tua opinião ajuda a construir o futuro da plataforma. O que achas
-            até agora?
+            {t("description")}
           </p>
 
           <div className="w-full flex justify-center mb-6 py-2 bg-stone-50 dark:bg-slate-950 rounded-2xl border-2 border-stone-100">
@@ -100,7 +99,7 @@ export const ReviewModal = () => {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               disabled={isPending}
-              placeholder="Adoro como a AI me ajuda a perceber..."
+              placeholder={t("placeholder")}
               className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-300 dark:border-slate-700 border-b-4 rounded-2xl p-4 text-stone-700 dark:text-slate-200 font-medium placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400 focus:outline-none focus:border-[#FFC800] focus:bg-yellow-50 focus:placeholder-yellow-600/50 transition-all resize-none min-h-[120px] text-left shadow-sm"
             />
             <div className="absolute top-0 right-0 w-8 h-8 rounded-tr-xl bg-gradient-to-bl from-white to-transparent opacity-50 pointer-events-none mix-blend-overlay"></div>
@@ -124,7 +123,7 @@ export const ReviewModal = () => {
             className="w-full mt-4 bg-purple-50 text-purple-600 border-2 border-purple-200 border-b-4 rounded-2xl py-3 flex items-center justify-center gap-2 font-bold hover:bg-purple-100 active:translate-y-1 active:border-b-0 transition-all text-sm uppercase tracking-widest"
           >
             <Heart className="w-4 h-4 fill-purple-600" />
-            Ver mural de feedback
+            {t("view_wall")}
           </Link>
         </div>
       </DialogContent>

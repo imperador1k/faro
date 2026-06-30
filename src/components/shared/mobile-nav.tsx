@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import {
   Home,
   Trophy,
@@ -106,7 +107,6 @@ const ExpandedMobileItem = ({
 }: ExpandedMobileItemProps) => {
   const { playClick } = useUISounds();
 
-  // Toy Box Color Mapping
   const themeStyles = {
     blue: "bg-blue-100 dark:bg-blue-950/50 text-blue-500 dark:text-blue-400 border-blue-200 dark:border-blue-900",
     purple:
@@ -175,22 +175,19 @@ const MobileNavContent = ({
   notificationCount,
   unreadMessageCount,
 }: MobileNavProps) => {
+  const t = useTranslations("shared");
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const activeUserId = searchParams.get("userId");
   const activeConversationId = searchParams.get("conversationId");
   const [isOpen, setIsOpen] = useState(false);
-
-  // Check for admin role BEFORE early returns
   const { user } = useUser();
   const isAdmin = (user?.publicMetadata as any)?.role === "admin";
 
-  // If we are in an active chat on mobile, hide the bottom nav entirely to maximize screen space
   if (pathname === "/messages" && (activeUserId || activeConversationId)) {
     return null;
   }
 
-  // Also hide for survival chat sessions to ensure immersive experience
   if (
     pathname.startsWith("/practice/survival/") &&
     pathname.split("/").length > 3
@@ -199,12 +196,10 @@ const MobileNavContent = ({
   }
 
   const toggleMenu = () => setIsOpen(!isOpen);
-
   const closeMenu = () => setIsOpen(false);
 
   return (
     <>
-      {/* Backdrop overlay to close menu when clicking outside */}
       {isOpen && (
         <div
           className="fixed inset-0 z-[60] bg-stone-900/20 backdrop-blur-sm lg:hidden transition-opacity"
@@ -213,7 +208,6 @@ const MobileNavContent = ({
       )}
 
       <div className="fixed bottom-0 left-0 right-0 z-[70] flex flex-col items-center justify-end lg:hidden pointer-events-none pb-4 px-4 w-full h-full">
-        {/* Expanded Menu - Toy Box */}
         <div
           className={cn(
             "w-full max-w-sm flex flex-col gap-2 transition-all duration-300 pointer-events-auto origin-bottom",
@@ -227,7 +221,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/shop"
                 icon={<ShoppingBag strokeWidth={2.5} className="h-7 w-7" />}
-                label="Loja"
+                label={t("shop")}
                 isActive={pathname === "/shop"}
                 onClick={closeMenu}
                 colorTheme="sky"
@@ -235,7 +229,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/friends"
                 icon={<Users strokeWidth={2.5} className="h-7 w-7" />}
-                label="Amigos"
+                label={t("friends")}
                 isActive={pathname === "/friends"}
                 onClick={closeMenu}
                 colorTheme="blue"
@@ -243,7 +237,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/courses"
                 icon={<BookOpen strokeWidth={2.5} className="h-7 w-7" />}
-                label="Cursos"
+                label={t("courses")}
                 isActive={pathname === "/courses"}
                 onClick={closeMenu}
                 colorTheme="purple"
@@ -251,7 +245,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/messages"
                 icon={<MessageSquare strokeWidth={2.5} className="h-7 w-7" />}
-                label="Msgs"
+                label={t("messages_short")}
                 isActive={pathname === "/messages"}
                 onClick={closeMenu}
                 badgeCount={unreadMessageCount}
@@ -260,7 +254,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/notifications"
                 icon={<Bell strokeWidth={2.5} className="h-7 w-7" />}
-                label="Notif."
+                label={t("notifications_short")}
                 isActive={pathname === "/notifications"}
                 onClick={closeMenu}
                 badgeCount={notificationCount}
@@ -269,7 +263,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/leaderboard"
                 icon={<Trophy strokeWidth={2.5} className="h-7 w-7" />}
-                label="Liga"
+                label={t("league")}
                 isActive={pathname === "/leaderboard"}
                 onClick={closeMenu}
                 colorTheme="yellow"
@@ -277,7 +271,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/quests"
                 icon={<Target strokeWidth={2.5} className="h-7 w-7" />}
-                label="Missões"
+                label={t("quests")}
                 isActive={pathname === "/quests"}
                 onClick={closeMenu}
                 colorTheme="amber"
@@ -285,7 +279,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/arcade"
                 icon={<Gamepad2 strokeWidth={2.5} className="h-7 w-7" />}
-                label="Arcade"
+                label={t("arcade")}
                 isActive={pathname.startsWith("/arcade")}
                 onClick={closeMenu}
                 colorTheme="purple"
@@ -293,7 +287,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/settings"
                 icon={<Settings strokeWidth={2.5} className="h-7 w-7" />}
-                label="Defin."
+                label={t("settings_short")}
                 isActive={pathname === "/settings"}
                 onClick={closeMenu}
                 colorTheme="stone"
@@ -301,7 +295,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/vocabulary"
                 icon={<Archive strokeWidth={2.5} className="h-7 w-7" />}
-                label="Cofre"
+                label={t("vault")}
                 isActive={pathname === "/vocabulary"}
                 onClick={closeMenu}
                 colorTheme="emerald"
@@ -309,7 +303,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/analytics"
                 icon={<BarChart strokeWidth={2.5} className="h-7 w-7" />}
-                label="Estat."
+                label={t("stats_short")}
                 isActive={pathname === "/analytics"}
                 onClick={closeMenu}
                 colorTheme="pink"
@@ -317,7 +311,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/evaluation"
                 icon={<GraduationCap strokeWidth={2.5} className="h-7 w-7" />}
-                label="Testes"
+                label={t("tests")}
                 isActive={pathname === "/evaluation"}
                 onClick={closeMenu}
                 colorTheme="indigo"
@@ -326,7 +320,7 @@ const MobileNavContent = ({
                 <ExpandedMobileItem
                   href="/admin"
                   icon={<ShieldAlert strokeWidth={2.5} className="h-7 w-7" />}
-                  label="Admin"
+                  label={t("admin")}
                   isActive={pathname === "/admin"}
                   onClick={closeMenu}
                   colorTheme="red"
@@ -335,7 +329,7 @@ const MobileNavContent = ({
               <ExpandedMobileItem
                 href="/support"
                 icon={<LifeBuoy strokeWidth={2.5} className="h-7 w-7" />}
-                label="Ajuda"
+                label={t("help")}
                 isActive={pathname === "/support"}
                 onClick={closeMenu}
                 colorTheme="teal"
@@ -344,22 +338,20 @@ const MobileNavContent = ({
           </div>
         </div>
 
-        {/* Main Floating Bar (The Pill) */}
         <nav className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-stone-200 dark:border-slate-800 border-t-2 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] rounded-3xl md:rounded-full px-6 py-2 flex items-center justify-between pointer-events-auto relative w-full max-w-sm">
           <MobileItem
             href="/learn"
             icon={<Home strokeWidth={2.5} className="h-6 w-6" />}
-            label="Início"
+            label={t("home")}
             isActive={pathname === "/learn" || pathname === "/"}
           />
           <MobileItem
             href="/practice"
             icon={<Dumbbell strokeWidth={2.5} className="h-6 w-6" />}
-            label="Praticar"
+            label={t("practice")}
             isActive={pathname.startsWith("/practice")}
           />
 
-          {/* Central Toggle Button */}
           <div className="relative z-[80] flex items-center justify-center -mt-8">
             <button
               onClick={toggleMenu}
@@ -403,7 +395,7 @@ const MobileNavContent = ({
           <MobileItem
             href="/profile"
             icon={<User strokeWidth={2.5} className="h-6 w-6" />}
-            label="Perfil"
+            label={t("profile")}
             isActive={pathname === "/profile"}
           />
         </nav>

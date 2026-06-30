@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState } from "react";
 import Link from "next/link";
 import { Archive, Search, Swords, BookOpen, Joystick } from "lucide-react";
@@ -24,6 +26,7 @@ interface VocabularyDashboardProps {
 export const VocabularyDashboard = ({
   initialWords,
 }: VocabularyDashboardProps) => {
+  const t = useTranslations("vocabulary");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredWords = initialWords.filter((entry) => {
@@ -45,7 +48,7 @@ export const VocabularyDashboard = ({
               <strong className="text-slate-700 dark:text-slate-200">
                 {initialWords.length}
               </strong>{" "}
-              {initialWords.length === 1 ? "palavra" : "palavras"} no cofre
+              {t("word_count", { count: initialWords.length })}
             </span>
           </div>
         </div>
@@ -59,7 +62,7 @@ export const VocabularyDashboard = ({
           </div>
           <input
             type="text"
-            placeholder="Pesquisar palavras ou traduções..."
+            placeholder={t("search_placeholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full h-full min-h-[56px] pl-12 pr-4 py-4 bg-white dark:bg-slate-900 border-2 border-transparent border-b-[4px] border-b-stone-200 dark:border-b-slate-800 rounded-[20px] text-stone-700 dark:text-slate-200 font-bold focus:outline-none focus:border-sky-400 focus:border-b-sky-500 transition-colors shadow-sm placeholder:font-bold placeholder:text-stone-400 dark:text-slate-500 dark:text-slate-400"
@@ -75,7 +78,7 @@ export const VocabularyDashboard = ({
             disabled={initialWords.length === 0}
           >
             <Joystick className="w-6 h-6 border-2 border-white/20 rounded-full p-0.5" />
-            TREINAR VOCABULÁRIO
+            {t("train_button")}
           </button>
         </Link>
       </div>
@@ -87,17 +90,16 @@ export const VocabularyDashboard = ({
             <Archive className="h-16 w-16 text-slate-400" />
           </div>
           <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-200 mb-2">
-            O teu cofre está vazio.
+            {t("empty_state_title")}
           </h2>
           <p className="text-slate-500 dark:text-slate-400 max-w-sm mx-auto font-medium">
-            Clica em palavras durante as lições ou avaliação para as guardares
-            aqui!
+            {t("empty_state_description")}
           </p>
         </div>
       ) : filteredWords.length === 0 ? (
         <div className="flex flex-col items-center justify-center p-12 text-center text-slate-500 dark:text-slate-400 font-medium">
           <Search className="h-12 w-12 text-slate-300 mb-4" />
-          <p>Nenhuma palavra encontrada para &quot;{searchQuery}&quot;.</p>
+          <p>{t("no_results", { query: searchQuery })}</p>
         </div>
       ) : (
         /* ── Word Vault Feed (S-Curve) ── */
@@ -124,10 +126,10 @@ export const VocabularyDashboard = ({
               <button className="w-full flex flex-col items-center justify-center gap-1 font-black text-xl px-8 py-6 rounded-[32px] bg-amber-400 text-amber-900 border-2 border-transparent border-b-[8px] border-b-amber-600 shadow-xl hover:translate-y-[2px] hover:border-b-[6px] active:translate-y-[8px] active:border-b-0 transition-all hover:scale-105 active:scale-95 group">
                 <span className="flex items-center gap-2 drop-shadow-sm">
                   <Swords className="w-6 h-6 animate-pulse" />
-                  INICIAR DOJO
+                  {t("dojo_button")}
                 </span>
                 <span className="text-[11px] font-black text-amber-900/50 uppercase tracking-widest mt-1 group-hover:opacity-100 opacity-60 transition-opacity">
-                  Missão Rápida (+20 XP)
+                  {t("dojo_subtitle")}
                 </span>
               </button>
             </Link>

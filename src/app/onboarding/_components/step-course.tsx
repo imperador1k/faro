@@ -4,6 +4,7 @@ import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Users } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface StepCourseProps {
   courses: {
@@ -16,6 +17,7 @@ interface StepCourseProps {
 
 export const StepCourse = ({ courses }: StepCourseProps) => {
   const { selectedCourse, setCourse } = useOnboardingStore();
+  const t = useTranslations("Onboarding");
 
   return (
     <div className="w-full h-full flex flex-col pt-4 max-w-2xl mx-auto">
@@ -36,14 +38,18 @@ export const StepCourse = ({ courses }: StepCourseProps) => {
           className="bg-white dark:bg-slate-900 border-2 border-gray-200 rounded-2xl p-4 shadow-sm relative"
         >
           <p className="text-sm sm:text-base font-bold text-[#4b4b4b]">
-            Estou tão entusiasmado! Qual destes idiomas queres dominar? 🌟
+            {t("marco_intro")}
           </p>
           <div className="absolute left-[-10px] top-1/2 -translate-y-1/2 w-4 h-4 bg-white dark:bg-slate-900 border-l-2 border-b-2 border-gray-200 rotate-45" />
         </motion.div>
       </div>
 
       <h1 className="text-2xl sm:text-3xl font-black text-[#042c60] mb-6 px-2">
-        Escolhe o teu <span className="text-[#58cc02]">Caminho</span>
+        {t.rich("choose_your_path", {
+          path_span: (chunks) => (
+            <span className="text-[#58cc02]">{chunks}</span>
+          ),
+        })}
       </h1>
 
       <div className="grid grid-cols-2 gap-4 w-full px-2">
@@ -70,7 +76,7 @@ export const StepCourse = ({ courses }: StepCourseProps) => {
               {/* Badge for popular courses */}
               {course.studentCount > 100 && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-wider z-10 shadow-sm">
-                  Popular
+                  {t("popular_badge")}
                 </div>
               )}
 
@@ -93,7 +99,9 @@ export const StepCourse = ({ courses }: StepCourseProps) => {
                 <div className="flex items-center justify-center gap-1.5 text-[#afafaf]">
                   <Users size={12} className="sm:w-4 sm:h-4" />
                   <span className="text-[10px] sm:text-xs font-bold uppercase tracking-tight">
-                    {course.studentCount.toLocaleString()} Alunos
+                    {t("students_count", {
+                      count: course.studentCount.toLocaleString(),
+                    })}
                   </span>
                 </div>
               </div>

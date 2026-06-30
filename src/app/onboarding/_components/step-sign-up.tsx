@@ -4,8 +4,10 @@ import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { motion } from "framer-motion";
 import { Zap, Trophy, Gem, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export const StepSignUp = () => {
+  const t = useTranslations("onboarding");
   const { placementResults, experienceLevel } = useOnboardingStore();
 
   // Calculate potential rewards to show
@@ -46,12 +48,11 @@ export const StepSignUp = () => {
 
         <div className="space-y-2">
           <h2 className="text-3xl md:text-4xl font-black text-[#042c60] leading-tight">
-            Tudo pronto para salvar o teu{" "}
-            <span className="text-sky-500">progresso</span>!
+            {t("ready_to_save")}
+            <span className="text-sky-500">{t("progress")}</span>!
           </h2>
           <p className="text-lg font-bold text-gray-500 max-w-md mx-auto">
-            Cria o teu perfil agora para garantires estas recompensas
-            exclusivas:
+            {t("create_profile_desc")}
           </p>
         </div>
       </div>
@@ -75,10 +76,10 @@ export const StepSignUp = () => {
             <Zap className="text-orange-500 fill-orange-500" size={24} />
           </div>
           <span className="font-black text-orange-600 text-lg leading-tight">
-            Streak Ativa
+            {t("active_streak")}
           </span>
           <span className="text-xs font-bold text-orange-400 uppercase">
-            1º Dia Grátis
+            {t("first_day_free")}
           </span>
         </motion.div>
 
@@ -97,7 +98,7 @@ export const StepSignUp = () => {
             +{xpBonus + 20} XP
           </span>
           <span className="text-xs font-bold text-blue-400 uppercase">
-            Bónus Inicial
+            {t("initial_bonus")}
           </span>
         </motion.div>
 
@@ -113,10 +114,10 @@ export const StepSignUp = () => {
             <Gem className="text-emerald-500 fill-emerald-500" size={24} />
           </div>
           <span className="font-black text-emerald-600 text-lg leading-tight">
-            {gemBonus} Joias
+            {gemBonus} {t("gems")}
           </span>
           <span className="text-xs font-bold text-emerald-400 uppercase">
-            Boas-vindas
+            {t("welcome")}
           </span>
         </motion.div>
       </motion.div>
@@ -130,13 +131,12 @@ export const StepSignUp = () => {
         <div className="flex items-center gap-2 text-[#58cc02] bg-[#f7fff0] px-4 py-2 rounded-full border border-[#58cc02]/20">
           <CheckCircle2 size={18} />
           <span className="text-sm font-black uppercase tracking-wider">
-            Perfil pronto para criar
+            {t("profile_ready")}
           </span>
         </div>
 
         <p className="text-xs font-bold text-gray-400 max-w-xs leading-relaxed">
-          Ao clicar em continuar, criarás a tua conta para guardar o progresso e
-          as tuas recompensas!
+          {t("click_continue_desc")}
         </p>
       </motion.div>
     </div>

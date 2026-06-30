@@ -49,7 +49,8 @@ export async function translateWord(
             },
             {
               role: "user",
-              content: `Word to translate: "${cleanWord}"\nContext sentence: "${context}"`,
+              content: `Word to translate: "${cleanWord}"
+Context sentence: "${context}"`,
             },
           ],
           temperature: 0.1,

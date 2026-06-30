@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
@@ -11,13 +12,13 @@ type AILoadingScreenProps = {
 };
 
 export const AILoadingScreen = ({
-  message = "A magia da IA está a acontecer...",
-  submessage = "A criar o teu desafio personalizado",
+  message,
+  submessage,
 }: AILoadingScreenProps) => {
+  const t = useTranslations("ui");
   const [animationData, setAnimationData] = useState<object | null>(null);
 
   useEffect(() => {
-    // Fetch broom animation for loading screen
     fetch("/broom.json")
       .then((res) => res.json())
       .then((data) => setAnimationData(data))
@@ -42,10 +43,10 @@ export const AILoadingScreen = ({
       </div>
       <div className="flex flex-col items-center space-y-2 text-center text-slate-700 dark:text-slate-200">
         <h3 className="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-sky-500">
-          {message}
+          {message || t("ai_loading_message")}
         </h3>
         <p className="font-medium text-slate-500 dark:text-slate-400">
-          {submessage}
+          {submessage || t("ai_loading_submessage")}
         </p>
         <div className="flex items-center space-x-1 mt-4">
           <span className="h-2.5 w-2.5 bg-purple-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>

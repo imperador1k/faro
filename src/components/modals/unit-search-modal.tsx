@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
@@ -18,6 +20,7 @@ interface UnitSearchModalProps {
 }
 
 export const UnitSearchModal = ({ units }: UnitSearchModalProps) => {
+  const t = useTranslations("modals");
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
@@ -88,7 +91,7 @@ export const UnitSearchModal = ({ units }: UnitSearchModalProps) => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Pesquisar um Capítulo..."
+            placeholder={t("search_placeholder")}
             className="w-full h-12 bg-transparent text-xl font-black text-stone-700 dark:text-slate-200 placeholder:text-stone-300 dark:placeholder:text-slate-500 outline-none"
           />
           <kbd className="hidden sm:inline-block px-2 py-1 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-xl text-[10px] uppercase font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 ml-2 shrink-0">
@@ -105,7 +108,7 @@ export const UnitSearchModal = ({ units }: UnitSearchModalProps) => {
                 strokeWidth={1.5}
               />
               <p className="text-lg font-bold text-stone-500 dark:text-slate-400">
-                Nenhum capítulo encontrado
+                {t("no_results")}
               </p>
             </div>
           ) : (
@@ -117,7 +120,7 @@ export const UnitSearchModal = ({ units }: UnitSearchModalProps) => {
               >
                 <div className="flex flex-col">
                   <span className="text-[10px] font-black text-sky-500 uppercase tracking-widest mb-1">
-                    Capítulo {unit.order}
+                    {t("chapter_label", { order: unit.order })}
                   </span>
                   <span className="text-lg font-extrabold text-stone-700 dark:text-slate-200">
                     {unit.title}

@@ -1,10 +1,9 @@
 "use client";
 
-import { format, parseISO } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import { Zap, Target, Crown, Flame, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { useTranslations, useFormatter } from "next-intl";
 
 type WeeklyData = {
   date: string;
@@ -31,14 +30,16 @@ export const DashboardClient = ({ data }: Props) => {
   const [activeTab, setActiveTab] = useState<"overview" | "heatmap">(
     "overview",
   );
+  const t = useTranslations("analytics");
+  const format = useFormatter();
 
   // Format date for the X-axis (e.g., "seg", "ter")
   const chartData = data.weeklyData.map((d) => {
     let dayName = "";
     try {
-      // date-fns format day of week short in Portuguese
-      dayName = format(parseISO(d.date), "EEEE", { locale: ptBR })
-        .split("-")[0]
+      const dateObj = new Date(d.date);
+      dayName = format
+        .dateTime(dateObj, { weekday: "short" })
         .substring(0, 3)
         .toUpperCase();
     } catch (e) {
@@ -65,7 +66,7 @@ export const DashboardClient = ({ data }: Props) => {
               : "px-2 sm:px-6 py-2.5 sm:py-2 font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 cursor-pointer text-sm sm:text-base whitespace-nowrap",
           )}
         >
-          Visão Geral
+          {t("overview_tab")}
         </button>
         <button
           onClick={() => setActiveTab("heatmap")}
@@ -76,7 +77,7 @@ export const DashboardClient = ({ data }: Props) => {
               : "px-2 sm:px-6 py-2.5 sm:py-2 font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 cursor-pointer text-sm sm:text-base whitespace-nowrap",
           )}
         >
-          Consistência
+          {t("consistency_tab")}
         </button>
       </div>
 
@@ -87,7 +88,7 @@ export const DashboardClient = ({ data }: Props) => {
             <div className="flex items-center gap-2">
               <Flame className="h-8 w-8 text-orange-500 fill-orange-500" />
               <h2 className="font-black text-2xl text-stone-700 dark:text-slate-200">
-                Dias de Foco
+                {t("focus_days")}
               </h2>
             </div>
 
@@ -111,12 +112,12 @@ export const DashboardClient = ({ data }: Props) => {
 
             <div className="bg-orange-100 border-2 border-orange-200 rounded-2xl px-6 py-3">
               <span className="font-black text-orange-500 text-lg">
-                🔥 {data.activeDays} / 7 Dias esta semana
+                {t("active_days_week", { activeDays: data.activeDays })}
               </span>
             </div>
 
             <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
-              Consegues fazer melhor, volta amanhã! ⏰
+              {t("come_back_tomorrow")}
             </p>
           </div>
 
@@ -125,11 +126,11 @@ export const DashboardClient = ({ data }: Props) => {
             <div className="flex items-center gap-2 mb-2">
               <Activity className="h-8 w-8 text-sky-500" />
               <h2 className="font-black text-2xl text-stone-700 dark:text-slate-200">
-                XP Semanal
+                {t("weekly_xp")}
               </h2>
             </div>
             <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm mb-8">
-              O teu desempenho ao longo da semana.
+              {t("weekly_performance")}
             </p>
 
             <div className="flex items-end justify-between h-48 sm:h-56 w-full gap-2 sm:gap-4">
@@ -209,7 +210,7 @@ export const DashboardClient = ({ data }: Props) => {
                   {data.totalXp}
                 </h3>
                 <p className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-sm">
-                  Total XP
+                  {t("total_xp")}
                 </p>
               </div>
             </div>
@@ -221,7 +222,7 @@ export const DashboardClient = ({ data }: Props) => {
                 {data.accuracy}%
               </span>
               <p className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-sm">
-                Precisão
+                {t("accuracy")}
               </p>
             </div>
 
@@ -232,7 +233,7 @@ export const DashboardClient = ({ data }: Props) => {
                 {data.wordsMastered}
               </span>
               <p className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-sm">
-                Palavras Dominadas
+                {t("words_mastered")}
               </p>
             </div>
           </div>
@@ -242,7 +243,8 @@ export const DashboardClient = ({ data }: Props) => {
       {activeTab === "heatmap" && (
         <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 md:p-8 w-full animate-in fade-in slide-in-from-bottom-2">
           <h2 className="text-xl font-black text-stone-700 dark:text-slate-200 mb-6 flex items-center gap-2">
-            <Activity className="h-6 w-6 text-emerald-500" />A Tua Consistência
+            <Activity className="h-6 w-6 text-emerald-500" />
+            {t("your_consistency")}
           </h2>
 
           <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-stone-200 scrollbar-track-transparent">
@@ -270,11 +272,11 @@ export const DashboardClient = ({ data }: Props) => {
                 // Format title string
                 let titleStr = `${d.xp} XP`;
                 try {
-                  const formattedDate = format(
-                    parseISO(d.date),
-                    "d 'de' MMMM",
-                    { locale: ptBR },
-                  );
+                  const dateObj = new Date(d.date);
+                  const formattedDate = format.dateTime(dateObj, {
+                    day: "numeric",
+                    month: "long",
+                  });
                   titleStr = `${d.xp} XP a ${formattedDate}`;
                 } catch (e) {
                   titleStr = `${d.xp} XP a ${d.date}`;
@@ -296,19 +298,19 @@ export const DashboardClient = ({ data }: Props) => {
 
           {/* Legend */}
           <div className="flex items-center justify-end gap-2 mt-4 text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 pb-8 border-b-2 border-stone-100">
-            Menos
+            {t("less")}
             <div className="w-[14px] h-[14px] rounded-[3px] bg-stone-100 dark:bg-slate-800" />
             <div className="w-[14px] h-[14px] rounded-[3px] bg-[#d7ffb8]" />
             <div className="w-[14px] h-[14px] rounded-[3px] bg-[#58CC02]" />
             <div className="w-[14px] h-[14px] rounded-[3px] bg-[#46a302]" />
-            Mais
+            {t("more")}
           </div>
 
           {/* Consistency Summary Stats */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
             <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 dark:bg-slate-950 border-2 border-stone-100">
               <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
-                Série Atual
+                {t("current_streak")}
               </span>
               <span className="text-2xl font-black text-orange-500 drop-shadow-sm">
                 {data.streak}
@@ -316,7 +318,7 @@ export const DashboardClient = ({ data }: Props) => {
             </div>
             <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 dark:bg-slate-950 border-2 border-stone-100">
               <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
-                Série Máxima
+                {t("longest_streak")}
               </span>
               <span className="text-2xl font-black text-stone-700 dark:text-slate-200 drop-shadow-sm">
                 {data.longestStreak}
@@ -324,7 +326,7 @@ export const DashboardClient = ({ data }: Props) => {
             </div>
             <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 dark:bg-slate-950 border-2 border-stone-100">
               <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
-                Este Mês
+                {t("this_month")}
               </span>
               <span className="text-2xl font-black text-sky-500 drop-shadow-sm">
                 {data.heatmapData.slice(-30).filter((d) => d.xp > 0).length}
@@ -332,7 +334,7 @@ export const DashboardClient = ({ data }: Props) => {
             </div>
             <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-stone-50 dark:bg-slate-950 border-2 border-stone-100">
               <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-widest mb-1 text-center">
-                Total XP
+                {t("total_xp")}
               </span>
               <span className="text-2xl font-black text-amber-500 drop-shadow-sm">
                 {data.totalXp}

@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { Heart, Star } from "lucide-react";
 import { useReviewModal } from "@/store/use-review-modal-store";
+import { useTranslations } from "next-intl";
 
 export const ReviewButtons = () => {
+  const t = useTranslations("settings_components");
   const { open: openReviewModal } = useReviewModal();
 
   return (
@@ -17,7 +19,7 @@ export const ReviewButtons = () => {
           <Heart className="h-5 w-5 text-purple-600 group-hover:text-white transition-colors" />
         </div>
         <span className="font-bold text-stone-700 dark:text-slate-200">
-          Mural de Feedback
+          {t("feedback_wall")}
         </span>
       </Link>
 
@@ -30,10 +32,10 @@ export const ReviewButtons = () => {
         </div>
         <div className="flex flex-col">
           <span className="font-bold text-stone-700 dark:text-slate-200">
-            Dar Feedback
+            {t("give_feedback")}
           </span>
           <span className="text-[10px] font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-0.5">
-            Ajuda-nos a crescer!
+            {t("help_us_grow")}
           </span>
         </div>
       </button>

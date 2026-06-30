@@ -4,6 +4,7 @@ import { Award } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
+import { useTranslations } from "next-intl";
 
 interface Certification {
   id: string;
@@ -21,13 +22,15 @@ interface CertificationsListProps {
 export const CertificationsList = ({
   certifications,
 }: CertificationsListProps) => {
+  const t = useTranslations("shared");
+
   if (!certifications || certifications.length === 0) return null;
 
   return (
     <div className="mb-14">
       <h2 className="text-2xl font-black text-stone-700 dark:text-slate-200 tracking-tight uppercase mb-6 flex items-center gap-3">
         <Award className="h-6 w-6 text-amber-500" strokeWidth={2.5} />
-        Certificações Oficiais
+        {t("official_certifications")}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {certifications.map((cert) => (
@@ -49,11 +52,13 @@ export const CertificationsList = ({
                 {cert.course.title}
               </h3>
               <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-widest relative z-10">
-                Emitido a {format(new Date(cert.createdAt), "dd/MM/yyyy")}
+                {t("issued_at", {
+                  date: format(new Date(cert.createdAt), "dd/MM/yyyy"),
+                })}
               </p>
 
               <div className="mt-4 text-xs font-bold text-sky-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                Ver Diploma &rarr;
+                {t("view_diploma")}
               </div>
             </div>
           </Link>

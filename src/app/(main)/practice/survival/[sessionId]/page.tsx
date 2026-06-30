@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { survivalSessions, survivalScenarios } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import SurvivalChatClient from "./survival-chat-client";
+import { getTranslations } from "next-intl/server";
 
 export default async function SurvivalChatPage({
   params,
@@ -11,6 +12,7 @@ export default async function SurvivalChatPage({
   params: { sessionId: string };
 }) {
   const { userId } = await auth();
+  const t = await getTranslations("practice");
 
   if (!userId) {
     redirect("/");

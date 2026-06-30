@@ -9,6 +9,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { Eye, EyeOff, Flame, Trophy, TrendingUp, Sparkles } from "lucide-react";
 import { onSelectCourse } from "@/actions/user-progress";
+import { useTranslations } from "next-intl";
 
 // Animation configuration for staggered children entry
 const containerVariants: Variants = {
@@ -44,6 +45,8 @@ const itemVariants: Variants = {
 };
 
 export default function CustomSignUp() {
+  const t = useTranslations("Auth");
+
   const selectedCourse = useOnboardingStore((state) => state.selectedCourse);
   const motivation = useOnboardingStore((state) => state.motivation);
   const experienceLevel = useOnboardingStore((state) => state.experienceLevel);
@@ -77,17 +80,17 @@ export default function CustomSignUp() {
   const translateError = (err: unknown) => {
     const errorObj = err as ClerkError;
     const error = errorObj.errors?.[0];
-    if (!error) return "Ocorreu um erro inesperado.";
+    if (!error) return t("unexpected_error");
 
     switch (error.code) {
       case "form_identifier_exists":
-        return "Este email já está em uso.";
+        return t("email_already_in_use");
       case "form_password_length_too_short":
-        return "A palavra-passe deve ter pelo menos 8 caracteres.";
+        return t("password_too_short");
       case "form_param_nil":
-        return "Por favor, preenche todos os campos.";
+        return t("fill_all_fields");
       default:
-        return error.message || "Erro ao criar conta.";
+        return error.message || t("error_creating_account");
     }
   };
 
@@ -149,7 +152,7 @@ export default function CustomSignUp() {
         });
       }
     } catch (err) {
-      console.error("Erro no registro com Google:", err);
+      console.error(t("google_sign_up_error"), err);
       setIsLoading(false);
     }
   };
@@ -168,7 +171,7 @@ export default function CustomSignUp() {
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
     } catch (err) {
-      console.error("Erro no registro:", err);
+      console.error(t("sign_up_error"), err);
       setError(translateError(err));
     } finally {
       setIsLoading(false);
@@ -194,7 +197,7 @@ export default function CustomSignUp() {
           >
             <Image
               src="/marco.png"
-              alt="A carregar..."
+              alt={t("loading_alt_text")}
               fill
               className="object-contain"
             />
@@ -355,10 +358,10 @@ export default function CustomSignUp() {
             </div>
             <div className="min-w-0">
               <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider leading-none">
-                Ofensiva
+                {t("streak_title")}
               </p>
               <p className="text-slate-700 dark:text-slate-200 text-xs font-black truncate mt-1">
-                30 Dias 🔥
+                {t("streak_value")}
               </p>
             </div>
           </motion.div>
@@ -379,10 +382,10 @@ export default function CustomSignUp() {
             </div>
             <div className="min-w-0">
               <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider leading-none">
-                Liga
+                {t("league_title")}
               </p>
               <p className="text-slate-700 dark:text-slate-200 text-xs font-black truncate mt-1">
-                Diamante 👑
+                {t("league_value")}
               </p>
             </div>
           </motion.div>
@@ -403,10 +406,10 @@ export default function CustomSignUp() {
             </div>
             <div className="min-w-0">
               <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider leading-none">
-                Bónus XP
+                {t("xp_bonus_title")}
               </p>
               <p className="text-slate-700 dark:text-slate-200 text-xs font-black truncate mt-1">
-                2.0x Ativo ⚡
+                {t("xp_bonus_value")}
               </p>
             </div>
           </motion.div>
@@ -427,10 +430,10 @@ export default function CustomSignUp() {
             </div>
             <div className="min-w-0">
               <p className="text-slate-400 text-[10px] font-black uppercase tracking-wider leading-none">
-                Progresso
+                {t("progress_title")}
               </p>
               <p className="text-slate-700 dark:text-slate-200 text-xs font-black truncate mt-1">
-                Inglês: 94% 🚀
+                {t("progress_value")}
               </p>
             </div>
           </motion.div>
@@ -451,7 +454,7 @@ export default function CustomSignUp() {
           >
             <Image
               src="/marco.png"
-              alt="Mascote Marco"
+              alt={t("marco_mascot_alt")}
               fill
               priority
               className="object-contain"
@@ -470,10 +473,10 @@ export default function CustomSignUp() {
               className="text-center space-y-1"
             >
               <h1 className="text-3xl lg:text-3xl font-black text-[#042c60]">
-                Criar conta
+                {t("create_account_title")}
               </h1>
               <p className="text-slate-400 font-bold text-xs sm:text-sm">
-                Começa a tua jornada épica hoje
+                {t("start_journey_today_subtitle")}
               </p>
             </motion.div>
 
@@ -484,15 +487,15 @@ export default function CustomSignUp() {
             >
               <div className="flex items-center gap-1 bg-orange-50 border border-orange-100 rounded-full px-2.5 py-1 text-orange-600 font-black text-[11px] sm:text-xs shadow-sm shadow-orange-100/50">
                 <Flame size={12} className="fill-orange-500 shrink-0" />
-                <span>30D</span>
+                <span>{t("micro_badge_streak")}</span>
               </div>
               <div className="flex items-center gap-1 bg-yellow-50 border border-yellow-100 rounded-full px-2.5 py-1 text-yellow-600 font-black text-[11px] sm:text-xs shadow-sm shadow-yellow-100/50">
                 <Trophy size={12} className="fill-yellow-500 shrink-0" />
-                <span>Diamante</span>
+                <span>{t("micro_badge_diamond")}</span>
               </div>
               <div className="flex items-center gap-1 bg-sky-50 border border-sky-100 rounded-full px-2.5 py-1 text-[#1cb0f6] font-black text-[11px] sm:text-xs shadow-sm shadow-sky-100/50">
                 <TrendingUp size={12} className="shrink-0" />
-                <span>2.0x</span>
+                <span>{t("micro_badge_xp_multiplier")}</span>
               </div>
             </motion.div>
 
@@ -527,7 +530,7 @@ export default function CustomSignUp() {
                         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                       />
                     </svg>
-                    <span>Registrar com Google</span>
+                    <span>{t("register_with_google_button")}</span>
                   </>
                 )}
               </motion.button>
@@ -536,7 +539,7 @@ export default function CustomSignUp() {
               <div className="flex items-center gap-3">
                 <div className="h-[2px] flex-1 bg-slate-100 dark:bg-slate-800" />
                 <span className="text-slate-300 font-black text-xs sm:text-sm uppercase tracking-widest">
-                  ou
+                  {t("or_separator")}
                 </span>
                 <div className="h-[2px] flex-1 bg-slate-100 dark:bg-slate-800" />
               </div>
@@ -546,7 +549,7 @@ export default function CustomSignUp() {
                 <motion.div variants={itemVariants} className="space-y-3">
                   <input
                     type="email"
-                    placeholder="Email"
+                    placeholder={t("email_placeholder")}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -555,7 +558,7 @@ export default function CustomSignUp() {
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
-                      placeholder="Palavra-passe"
+                      placeholder={t("password_placeholder")}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
@@ -596,7 +599,7 @@ export default function CustomSignUp() {
                   {isLoading ? (
                     <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin" />
                   ) : (
-                    "CRIAR CONTA"
+                    t("create_account_button")
                   )}
                 </motion.button>
               </form>
@@ -607,12 +610,12 @@ export default function CustomSignUp() {
                 className="pt-2 text-center space-y-4"
               >
                 <p className="text-slate-400 font-bold text-xs sm:text-sm">
-                  Já tens conta?{" "}
+                  {t("already_have_account_question")}{" "}
                   <Link
                     href="/sign-in"
                     className="text-[#1cb0f6] font-black hover:text-sky-400 hover:underline transition-colors ml-1"
                   >
-                    Inicia sessão
+                    {t("login_link")}
                   </Link>
                 </p>
               </motion.div>

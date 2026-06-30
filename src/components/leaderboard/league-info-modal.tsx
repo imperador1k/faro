@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -62,6 +64,7 @@ type Props = {
 };
 
 export function LeagueInfoModal({ trigger }: Props) {
+  const t = useTranslations("leaderboard");
   const [isOpen, setIsOpen] = useState(false);
   // Track if we are mounted on the client (required for createPortal)
   const [mounted, setMounted] = useState(false);
@@ -101,7 +104,7 @@ export function LeagueInfoModal({ trigger }: Props) {
   ) : (
     <button
       onClick={handleOpen}
-      aria-label="Como funcionam as ligas"
+      aria-label={t("trigger_aria")}
       className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm border-2 border-white/30 border-b-4 border-b-black/10 text-white transition-all hover:bg-white/30 active:translate-y-0.5"
     >
       <Info className="h-4 w-4" />
@@ -141,7 +144,7 @@ export function LeagueInfoModal({ trigger }: Props) {
                   <button
                     onClick={handleClose}
                     className="absolute right-5 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-600 dark:text-slate-300 active:border-b-0 active:translate-y-0.5 transition-all focus:outline-none"
-                    aria-label="Fechar"
+                    aria-label={t("close")}
                   >
                     <X className="h-5 w-5 stroke-[2.5]" />
                   </button>
@@ -153,9 +156,7 @@ export function LeagueInfoModal({ trigger }: Props) {
                         <Trophy className="h-8 w-8 text-amber-500 fill-amber-200" />
                       </div>
                       <h2 className="text-2xl md:text-3xl font-black text-stone-700 dark:text-slate-200 tracking-tight uppercase">
-                        Como funcionam
-                        <br />
-                        as Ligas?
+                        {t.rich("title", { br: () => <br /> })}
                       </h2>
                       <div className="h-1.5 w-12 bg-amber-400 rounded-full mx-auto mt-4" />
                     </div>
@@ -163,32 +164,32 @@ export function LeagueInfoModal({ trigger }: Props) {
                     {/* Section 1 — Regras */}
                     <div className="rounded-[2rem] border-2 border-stone-100 bg-stone-50/60 p-5 flex flex-col gap-3">
                       <h3 className="font-black text-stone-700 dark:text-slate-200 text-sm uppercase tracking-widest">
-                        📋 Regras
+                        {t("rules_title")}
                       </h3>
                       <RuleItem
                         icon={
                           <Zap className="h-5 w-5 text-amber-500 fill-amber-300" />
                         }
-                        text="Ganha XP a completar lições ao longo da semana."
+                        text={t("rule_1")}
                       />
                       <RuleItem
                         icon={
                           <TrendingUp className="h-5 w-5 text-emerald-500" />
                         }
-                        text="Os 10 primeiros avançam para a liga seguinte ao domingo."
+                        text={t("rule_2")}
                       />
                       <RuleItem
                         icon={
                           <TrendingDown className="h-5 w-5 text-rose-500" />
                         }
-                        text="Os últimos 5 descem de liga. Mantém-te activo!"
+                        text={t("rule_3")}
                       />
                     </div>
 
                     {/* Section 2 — Ligas */}
                     <div className="rounded-[2rem] border-2 border-stone-100 bg-stone-50/60 p-5 flex flex-col gap-2">
                       <h3 className="font-black text-stone-700 dark:text-slate-200 text-sm uppercase tracking-widest mb-1">
-                        🏆 As Ligas
+                        {t("leagues_title")}
                       </h3>
                       <div className="flex flex-col gap-2">
                         {LEAGUES_INFO.map((league, index) => {
@@ -205,7 +206,8 @@ export function LeagueInfoModal({ trigger }: Props) {
                                 className={cn("h-5 w-5 shrink-0", league.color)}
                               />
                               <span className="font-black text-stone-700 dark:text-slate-200 text-sm">
-                                {index + 1}. Liga {league.label}
+                                {index + 1}. Liga{" "}
+                                {t(`league_names.${league.key.toLowerCase()}`)}
                               </span>
                             </div>
                           );
@@ -220,14 +222,14 @@ export function LeagueInfoModal({ trigger }: Props) {
                       </div>
                       <div>
                         <p className="font-black text-amber-700 text-sm uppercase tracking-widest">
-                          Dica de Ouro
+                          {t("pro_tip_title")}
                         </p>
                         <p className="text-stone-600 dark:text-slate-300 font-bold text-sm mt-1 leading-relaxed">
-                          Usa os{" "}
-                          <span className="text-amber-600">XP Boosts</span> da
-                          Loja para ganhares o dobro do XP durante uma lição
-                          inteira. Perfeito para a última hora antes do fecho da
-                          liga!
+                          {t.rich("pro_tip_body", {
+                            span: (chunks) => (
+                              <span className="text-amber-600">{chunks}</span>
+                            ),
+                          })}
                         </p>
                       </div>
                     </div>
@@ -237,7 +239,7 @@ export function LeagueInfoModal({ trigger }: Props) {
                       onClick={handleClose}
                       className="w-full py-4 rounded-2xl bg-emerald-500 border-2 border-emerald-400 border-b-6 border-b-emerald-700 text-white font-black text-sm uppercase tracking-widest hover:bg-emerald-600 active:translate-y-1 active:border-b-2 transition-all"
                     >
-                      Vamos lá! 🚀
+                      {t("cta")}
                     </button>
                   </div>
                 </motion.div>

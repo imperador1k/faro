@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { Capacitor } from "@capacitor/core";
 import { Browser } from "@capacitor/browser";
+import { useTranslations } from "next-intl";
 
 const GoogleIcon = () => (
   <svg
@@ -35,6 +36,7 @@ export default function NativeGoogleLoginButton({
 }: {
   mode?: "sign-in" | "sign-up";
 }) {
+  const t = useTranslations("shared");
   const [loading, setLoading] = useState(false);
   const [isNative, setIsNative] = useState(false);
 
@@ -49,18 +51,9 @@ export default function NativeGoogleLoginButton({
     setLoading(true);
 
     try {
-      console.log(
-        "Iniciando Google OAuth via Browser Externo para App Nativa...",
-      );
-
       const isTauriEnv =
         typeof window !== "undefined" &&
         navigator.userAgent.includes("TauriDesktop");
-      console.log("[NativeAuth] Platform Debug:", {
-        isCapacitor: Capacitor.isNativePlatform(),
-        isTauri: isTauriEnv,
-        userAgent: typeof window !== "undefined" ? navigator.userAgent : "SSR",
-      });
 
       if (
         typeof window !== "undefined" &&
@@ -70,18 +63,13 @@ export default function NativeGoogleLoginButton({
 
         if (Capacitor.isNativePlatform()) {
           await Browser.open({ url: authUrl, windowName: "_system" });
-          // We reset loading after 3 seconds in case they close the browser without finishing
           setTimeout(() => setLoading(false), 3000);
         } else if (isTauriEnv) {
-          console.log(
-            "[NativeAuth] Opening external browser via Tauri opener plugin...",
-          );
           const { openUrl } = await import("@tauri-apps/plugin-opener");
           await openUrl(authUrl);
           setTimeout(() => setLoading(false), 3000);
         }
       } else {
-        console.log("[NativeAuth] Falling back to standard redirect.");
         window.location.href = `${window.location.origin}/mobile-auth?mode=${mode}`;
       }
     } catch (err) {
@@ -104,16 +92,16 @@ export default function NativeGoogleLoginButton({
         )}
         <span>
           {loading
-            ? "A processar..."
+            ? t("processing")
             : mode === "sign-in"
-              ? "Continuar com Google"
-              : "Criar conta com Google"}
+              ? t("continue_with_google")
+              : t("create_account_with_google")}
         </span>
       </button>
 
       {isNative && (
         <p className="text-center text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-widest">
-          Browser Seguro
+          {t("secure_browser")}
         </p>
       )}
     </div>

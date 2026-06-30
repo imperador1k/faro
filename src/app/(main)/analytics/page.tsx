@@ -3,15 +3,19 @@ import { redirect } from "next/navigation";
 import { getUserAnalytics } from "@/db/queries";
 import { DashboardClient } from "./dashboard-client";
 
-export default function AnalyticsPage() {
+import { getTranslations } from "next-intl/server";
+
+export default async function AnalyticsPage() {
+  const t = await getTranslations("analytics");
+
   return (
     <div className="flex w-full flex-col px-6 py-6 pb-24 md:pb-6 max-w-[1056px] mx-auto min-h-screen">
       <div className="mb-6 flex flex-col gap-y-2 animate-in fade-in duration-500">
         <h1 className="text-3xl font-extrabold text-neutral-800 dark:text-slate-200">
-          Estatísticas
+          {t("title")}
         </h1>
         <p className="text-lg text-neutral-500 dark:text-slate-300">
-          Acompanha o teu domínio do idioma.
+          {t("subtitle")}
         </p>
       </div>
 

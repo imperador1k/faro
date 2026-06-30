@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 interface DynamicNPCProps {
   baseImage: string;
@@ -13,6 +14,8 @@ export const DynamicNPC = ({
   clothes,
   isGrammarCorrect,
 }: DynamicNPCProps) => {
+  const t = useTranslations("practice");
+
   // Animação de erro: Um abanão horizontal rápido ("shaking head")
   const shakeAnimation = {
     x: [0, -10, 10, -10, 10, 0],
@@ -32,7 +35,7 @@ export const DynamicNPC = ({
       {/* Base Body */}
       <img
         src={baseImage}
-        alt="NPC Body"
+        alt={t("npc_body_alt")}
         className="absolute bottom-0 left-0 w-full h-full object-contain z-0 select-none drop-shadow-md"
         draggable={false}
       />
@@ -42,7 +45,7 @@ export const DynamicNPC = ({
         <img
           key={index}
           src={clothingSrc}
-          alt={`NPC Clothing ${index}`}
+          alt={t("npc_clothing_alt", { index })}
           className="absolute bottom-0 left-0 w-full h-full object-contain select-none drop-shadow-sm"
           draggable={false}
           style={{ zIndex: 10 + index }} // Explicit z-indexing guarantees layering

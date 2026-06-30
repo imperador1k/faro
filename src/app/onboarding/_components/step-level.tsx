@@ -4,13 +4,13 @@ import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { motion } from "framer-motion";
 import { Check, Sparkles } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const LEVELS = [
   {
     id: "beginner",
-    title: "Estou a começar do zero",
-    description:
-      "Vais aprender as bases, desde os primeiros sons até frases simples.",
+    titleKey: "levels.beginner.title",
+    descriptionKey: "levels.beginner.description",
     icon: "/duo_happy.png",
     color: "bg-green-100",
     borderColor: "border-green-200",
@@ -18,9 +18,8 @@ const LEVELS = [
   },
   {
     id: "basic",
-    title: "Sei algumas palavras",
-    description:
-      "Já conheces o básico? Vamos focar em expandir o teu vocabulário diário.",
+    titleKey: "levels.basic.title",
+    descriptionKey: "levels.basic.description",
     icon: "/duo_thinking.png",
     color: "bg-blue-100",
     borderColor: "border-blue-200",
@@ -28,8 +27,8 @@ const LEVELS = [
   },
   {
     id: "intermediate",
-    title: "Consigo conversar",
-    description: "Tens confiança mas queres fluidez? Este é o teu lugar.",
+    titleKey: "levels.intermediate.title",
+    descriptionKey: "levels.intermediate.description",
     icon: "/duo_gentleman.png",
     color: "bg-amber-100",
     borderColor: "border-amber-200",
@@ -37,9 +36,8 @@ const LEVELS = [
   },
   {
     id: "advanced",
-    title: "Nível Avançado",
-    description:
-      "Já dominas a língua mas queres polir a tua pronúncia e gramática complexa.",
+    titleKey: "levels.advanced.title",
+    descriptionKey: "levels.advanced.description",
     icon: "/duo_detective.png",
     color: "bg-purple-100",
     borderColor: "border-purple-200",
@@ -53,6 +51,7 @@ interface StepLevelProps {
 
 export const StepLevel = ({ courseTitle }: StepLevelProps) => {
   const { experienceLevel, setExperienceLevel } = useOnboardingStore();
+  const t = useTranslations("Onboarding");
 
   const container = {
     hidden: { opacity: 0 },
@@ -81,7 +80,7 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
           <div className="absolute inset-0 bg-yellow-100 rounded-full blur-2xl opacity-50 animate-pulse" />
           <Image
             src="/marco.png"
-            alt="Mascote"
+            alt={t("marco_mascot_alt")}
             fill
             className="object-contain relative z-10"
           />
@@ -89,20 +88,23 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
 
         <div className="space-y-2">
           <h1 className="text-3xl font-black md:text-4xl tracking-tight text-[#042c60]">
-            Quanto sabes de{" "}
-            <span className="text-[#58cc02] relative inline-block">
-              {courseTitle}
-              <motion.span
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-                className="absolute bottom-1 left-0 h-1 bg-[#58cc02]/20 rounded-full"
-              />
-            </span>
-            ?
+            {t.rich("how_much_do_you_know", {
+              course_title: courseTitle,
+              span: (chunks) => (
+                <span className="text-[#58cc02] relative inline-block">
+                  {chunks}
+                  <motion.span
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ delay: 0.5, duration: 0.8 }}
+                    className="absolute bottom-1 left-0 h-1 bg-[#58cc02]/20 rounded-full"
+                  />
+                </span>
+              ),
+            })}
           </h1>
           <p className="text-gray-500 font-bold text-lg md:text-xl">
-            O Marco vai desenhar o teu plano de estudos personalizado.
+            {t("marco_personal_plan")}
           </p>
         </div>
       </div>
@@ -138,28 +140,28 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
               >
                 <Image
                   src={level.icon}
-                  alt={level.title}
+                  alt={t(level.titleKey)}
                   fill
                   className="object-contain p-1"
                 />
               </div>
               <div className="flex-1">
                 <h3 className="font-black text-xl text-[#042c60] leading-none mb-1">
-                  {level.title}
+                  {t(level.titleKey)}
                 </h3>
                 <div
                   className={`flex items-center gap-1 text-[10px] font-black uppercase tracking-widest ${level.accent}`}
                 >
                   <Sparkles size={10} />
                   {level.id === "beginner"
-                    ? "Recomendado"
-                    : "Nivelamento Ativo"}
+                    ? t("recommended")
+                    : t("active_leveling")}
                 </div>
               </div>
             </div>
 
             <p className="text-gray-500 font-bold text-sm leading-snug relative z-10">
-              {level.description}
+              {t(level.descriptionKey)}
             </p>
 
             {experienceLevel === level.id && (
@@ -176,7 +178,7 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
       </motion.div>
 
       <p className="text-gray-400 font-bold text-sm italic">
-        * Não te preocupes, podes sempre mudar o nível mais tarde.
+        {t("level_change_note")}
       </p>
     </div>
   );

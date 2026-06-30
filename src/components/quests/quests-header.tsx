@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import { HelpCircle, Crown, Target } from "lucide-react";
 import { QuestsInfoModal } from "@/components/modals/quests-info-modal";
+import { useTranslations } from "next-intl";
 
 export const QuestsHeader = () => {
+  const t = useTranslations("quests_components");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -46,11 +48,10 @@ export const QuestsHeader = () => {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] relative z-10">
-          Missões e Troféus
+          {t("title")}
         </h1>
         <p className="text-white/90 font-bold text-lg md:text-xl mt-4 max-w-lg relative z-10 drop-shadow-sm">
-          Completa desafios diários para ganhar baús e imortaliza as tuas
-          conquistas na Sala de Troféus.
+          {t("description")}
         </p>
       </div>
     </div>

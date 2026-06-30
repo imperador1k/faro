@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import Image from "next/image";
 import { useTransition } from "react";
 import { X, Heart, Sparkles, BadgeCheck, Crown, Loader2 } from "lucide-react";
@@ -8,28 +10,29 @@ import { useProModalStore } from "@/store/use-pro-modal-store";
 import { cn } from "@/lib/utils";
 import { createStripeUrl } from "@/actions/user-subscription";
 
-const BENEFITS = [
+const getBenefits = (t: any) => [
   {
     icon: Heart,
     iconColor: "text-rose-500 fill-rose-500",
-    title: "Corações Ilimitados",
-    description: "Nunca mais pares de aprender por causa de erros.",
+    title: t("benefits.hearts.title"),
+    description: t("benefits.hearts.description"),
   },
   {
     icon: Sparkles,
     iconColor: "text-purple-500 fill-purple-300",
-    title: "Prática com IA Ilimitada",
-    description: "Treina com a nossa inteligência artificial sem restrições.",
+    title: t("benefits.ai.title"),
+    description: t("benefits.ai.description"),
   },
   {
     icon: BadgeCheck,
     iconColor: "text-amber-500 fill-amber-300",
-    title: "Badge VIP",
-    description: "Mostra a tua dedicação nos grupos e no perfil.",
+    title: t("benefits.badge.title"),
+    description: t("benefits.badge.description"),
   },
-] as const;
+];
 
 export const ProModal = () => {
+  const t = useTranslations("modals");
   const { isOpen, closeModal } = useProModalStore();
   const [isPending, startTransition] = useTransition();
 
@@ -50,11 +53,7 @@ export const ProModal = () => {
             toast.error(response.message);
           }
         })
-        .catch(() =>
-          toast.error(
-            "Ocorreu um erro ao processar. Tenta novamente mais tarde.",
-          ),
-        );
+        .catch(() => toast.error(t("error_message")));
     });
   };
 
@@ -71,7 +70,7 @@ export const ProModal = () => {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Upgrade para PRO"
+        aria-label={t("aria_label")}
         className="fixed left-1/2 top-1/2 z-above-modal flex max-h-[95vh] w-[94%] max-w-md -translate-x-1/2 -translate-y-1/2 flex-col animate-in zoom-in-95 fade-in duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]"
       >
         <div className="relative flex flex-col overflow-hidden rounded-[2rem] border-2 border-amber-300 border-b-8 bg-white dark:bg-slate-900 shadow-2xl">
@@ -94,7 +93,7 @@ export const ProModal = () => {
               <button
                 onClick={closeModal}
                 className="absolute right-4 top-4 z-20 flex h-8 w-8 items-center justify-center rounded-xl bg-white/30 text-amber-700 backdrop-blur-sm transition-all hover:bg-white/50 active:scale-90"
-                aria-label="Fechar modal"
+                aria-label={t("close_button")}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -103,7 +102,7 @@ export const ProModal = () => {
               <div className="relative mx-auto mb-4 h-24 w-24">
                 <Image
                   src="/duo_crying.png"
-                  alt="Marco PRO"
+                  alt={t("mascot_alt")}
                   fill
                   className="object-contain drop-shadow-lg pro-mascot-float"
                 />
@@ -115,19 +114,22 @@ export const ProModal = () => {
 
               {/* Title */}
               <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-amber-900 drop-shadow-sm">
-                Torna-te{" "}
-                <span className="text-white drop-shadow-[0_2px_4px_rgba(180,80,0,0.5)]">
-                  PRO
-                </span>
+                {t.rich("title", {
+                  span: (chunks) => (
+                    <span className="text-white drop-shadow-[0_2px_4px_rgba(180,80,0,0.5)]">
+                      {chunks}
+                    </span>
+                  ),
+                })}
               </h2>
               <p className="mx-auto mt-2 max-w-xs text-xs md:text-sm font-bold text-amber-800/80">
-                Desbloqueia o teu superpoder e acelera a tua aprendizagem.
+                {t("subtitle")}
               </p>
             </div>
 
             {/* ===== Benefits List ===== */}
             <div className="space-y-3 px-6 py-5">
-              {BENEFITS.map((benefit, index) => (
+              {getBenefits(t).map((benefit, index) => (
                 <div
                   key={benefit.title}
                   className={cn(
@@ -170,7 +172,7 @@ export const ProModal = () => {
               ) : (
                 <Crown className="h-6 w-6 fill-amber-400 text-amber-500 transition-transform group-hover:rotate-12" />
               )}
-              {isPending ? "A CARREGAR..." : "SUBSCREVER PRO"}
+              {isPending ? t("button_loading") : t("button_subscribe")}
             </button>
 
             {/* Dismiss */}
@@ -178,7 +180,7 @@ export const ProModal = () => {
               onClick={closeModal}
               className="mt-3 w-full py-2 text-center text-xs font-bold uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 transition-all hover:text-stone-600 dark:text-slate-300 active:scale-95"
             >
-              Talvez mais tarde
+              {t("maybe_later")}
             </button>
           </div>
         </div>

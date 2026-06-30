@@ -1,10 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { AlertCircle } from "lucide-react";
 
 export const DangerZone = () => {
+  const t = useTranslations("settings");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [confirmationText, setConfirmationText] = useState("");
   const [mounted, setMounted] = useState(false);
@@ -13,7 +16,7 @@ export const DangerZone = () => {
     setMounted(true);
   }, []);
 
-  const isConfirmed = confirmationText === "CONFIRMO";
+  const isConfirmed = confirmationText === t("confirm_keyword");
 
   const handleDelete = () => {
     if (!isConfirmed) return;
@@ -47,25 +50,28 @@ export const DangerZone = () => {
         </div>
 
         <h2 className="text-3xl font-black text-slate-800 dark:text-slate-100 mb-3 tracking-tight">
-          Apagar Conta?
+          {t("modal_title")}
         </h2>
 
         <p className="text-slate-500 dark:text-slate-400 font-medium mb-6 leading-relaxed">
-          Esta ação é{" "}
-          <span className="font-bold text-red-500">irreversível</span>. Vais
-          perder instantaneamente todo o teu progresso, XP, ligas e histórico.
+          {t.rich("modal_description", {
+            span: (chunks) => (
+              <span className="font-bold text-red-500">{chunks}</span>
+            ),
+          })}
         </p>
 
         <div className="bg-slate-50 dark:bg-slate-950 border-2 border-slate-100 dark:border-slate-800 rounded-2xl p-5 mb-8 text-left shadow-inner">
           <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
-            Para confirmar, escreve{" "}
-            <span className="text-red-500">CONFIRMO</span>
+            {t.rich("confirm_instruction", {
+              span: (chunks) => <span className="text-red-500">{chunks}</span>,
+            })}
           </label>
           <input
             type="text"
             value={confirmationText}
             onChange={(e) => setConfirmationText(e.target.value)}
-            placeholder="CONFIRMO"
+            placeholder={t("confirm_keyword")}
             className="w-full bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-base font-bold text-slate-700 dark:text-slate-200 outline-none focus:border-red-400 focus:ring-4 focus:ring-red-100 transition-all font-mono placeholder:text-slate-300"
           />
         </div>
@@ -80,13 +86,13 @@ export const DangerZone = () => {
                 : "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700 cursor-not-allowed opacity-70"
             }`}
           >
-            Sim, Apagar Conta
+            {t("confirm_button")}
           </button>
           <button
             onClick={handleClose}
             className="w-full bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider py-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 border-b-4 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-600 active:translate-y-1 active:border-b-0 transition-all"
           >
-            Manter a minha conta
+            {t("cancel_button")}
           </button>
         </div>
       </div>
@@ -96,18 +102,17 @@ export const DangerZone = () => {
   return (
     <div className="bg-red-50 dark:bg-red-950/30 border-2 border-red-200 dark:border-red-900/50 border-b-8 rounded-[2rem] p-6 md:p-8">
       <h3 className="text-xl font-black text-red-600 dark:text-red-500 mb-2">
-        Zona de Perigo
+        {t("title")}
       </h3>
       <p className="text-sm font-bold text-red-400 dark:text-red-500/80 mb-6 max-w-md">
-        Atenção: Ao apagares a tua conta, perdes todo o XP, Ligas e o teu lugar
-        no MyDuolingo. Esta ação é irreversível.
+        {t("description")}
       </p>
 
       <button
         onClick={() => setIsDeleteModalOpen(true)}
         className="bg-red-500 hover:bg-red-400 text-white border-2 border-b-4 border-red-600 font-black uppercase tracking-wider rounded-2xl px-8 py-4 active:translate-y-[2px] active:border-b-2 transition-all w-full md:w-auto text-center block"
       >
-        🗑️ APAGAR A MINHA CONTA
+        {t("delete_action")}
       </button>
 
       {isDeleteModalOpen &&

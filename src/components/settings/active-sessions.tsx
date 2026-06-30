@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useUser, useSession } from "@clerk/nextjs";
 import {
   Monitor,
@@ -17,6 +19,7 @@ import { SessionWithActivitiesResource } from "@clerk/types";
 import { revokeDeviceSession } from "@/actions/user-actions";
 
 export const ActiveSessions = () => {
+  const t = useTranslations("settings");
   const { user, isLoaded } = useUser();
   const { session: currentSession } = useSession();
   const [sessions, setSessions] = useState<SessionWithActivitiesResource[]>([]);
@@ -54,14 +57,14 @@ export const ActiveSessions = () => {
     try {
       await revokeDeviceSession(sessionId);
       setSessions((prev) => prev.filter((s) => s.id !== sessionId));
-      toast.success("Sessão revogada com sucesso!");
+      toast.success(t("messages.success"));
     } catch (error: any) {
       console.error(error);
       const msg =
         error?.errors?.[0]?.longMessage ||
         error?.message ||
         "Erro ao revogar sessão.";
-      toast.error(msg);
+      toast.error(msg || t("messages.error"));
     } finally {
       setRevokingId(null);
     }
@@ -71,21 +74,19 @@ export const ActiveSessions = () => {
     <div className="flex flex-col gap-4">
       <h4 className="text-lg font-black text-stone-800 dark:text-slate-100 flex items-center gap-2">
         <Monitor className="w-5 h-5 text-[#1CB0F6]" />
-        Dispositivos Ativos
+        {t("title")}
       </h4>
       <p className="text-sm font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
-        Estes são os dispositivos que têm sessão iniciada na tua conta. Se vires
-        algum que não reconheças, podes terminar a sessão remotamente.
+        {t("description")}
       </p>
 
       <div className="flex flex-col gap-3 mt-2">
         {sessions?.map((session) => {
           const isCurrent = session.id === currentSession?.id;
           const browser =
-            session.latestActivity?.browserName || "Browser Desconhecido";
-          const os =
-            session.latestActivity?.deviceType || "Sistema Desconhecido";
-          const ip = session.latestActivity?.ipAddress || "IP Desconhecido";
+            session.latestActivity?.browserName || t("browser_unknown");
+          const os = session.latestActivity?.deviceType || t("os_unknown");
+          const ip = session.latestActivity?.ipAddress || t("ip_unknown");
           const isMobile =
             session.latestActivity?.isMobile ||
             os.includes("Android") ||
@@ -121,7 +122,7 @@ export const ActiveSessions = () => {
                     </span>
                     {isCurrent && (
                       <span className="bg-[#58CC02] text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-lg shrink-0">
-                        Este Dispositivo
+                        {t("current_device")}
                       </span>
                     )}
                   </div>
@@ -132,10 +133,10 @@ export const ActiveSessions = () => {
                     </span>
                   </div>
                   <div className="text-[11px] font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 mt-1">
-                    Última atividade:{" "}
+                    {t("last_activity")}{" "}
                     {session.lastActiveAt
                       ? new Date(session.lastActiveAt).toLocaleString()
-                      : "Desconhecido"}
+                      : "{t('unknown')}"}
                   </div>
                 </div>
               </div>
@@ -151,7 +152,7 @@ export const ActiveSessions = () => {
                   ) : (
                     <>
                       <LogOut className="w-4 h-4" />
-                      Desconectar
+                      {t("disconnect")}
                     </>
                   )}
                 </button>

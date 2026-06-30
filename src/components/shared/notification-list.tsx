@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -23,6 +25,7 @@ type Props = {
 };
 
 export const NotificationList = ({ notifications }: Props) => {
+  const t = useTranslations("shared");
   const [mounted, setMounted] = useState(false);
   const [playSuccess] = useSound("/sounds/success.mp3", { volume: 0.3 });
 
@@ -76,10 +79,10 @@ export const NotificationList = ({ notifications }: Props) => {
         {/* Sleeping mascot Lottie */}
         <LottieBlock className="w-32 h-32 md:w-48 md:h-48 mx-auto mb-6 opacity-80" />
         <h2 className="text-2xl font-black text-stone-700 dark:text-slate-200 tracking-tight mb-2">
-          Sem notificações novas
+          {t("empty_title")}
         </h2>
         <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-lg">
-          Tudo calmo por aqui.
+          {t("empty_message")}
         </p>
       </div>
     );

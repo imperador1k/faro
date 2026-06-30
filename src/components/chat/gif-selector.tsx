@@ -4,6 +4,7 @@ import { Grid } from "@giphy/react-components";
 import { gf } from "@/lib/giphy";
 import { useState } from "react";
 import { useDebounce } from "@/hooks/use-debounce";
+import { useTranslations } from "next-intl";
 
 import type { GiphyGif } from "@/types";
 
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export const GifSelector = ({ onSelect }: Props) => {
+  const t = useTranslations("chat");
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
 
@@ -26,7 +28,7 @@ export const GifSelector = ({ onSelect }: Props) => {
     <div className="flex flex-col gap-3 w-full h-full min-h-0">
       <input
         className="p-3 border-2 border-slate-200 dark:border-slate-800 border-b-4 rounded-xl w-full bg-slate-100 dark:bg-slate-800 focus:bg-white dark:bg-slate-900 transition outline-none focus:border-sky-400 font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 text-sm shrink-0"
-        placeholder="Pesquisar GIF..."
+        placeholder={t("search_gif_placeholder")}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />

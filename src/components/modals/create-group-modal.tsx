@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X, Users, Check, Loader2 } from "lucide-react";
@@ -22,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 
 export const CreateGroupModal = ({ isOpen, onClose }: Props) => {
+  const t = useTranslations("modals");
   const router = useRouter();
   const [groupName, setGroupName] = useState("");
   const [selectedFriends, setSelectedFriends] = useState<string[]>([]);
@@ -77,8 +80,8 @@ export const CreateGroupModal = ({ isOpen, onClose }: Props) => {
         groupName,
       );
 
-      toast.success("Grupo Criado!", {
-        description: `O grupo "${groupName}" está pronto para as mensagens.`,
+      toast.success(t("success_title"), {
+        description: t("success_description", { name: groupName }),
         icon: (
           <div className="bg-green-100 p-1.5 rounded-full">
             <Users className="w-4 h-4 text-green-600" />
@@ -91,8 +94,8 @@ export const CreateGroupModal = ({ isOpen, onClose }: Props) => {
       onClose();
       router.push(`/messages?conversationId=${conversationId}`);
     } catch (error) {
-      toast.error("Erro ao criar grupo", {
-        description: "Tenta novamente em instantes.",
+      toast.error(t("error_title"), {
+        description: t("error_description"),
       });
       console.error(error);
     } finally {
@@ -119,7 +122,7 @@ export const CreateGroupModal = ({ isOpen, onClose }: Props) => {
             </div>
             <DialogHeader>
               <DialogTitle className="text-2xl font-black text-stone-800 dark:text-slate-100 tracking-tight">
-                Criar Novo Grupo
+                {t("title")}
               </DialogTitle>
             </DialogHeader>
           </div>
@@ -127,13 +130,13 @@ export const CreateGroupModal = ({ isOpen, onClose }: Props) => {
           {/* Group Name Input */}
           <div className="space-y-2 mb-6">
             <label className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1">
-              Nome do Grupo
+              {t("group_name_label")}
             </label>
             <input
               disabled={isSubmitting}
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
-              placeholder="ex: Clube do Café ☕"
+              placeholder={t("group_name_placeholder")}
               className="w-full bg-stone-50 dark:bg-slate-950 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-2xl p-4 font-bold text-stone-700 dark:text-slate-200 outline-none focus:border-[#58CC02] focus:bg-green-50/50 transition-all placeholder:text-stone-300 disabled:opacity-50"
             />
           </div>
@@ -141,7 +144,7 @@ export const CreateGroupModal = ({ isOpen, onClose }: Props) => {
           {/* Friend Selection */}
           <div className="space-y-3 mb-8">
             <label className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest ml-1">
-              Adicionar Amigos ({selectedFriends.length})
+              {t("add_friends_label", { count: selectedFriends.length })}
             </label>
             <div className="max-h-48 overflow-y-auto pr-2 flex flex-col gap-2 scrollbar-hide">
               {isLoadingFriends ? (
@@ -150,7 +153,7 @@ export const CreateGroupModal = ({ isOpen, onClose }: Props) => {
                 </div>
               ) : friends.length === 0 ? (
                 <div className="text-center py-8 text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm">
-                  Segue alguns amigos para os adicionares a grupos.
+                  {t("no_friends")}
                 </div>
               ) : (
                 friends.map((friend) => {
@@ -215,7 +218,7 @@ export const CreateGroupModal = ({ isOpen, onClose }: Props) => {
             {isSubmitting ? (
               <Loader2 className="w-6 h-6 animate-spin" />
             ) : (
-              "CRIAR GRUPO"
+              t("create_button")
             )}
           </Button>
         </div>

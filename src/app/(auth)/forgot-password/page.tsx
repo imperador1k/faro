@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ArrowLeft, Mail, Key, ShieldCheck, Eye, EyeOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function ForgotPasswordPage() {
   const { isLoaded, signIn, setActive } = useSignIn();
@@ -21,6 +22,8 @@ export default function ForgotPasswordPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const t = useTranslations("Auth");
+
   interface ClerkError {
     errors?: Array<{
       code: string;
@@ -33,30 +36,30 @@ export default function ForgotPasswordPage() {
   const translateError = (err: unknown) => {
     const errorObj = err as ClerkError;
     const error = errorObj.errors?.[0];
-    if (!error) return "Ocorreu um erro inesperado.";
+    if (!error) return t("error_unexpected");
 
     console.log("Clerk Error:", error.code, error.message);
 
     switch (error.code) {
       case "form_identifier_not_found":
-        return "Não encontrámos nenhuma conta com este email.";
+        return t("error_account_not_found");
       case "form_password_pwned":
-        return "Esta palavra-passe foi encontrada numa fuga de dados. Escolhe outra.";
+        return t("error_password_pwned");
       case "form_password_length_too_short":
-        return "A palavra-passe deve ter pelo menos 8 caracteres.";
+        return t("error_password_length_too_short");
       case "verification_failed":
-        return "Código inválido. Verifica o teu email e tenta novamente.";
+        return t("error_invalid_code_check_email");
       case "form_param_format_invalid":
         if (error.meta?.paramName === "code")
-          return "O formato do código é inválido.";
-        return "Formato inválido.";
+          return t("error_code_format_invalid");
+        return t("error_invalid_format");
       case "form_param_nil":
-        return "Por favor, preenche todos os campos.";
+        return t("error_fill_all_fields");
       case "session_exists":
-        return "Já tens uma sessão ativa.";
+        return t("error_session_exists");
       default:
         if (error.message.toLowerCase().includes("is invalid"))
-          return "Código inválido.";
+          return t("error_invalid_code");
         return error.message;
     }
   };
@@ -206,10 +209,10 @@ export default function ForgotPasswordPage() {
                     <Mail size={32} />
                   </div>
                   <h1 className="text-3xl font-black text-[#042c60]">
-                    Recuperar Acesso
+                    {t("recover_access_title")}
                   </h1>
                   <p className="text-slate-400 font-bold text-base">
-                    Introduz o teu email para receberes um código
+                    {t("enter_email_for_code_description")}
                   </p>
                 </motion.div>
 
@@ -217,11 +220,11 @@ export default function ForgotPasswordPage() {
                   <motion.div variants={itemVariants} className="relative">
                     <input
                       type="email"
-                      placeholder="O teu email"
+                      placeholder={t("your_email_placeholder")}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full h-16 px-6 bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:border-[#1cb0f6] focus:bg-white dark:bg-slate-900 transition-all text-lg"
+                      className="w-full h-16 px-6 bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:border-[#1cb0f6] focus:bg-white focus:dark:bg-slate-900 transition-all text-lg"
                     />
                   </motion.div>
 
@@ -246,7 +249,7 @@ export default function ForgotPasswordPage() {
                       {isLoading ? (
                         <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
                       ) : (
-                        "ENVIAR CÓDIGO"
+                        t("send_code_button")
                       )}
                     </button>
                   </motion.div>
@@ -271,11 +274,15 @@ export default function ForgotPasswordPage() {
                     <Key size={32} />
                   </div>
                   <h1 className="text-3xl font-black text-[#042c60]">
-                    Verifica o Email
+                    {t("verify_email_title")}
                   </h1>
                   <p className="text-slate-400 font-bold text-base">
-                    Enviámos um código para{" "}
-                    <span className="text-[#1cb0f6]">{email}</span>
+                    {t.rich("code_sent_to_email_description", {
+                      email: email,
+                      highlight: (chunks) => (
+                        <span className="text-[#1cb0f6]">{chunks}</span>
+                      ),
+                    })}
                   </p>
                 </motion.div>
 
@@ -290,7 +297,7 @@ export default function ForgotPasswordPage() {
                       }
                       required
                       maxLength={6}
-                      className="w-full h-24 text-center text-5xl tracking-[0.5em] font-black bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl focus:bg-white dark:bg-slate-900 focus:ring-0 outline-none transition-all text-slate-700 dark:text-slate-200 focus:border-amber-400"
+                      className="w-full h-24 text-center text-5xl tracking-[0.5em] font-black bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl focus:bg-white focus:dark:bg-slate-900 focus:ring-0 outline-none transition-all text-slate-700 dark:text-slate-200 focus:border-amber-400"
                     />
                   </motion.div>
 
@@ -318,18 +325,18 @@ export default function ForgotPasswordPage() {
                       disabled={isLoading || code.length !== 6}
                       className="w-full h-16 bg-amber-500 border-b-[6px] border-amber-600 rounded-2xl flex items-center justify-center font-extrabold text-white uppercase tracking-widest shadow-sm hover:bg-amber-600 active:border-b-0 active:translate-y-[6px] transition-all disabled:opacity-50 text-lg"
                     >
-                      CONTINUAR
+                      {t("continue_button")}
                     </button>
                   </motion.div>
 
                   <motion.div variants={itemVariants}>
                     <p className="text-center text-sm font-bold text-slate-400 pt-2">
-                      Não recebeste?{" "}
+                      {t("did_not_receive_code")}{" "}
                       <button
                         onClick={handleRequestCode}
                         className="text-[#1cb0f6] hover:underline"
                       >
-                        Reenviar código
+                        {t("resend_code_button")}
                       </button>
                     </p>
                   </motion.div>
@@ -354,10 +361,10 @@ export default function ForgotPasswordPage() {
                     <ShieldCheck size={32} />
                   </div>
                   <h1 className="text-3xl font-black text-[#042c60]">
-                    Nova Password
+                    {t("new_password_title")}
                   </h1>
                   <p className="text-slate-400 font-bold text-base">
-                    Cria uma palavra-passe forte e segura
+                    {t("create_strong_password_description")}
                   </p>
                 </motion.div>
 
@@ -365,7 +372,7 @@ export default function ForgotPasswordPage() {
                   onSubmit={async (e) => {
                     e.preventDefault();
                     if (password !== confirmPassword) {
-                      setError("As palavras-passe não coincidem.");
+                      setError(t("passwords_do_not_match_error"));
                       return;
                     }
                     handleResetPassword(e);
@@ -376,12 +383,12 @@ export default function ForgotPasswordPage() {
                     <div className="relative">
                       <input
                         type={showPassword ? "text" : "password"}
-                        placeholder="Nova palavra-passe"
+                        placeholder={t("new_password_placeholder")}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                         autoFocus
-                        className="w-full h-16 px-6 bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:border-[#58cc02] focus:bg-white dark:bg-slate-900 transition-all text-lg pr-14"
+                        className="w-full h-16 px-6 bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:border-[#58cc02] focus:bg-white focus:dark:bg-slate-900 transition-all text-lg pr-14"
                       />
                       <button
                         type="button"
@@ -398,11 +405,11 @@ export default function ForgotPasswordPage() {
 
                     <input
                       type={showPassword ? "text" : "password"}
-                      placeholder="Confirmar palavra-passe"
+                      placeholder={t("confirm_password_placeholder")}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
-                      className="w-full h-16 px-6 bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:border-[#58cc02] focus:bg-white dark:bg-slate-900 transition-all text-lg"
+                      className="w-full h-16 px-6 bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:border-[#58cc02] focus:bg-white focus:dark:bg-slate-900 transition-all text-lg"
                     />
                   </motion.div>
 
@@ -429,7 +436,7 @@ export default function ForgotPasswordPage() {
                       {isLoading ? (
                         <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
                       ) : (
-                        "REDEFINIR E ENTRAR"
+                        t("reset_and_login_button")
                       )}
                     </button>
                   </motion.div>

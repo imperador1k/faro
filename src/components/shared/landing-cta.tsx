@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 interface LandingCTAProps {
   userId: string | null;
 }
 
 export const LandingCTA = ({ userId }: LandingCTAProps) => {
+  const t = useTranslations("shared");
   const playClick = () => {
     const audio = new Audio("/click_button.mp3");
     audio.play().catch(() => {
@@ -24,7 +26,7 @@ export const LandingCTA = ({ userId }: LandingCTAProps) => {
             className="w-full bg-green-500 hover:bg-green-600 text-white font-bold uppercase tracking-wide border-b-4 border-green-700 h-12 rounded-xl"
             onClick={playClick}
           >
-            Continuar curso
+            {t("continue_course")}
           </Button>
         </Link>
       ) : (
@@ -35,7 +37,7 @@ export const LandingCTA = ({ userId }: LandingCTAProps) => {
               className="w-full bg-green-500 hover:bg-green-600 text-white font-bold uppercase tracking-wide border-b-4 border-green-700 h-12 rounded-xl"
               onClick={playClick}
             >
-              Comece agora
+              {t("start_now")}
             </Button>
           </Link>
           <Link href="/sign-in" className="w-full">
@@ -45,7 +47,7 @@ export const LandingCTA = ({ userId }: LandingCTAProps) => {
               className="w-full bg-white dark:bg-slate-900 text-blue-500 hover:bg-slate-50 dark:bg-slate-950 font-bold uppercase tracking-wide border-2 border-slate-200 dark:border-slate-800 border-b-4 h-12 rounded-xl active:border-b-2 hover:text-blue-600"
               onClick={playClick}
             >
-              Já tenho uma conta
+              {t("already_have_an_account")}
             </Button>
           </Link>
         </>

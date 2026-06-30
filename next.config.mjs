@@ -1,5 +1,7 @@
 import { withSentryConfig } from "@sentry/nextjs";
+import createNextIntlPlugin from 'next-intl/plugin';
 
+const withNextIntl = createNextIntlPlugin();
 /* CSP (Content Security Policy) - Bloqueia iframes de domínios não confiáveis (Um dia futuro preciso colocar o link aqui)*/
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -61,7 +63,7 @@ const nextConfig = {
     },
 };
 
-export default withSentryConfig(nextConfig, {
+export default withSentryConfig(withNextIntl(nextConfig), {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 

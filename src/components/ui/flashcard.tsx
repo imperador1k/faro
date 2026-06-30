@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Sparkles, Activity, RotateCcw } from "lucide-react";
@@ -13,17 +15,26 @@ interface FlashcardProps {
   strength: number;
 }
 
-const strengthLabels: Record<number, { label: string; color: string }> = {
-  1: { label: "Semente", color: "text-amber-600 bg-amber-50 border-amber-200" },
-  2: { label: "Broto", color: "text-lime-600 bg-lime-50 border-lime-200" },
-  3: {
-    label: "Árvore",
-    color: "text-emerald-600 bg-emerald-50 border-emerald-200",
-  },
-  4: {
-    label: "Mestre",
-    color: "text-indigo-600 bg-indigo-50 border-indigo-200",
-  },
+const useStrengthLabels = () => {
+  const t = useTranslations("flashcard.strengths");
+  return {
+    1: {
+      label: t("seed"),
+      color: "text-amber-600 bg-amber-50 border-amber-200",
+    },
+    2: {
+      label: t("sprout"),
+      color: "text-lime-600 bg-lime-50 border-lime-200",
+    },
+    3: {
+      label: t("tree"),
+      color: "text-emerald-600 bg-emerald-50 border-emerald-200",
+    },
+    4: {
+      label: t("master"),
+      color: "text-indigo-600 bg-indigo-50 border-indigo-200",
+    },
+  };
 };
 
 export const Flashcard = ({
@@ -34,13 +45,17 @@ export const Flashcard = ({
   language,
   strength,
 }: FlashcardProps) => {
+  const t = useTranslations("ui");
   const [isFlipped, setIsFlipped] = useState(false);
 
   const clozedSentence = contextSentence
     ? contextSentence.replace(new RegExp(`\\b${word}\\b`, "gi"), "_______")
     : null;
 
-  const strengthInfo = strengthLabels[strength] || strengthLabels[1];
+  const strengthLabels = useStrengthLabels();
+  const strengthInfo =
+    strengthLabels[strength as keyof typeof strengthLabels] ||
+    strengthLabels[1];
 
   return (
     <div
@@ -89,7 +104,7 @@ export const Flashcard = ({
           {/* Bottom hint - St stays at the end of the scroll if content is long */}
           <p className="text-[11px] text-center text-slate-400 font-bold uppercase tracking-widest pt-3 border-t border-slate-100 w-full flex items-center justify-center gap-1.5 mt-auto">
             <RotateCcw className="h-3 w-3" />
-            Clica para revelar
+            {t("click_to_reveal")}
           </p>
         </div>
 
@@ -100,7 +115,7 @@ export const Flashcard = ({
             <div className="flex items-center gap-1.5 bg-white/60 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-emerald-200 shadow-sm">
               <Sparkles className="h-3 w-3 text-emerald-500" />
               <span className="text-[10px] font-bold text-emerald-600 uppercase">
-                Tradução
+                {t("translation")}
               </span>
             </div>
           </div>
@@ -127,7 +142,7 @@ export const Flashcard = ({
           {/* Bottom hint */}
           <p className="text-[11px] text-center text-emerald-400 font-bold uppercase tracking-widest pt-3 border-t border-emerald-200/50 w-full flex items-center justify-center gap-1.5 mt-auto">
             <RotateCcw className="h-3 w-3" />
-            Clica para voltar
+            {t("click_to_return")}
           </p>
         </div>
       </div>

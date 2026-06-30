@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
@@ -21,6 +22,8 @@ export const ChallengeOptionCard = ({
   isCorrect,
   onClick,
 }: ChallengeOptionProps) => {
+  const t = useTranslations("lesson");
+
   return (
     <button
       onClick={onClick}

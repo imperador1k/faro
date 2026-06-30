@@ -4,6 +4,7 @@ import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { StepWelcome } from "./step-welcome";
 import { StepGetReady } from "./step-get-ready";
@@ -47,6 +48,7 @@ const variants = {
 
 export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
   const router = useRouter();
+  const t = useTranslations("Onboarding");
   const {
     step,
     setStep,
@@ -62,7 +64,8 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
   const progress = (step / TOTAL_STEPS) * 100;
 
   const selectedCourseTitle =
-    courses.find((c) => c.id === selectedCourse)?.title || "Inglês";
+    courses.find((c) => c.id === selectedCourse)?.title ||
+    t("default_course_title");
 
   const handleBack = () => {
     if (step === 1) {
@@ -70,7 +73,6 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
       return;
     }
 
-    // Logic for jumping back from Sign Up if beginner
     if (step === 8 && experienceLevel === "beginner") {
       setStep(5);
       return;
@@ -92,10 +94,9 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
   const handleContinue = () => {
     if (!canContinue) return;
 
-    // Logic for Step 5 (Level selection)
     if (step === 5) {
       if (experienceLevel === "beginner") {
-        setStep(8); // Go straight to sign up
+        setStep(8);
         return;
       }
       nextStep();
@@ -107,7 +108,6 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
     } else {
       completeOnboarding();
 
-      // Save full onboarding data to a cookie for server-side syncing
       const onboardingData = {
         selectedCourse,
         motivation,
@@ -175,7 +175,7 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
             }
           `}
         >
-          Continuar
+          {t("continue_button")}
         </button>
       </footer>
     </div>

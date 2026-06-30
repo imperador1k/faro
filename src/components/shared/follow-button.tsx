@@ -1,6 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { onFollow, onUnfollow } from "@/actions/user-actions";
 import { Loader2 } from "lucide-react";
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export const FollowButton = ({ userId, isFollowing, className }: Props) => {
+  const t = useTranslations("shared");
   const [pending, startTransition] = useTransition();
 
   const onClick = () => {
@@ -36,7 +38,7 @@ export const FollowButton = ({ userId, isFollowing, className }: Props) => {
         disabled={pending}
       >
         {pending && <Loader2 className="w-5 h-5 animate-spin text-white" />}
-        Deixar de Seguir
+        {t("unfollow")}
       </button>
     );
   }
@@ -51,7 +53,7 @@ export const FollowButton = ({ userId, isFollowing, className }: Props) => {
       disabled={pending}
     >
       {pending && <Loader2 className="w-5 h-5 animate-spin mr-2 text-white" />}
-      Seguir
+      {t("follow")}
     </button>
   );
 };

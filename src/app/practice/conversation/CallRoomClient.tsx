@@ -1,15 +1,17 @@
 "use client";
 
-import { useVoiceTutor } from "@/hooks/use-voice-tutor";
+import { useGeminiLive } from "@/hooks/use-gemini-live";
 import { Mic, PhoneOff, Loader2, Square, MessageCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type CallRoomClientProps = {
   activeLanguage: string;
 };
 
 export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
+  const t = useTranslations("Onboarding");
   const router = useRouter();
   const {
     isRecording,
@@ -18,26 +20,22 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
     aiResponse,
     status,
     toggleRecording,
-  } = useVoiceTutor(activeLanguage);
+  } = useGeminiLive();
 
   return (
     <div className="min-h-screen bg-[#fbf9f8] dark:bg-slate-950 text-slate-800 dark:text-slate-200 flex flex-col items-center font-sans overflow-hidden p-4 sm:p-6 lg:p-8">
-      {/* Header */}
       <header className="w-full max-w-4xl flex items-center justify-between mb-8 z-10">
         <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-700 dark:text-slate-200 tracking-tight flex items-center gap-2">
           <MessageCircle className="text-[#1CB0F6] w-8 h-8" />
-          Conversa
+          {t("header_title")}
         </h1>
         <div className="bg-white dark:bg-slate-900 px-4 py-2 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-4 text-sm font-bold text-[#1cb0f6] uppercase tracking-wider shadow-sm">
           {activeLanguage}
         </div>
       </header>
 
-      {/* Main Bento Layout */}
       <main className="w-full max-w-4xl flex flex-col lg:flex-row gap-6 lg:gap-8 flex-1">
-        {/* Left Side: The AI Orb Model Bento */}
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-8 relative shadow-sm h-[300px] lg:h-auto">
-          {/* Ripple Rings Background */}
           <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-3xl pointer-events-none">
             {isRecording && (
               <div
@@ -51,7 +49,6 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
           </div>
 
           <div className="relative w-48 h-48 sm:w-64 sm:h-64 flex items-center justify-center">
-            {/* Gamified AI Character / Orb */}
             <div
               className={cn(
                 "relative w-40 h-40 sm:w-56 sm:h-56 rounded-[40px] rotate-3 transition-all duration-500 ease-in-out border-4 border-white shadow-[0_10px_0_rgba(0,0,0,0.1)] flex items-center justify-center",
@@ -65,7 +62,6 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
                   "hover:rotate-6 hover:scale-105",
               )}
             >
-              {/* Face representation */}
               <div className="flex gap-4 sm:gap-6 -rotate-3 transition-all duration-300">
                 <div
                   className={cn(
@@ -80,7 +76,6 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
                   )}
                 />
               </div>
-              {/* Mouth */}
               <div
                 className={cn(
                   "absolute bottom-10 w-8 h-4 bg-white dark:bg-slate-900 rounded-full -rotate-3 transition-all duration-200",
@@ -92,14 +87,11 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
           </div>
         </div>
 
-        {/* Right Side: Chat Feed & Controls Bento */}
         <div className="w-full lg:w-1/2 flex flex-col gap-6 h-full">
-          {/* Transcripts Board - Bento */}
           <div className="flex-1 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col gap-6 min-h-[300px] justify-between relative overflow-hidden">
-            {/* Tutor Message */}
             <div className="flex flex-col gap-2 w-full">
               <span className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase ml-2">
-                Professor IA
+                {t("tutor_label")}
               </span>
               <div
                 className={cn(
@@ -109,19 +101,18 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
               >
                 {status === "thinking" ? (
                   <span className="flex items-center gap-2">
-                    <Loader2 className="w-5 h-5 animate-spin text-[#1cb0f6]" />A
-                    pensar...
+                    <Loader2 className="w-5 h-5 animate-spin text-[#1cb0f6]" />
+                    {t("thinking_state")}
                   </span>
                 ) : (
-                  aiResponse || "..."
+                  aiResponse || t("ready_to_start")
                 )}
               </div>
             </div>
 
-            {/* User Transcript */}
             <div className="flex flex-col gap-2 w-full items-end mt-4">
               <span className="text-xs font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase mr-2 overflow-hidden text-right">
-                Tu
+                {t("user_label")}
               </span>
               <div
                 className={cn(
@@ -129,13 +120,11 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
                   !userTranscript && !isRecording && "opacity-0",
                 )}
               >
-                {userTranscript ||
-                  (isRecording ? "A ouvir... fala livremente!" : "")}
+                {userTranscript || (isRecording ? t("listening_state") : "")}
               </div>
             </div>
           </div>
 
-          {/* Control Panel - Bento */}
           <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 shadow-sm flex flex-col gap-4">
             <button
               onClick={toggleRecording}
@@ -149,12 +138,12 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
               {isRecording ? (
                 <>
                   <Square className="w-6 h-6 fill-current" />
-                  Parar e Enviar
+                  {t("stop_send_button")}
                 </>
               ) : (
                 <>
                   <Mic className="w-7 h-7" />
-                  Tocar para Falar
+                  {t("tap_to_speak_button")}
                 </>
               )}
             </button>
@@ -164,7 +153,7 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
               className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-md font-bold uppercase tracking-wider text-rose-500 bg-transparent border-2 border-stone-200 dark:border-slate-800 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-[2px] transition-all"
             >
               <PhoneOff className="w-5 h-5" />
-              Terminar Sessão
+              {t("end_session_button")}
             </button>
           </div>
         </div>

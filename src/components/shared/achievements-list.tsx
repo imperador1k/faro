@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 type AchievementItem = {
   title: string;
@@ -26,6 +26,7 @@ type Props = {
 import { Zap, Trophy, Flame, Target, Star } from "lucide-react";
 
 export const AchievementsList = ({ achievements, userProgress }: Props) => {
+  const t = useTranslations("shared");
   const [mounted, setMounted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -34,13 +35,12 @@ export const AchievementsList = ({ achievements, userProgress }: Props) => {
   }, []);
   const unlockedCount = achievements.filter((a) => a.unlocked).length;
 
-  // Categorization logic parsing descriptions
   const categories = {
-    "Mestre de XP": achievements.filter((a) => a.description.includes("XP")),
-    "Série de Fogo": achievements.filter((a) =>
+    [t("master_xp")]: achievements.filter((a) => a.description.includes("XP")),
+    [t("fire_streak")]: achievements.filter((a) =>
       a.description.includes("Streak"),
     ),
-    Colecionador: achievements.filter(
+    [t("collector")]: achievements.filter(
       (a) => !a.description.includes("XP") && !a.description.includes("Streak"),
     ),
   };
@@ -51,9 +51,9 @@ export const AchievementsList = ({ achievements, userProgress }: Props) => {
   };
 
   const getProgressValue = (category: string) => {
-    if (category === "Mestre de XP")
+    if (category === t("master_xp"))
       return userProgress.totalXpEarned || userProgress.points || 0;
-    if (category === "Série de Fogo") return userProgress.longestStreak || 0;
+    if (category === t("fire_streak")) return userProgress.longestStreak || 0;
     return userProgress.hearts || 1;
   };
 
@@ -66,7 +66,11 @@ export const AchievementsList = ({ achievements, userProgress }: Props) => {
     if (displayedItems.length === 0) return null;
 
     const CategoryIcon =
-      title === "Mestre de XP" ? Zap : title === "Série de Fogo" ? Flame : Star;
+      title === t("master_xp")
+        ? Zap
+        : title === t("fire_streak")
+          ? Flame
+          : Star;
 
     return (
       <div className="mb-10" key={title}>
@@ -137,12 +141,11 @@ export const AchievementsList = ({ achievements, userProgress }: Props) => {
                   {achievement.unlocked && (
                     <div className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-widest text-emerald-500 uppercase px-3 py-1 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border-2 border-emerald-100 dark:border-emerald-900/50">
                       <Star className="h-3 w-3 fill-emerald-500" />
-                      Completado
+                      {t("completed")}
                     </div>
                   )}
                 </div>
 
-                {/* Unlocking Glow */}
                 {achievement.unlocked && (
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 dark:via-white/5 to-transparent -translate-x-[200%] group-hover:animate-[shimmer_2s_infinite] pointer-events-none rounded-[2.5rem]" />
                 )}
@@ -163,10 +166,10 @@ export const AchievementsList = ({ achievements, userProgress }: Props) => {
           </div>
           <div className="flex flex-col">
             <h2 className="text-2xl sm:text-3xl font-black text-stone-700 dark:text-slate-200 tracking-tight uppercase leading-none">
-              Conquistas
+              {t("achievements")}
             </h2>
             <p className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-sm mt-1">
-              O teu percurso de glória
+              {t("glory_path")}
             </p>
           </div>
         </div>
@@ -178,13 +181,13 @@ export const AchievementsList = ({ achievements, userProgress }: Props) => {
       </div>
 
       <div className="flex flex-col gap-2">
-        {renderAchievementGroup("Mestre de XP", categories["Mestre de XP"], 4)}
+        {renderAchievementGroup(t("master_xp"), categories[t("master_xp")], 4)}
         {renderAchievementGroup(
-          "Série de Fogo",
-          categories["Série de Fogo"],
+          t("fire_streak"),
+          categories[t("fire_streak")],
           4,
         )}
-        {renderAchievementGroup("Colecionador", categories["Colecionador"], 4)}
+        {renderAchievementGroup(t("collector"), categories[t("collector")], 4)}
       </div>
 
       <div className="flex justify-center mt-10">
@@ -193,7 +196,7 @@ export const AchievementsList = ({ achievements, userProgress }: Props) => {
           variant="super"
           className="w-full md:w-auto h-auto min-h-[64px] py-4 rounded-[2rem] border-b-8 text-white font-black uppercase tracking-wider sm:tracking-widest px-4 sm:px-12 text-sm sm:text-base active:translate-y-1 active:border-b-0 transition-all shadow-lg shadow-green-500/20 whitespace-normal text-center"
         >
-          {isExpanded ? "Esconder Grelha" : "Ver grelha completa de conquistas"}
+          {isExpanded ? t("hide_grid") : t("view_all_achievements")}
         </Button>
       </div>
     </div>

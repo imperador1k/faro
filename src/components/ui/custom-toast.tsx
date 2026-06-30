@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import {
   createContext,
   useContext,
@@ -31,6 +33,7 @@ type ToastContextType = {
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 export function CustomToastProvider({ children }: { children: ReactNode }) {
+  const t = useTranslations("ui");
   const [state, setState] = useState<ToastState>({
     isOpen: false,
     message: "",
@@ -125,7 +128,6 @@ export function CustomToastProvider({ children }: { children: ReactNode }) {
 
 export const useCustomToast = () => {
   const context = useContext(ToastContext);
-  if (!context)
-    throw new Error("useCustomToast must be used within CustomToastProvider");
+  if (!context) throw new Error("ToastContext provider is missing");
   return context;
 };

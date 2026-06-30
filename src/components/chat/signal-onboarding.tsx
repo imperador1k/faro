@@ -11,8 +11,10 @@ import {
 } from "@/lib/crypto";
 import localforage from "localforage";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export function SignalOnboarding() {
+  const t = useTranslations("chat");
   const [isInitializing, setIsInitializing] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [needsPin, setNeedsPin] = useState<"CREATE" | "UNLOCK" | null>(null);
@@ -23,7 +25,6 @@ export function SignalOnboarding() {
   useEffect(() => {
     async function checkState() {
       try {
-        // 1. Check if we already have the private key locally
         const localKey =
           await localforage.getItem<CryptoKey>("e2e_private_key");
         if (localKey) {
@@ -31,30 +32,27 @@ export function SignalOnboarding() {
           return;
         }
 
-        // 2. Fetch from server
         const bundle = await getMyE2EBundle();
         if (bundle) {
-          // Exists on server, need PIN to unlock
           setServerBundle(bundle);
           setNeedsPin("UNLOCK");
         } else {
-          // Doesn't exist, need PIN to create
           setNeedsPin("CREATE");
         }
       } catch (err) {
         console.error("E2E State Check Error:", err);
-        setError("Erro ao verificar estado da encriptação.");
+        setError(t("error_verifying_encryption"));
       } finally {
         setIsInitializing(false);
       }
     }
 
     checkState();
-  }, []);
+  }, [t]);
 
   const handlePinSubmit = async () => {
     if (pin.length < 4) {
-      setError("O PIN deve ter pelo menos 4 caracteres.");
+      setError(t("error_pin_length"));
       return;
     }
 
@@ -63,11 +61,9 @@ export function SignalOnboarding() {
 
     try {
       if (needsPin === "CREATE") {
-        // Generate new Identity
         const { keyPair, publicKeyBase64, privateKeyJwk } =
           await generateMasterKeyPair();
 
-        // Encrypt Private Key with PIN
         const salt = generateSalt(16);
         const encryptedPrivateKey = await encryptPrivateKeyWithPIN(
           privateKeyJwk,
@@ -75,7 +71,6 @@ export function SignalOnboarding() {
           salt,
         );
 
-        // Upload to server
         const res = await fetch("/api/crypto/keys", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -86,26 +81,23 @@ export function SignalOnboarding() {
           }),
         });
 
-        if (!res.ok) throw new Error("Falha ao guardar chaves no servidor.");
+        if (!res.ok) throw new Error(t("error_save_server"));
 
-        // Save private key locally
         await localforage.setItem("e2e_private_key", keyPair.privateKey);
       } else if (needsPin === "UNLOCK" && serverBundle) {
-        // Decrypt Private Key with PIN
         const privateKey = await decryptPrivateKeyWithPIN(
           serverBundle.encryptedPrivateKey,
           pin,
           serverBundle.salt,
         );
 
-        // Save locally
         await localforage.setItem("e2e_private_key", privateKey);
       }
 
       setNeedsPin(null);
     } catch (err: any) {
       console.error("PIN processing error:", err);
-      setError("PIN incorreto ou erro na encriptação.");
+      setError(t("error_pin_invalid"));
     } finally {
       setIsProcessing(false);
     }
@@ -117,20 +109,20 @@ export function SignalOnboarding() {
         <div className="bg-background rounded-xl p-6 max-w-sm w-full space-y-4 shadow-xl border">
           <h3 className="font-bold text-lg text-center">
             {needsPin === "CREATE"
-              ? "Criar PIN de Segurança"
-              : "Desbloquear Mensagens"}
+              ? t("title_create_pin")
+              : t("title_unlock_messages")}
           </h3>
           <p className="text-sm text-muted-foreground text-center">
             {needsPin === "CREATE"
-              ? "Para acederes às tuas mensagens E2EE noutros dispositivos, define um PIN ou Password."
-              : "As tuas mensagens estão encriptadas. Insere o teu PIN para aceder a este dispositivo."}
+              ? t("desc_create_pin")
+              : t("desc_unlock_messages")}
           </p>
 
           <div className="space-y-2">
             <input
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               type="password"
-              placeholder="Ex: 1234 ou Senh@Forte"
+              placeholder={t("placeholder_pin")}
               value={pin}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setPin(e.target.value)
@@ -151,10 +143,10 @@ export function SignalOnboarding() {
             disabled={isProcessing || pin.length < 4}
           >
             {isProcessing
-              ? "A processar..."
+              ? t("btn_processing")
               : needsPin === "CREATE"
-                ? "Criar Identidade Segura"
-                : "Desbloquear"}
+                ? t("btn_create_identity")
+                : t("btn_unlock")}
           </Button>
         </div>
       </div>
@@ -164,7 +156,7 @@ export function SignalOnboarding() {
   if (isInitializing) {
     return (
       <div className="text-muted-foreground text-xs text-center mt-2 animate-pulse">
-        A inicializar encriptação... 🔒
+        {t("msg_initializing")}
       </div>
     );
   }

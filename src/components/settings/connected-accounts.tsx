@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useUser } from "@clerk/nextjs";
 import { Link2, Trash2, Plus, Loader2 } from "lucide-react";
 import { useState } from "react";
@@ -32,6 +34,7 @@ const GoogleIcon = () => (
 );
 
 export const ConnectedAccounts = () => {
+  const t = useTranslations("settings");
   const { user, isLoaded } = useUser();
   const [isLinking, setIsLinking] = useState<OAuthStrategy | null>(null);
   const [isUnlinking, setIsUnlinking] = useState<string | null>(null);
@@ -63,7 +66,7 @@ export const ConnectedAccounts = () => {
       }
     } catch (error) {
       console.error("Error linking account:", error);
-      toast.error("Erro ao conectar conta.");
+      toast.error(t("errors.link"));
       setIsLinking(null);
     }
   };
@@ -76,13 +79,11 @@ export const ConnectedAccounts = () => {
       );
       if (accountToUnlink) {
         await accountToUnlink.destroy();
-        toast.success("Conta desconectada com sucesso!");
+        toast.success(t("success.unlink"));
       }
     } catch (error) {
       console.error("Error unlinking account:", error);
-      toast.error(
-        "Erro ao desconectar conta. Podes precisar de ter uma password definida primeiro.",
-      );
+      toast.error(t("errors.unlink"));
     } finally {
       setIsUnlinking(null);
     }
@@ -92,10 +93,10 @@ export const ConnectedAccounts = () => {
     <div className="flex flex-col gap-4">
       <h4 className="text-lg font-black text-stone-800 dark:text-slate-100 flex items-center gap-2">
         <Link2 className="w-5 h-5 text-[#1CB0F6]" />
-        Contas Conectadas
+        {t("title")}
       </h4>
       <p className="text-sm font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
-        Conecta contas externas para fazeres login de forma mais rápida.
+        {t("description")}
       </p>
 
       <div className="flex flex-col gap-3 mt-2">
@@ -118,7 +119,9 @@ export const ConnectedAccounts = () => {
                     {formattedName}
                   </span>
                   <span className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 truncate max-w-[150px] sm:max-w-xs">
-                    {account.emailAddress || account.username || "Conectado"}
+                    {account.emailAddress ||
+                      account.username ||
+                      t("connected_label")}
                   </span>
                 </div>
               </div>
@@ -130,8 +133,8 @@ export const ConnectedAccounts = () => {
                 className="flex items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-900 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 hover:text-rose-500 active:translate-y-1 active:border-b-2 transition-all disabled:opacity-50 group"
                 title={
                   connectedAccounts.length === 1
-                    ? "Não podes remover a única forma de login."
-                    : "Desconectar"
+                    ? t("tooltips.cannot_remove")
+                    : t("tooltips.disconnect")
                 }
               >
                 {isUnlinking === account.id ? (
@@ -155,7 +158,7 @@ export const ConnectedAccounts = () => {
                 <GoogleIcon />
               </div>
               <span className="font-black text-stone-600 dark:text-slate-300 group-hover:text-stone-800 dark:text-slate-100">
-                Ligar Conta Google
+                {t("link_google")}
               </span>
             </div>
             {isLinking === "oauth_google" ? (

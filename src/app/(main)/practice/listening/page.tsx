@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useEffect, useState, useTransition, useRef } from "react";
 import { generateListeningScript, analyzeListening } from "@/actions/gemini";
 import { savePracticeSession } from "@/actions/practice";
@@ -33,6 +35,7 @@ import { AILoadingScreen } from "@/components/ui/ai-loading-screen";
 import { InteractiveText } from "@/components/ui/interactive-text";
 
 export default function ListeningPracticePage() {
+  const t = useTranslations("practice");
   const [scriptData, setScriptData] = useState<{
     script: string;
     topic: string;
@@ -153,7 +156,7 @@ export default function ListeningPracticePage() {
       (window as unknown as { webkitSpeechRecognition: any })
         .webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      alert("O teu browser não suporta reconhecimento de voz.");
+      alert(t("browser_no_support"));
       return;
     }
 
@@ -260,8 +263,8 @@ export default function ListeningPracticePage() {
   if (isGenerating) {
     return (
       <AILoadingScreen
-        message="A Gerar Módulo Auditivo..."
-        submessage="A IA está a preparar um áudio nativo"
+        message={t("generating_module")}
+        submessage={t("preparing_native_audio")}
       />
     );
   }
@@ -300,7 +303,7 @@ export default function ListeningPracticePage() {
           {scriptData && (
             <section className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 p-6 md:p-8 flex flex-col items-center justify-center gap-6 relative z-10 transition-all hover:-translate-y-1 hover:border-b-[10px] hover:mb-[-2px]">
               <div className="absolute -top-4 left-6 bg-indigo-500 text-white text-xs font-black uppercase tracking-widest px-4 py-1 rounded-xl shadow border-2 border-indigo-600 z-10 flex items-center gap-2">
-                <Headphones className="w-3.5 h-3.5" /> ÁUDIO NATIVO
+                <Headphones className="w-3.5 h-3.5" /> {t("native_audio")}
               </div>
 
               <h2 className="text-xl md:text-3xl font-black text-stone-700 dark:text-slate-200 tracking-tight leading-tight text-center mt-2">
@@ -308,7 +311,7 @@ export default function ListeningPracticePage() {
                   scriptData.topic
                 ) : (
                   <span className="blur-sm select-none text-stone-400 dark:text-slate-500 dark:text-slate-400">
-                    Tópico Oculto (Ouve Primeiro)
+                    {t("hidden_topic")}
                   </span>
                 )}
               </h2>
@@ -319,7 +322,7 @@ export default function ListeningPracticePage() {
                     onClick={pauseAudio}
                     className="w-full md:w-auto px-12 h-16 md:h-20 bg-amber-500 text-white text-lg md:text-xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-amber-600 hover:bg-amber-400 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
                   >
-                    <Pause className="w-6 h-6 fill-current" /> PAUSAR
+                    <Pause className="w-6 h-6 fill-current" /> {t("pause")}
                   </button>
                 ) : (
                   <button
@@ -332,7 +335,7 @@ export default function ListeningPracticePage() {
                     )}
                   >
                     <Play className="w-6 h-6 fill-current" />{" "}
-                    {isPaused ? "RETOMAR" : "OUVIR"}
+                    {isPaused ? "{t('resume')}" : "{t('listen')}"}
                   </button>
                 )}
 
@@ -358,8 +361,8 @@ export default function ListeningPracticePage() {
                   <p className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 text-xs md:text-sm uppercase tracking-wide flex items-center justify-center gap-2">
                     <AlertCircle className="h-4 w-4 text-indigo-400" />
                     {hasAudioFinished
-                      ? "Responde às questões baseadas no áudio!"
-                      : "As questões estão bloqueadas enquanto o áudio toca..."}
+                      ? "{t('answer_based_on_audio')}"
+                      : "{t('questions_locked')}"}
                   </p>
                 </div>
               )}
@@ -370,7 +373,8 @@ export default function ListeningPracticePage() {
           <section className="bg-stone-100/50 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 p-6 md:p-8 flex flex-col gap-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <h3 className="text-xl font-black text-stone-700 dark:text-slate-200 uppercase tracking-widest flex items-center gap-2">
-                <Target className="w-6 h-6 text-indigo-500" />A TUA ANÁLISE
+                <Target className="w-6 h-6 text-indigo-500" />
+                {t("your_analysis")}
               </h3>
 
               {/* Input Mode Toggle */}
@@ -384,7 +388,7 @@ export default function ListeningPracticePage() {
                       : "text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 border-2 border-transparent",
                   )}
                 >
-                  <Keyboard className="h-4 w-4" /> TEXTO
+                  <Keyboard className="h-4 w-4" /> {t("text")}
                 </button>
                 <button
                   onClick={() => setInputMode("voice")}
@@ -395,7 +399,7 @@ export default function ListeningPracticePage() {
                       : "text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 border-2 border-transparent",
                   )}
                 >
-                  <Mic className="h-4 w-4" /> VOZ
+                  <Mic className="h-4 w-4" /> {t("voice")}
                 </button>
               </div>
             </div>
@@ -417,7 +421,7 @@ export default function ListeningPracticePage() {
                     </span>
                     {hasAudioFinished
                       ? q
-                      : "A questão será revelada após o áudio."}
+                      : "{t('question_revealed_after_audio')}"}
                   </h4>
 
                   {inputMode === "voice" ? (
@@ -455,18 +459,18 @@ export default function ListeningPracticePage() {
                           (isRecording && activeQuestionIndex === idx ? (
                             <span className="italic text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center gap-2">
                               <Mic className="w-5 h-5 animate-pulse text-rose-500" />{" "}
-                              A ouvir...
+                              {t("listening_placeholder")}
                             </span>
                           ) : (
                             <span className="italic text-stone-300">
-                              Grava a tua resposta
+                              {t("record_answer_placeholder")}
                             </span>
                           ))}
                       </div>
                     </div>
                   ) : (
                     <Textarea
-                      placeholder="Escreve a tua resposta aqui..."
+                      placeholder="{t('write_answer_placeholder')}"
                       className="min-h-[120px] resize-none border-2 border-stone-200 dark:border-slate-800 bg-stone-50 dark:bg-slate-950 rounded-2xl p-4 text-base md:text-lg font-medium text-stone-700 dark:text-slate-200 focus-visible:ring-indigo-500 shadow-inner placeholder:text-stone-300 placeholder:italic transition-shadow mt-2"
                       value={userAnswers[idx] || ""}
                       onChange={(e) => handleTextChange(idx, e.target.value)}
@@ -516,7 +520,7 @@ export default function ListeningPracticePage() {
                     >
                       <CheckCircle2 className="h-7 w-7" strokeWidth={3} />
                     </div>
-                    Análise da AI
+                    {t("ai_analysis")}
                   </h2>
                   <div
                     className={cn(
@@ -528,7 +532,7 @@ export default function ListeningPracticePage() {
                           : "bg-red-100/50 border-red-300 text-red-700",
                     )}
                   >
-                    SCORE: {feedback.score}%
+                    {t("score")} {feedback.score}%
                   </div>
                 </div>
 
@@ -539,8 +543,8 @@ export default function ListeningPracticePage() {
                 {feedback.missedPoints && feedback.missedPoints.length > 0 && (
                   <div className="mt-6 pt-6 border-t-2 border-indigo-200 flex flex-col gap-4">
                     <h3 className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-indigo-500">
-                      <AlertCircle className="h-5 w-5 shrink-0" /> Pontos
-                      Falhados
+                      <AlertCircle className="h-5 w-5 shrink-0" />{" "}
+                      {t("missed_points")}
                     </h3>
                     <ul className="flex flex-col gap-3">
                       {feedback.missedPoints.map((point, idx) => (
@@ -569,7 +573,7 @@ export default function ListeningPracticePage() {
                 <div className="p-2 bg-indigo-50 text-indigo-500 rounded-xl">
                   <Eye className="w-5 h-5" />
                 </div>
-                Transcrição
+                {t("transcript")}
               </h3>
               <button
                 onClick={() => setShowScript(!showScript)}
@@ -578,10 +582,10 @@ export default function ListeningPracticePage() {
               >
                 {showScript ? (
                   <>
-                    <EyeOff className="w-4 h-4" /> ESCONDER
+                    <EyeOff className="w-4 h-4" /> {t("hide")}
                   </>
                 ) : (
-                  "MOSTRAR"
+                  "{t('show')}"
                 )}
               </button>
             </div>
@@ -605,7 +609,7 @@ export default function ListeningPracticePage() {
                 <div className="text-center text-stone-400 dark:text-slate-500 dark:text-slate-400 flex flex-col items-center gap-2">
                   <EyeOff className="h-8 w-8 opacity-50" />
                   <p className="text-xs font-bold uppercase tracking-widest">
-                    Oculta para treinares o ouvido.
+                    {t("hidden_for_training")}
                   </p>
                 </div>
               )}
@@ -627,9 +631,9 @@ export default function ListeningPracticePage() {
                 className="w-full h-20 md:h-24 bg-[#58cc02] text-white text-xl md:text-2xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-[#46a302] hover:bg-[#61da02] active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm disabled:opacity-50 disabled:grayscale"
               >
                 {isAnalyzing ? (
-                  <span className="animate-pulse">A AVALIAR...</span>
+                  <span className="animate-pulse">{t("evaluating")}</span>
                 ) : (
-                  "AVALIAR"
+                  "{t('evaluate')}"
                 )}
               </button>
             ) : (
@@ -637,13 +641,13 @@ export default function ListeningPracticePage() {
                 onClick={() => handleGenerateScript()}
                 className="w-full h-20 md:h-24 bg-sky-400 text-white text-xl md:text-2xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-sky-500 hover:bg-sky-500 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
               >
-                NOVO ÁUDIO
+                {t("new_audio")}
                 <RefreshCw className="w-7 h-7" strokeWidth={3} />
               </button>
             )}
 
             <p className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2 mt-2">
-              A AI interpreta as tuas respostas
+              {t("ai_interprets_answers")}
             </p>
           </div>
         </aside>

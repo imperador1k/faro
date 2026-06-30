@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { getTranslations } from "next-intl/server";
 import {
   getFollowers,
   getFollowing,
@@ -37,11 +38,9 @@ async function FriendsData({ searchParams }: Props) {
   const following = await getFollowing();
   const query = searchParams.q;
 
-  // Discovery Engine
   const searchResults = query ? await searchUsers(query) : [];
-  const suggestionsResponse = await getTopUsers(8); // Fetch top users as suggestions
+  const suggestionsResponse = await getTopUsers(8);
 
-  // Serialize data payload to strip Drizzle specific prototype traits if any
   const safeSearchResults = searchResults.map((u) => ({
     userId: u.userId,
     userName: u.userName,
@@ -55,7 +54,6 @@ async function FriendsData({ searchParams }: Props) {
   }));
 
   const rawFeedActivities = await getFeedActivities();
-  // Serialize to pass to Client Component safely
   const safeFeedActivities = rawFeedActivities.map((fa) => ({
     id: fa.id,
     userId: fa.userId,
@@ -80,54 +78,25 @@ async function FriendsData({ searchParams }: Props) {
       query={query}
       searchResults={safeSearchResults}
       suggestions={safeSuggestions}
-      followers={
-        followers as Array<{
-          follower?: {
-            userId: string;
-            userName: string;
-            userImageSrc: string | null;
-          };
-          following?: {
-            userId: string;
-            userName: string;
-            userImageSrc: string | null;
-          };
-        }>
-      }
-      following={
-        following as Array<{
-          follower?: {
-            userId: string;
-            userName: string;
-            userImageSrc: string | null;
-          };
-          following?: {
-            userId: string;
-            userName: string;
-            userImageSrc: string | null;
-          };
-        }>
-      }
+      followers={followers}
+      following={following}
       feedActivities={safeFeedActivities}
     />
   );
 }
 
-// --- SKELETON FALLBACK ---
-const FriendsSkeleton = () => {
+async function FriendsSkeleton() {
+  const t = await getTranslations("friends");
   return (
     <div className="max-w-4xl mx-auto w-full p-4 sm:p-8 pb-24 animate-in fade-in duration-500">
-      {/* Header */}
       <div className="flex items-center gap-4 mb-8">
         <h1 className="text-4xl font-extrabold text-stone-800 dark:text-slate-100">
-          Amigos
+          {t("title")}
         </h1>
       </div>
 
-      {/* Tactile Tab Switcher Skeleton */}
       <div className="bg-stone-200 dark:bg-slate-700 p-1.5 rounded-2xl flex items-center max-w-3xl w-full mx-auto mb-10 overflow-hidden shadow-inner h-[56px] animate-pulse"></div>
 
-      {/* Feed Tab Activity Skeleton */}
       <div className="space-y-4 max-w-3xl mx-auto">
         {[1, 2, 3].map((i) => (
           <div
@@ -147,4 +116,4 @@ const FriendsSkeleton = () => {
       </div>
     </div>
   );
-};
+}

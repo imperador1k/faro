@@ -1,11 +1,14 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useState, useEffect } from "react";
 import { HelpCircle, Bot, History } from "lucide-react";
 import Link from "next/link";
 import { PracticeInfoModal } from "@/components/modals/practice-info-modal";
 
 export const PracticeHeader = () => {
+  const t = useTranslations("practice");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -44,7 +47,7 @@ export const PracticeHeader = () => {
           className="absolute top-6 left-6 hidden sm:flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-3 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all active:scale-95 z-20 border-2 border-white/20 backdrop-blur-sm shadow-sm"
         >
           <History className="w-4 h-4" />
-          Ver Histórico
+          {t("history_button")}
         </Link>
 
         {/* Mobile History Button (icon only) */}
@@ -60,11 +63,10 @@ export const PracticeHeader = () => {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] relative z-10">
-          Área de Prática
+          {t("title")}
         </h1>
         <p className="text-white/90 font-bold text-lg md:text-xl mt-4 max-w-lg relative z-10 drop-shadow-sm">
-          Acelera a tua fluência com exercícios direcionados pela nossa
-          Inteligência Artificial.
+          {t("description")}
         </p>
       </div>
     </div>

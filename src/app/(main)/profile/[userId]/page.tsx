@@ -1,12 +1,13 @@
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
+import { getTranslations } from "next-intl/server";
 import {
   getUserProgressById,
   isFollowingUser,
   getCompletedLessonsCount,
 } from "@/db/queries";
 import { getUserCertificates } from "@/actions/certificates";
-import { ACHIEVEMENTS, Achievement } from "@/constants/achievements";
+import { getAchievements, Achievement } from "@/constants/achievements";
 import { Flame, Target, Heart, Zap, MessageSquareText } from "lucide-react";
 import { FollowButton } from "@/components/shared/follow-button";
 import { ProfileHero } from "@/components/shared/profile-hero";
@@ -15,7 +16,6 @@ import { CertificationsList } from "@/components/shared/certifications-list";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 
 interface Props {
   params: {
@@ -24,6 +24,7 @@ interface Props {
 }
 
 export default async function PublicProfilePage({ params }: Props) {
+  const t = await getTranslations("profile");
   const userProgress = await getUserProgressById(params.userId);
   const completedLessons = await getCompletedLessonsCount(params.userId);
   const isFollowing = await isFollowingUser(params.userId);
@@ -42,34 +43,34 @@ export default async function PublicProfilePage({ params }: Props) {
     {
       icon: <Flame className="h-9 w-9 text-orange-500 fill-orange-200" />,
       value: streak,
-      label: "Série",
+      label: t("stats.streak"),
       color:
         "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-stone-700 dark:text-slate-200",
     },
     {
       icon: <Zap className="h-9 w-9 text-amber-500 fill-amber-200" />,
       value: totalXpEarned.toLocaleString(),
-      label: "XP Total",
+      label: t("stats.xp"),
       color:
         "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-stone-700 dark:text-slate-200",
     },
     {
       icon: <Target className="h-9 w-9 text-green-500 fill-green-200" />,
       value: completedLessons,
-      label: "Lições",
+      label: t("stats.lessons"),
       color:
         "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-stone-700 dark:text-slate-200",
     },
     {
       icon: <Heart className="h-9 w-9 text-rose-500 fill-rose-200" />,
       value: userProgress.hearts,
-      label: "Vidas",
+      label: t("stats.hearts"),
       color:
         "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-stone-700 dark:text-slate-200",
     },
   ];
 
-  const achievements = ACHIEVEMENTS.map((achievement: Achievement) => ({
+  const achievements = getAchievements(t).map((achievement: Achievement) => ({
     title: achievement.title,
     description: achievement.description,
     icon: achievement.icon,
@@ -80,8 +81,8 @@ export default async function PublicProfilePage({ params }: Props) {
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 pb-32 font-sans">
       <ProfileHero
         imageUrl={userProgress.userImageSrc}
-        name={userProgress.userName || "Estudante"}
-        username={userProgress.userName || "estudante"}
+        name={userProgress.userName || t("default_name")}
+        username={userProgress.userName || t("default_username")}
         createdAt={new Date()}
         bannerImageUrl={userProgress.userBannerSrc}
         bannerColorFrom="from-sky-500"
@@ -104,7 +105,7 @@ export default async function PublicProfilePage({ params }: Props) {
                 >
                   <button className="w-full h-full flex items-center justify-center gap-2 rounded-[1.2rem] sm:rounded-[1.5rem] px-4 sm:px-6 bg-stone-100 dark:bg-slate-800 text-[#1CB0F6] font-black uppercase tracking-widest text-[12px] sm:text-sm border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:border-stone-300 dark:border-slate-700 active:translate-y-1 active:border-b-0 transition-all shadow-sm">
                     <MessageSquareText className="h-5 w-5 sm:h-6 sm:w-6" />
-                    <span>Mensagem</span>
+                    <span>{t("message_button")}</span>
                   </button>
                 </Link>
               </div>
@@ -113,7 +114,6 @@ export default async function PublicProfilePage({ params }: Props) {
         }
       />
 
-      {/* Stats Bento Grid - High Definition Dojo Style */}
       <div className="mb-14 grid grid-cols-2 gap-6 sm:grid-cols-4 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
         {stats.map((stat, i) => (
           <div
@@ -136,16 +136,14 @@ export default async function PublicProfilePage({ params }: Props) {
         ))}
       </div>
 
-      {/* Active Course Context Segment - Bento Upgrade */}
       <div className="mb-14 rounded-[3rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 bg-white dark:bg-slate-900 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 shadow-sm hover:shadow-md transition-all group overflow-hidden relative">
-        {/* Decorative background accent */}
         <div className="absolute -top-10 -left-10 w-40 h-40 bg-sky-50 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity" />
 
         <div className="relative z-10 p-5 bg-sky-50 rounded-[2rem] border-2 border-sky-100 border-b-8 shadow-sky-200/50 group-hover:scale-105 transition-transform">
           <div className="relative h-20 w-24">
             <Image
               src={userProgress.activeCourse?.imageSrc || "/es.svg"}
-              alt="Course Flag"
+              alt={t("course_flag")}
               fill
               className="object-cover rounded-xl shadow-md border-2 border-white"
             />
@@ -155,18 +153,19 @@ export default async function PublicProfilePage({ params }: Props) {
           <div className="flex items-center justify-center md:justify-start gap-2">
             <span className="h-1.5 w-6 bg-sky-400 rounded-full" />
             <h3 className="font-black text-sky-500 uppercase tracking-widest text-xs">
-              Curso Ativo
+              {t("active_course")}
             </h3>
           </div>
           <p className="font-black text-3xl text-stone-700 dark:text-slate-200 tracking-tight leading-none uppercase">
-            A estudar {userProgress.activeCourse?.title || "Um Novo Idioma"}
+            {t("studying_course", {
+              course: userProgress.activeCourse?.title || t("new_language"),
+            })}
           </p>
 
-          {/* Dojo Progress Bar */}
           <div className="w-full mt-4">
             <div className="flex justify-between items-center mb-2 px-1">
               <span className="text-[10px] font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-                Nível de Mestria
+                {t("mastery_level")}
               </span>
               <span className="text-[10px] font-black text-sky-500 uppercase tracking-widest">
                 65%
@@ -179,10 +178,7 @@ export default async function PublicProfilePage({ params }: Props) {
         </div>
       </div>
 
-      {/* Official Certifications */}
       <CertificationsList certifications={certificates as any} />
-
-      {/* Gamified Achievements List */}
       <AchievementsList
         achievements={achievements}
         userProgress={userProgress}

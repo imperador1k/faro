@@ -2,6 +2,7 @@
 
 import { createContext, useContext } from "react";
 import useSound from "use-sound";
+import { useTranslations } from "next-intl";
 
 type UISoundsContextType = {
   playClick: () => void;
@@ -14,7 +15,11 @@ type UISoundsContextType = {
 
 const UISoundsContext = createContext<UISoundsContextType | null>(null);
 
-export const UISoundsProvider = ({ children }: { children: React.ReactNode }) => {
+export const UISoundsProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [playClick] = useSound("/sounds/click.mp3", { volume: 0.5 });
   const [playWhoosh] = useSound("/sounds/whoosh.mp3", { volume: 0.4 });
   const [playReward] = useSound("/sounds/reward.mp3", { volume: 0.6 });
@@ -39,6 +44,7 @@ export const UISoundsProvider = ({ children }: { children: React.ReactNode }) =>
 };
 
 export const useUISounds = () => {
+  const t = useTranslations("providers");
   const context = useContext(UISoundsContext);
   if (!context) {
     // If not wrapped in provider (e.g. testing or error boundary), return noop functions

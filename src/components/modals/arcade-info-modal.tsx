@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useEffect, useState } from "react";
 import {
   Dialog,
@@ -17,6 +19,7 @@ interface Props {
 }
 
 export const ArcadeInfoModal = ({ isOpen, onOpenChange }: Props) => {
+  const t = useTranslations("arcade");
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -43,20 +46,22 @@ export const ArcadeInfoModal = ({ isOpen, onOpenChange }: Props) => {
             </div>
 
             <DialogTitle className="text-3xl font-black text-white text-center tracking-tight drop-shadow-md relative z-10 uppercase">
-              Bem-vindo ao Arcade!
+              {t("welcome")}
             </DialogTitle>
           </DialogHeader>
 
           {/* Content Area */}
           <div className="flex flex-col items-center justify-center gap-6 p-8 w-full -mt-6 bg-white dark:bg-slate-900 rounded-t-[2.5rem] relative z-20">
             <p className="text-[15px] font-bold text-stone-500 dark:text-slate-400 text-center leading-relaxed">
-              Aqui podes treinar os teus reflexos e ganhar{" "}
-              <span className="text-amber-500 font-black">XP extra</span>!
-              Descobre os nossos minijogos:
+              {t.rich("description", {
+                xp: (chunks) => (
+                  <span className="text-amber-500 font-black">{chunks}</span>
+                ),
+              })}
             </p>
 
             <div className="flex flex-col gap-3 w-full">
-              {/* Sprint */}
+              {/* {t('sprint_title')} */}
               <div className="flex items-center gap-4 bg-purple-50 p-4 rounded-2xl border-2 border-purple-100">
                 <div className="h-12 w-12 bg-white dark:bg-slate-900 rounded-xl border-2 border-purple-200 flex items-center justify-center shrink-0">
                   <Zap className="w-6 h-6 text-purple-500 fill-purple-500" />
@@ -66,7 +71,7 @@ export const ArcadeInfoModal = ({ isOpen, onOpenChange }: Props) => {
                     Sprint
                   </span>
                   <span className="text-xs font-bold text-purple-600/70">
-                    Traduz rápido e ganha combos!
+                    {t("sprint_desc")}
                   </span>
                 </div>
               </div>
@@ -78,15 +83,15 @@ export const ArcadeInfoModal = ({ isOpen, onOpenChange }: Props) => {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-rose-700 uppercase tracking-wider text-sm">
-                    O Deslize
+                    {t("swipe_title")}
                   </span>
                   <span className="text-xs font-bold text-rose-600/70">
-                    Arrasta para decidir: Verdade ou Mentira.
+                    {t("swipe_desc")}
                   </span>
                 </div>
               </div>
 
-              {/* Meteoros */}
+              {/* {t('meteors_title')} */}
               <div className="flex items-center gap-4 bg-amber-50 p-4 rounded-2xl border-2 border-amber-100">
                 <div className="h-12 w-12 bg-white dark:bg-slate-900 rounded-xl border-2 border-amber-200 flex items-center justify-center shrink-0 relative overflow-hidden">
                   <Sparkles className="w-6 h-6 text-amber-500" />
@@ -96,7 +101,7 @@ export const ArcadeInfoModal = ({ isOpen, onOpenChange }: Props) => {
                     Meteoros
                   </span>
                   <span className="text-xs font-bold text-amber-600/70">
-                    Destrói as palavras antes que caiam!
+                    {t("meteors_desc")}
                   </span>
                 </div>
               </div>
@@ -108,13 +113,13 @@ export const ArcadeInfoModal = ({ isOpen, onOpenChange }: Props) => {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-white uppercase tracking-wider text-sm flex items-center gap-2">
-                    Casino 8-Bit
+                    {t("casino_title")}
                     <span className="bg-yellow-500 text-black text-[10px] px-2 py-0.5 rounded-full border border-yellow-300 leading-none">
-                      PRO
+                      {t("pro_badge")}
                     </span>
                   </span>
                   <span className="text-xs font-bold text-slate-400">
-                    Aposta coins em minijogos de risco.
+                    {t("casino_desc")}
                   </span>
                 </div>
               </div>
@@ -125,7 +130,7 @@ export const ArcadeInfoModal = ({ isOpen, onOpenChange }: Props) => {
                 onClick={() => onOpenChange(false)}
                 className="w-full py-4 bg-[#1CB0F6] hover:bg-[#1899D6] text-white font-black text-[15px] uppercase tracking-widest rounded-2xl border-b-4 border-[#1899D6] active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center"
               >
-                VAMOS A ISTO!
+                {t("cta_button")}
               </button>
             </div>
           </div>

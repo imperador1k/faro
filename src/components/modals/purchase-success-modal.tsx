@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
@@ -23,6 +25,7 @@ export const PurchaseSuccessModal = ({
   description,
   color,
 }: PurchaseSuccessModalProps) => {
+  const t = useTranslations("modals");
   // Prevent hydration mismatch for portals/modals
   const [isClient, setIsClient] = useState(false);
 
@@ -75,10 +78,10 @@ export const PurchaseSuccessModal = ({
             onClick={onClose}
             className="w-full h-16 md:h-20 bg-[#58cc02] text-white text-xl font-black rounded-2xl border-2 border-transparent border-b-8 border-b-[#46a302] hover:bg-[#61da02] active:border-b-0 active:translate-y-2 active:mb-[-8px] transition-all uppercase tracking-[0.1em] flex items-center justify-center gap-3 shadow-md"
           >
-            <span>CONTINUAR</span>
+            <span>{t("continue")}</span>
           </button>
           <p className="mt-6 text-xs font-black text-amber-500 uppercase tracking-widest animate-pulse">
-            Inventário Atualizado!
+            {t("inventory_updated")}
           </p>
         </div>
       </div>

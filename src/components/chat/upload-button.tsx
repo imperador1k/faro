@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Paperclip, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@clerk/nextjs";
+import { useTranslations } from "next-intl";
 
 type Props = {
   onUploadComplete: (
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export const UploadButton = ({ onUploadComplete }: Props) => {
+  const t = useTranslations("chat");
   const [uploading, setUploading] = useState(false);
   const { getToken } = useAuth();
 
@@ -46,7 +48,7 @@ export const UploadButton = ({ onUploadComplete }: Props) => {
       onUploadComplete(data.publicUrl, type, file.name);
     } catch (error) {
       console.error(error);
-      alert("Erro ao enviar ficheiro.");
+      alert(t("error_uploading_file"));
     } finally {
       setUploading(false);
       e.target.value = ""; // Reset input

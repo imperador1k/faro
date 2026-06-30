@@ -4,9 +4,11 @@ import { redirect } from "next/navigation";
 import { survivalSessions } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { SurvivalLobbyClient } from "./survival-lobby-client";
+import { getTranslations } from "next-intl/server";
 
 export default async function SurvivalLobbyPage() {
   const { userId } = await auth();
+  const t = await getTranslations("practice");
 
   if (!userId) {
     redirect("/");

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   CopyMinus,
   Zap,
@@ -13,6 +14,7 @@ import {
 import { ArcadeInfoModal } from "@/components/modals/arcade-info-modal";
 
 export default function ArcadeHub() {
+  const t = useTranslations("arcade");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -51,14 +53,13 @@ export default function ArcadeHub() {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] relative z-10">
-          Arcade{" "}
+          {t("hero_title")}{" "}
           <span className="inline-block hover:scale-110 hover:rotate-12 transition-transform cursor-pointer">
             🕹️
           </span>
         </h1>
         <p className="text-white/90 font-bold text-lg md:text-xl mt-4 max-w-lg relative z-10 drop-shadow-sm">
-          Treina os teus reflexos e a memória muscular em minijogos imersivos e
-          divertidos.
+          {t("hero_description")}
         </p>
       </div>
 
@@ -72,7 +73,7 @@ export default function ArcadeHub() {
 
           {/* Badge */}
           <div className="absolute top-6 left-6 bg-purple-500 text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-sm z-10 rotate-[-10deg]">
-            Popular
+            {t("badge_popular")}
           </div>
 
           <div className="h-28 w-28 bg-white dark:bg-slate-900 rounded-[2rem] border-4 border-purple-200 border-b-[6px] flex items-center justify-center text-purple-500 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-md relative z-10">
@@ -80,17 +81,16 @@ export default function ArcadeHub() {
           </div>
 
           <h2 className="text-3xl font-black text-purple-800 mb-3 uppercase tracking-wide relative z-10 drop-shadow-sm">
-            Sprint
+            {t("game_sprint_title")}
           </h2>
 
           <p className="text-purple-600 font-bold mb-10 relative z-10 leading-relaxed px-4">
-            Treina a tua memória muscular. Traduz rápido e ganha pontos de bónus
-            incríveis!
+            {t("game_sprint_description")}
           </p>
 
           <Link href="/arcade/sprint" className="w-full mt-auto relative z-10">
             <button className="w-full py-5 bg-purple-500 hover:bg-purple-600 text-white font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 border-purple-700 active:border-b-0 active:translate-y-[8px] transition-all shadow-sm flex items-center justify-center gap-2">
-              JOGAR AGORA
+              {t("play_now")}
             </button>
           </Link>
         </div>
@@ -104,17 +104,16 @@ export default function ArcadeHub() {
           </div>
 
           <h2 className="text-3xl font-black text-rose-800 mb-3 uppercase tracking-wide relative z-10 drop-shadow-sm">
-            O Deslize
+            {t("game_swipe_title")}
           </h2>
 
           <p className="text-rose-600 font-bold mb-10 relative z-10 leading-relaxed px-4">
-            Verdade ou Mentira? Arrasta cartas velozmente à la Tinder para
-            aprender.
+            {t("game_swipe_description")}
           </p>
 
           <Link href="/arcade/swipe" className="w-full mt-auto relative z-10">
             <button className="w-full py-5 bg-rose-500 hover:bg-rose-600 text-white font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 border-rose-700 active:border-b-0 active:translate-y-[8px] transition-all shadow-sm flex items-center justify-center gap-2">
-              JOGAR AGORA
+              {t("play_now")}
             </button>
           </Link>
         </div>
@@ -125,7 +124,7 @@ export default function ArcadeHub() {
 
           {/* Badge */}
           <div className="absolute top-6 right-6 bg-amber-500 text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-sm z-10 rotate-[10deg]">
-            Hardcore
+            {t("badge_hardcore")}
           </div>
 
           <div className="h-28 w-28 bg-white dark:bg-slate-900 rounded-[2rem] border-4 border-amber-200 border-b-[6px] flex items-center justify-center text-amber-500 mb-8 group-hover:scale-110 transition-transform shadow-md relative z-10">
@@ -137,12 +136,11 @@ export default function ArcadeHub() {
           </div>
 
           <h2 className="text-3xl font-black text-amber-800 mb-3 uppercase tracking-wide relative z-10 drop-shadow-sm">
-            Meteoros
+            {t("game_meteors_title")}
           </h2>
 
           <p className="text-amber-600 font-bold mb-10 relative z-10 leading-relaxed px-4 max-w-xl">
-            Física realista! Destrói as palavras enquanto elas caem. Testa os
-            teus reflexos ao limite e não as deixes bater no chão.
+            {t("game_meteors_description")}
           </p>
 
           <Link
@@ -151,7 +149,7 @@ export default function ArcadeHub() {
           >
             <button className="w-full py-5 bg-amber-500 hover:bg-amber-600 text-white font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 border-amber-700 active:border-b-0 active:translate-y-[8px] transition-all shadow-sm flex items-center justify-center gap-2 relative overflow-hidden">
               <span className="absolute inset-0 bg-white/20 w-12 h-full skew-x-12 -ml-20 group-hover:animate-[shimmer_1.5s_infinite]" />
-              JOGAR AGORA
+              {t("play_now")}
             </button>
           </Link>
         </div>
@@ -164,7 +162,7 @@ export default function ArcadeHub() {
 
           {/* PRO Badge */}
           <div className="absolute top-6 left-6 bg-yellow-500 text-black text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-sm z-10 rotate-[-10deg] border-2 border-yellow-300">
-            PRO
+            {t("badge_pro")}
           </div>
 
           <div className="h-28 w-28 bg-slate-950 rounded-[2rem] border-4 border-cyan-500 border-b-[6px] flex items-center justify-center text-cyan-400 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-[0_0_20px_rgba(6,182,212,0.5)] relative z-10">
@@ -172,17 +170,16 @@ export default function ArcadeHub() {
           </div>
 
           <h2 className="text-3xl font-black text-white mb-3 uppercase tracking-wide relative z-10 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
-            Casino 8-Bit
+            {t("game_casino_title")}
           </h2>
 
           <p className="text-slate-300 font-bold mb-10 relative z-10 leading-relaxed px-4">
-            Aposta no teu conhecimento! Double or Nothing, Word Sniper e muita
-            adrenalina.
+            {t("game_casino_description")}
           </p>
 
           <Link href="/arcade/casino" className="w-full mt-auto relative z-10">
             <button className="w-full py-5 bg-pink-500 hover:bg-pink-600 text-white font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 border-pink-700 active:border-b-0 active:translate-y-[8px] transition-all shadow-sm flex items-center justify-center gap-2">
-              ENTRAR NO CASINO
+              {t("enter_casino")}
             </button>
           </Link>
         </div>

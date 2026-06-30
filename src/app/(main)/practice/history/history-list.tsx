@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import {
   MessageSquare,
   Mic,
@@ -24,6 +25,7 @@ type Session = {
 };
 
 export const HistoryList = ({ history }: { history: Session[] }) => {
+  const t = useTranslations("practice");
   const [filter, setFilter] = useState<
     "all" | "writing" | "speaking" | "reading" | "listening"
   >("all");
@@ -44,7 +46,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
           month: "long",
           year: "numeric",
         })
-      : "Desconhecido";
+      : t("unknown_date");
     if (!groupedHistory[date]) {
       groupedHistory[date] = [];
     }
@@ -64,7 +66,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
               : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:bg-slate-950 hover:-translate-y-0.5",
           )}
         >
-          Todos
+          {t("filter_all")}
         </button>
         <button
           onClick={() => setFilter("writing")}
@@ -76,7 +78,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
           )}
         >
           <MessageSquare className="h-4 w-4" strokeWidth={2.5} />
-          Escrita
+          {t("filter_writing")}
         </button>
         <button
           onClick={() => setFilter("speaking")}
@@ -88,7 +90,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
           )}
         >
           <Mic className="h-4 w-4" strokeWidth={2.5} />
-          Fala
+          {t("filter_speaking")}
         </button>
         <button
           onClick={() => setFilter("reading")}
@@ -100,7 +102,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
           )}
         >
           <BookOpen className="h-4 w-4" strokeWidth={2.5} />
-          Leitura
+          {t("filter_reading")}
         </button>
         <button
           onClick={() => setFilter("listening")}
@@ -112,7 +114,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
           )}
         >
           <Headphones className="h-4 w-4" strokeWidth={2.5} />
-          Escuta
+          {t("filter_listening")}
         </button>
       </div>
 
@@ -123,7 +125,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
             <Sparkles className="w-10 h-10 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
           </div>
           <p className="text-xl font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
-            Nenhuma sessão encontrada para este filtro.
+            {t("no_sessions")}
           </p>
         </div>
       ) : (
@@ -158,7 +160,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
 };
 
 const HistoryCard = ({ session }: { session: Session }) => {
-  // Parse feedback if string
+  const t = useTranslations("practice");
   const feedbackData: any =
     typeof session.feedback === "string"
       ? JSON.parse(session.feedback as string)
@@ -197,15 +199,17 @@ const HistoryCard = ({ session }: { session: Session }) => {
           <div>
             <h3 className="font-black text-xl text-stone-700 dark:text-slate-200 capitalize tracking-tight">
               {session.type === "writing"
-                ? "Prática de Escrita"
+                ? t("practice_writing")
                 : session.type === "speaking"
-                  ? "Prática de Fala"
+                  ? t("practice_speaking")
                   : session.type === "reading"
-                    ? "Prática de Leitura"
-                    : "Prática de Escuta"}
+                    ? t("practice_reading")
+                    : t("practice_listening")}
             </h3>
             <p className="text-stone-500 dark:text-slate-400 font-bold mt-1 line-clamp-1 sm:line-clamp-none">
-              <span className="opacity-70 font-medium">Tema:</span>{" "}
+              <span className="opacity-70 font-medium">
+                {t("label_theme")}:
+              </span>{" "}
               {session.prompt}
             </p>
           </div>
@@ -227,7 +231,7 @@ const HistoryCard = ({ session }: { session: Session }) => {
               {session.score}
             </span>
             <span className="text-[9px] sm:text-[10px] uppercase font-black opacity-80 tracking-widest">
-              Score
+              {t("label_score")}
             </span>
           </div>
         )}
@@ -243,7 +247,7 @@ const HistoryCard = ({ session }: { session: Session }) => {
           </div>
           <div className="w-10 h-10 rounded-full bg-stone-200 dark:bg-slate-700 border-2 border-white shrink-0 shadow-sm overflow-hidden flex items-center justify-center">
             <span className="font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400 text-xs">
-              TU
+              {t("label_you")}
             </span>
           </div>
         </div>
@@ -258,7 +262,7 @@ const HistoryCard = ({ session }: { session: Session }) => {
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="w-4 h-4 text-indigo-400" />
               <span className="font-black text-indigo-600 uppercase text-xs tracking-widest">
-                Feedback da IA
+                {t("label_ai_feedback")}
               </span>
             </div>
             <p className="text-stone-600 dark:text-slate-300 font-medium leading-relaxed">
@@ -271,7 +275,7 @@ const HistoryCard = ({ session }: { session: Session }) => {
               feedbackData.corrections.length > 0 && (
                 <div className="mt-5 space-y-3">
                   <span className="font-black text-stone-500 dark:text-slate-400 uppercase text-[10px] tracking-widest block">
-                    Correções Sugeridas
+                    {t("label_suggested_corrections")}
                   </span>
                   <div className="flex flex-col gap-2">
                     {feedbackData.corrections.map(
@@ -309,7 +313,7 @@ const HistoryCard = ({ session }: { session: Session }) => {
                 </div>
                 <div>
                   <span className="font-black text-indigo-600 uppercase text-[10px] tracking-widest block mb-1">
-                    Dica de Pronúncia
+                    {t("label_pronunciation_tip")}
                   </span>
                   <p className="text-stone-600 dark:text-slate-300 font-medium text-sm leading-relaxed">
                     {feedbackData.pronunciationTips}

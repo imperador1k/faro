@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { auth } from "@clerk/nextjs/server";
@@ -13,17 +14,20 @@ export const dynamic = "force-dynamic";
  * This is the most important page for SEO — the title is crafted
  * to target high-intent keywords about language learning.
  */
-export const metadata: Metadata = {
-  title: "Aprende Inglês a Jogar — Grátis",
-  description:
-    "A plataforma gratuita que te ensina inglês, espanhol e outros idiomas através de lições curtas e gamificadas. Ganha XP, compete em ligas e evolui com os teus amigos.",
-  alternates: {
-    canonical: "/",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("landing");
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: "/",
+    },
+  };
+}
 
 export default async function Home() {
   const { userId } = await auth();
+  const t = await getTranslations("landing");
 
   return (
     <div className="relative flex min-h-screen flex-col overflow-hidden bg-white dark:bg-slate-900">
@@ -79,13 +83,15 @@ export default async function Home() {
             but specific enough to rank for the primary use case.
           */}
           <h1 className="animate-in slide-in-from-bottom-8 fade-in duration-700 delay-100 fill-mode-both text-4xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 lg:text-5xl lg:leading-[1.15]">
-            O jeito <span className="text-green-500 font-black">grátis</span>,
-            divertido e eficaz de aprender um idioma!
+            {t.rich("hero_title", {
+              green: (chunks) => (
+                <span className="text-green-500 font-black">{chunks}</span>
+              ),
+            })}
           </h1>
 
           <p className="hidden md:block animate-in slide-in-from-bottom-6 fade-in duration-700 delay-200 fill-mode-both text-lg font-medium text-slate-500 dark:text-slate-400 lg:text-xl">
-            Junta-te a nós e começa a aprender hoje mesmo com lições curtas e
-            viciantes.
+            {t("hero_desc")}
           </p>
 
           <div className="w-full mt-2 animate-in slide-in-from-bottom-6 fade-in duration-700 delay-300 fill-mode-both">

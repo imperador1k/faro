@@ -23,14 +23,18 @@ import { ActiveSessions } from "@/components/settings/active-sessions";
 import { ConnectedAccounts } from "@/components/settings/connected-accounts";
 import { ThemeToggle } from "@/components/settings/theme-toggle";
 import { LanguageToggle } from "@/components/settings/language-toggle";
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
 
 export default function SettingsPage() {
+  const t = useTranslations("settings");
+
   return (
     <div className="max-w-4xl mx-auto py-10 px-4 flex flex-col gap-8 pb-24">
       <h1 className="text-3xl md:text-4xl font-black text-stone-800 dark:text-slate-100 tracking-tight animate-in fade-in duration-500">
-        Definições
+        {t("title")}
       </h1>
 
       <Suspense fallback={<SettingsSkeleton />}>
@@ -41,6 +45,7 @@ export default function SettingsPage() {
 }
 
 async function SettingsData() {
+  const t = await getTranslations("settings");
   const user = await currentUser();
   if (!user) return redirect("/");
 
@@ -57,9 +62,7 @@ async function SettingsData() {
 
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-500">
-      {/* The "Player Passport" (Profile Section) */}
       <div className="bg-white dark:bg-slate-900 border-2 border-sky-200 border-b-8 rounded-[2.5rem] p-6 md:p-10 flex flex-col md:flex-row md:items-center justify-between relative overflow-hidden gap-6 shadow-sm group hover:shadow-md hover:-translate-y-1 transition-all">
-        {/* Decorative blobs */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-sky-50 rounded-full blur-3xl opacity-60 z-0 translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform duration-700" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-50 rounded-full blur-3xl opacity-60 z-0 -translate-x-10 translate-y-10" />
 
@@ -76,7 +79,7 @@ async function SettingsData() {
             <h2 className="text-2xl sm:text-3xl font-black text-stone-700 dark:text-slate-200 truncate tracking-tight drop-shadow-sm">
               {user.firstName
                 ? `${user.firstName} ${user.lastName || ""}`
-                : "Utilizador"}
+                : t("user_placeholder")}
             </h2>
             <div className="flex items-center gap-2 mt-1.5">
               <span className="relative flex h-2.5 w-2.5">
@@ -84,7 +87,7 @@ async function SettingsData() {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
               <p className="text-xs sm:text-sm font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 truncate uppercase tracking-[0.2em]">
-                Online Agora
+                {t("online_status")}
               </p>
             </div>
           </div>
@@ -95,13 +98,11 @@ async function SettingsData() {
         </div>
       </div>
 
-      {/* Account Details (Bento Grid Style) */}
       <div>
         <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-4">
-          A Minha Conta
+          {t("my_account")}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-          {/* Email Card */}
           <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-center items-center text-center sm:items-start sm:text-left gap-2 group hover:-translate-y-1 hover:shadow-md transition-all overflow-hidden relative">
             <div className="absolute -right-6 -bottom-6 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500">
               <Mail className="w-32 h-32 text-stone-800 dark:text-slate-100" />
@@ -110,14 +111,13 @@ async function SettingsData() {
               <Mail className="w-6 h-6" />
             </div>
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 relative z-10">
-              Endereço de Email
+              {t("email_address")}
             </span>
             <span className="text-lg sm:text-xl font-black text-stone-700 dark:text-slate-200 break-all w-full relative z-10">
               {user.emailAddresses[0]?.emailAddress}
             </span>
           </div>
 
-          {/* Member Since Card */}
           <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] p-6 md:p-8 flex flex-col justify-center items-center text-center sm:items-start sm:text-left gap-2 group hover:-translate-y-1 hover:shadow-md transition-all overflow-hidden relative">
             <div className="absolute -right-6 -bottom-6 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500">
               <CalendarDays className="w-32 h-32 text-stone-800 dark:text-slate-100" />
@@ -126,7 +126,7 @@ async function SettingsData() {
               <CalendarDays className="w-6 h-6" />
             </div>
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 relative z-10">
-              Membro Desde
+              {t("member_since")}
             </span>
             <span className="text-lg sm:text-xl font-black text-stone-700 dark:text-slate-200 relative z-10">
               {formattedDate}
@@ -135,15 +135,13 @@ async function SettingsData() {
         </div>
       </div>
 
-      {/* Subscription Management */}
       <div>
         <SubscriptionCard isPro={isPro} />
       </div>
 
-      {/* Notifications & Preferences */}
       <div>
         <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-4">
-          Notificações
+          {t("notifications")}
         </h3>
         <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-4">
           <NotificationToggle
@@ -152,13 +150,11 @@ async function SettingsData() {
         </div>
       </div>
 
-      {/* Appearance & Theme & Language */}
       <div>
         <ThemeToggle />
         <LanguageToggle />
       </div>
 
-      {/* Security & Encryption (E2EE) */}
       <div className="flex flex-col gap-6">
         <E2ESettings />
         <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-8">
@@ -168,10 +164,9 @@ async function SettingsData() {
         </div>
       </div>
 
-      {/* Support & Legal (The Compliance Grid) */}
       <div>
         <h3 className="text-xl font-black text-stone-800 dark:text-slate-100 mb-4">
-          Suporte & Legal
+          {t("support_legal")}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Link
@@ -180,7 +175,7 @@ async function SettingsData() {
           >
             <Book className="h-6 w-6 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
             <span className="font-bold text-stone-700 dark:text-slate-200">
-              Manual de Apoio
+              {t("support_manual")}
             </span>
           </Link>
           <Link
@@ -189,7 +184,7 @@ async function SettingsData() {
           >
             <FileText className="h-6 w-6 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
             <span className="font-bold text-stone-700 dark:text-slate-200">
-              Termos de Uso
+              {t("terms_of_use")}
             </span>
           </Link>
           <Link
@@ -198,7 +193,7 @@ async function SettingsData() {
           >
             <Shield className="h-6 w-6 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
             <span className="font-bold text-stone-700 dark:text-slate-200">
-              Política de Privacidade
+              {t("privacy_policy")}
             </span>
           </Link>
           <Link
@@ -207,27 +202,24 @@ async function SettingsData() {
           >
             <FileCheck className="h-6 w-6 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6] transition-colors shrink-0" />
             <span className="font-bold text-stone-700 dark:text-slate-200">
-              Licenças
+              {t("licenses")}
             </span>
           </Link>
         </div>
       </div>
 
-      {/* Action Buttons */}
       <div className="mt-8 flex flex-col gap-8">
         <SignOutZone />
-
         <DangerZone />
       </div>
     </div>
   );
 }
 
-// --- SKELETON FALLBACK ---
 const SettingsSkeleton = () => {
+  const t = useTranslations("settings");
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-500">
-      {/* Player Passport Skeleton */}
       <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between relative overflow-hidden gap-6 animate-pulse">
         <div className="flex items-center gap-x-6">
           <div className="h-20 w-20 md:h-24 md:w-24 rounded-full bg-stone-200 dark:bg-slate-700 shrink-0" />
@@ -238,8 +230,6 @@ const SettingsSkeleton = () => {
         </div>
         <div className="w-full md:w-32 h-12 bg-stone-200 dark:bg-slate-700 rounded-xl" />
       </div>
-
-      {/* Account Details Skeleton */}
       <div>
         <div className="h-6 w-40 bg-stone-200 dark:bg-slate-700 rounded-lg mb-4 animate-pulse" />
         <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 flex flex-col gap-4 animate-pulse">
@@ -247,24 +237,16 @@ const SettingsSkeleton = () => {
           <div className="h-16 w-full bg-stone-200 dark:bg-slate-700 rounded-2xl" />
         </div>
       </div>
-
-      {/* Subscription Skeleton */}
       <div>
         <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 animate-pulse h-[240px]" />
       </div>
-
-      {/* Notifications Skeleton */}
       <div>
         <div className="h-6 w-32 bg-stone-200 dark:bg-slate-700 rounded-lg mb-4 animate-pulse" />
         <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] p-6 md:p-8 animate-pulse h-[100px]" />
       </div>
-
-      {/* Theme Skeleton */}
       <div>
         <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-[1rem] p-4 animate-pulse h-[120px]" />
       </div>
-
-      {/* Support & Legal Skeleton */}
       <div>
         <div className="h-6 w-48 bg-stone-200 dark:bg-slate-700 rounded-lg mb-4 animate-pulse" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

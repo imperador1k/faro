@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   supabase,
   setSupabaseAuth,
@@ -33,6 +34,7 @@ export const GlobalPresenceProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const t = useTranslations("providers");
   const { userId, getToken, isLoaded: isAuthLoaded } = useAuth();
   const { user } = useUser();
   const router = useRouter();
@@ -71,10 +73,7 @@ export const GlobalPresenceProvider = ({
           "postgres_changes",
           { event: "*", schema: "public", table: "messages" },
           (payload) => {
-            console.log(
-              "[GlobalPresence] Mensagem detectada no fundo! Atualizando sidebar...",
-              payload,
-            );
+            console.log(t("message_detected_log"), payload);
             // Let Next.js re-fetch the layout props like getUnreadMessageCount()
             if (!isStopped) router.refresh();
           },
@@ -84,10 +83,7 @@ export const GlobalPresenceProvider = ({
           "postgres_changes",
           { event: "*", schema: "public", table: "notifications" },
           (payload) => {
-            console.log(
-              "[GlobalPresence] Notificação detectada no fundo! Atualizando sidebar...",
-              payload,
-            );
+            console.log(t("notification_detected_log"), payload);
             if (!isStopped) router.refresh();
           },
         );
@@ -97,7 +93,7 @@ export const GlobalPresenceProvider = ({
           if (status === "SUBSCRIBED") {
             if (process.env.NODE_ENV !== "production")
               console.log(
-                `[GlobalPresence] 🟢 [${timestamp}] Conectado ao Presence.`,
+                `[GlobalPresence] 🟢 [${timestamp}] ${t("connected_status")}`,
               );
             await channel.track({
               online_at: new Date().toISOString(),
@@ -107,7 +103,7 @@ export const GlobalPresenceProvider = ({
             if (!isStopped) {
               if (process.env.NODE_ENV !== "production")
                 console.warn(
-                  `[GlobalPresence] 📡 [${timestamp}] Connection CLOSED unexpected.`,
+                  `[GlobalPresence] 📡 [${timestamp}] ${t("connection_closed")}`,
                 );
               // Attempt to recover channel
               setTimeout(() => {
@@ -119,7 +115,7 @@ export const GlobalPresenceProvider = ({
           } else if (status === "TIMED_OUT") {
             if (process.env.NODE_ENV !== "production")
               console.error(
-                `[GlobalPresence] ⏱️ [${timestamp}] Timeout ao conectar.`,
+                `[GlobalPresence] ⏱️ [${timestamp}] ${t("timeout_error")}`,
               );
           }
         });
@@ -149,7 +145,7 @@ export const GlobalPresenceProvider = ({
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (activeChannel) {
         if (process.env.NODE_ENV !== "production")
-          console.log("[GlobalPresence] 🔌 Cleanup: Disconnecting presence");
+          console.log(t("cleanup_log"));
         activeChannel.unsubscribe();
       }
     };

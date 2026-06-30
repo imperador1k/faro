@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { startSurvivalSession } from "@/actions/survival";
+import { useTranslations } from "next-intl";
 import {
   HeartPulse,
   ShieldAlert,
@@ -21,6 +22,7 @@ export function SurvivalLobbyClient({
   scenarios: any[];
   userSessions: any[];
 }) {
+  const t = useTranslations("practice");
   const [filterLevel, setFilterLevel] = useState<string>("ALL");
   const [filterStatus, setFilterStatus] = useState<"ACTIVE" | "COMPLETED">(
     "ACTIVE",
@@ -39,28 +41,21 @@ export function SurvivalLobbyClient({
   );
 
   const filteredScenarios = scenarios.filter((sc) => {
-    // Level filter
     if (filterLevel !== "ALL" && sc.targetLevel !== filterLevel) return false;
-
-    // Status filter
     const isCompleted = completedScenarioIds.has(sc.id);
     if (filterStatus === "COMPLETED" && !isCompleted) return false;
     if (filterStatus === "ACTIVE" && isCompleted) return false;
-
     return true;
   });
 
   return (
     <div className="flex flex-col items-center max-w-4xl mx-auto w-full p-6 pt-12 relative">
-      {/* Rules Modal Overlay */}
       {showInfo &&
         mounted &&
         createPortal(
           <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
             <div className="bg-slate-950 w-full max-w-2xl rounded-3xl p-8 shadow-[0_0_60px_-15px_rgba(225,29,72,0.3)] border border-rose-900/50 flex flex-col relative animate-in zoom-in-95 duration-300 overflow-hidden">
-              {/* Chaotic Background Pattern */}
               <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-900 via-slate-900 to-black"></div>
-
               <button
                 onClick={() => setShowInfo(false)}
                 className="absolute top-4 right-4 text-slate-500 hover:text-rose-500 transition-colors z-10"
@@ -72,37 +67,42 @@ export function SurvivalLobbyClient({
                   <ShieldAlert className="w-8 h-8 text-rose-500" />
                 </div>
                 <h2 className="text-2xl font-black text-slate-100 uppercase tracking-wider">
-                  Regras de Sobrevivência
+                  {t("survival_rules")}
                 </h2>
               </div>
               <div className="space-y-5 text-slate-300 font-medium relative z-10">
                 <p className="text-rose-400 font-bold">
-                  Aviso: O Modo Sobrevivência não é para fracos.
+                  {t("survival_warning")}
                 </p>
                 <ul className="space-y-4 text-sm">
                   <li className="flex gap-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0"></div>
                     <p>
-                      <strong className="text-white">Ameaça Iminente:</strong> O
-                      NPC dá sempre o primeiro passo. Prepara-te para reagir.
+                      {t.rich("imminent_threat", {
+                        strong: (chunks) => (
+                          <strong className="text-white">{chunks}</strong>
+                        ),
+                      })}
                     </p>
                   </li>
                   <li className="flex gap-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0"></div>
                     <p>
-                      <strong className="text-white">
-                        Caos Controlado por IA:
-                      </strong>{" "}
-                      Reações imprevisíveis. Não há guiões, apenas instinto de
-                      sobrevivência.
+                      {t.rich("ai_chaos", {
+                        strong: (chunks) => (
+                          <strong className="text-white">{chunks}</strong>
+                        ),
+                      })}
                     </p>
                   </li>
                   <li className="flex gap-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0"></div>
                     <p>
-                      <strong className="text-white">Julgamento Final:</strong>{" "}
-                      Só o NPC decide se passas ou ficas para trás. Sê
-                      persuasivo.
+                      {t.rich("final_judgment", {
+                        strong: (chunks) => (
+                          <strong className="text-white">{chunks}</strong>
+                        ),
+                      })}
                     </p>
                   </li>
                 </ul>
@@ -111,7 +111,7 @@ export function SurvivalLobbyClient({
                 onClick={() => setShowInfo(false)}
                 className="w-full mt-8 h-14 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-black text-lg border-2 border-rose-800 border-b-4 active:border-b-2 active:translate-y-[2px] transition-all relative z-10 uppercase tracking-widest shadow-[0_0_20px_rgba(225,29,72,0.4)]"
               >
-                Estou Preparado
+                {t("i_am_ready")}
               </Button>
             </div>
           </div>,
@@ -126,37 +126,34 @@ export function SurvivalLobbyClient({
         </div>
         <div className="flex justify-center items-center gap-3 mb-4">
           <h1 className="text-3xl lg:text-4xl font-extrabold text-slate-800 dark:text-slate-100">
-            Modo Sobrevivência
+            {t("survival_mode")}
           </h1>
           <button
             onClick={() => setShowInfo(true)}
             className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-sky-500 hover:bg-sky-50 dark:hover:bg-sky-900/30 flex items-center justify-center transition-all"
-            title="Como Funciona?"
+            title={t("how_it_works")}
           >
             <Info className="w-5 h-5" />
           </button>
         </div>
         <p className="text-lg text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto">
-          Testa o teu conhecimento na vida real. Conversa com NPCs imprevisíveis
-          em cenários caóticos e tenta safar-te usando apenas a língua que estás
-          a aprender!
+          {t("survival_description")}
         </p>
       </div>
 
-      {/* Filters */}
       <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div className="flex bg-stone-100 dark:bg-slate-900 p-1.5 rounded-2xl border-2 border-stone-200 dark:border-slate-800 w-full md:w-auto">
           <button
             onClick={() => setFilterStatus("ACTIVE")}
             className={`flex-1 md:w-32 py-2 px-4 rounded-xl font-bold text-sm transition-all ${filterStatus === "ACTIVE" ? "bg-white dark:bg-slate-800 text-sky-500 shadow-sm" : "text-stone-500 dark:text-slate-400 hover:text-stone-700"}`}
           >
-            Por Fazer
+            {t("to_do")}
           </button>
           <button
             onClick={() => setFilterStatus("COMPLETED")}
             className={`flex-1 md:w-32 py-2 px-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${filterStatus === "COMPLETED" ? "bg-white dark:bg-slate-800 text-green-500 shadow-sm" : "text-stone-500 dark:text-slate-400 hover:text-stone-700"}`}
           >
-            Concluídos{" "}
+            {t("completed")}
             <span className="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-[10px] px-2 py-0.5 rounded-lg">
               {completedScenarioIds.size}
             </span>
@@ -174,7 +171,7 @@ export function SurvivalLobbyClient({
                   : "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-stone-500 hover:bg-stone-50"
               }`}
             >
-              {level === "ALL" ? "Todos os Níveis" : level}
+              {level === "ALL" ? t("all_levels") : level}
             </button>
           ))}
         </div>
@@ -189,8 +186,8 @@ export function SurvivalLobbyClient({
             />
             <p className="text-xl font-bold text-slate-500 dark:text-slate-400">
               {filterStatus === "COMPLETED"
-                ? "Ainda não concluíste nenhuma missão."
-                : "Nenhuma missão disponível para estes filtros."}
+                ? t("no_completed_missions")
+                : t("no_available_missions")}
             </p>
           </div>
         ) : (
@@ -240,7 +237,6 @@ export function SurvivalLobbyClient({
                   <div className="flex gap-2">
                     <form
                       action={async () => {
-                        // Restart session
                         await startSurvivalSession(scenario.id);
                       }}
                       className="flex-1"
@@ -251,7 +247,7 @@ export function SurvivalLobbyClient({
                         className="w-full text-slate-500 border-2 border-slate-200 hover:bg-slate-50 font-bold h-12"
                       >
                         <History className="w-5 h-5 mr-2" />
-                        Repetir
+                        {t("repeat")}
                       </Button>
                     </form>
                     <form
@@ -262,7 +258,7 @@ export function SurvivalLobbyClient({
                         type="submit"
                         className="w-full bg-green-500 hover:bg-green-400 text-white border-2 border-green-600 border-b-4 active:border-b-2 active:translate-y-[2px] transition-all text-base font-bold h-12 px-0"
                       >
-                        Ver Histórico
+                        {t("view_history")}
                       </Button>
                     </form>
                   </div>
@@ -277,7 +273,7 @@ export function SurvivalLobbyClient({
                       className="w-full bg-sky-500 hover:bg-sky-400 text-white border-2 border-sky-600 border-b-4 active:border-b-2 active:translate-y-[2px] transition-all text-lg font-bold h-12"
                     >
                       <HeartPulse className="w-5 h-5 mr-2" />
-                      Entrar no Cenário
+                      {t("enter_scenario")}
                     </Button>
                   </form>
                 )}
