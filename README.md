@@ -1,7 +1,7 @@
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="/icon.png">
-    <img src="/icon.png" alt="Faro" width="120" height="120">
+    <source media="(prefers-color-scheme: dark)" srcset="public/icon.png">
+    <img src="public/icon.png" alt="Faro" width="120" height="120">
   </picture>
 
   <h1 align="center">Faro</h1>
