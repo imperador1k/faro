@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Download, CheckCircle2, ChevronRight, AlertTriangle, Sparkles, Zap, ArrowRight, ArrowLeft } from "lucide-react";
+import { Download, CheckCircle2, AlertTriangle, Sparkles, Zap, ArrowRight, ArrowLeft } from "lucide-react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { Topbar } from "./components/Topbar";

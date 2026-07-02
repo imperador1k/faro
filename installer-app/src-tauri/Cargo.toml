@@ -1,5 +1,5 @@
 [package]
-name = "app"
+name = "faro-installer"
 version = "0.1.0"
 description = "A Tauri App"
 authors = ["you"]
@@ -26,3 +26,4 @@ tauri-plugin-log = "2"
 reqwest = { version = "0.13.3", features = ["stream", "blocking", "json"] }
 tokio = { version = "1.52.3", features = ["full"] }
 futures-util = "0.3.32"
+winreg = "0.56.0"
