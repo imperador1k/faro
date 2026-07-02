@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import { AlertCircle, Trash2, X, Loader2, Bug, GraduationCap, Clock, BellOff, HelpCircle, ChevronRight } from "lucide-react";
+import { AlertCircle, Trash2, Loader2, Bug, GraduationCap, Clock, BellOff, HelpCircle, ChevronRight } from "lucide-react";
 import "./index.css";
 
 const buttonStyle = (
