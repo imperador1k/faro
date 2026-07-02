@@ -14,8 +14,13 @@ if (!['patch', 'minor', 'major'].includes(type)) {
 console.log(`\n🚀 A iniciar o lançamento da tua App (Atualização tipo: ${type})...\n`);
 
 try {
+  // 0. Sincronizar com o GitHub primeiro
+  console.log(`[0/4] A verificar se há alterações no GitHub...`);
+  const currentBranch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+  execSync(`git pull origin ${currentBranch} --rebase`, { stdio: 'inherit' });
+
   // 1. Atualizar o package.json
-  console.log(`[1/4] A calcular a nova versão...`);
+  console.log(`\n[1/4] A calcular a nova versão...`);
   execSync(`npm version ${type} --no-git-tag-version`, { stdio: 'inherit' });
 
   // Ler a nova versão
@@ -37,7 +42,8 @@ try {
 
   // 4. Enviar tudo para o GitHub
   console.log(`\n[4/4] A enviar a nova versão para os servidores do GitHub...`);
-  execSync(`git push origin main`, { stdio: 'inherit' });
+  
+  execSync(`git push origin ${currentBranch}`, { stdio: 'inherit' });
   execSync(`git push origin v${newVersion}`, { stdio: 'inherit' });
 
   console.log(`\n✅ SUCESSO ABSOLUTO! 🎉`);

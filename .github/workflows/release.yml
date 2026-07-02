@@ -20,7 +20,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
           
       - name: Install Frontend Dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build and Release Tauri App
         uses: tauri-apps/tauri-action@v0
@@ -32,6 +32,6 @@ jobs:
           tagName: app-v__VERSION__
           releaseName: 'Faro v__VERSION__'
           releaseBody: 'Uma nova versão do Faro está disponível!'
-          releaseDraft: true
+          releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
