@@ -1,18 +1,23 @@
 const COLORS = {
-    primary: '#1CB0F6',
-    primaryDark: '#1899D6',
-    green: '#58CC02',
-    greenDark: '#46a302',
-    bg: '#f5f5f4',
-    card: '#ffffff',
-    text: '#333333',
-    textMuted: '#888888',
-    amber: '#FFC800',
-    red: '#ea2b2b'
+  primary: "#1CB0F6",
+  primaryDark: "#1899D6",
+  green: "#58CC02",
+  greenDark: "#46a302",
+  bg: "#f5f5f4",
+  card: "#ffffff",
+  text: "#333333",
+  textMuted: "#888888",
+  amber: "#FFC800",
+  red: "#ea2b2b",
 };
 
-export function getEmailLayout(content: string, preheader: string = "Notificação da MyDuolingo", headerColor: string = COLORS.card, headerTitle: string = "MyDuolingo") {
-    return `
+export function getEmailLayout(
+  content: string,
+  preheader: string = "Notificação do Faro",
+  headerColor: string = COLORS.card,
+  headerTitle: string = "MyDuolingo",
+) {
+  return `
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -95,8 +100,13 @@ export function getEmailLayout(content: string, preheader: string = "Notificaç�
     `;
 }
 
-export function getButtonHtml(url: string, text: string, color: string = COLORS.primary, darkColor: string = COLORS.primaryDark) {
-    return `
+export function getButtonHtml(
+  url: string,
+  text: string,
+  color: string = COLORS.primary,
+  darkColor: string = COLORS.primaryDark,
+) {
+  return `
     <div style="text-align: center; margin-top: 30px; margin-bottom: 10px;">
         <a href="${url}" target="_blank" style="display: inline-block; background-color: ${color}; color: #ffffff !important; font-weight: bold; font-size: 15px; text-decoration: none; padding: 15px 30px; border-radius: 14px; border-bottom: 4px solid ${darkColor}; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">
             ${text}
@@ -109,8 +119,12 @@ export function getButtonHtml(url: string, text: string, color: string = COLORS.
 // Specific Email Templates
 // ----------------------------------------------------
 
-export function getSupportReplyEmail(userName: string, replyText: string, ticketSubject: string) {
-    const content = `
+export function getSupportReplyEmail(
+  userName: string,
+  replyText: string,
+  ticketSubject: string,
+) {
+  const content = `
         <h2 style="color: ${COLORS.text}; margin-top: 0; font-weight: 900; font-size: 22px;">Olá, ${userName}! 👋</h2>
         
         <p style="color: ${COLORS.text}; font-size: 16px; line-height: 1.6; margin-bottom: 20px; white-space: pre-wrap;">${replyText}</p>
@@ -123,11 +137,16 @@ export function getSupportReplyEmail(userName: string, replyText: string, ticket
         ${getButtonHtml("https://myduolingo.vercel.app/support", "Ver Resposta Completa", COLORS.primary, COLORS.primaryDark)}
     `;
 
-    return getEmailLayout(content, "Temos novidades sobre o teu ticket de suporte!", COLORS.card, "Apoio ao Cliente");
+  return getEmailLayout(
+    content,
+    "Temos novidades sobre o teu ticket de suporte!",
+    COLORS.card,
+    "Apoio ao Cliente",
+  );
 }
 
 export function getWelcomeEmail(userName: string) {
-    const content = `
+  const content = `
         <h2 style="color: ${COLORS.text}; margin-top: 0; font-weight: 900; font-size: 26px; text-align: center;">Bem-vindo à jornada! 🚀</h2>
         
         <p style="color: ${COLORS.text}; font-size: 16px; line-height: 1.6; margin-bottom: 20px; text-align: center;">
@@ -137,11 +156,21 @@ export function getWelcomeEmail(userName: string) {
         ${getButtonHtml("https://miguelweb.dev", "Começar a Aprender", COLORS.green, COLORS.greenDark)}
     `;
 
-    return getEmailLayout(content, "Bem-vindo à MyDuolingo! Começa a tua jornada de aprendizagem.", COLORS.card, "MyDuolingo");
+  return getEmailLayout(
+    content,
+    "Bem-vindo à MyDuolingo! Começa a tua jornada de aprendizagem.",
+    COLORS.card,
+    "MyDuolingo",
+  );
 }
 
-export function getAdminNotificationEmail(userName: string, userEmail: string, subject: string, message: string) {
-    const content = `
+export function getAdminNotificationEmail(
+  userName: string,
+  userEmail: string,
+  subject: string,
+  message: string,
+) {
+  const content = `
         <h2 style="color: ${COLORS.text}; margin-top: 0; font-weight: 900; font-size: 22px;">🚨 Novo Reporte Submetido</h2>
         
         <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; margin: 30px 0;">
@@ -155,11 +184,16 @@ export function getAdminNotificationEmail(userName: string, userEmail: string, s
         ${getButtonHtml("https://myduolingo.vercel.app/admin/inbox", "Abrir na Inbox Admin", COLORS.red, "#cc0000")}
     `;
 
-    return getEmailLayout(content, "Um novo ticket aguarda a tua atenção na Inbox.", COLORS.card, "Admin Alerts");
+  return getEmailLayout(
+    content,
+    "Um novo ticket aguarda a tua atenção na Inbox.",
+    COLORS.card,
+    "Admin Alerts",
+  );
 }
 
 export function getUserReceiptEmail(userName: string, subject: string) {
-    const content = `
+  const content = `
         <div style="text-align: center;">
             <div style="font-size: 60px; margin-bottom: 20px;">📨</div>
             <h2 style="color: ${COLORS.green}; margin-top: 0; font-weight: 900; font-size: 24px;">Recebemos a tua mensagem!</h2>
@@ -175,5 +209,10 @@ export function getUserReceiptEmail(userName: string, subject: string) {
         </div>
     `;
 
-    return getEmailLayout(content, "O teu pedido de suporte foi recebido com sucesso.", COLORS.card, "Suporte MyDuolingo");
+  return getEmailLayout(
+    content,
+    "O teu pedido de suporte foi recebido com sucesso.",
+    COLORS.card,
+    "Suporte MyDuolingo",
+  );
 }

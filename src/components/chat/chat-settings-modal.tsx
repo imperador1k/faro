@@ -958,7 +958,7 @@ export const ChatSettingsModal = ({
                                     Admin
                                   </span>
                                 )}
-                                No Duolingo
+                                No Faro
                               </span>
                             </div>
                           </Link>
@@ -1037,7 +1037,7 @@ export const ChatSettingsModal = ({
                   </h3>
                   <p className="text-xs font-bold text-green-600/80 dark:text-green-500/80 leading-relaxed px-4">
                     Esta conversa está protegida com E2EE de nível militar. O
-                    Duolingo não consegue ler as tuas mensagens.
+                    Faro não consegue ler as tuas mensagens.
                   </p>
                 </div>
               </div>

@@ -37,7 +37,7 @@ export const AdminSidebar = () => {
           </div>
           <div className="flex flex-col">
             <h1 className="text-xl font-black tracking-tighter text-slate-800 dark:text-slate-100 leading-none">
-              My Duolingo
+              Faro
             </h1>
             <span className="text-[11px] font-black text-sky-500 uppercase tracking-widest mt-0.5">
               Admin Panel

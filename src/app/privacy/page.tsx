@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 export const metadata: Metadata = {
   title: "Aviso de Privacidade",
   description:
-    "Consulta como a MyDuolingo protege os teus dados e gere a tua privacidade enquanto aprendes idiomas.",
+    "Consulta como o Faro protege os teus dados e gere a tua privacidade enquanto aprendes idiomas.",
   alternates: {
     canonical: "/privacy",
   },

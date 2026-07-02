@@ -6,7 +6,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 export const metadata = {
-  title: "Treino de Vocabulário | MyDuolingo",
+  title: "Treino de Vocabulário | Faro",
   description: "Treina as tuas palavras mais fracas no Sprint de Vocabulário.",
 };
 

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 export const metadata: Metadata = {
   title: "Termos de Utilização",
   description:
-    "Lê os termos e condições de utilização da plataforma MyDuolingo e os teus direitos como utilizador.",
+    "Lê os termos e condições de utilização da plataforma Faro e os teus direitos como utilizador.",
   alternates: {
     canonical: "/terms",
   },

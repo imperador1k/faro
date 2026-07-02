@@ -391,7 +391,7 @@ export default function DocsHubPage() {
                     V 1.5.0
                   </div>
                   <h3 className="text-stone-800 dark:text-slate-100 font-[1000] text-xl mt-3 mb-2 leading-tight">
-                    Chegou o MyDuolingo PRO! 👑
+                    Chegou o Faro PRO! 👑
                   </h3>
                   <p className="text-stone-500 dark:text-slate-400 font-bold text-sm leading-relaxed mb-4">
                     Desbloqueia corações infinitos e a Área de Prática AI com a

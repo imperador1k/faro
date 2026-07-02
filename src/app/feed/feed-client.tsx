@@ -359,7 +359,7 @@ export default function FeedClient({
               const shareCount = 0; // Temporary placeholder for shares
 
               const isSystem = !post.authorId || post.author === "System";
-              const authorName = isSystem ? "MyDuolingo" : post.author;
+              const authorName = isSystem ? "Faro" : post.author;
               const authorImg = isSystem ? "/icon.png" : post.authorImg;
 
               return (

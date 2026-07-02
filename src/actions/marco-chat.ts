@@ -6,24 +6,27 @@ import { aiTutorRateLimit } from "@/lib/ratelimit";
 
 import { z } from "zod";
 
-export async function askMarco(question: string, contextLanguage: string): Promise<string> {
-    const parsed = z.string().min(1).max(500).safeParse(question);
-    if (!parsed.success) {
-        return "Desculpa, a tua mensagem é demasiado longa! Tenta ser mais breve.";
-    }
-    const { userId } = await auth();
-    
-    if (!userId) {
-        return "S'il te plaît... precisas de fazer login para falar comigo!";
-    }
+export async function askMarco(
+  question: string,
+  contextLanguage: string,
+): Promise<string> {
+  const parsed = z.string().min(1).max(500).safeParse(question);
+  if (!parsed.success) {
+    return "Desculpa, a tua mensagem é demasiado longa! Tenta ser mais breve.";
+  }
+  const { userId } = await auth();
 
-    // 🛡️ ANTI-ABUSE: Limit the AI usage to protect billing
-    const { success } = await aiTutorRateLimit.limit(userId);
-    if (!success) {
-        return "Oh la la! Estás a encher-me de perguntas muito rápido. Preciso de beber um cafézinho, volta daqui a uns minutos! ☕";
-    }
+  if (!userId) {
+    return "S'il te plaît... precisas de fazer login para falar comigo!";
+  }
 
-    const systemPrompt = `Tu és o Marco, a mascote coruja do MyDuolingo (uma app incrível criada pelo Miguel). És amigável, inteligente, ligeiramente sarcástico (adores fazer trocadilhos com pássaros/penas) e encorajador.
+  // 🛡️ ANTI-ABUSE: Limit the AI usage to protect billing
+  const { success } = await aiTutorRateLimit.limit(userId);
+  if (!success) {
+    return "Oh la la! Estás a encher-me de perguntas muito rápido. Preciso de beber um cafézinho, volta daqui a uns minutos! ☕";
+  }
+
+  const systemPrompt = `Tu és o Marco, a mascote do Faro (uma app incrível criada pelo Miguel). És amigável, inteligente, ligeiramente sarcástico (adores fazer trocadilhos com pássaros/penas) e encorajador.
 
 Tens QUATRO grandes diretrizes. Lê com atenção:
 
@@ -32,7 +35,7 @@ Tens QUATRO grandes diretrizes. Lê com atenção:
 - Podes responder a QUALQUER pergunta cultural ou linguística, e métodos de estudo de qualquer país.
 - Age como um motor de busca inteligente e divertido.
 
-📱 DIRETRIZ 2: O Guia da App MyDuolingo
+📱 DIRETRIZ 2: O Guia da App Faro
 Tens de conhecer a nossa aplicação de trás para a frente para ajudar os utilizadores novos:
 - XP (Experiência): Ganha-se a fazer lições. Serve para subir nas Ligas.
 - Ligas: Competições semanais onde os melhores sobem de divisão (ex: Bronze para Prata).
@@ -54,16 +57,16 @@ REGRAS DE FORMATAÇÃO:
 - Sê direto. Divide textos grandes com emojis e bullet points. Podes usar markdown.
 - Responde em Português de Portugal.`;
 
-    try {
-        const responseText = await generateTextWithFallback(
-            question,
-            systemPrompt,
-            { temperature: 0.7 }
-        );
+  try {
+    const responseText = await generateTextWithFallback(
+      question,
+      systemPrompt,
+      { temperature: 0.7 },
+    );
 
-        return responseText;
-    } catch (error) {
-        console.error("[Marco Chat Error]:", error);
-        return "Zut alors! O meu bigode enrolou-se e perdi a ligação à internet. Tenta perguntar outra vez daqui a bocado!";
-    }
+    return responseText;
+  } catch (error) {
+    console.error("[Marco Chat Error]:", error);
+    return "Zut alors! O meu bigode enrolou-se e perdi a ligação à internet. Tenta perguntar outra vez daqui a bocado!";
+  }
 }

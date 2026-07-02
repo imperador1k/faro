@@ -51,7 +51,7 @@ export const submitUGCPost = async (
     };
   }
 
-  const systemPrompt = `You are a strict moderation AI for an educational language learning app (MyDuolingo).
+  const systemPrompt = `You are a strict moderation AI for an educational language learning app (Faro).
 A user submitted the following content to be posted to the public "Knowledge Feed".
 Your job is to:
 1. Verify it contains NO nudity, violence, hate speech, or aggressive/inappropriate behavior.

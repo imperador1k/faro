@@ -74,8 +74,7 @@ export const createStripeUrl = async () => {
             "Começa a tua jornada PRO hoje. Podes cancelar a qualquer momento diretamente na app.",
         },
         after_submit: {
-          message:
-            "Bem-vindo ao MyDuolingo PRO! Os teus poderes foram ativados.",
+          message: "Bem-vindo ao Faro PRO! Os teus poderes foram ativados.",
         },
       },
       // IMPORTANTE: Metadata para que o Webhook saiba de QUEM é a compra

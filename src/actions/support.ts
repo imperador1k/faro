@@ -111,7 +111,7 @@ export async function submitSupportTicket(
     // 2. ENVIAR EMAILS (Usando o remetente oficial verificado)
     try {
       await resend.emails.send({
-        from: "MyDuolingo <suporte@miguelweb.dev>",
+        from: "Faro <suporte@miguelweb.dev>",
         to: targetEmail,
         subject: `[Bug Report] ${subject}`,
         replyTo: userEmail,
@@ -119,7 +119,7 @@ export async function submitSupportTicket(
       });
 
       await resend.emails.send({
-        from: "MyDuolingo <suporte@miguelweb.dev>",
+        from: "Faro <suporte@miguelweb.dev>",
         to: userEmail,
         subject: "Recebemos a tua mensagem! 🚀",
         html: userReceiptHtml,

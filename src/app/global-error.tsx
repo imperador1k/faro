@@ -5,17 +5,60 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
-const TRANSLATIONS: Record<string, { title: string; desc: string; btn: string }> = {
-  ar: { title: "خطأ غير متوقع", desc: "حدث خطأ ما من جانبنا. تم إبلاغ فريقنا.", btn: "حاول مرة أخرى" },
-  de: { title: "Unerwarteter Fehler", desc: "Auf unserer Seite ist etwas schiefgelaufen. Wir wurden benachrichtigt.", btn: "Erneut versuchen" },
-  en: { title: "Unexpected Error", desc: "Something went wrong on our end. We have been notified.", btn: "Try Again" },
-  es: { title: "Error Inesperado", desc: "Algo salió mal de nuestra parte. Nuestro equipo ha sido notificado.", btn: "Intentar de nuevo" },
-  fr: { title: "Erreur Inattendue", desc: "Quelque chose s'est mal passé. Notre équipe a été notifiée.", btn: "Réessayer" },
-  hi: { title: "अप्रत्याशित त्रुटि", desc: "हमारी ओर से कुछ गलत हो गया। हमें सूचित कर दिया गया है।", btn: "पुनः प्रयास करें" },
-  it: { title: "Errore Inaspettato", desc: "Qualcosa è andato storto. Il nostro team è stato informato.", btn: "Riprova" },
-  ja: { title: "予期せぬエラー", desc: "こちら側で問題が発生しました。チームに通知されました。", btn: "もう一度試す" },
-  pt: { title: "Erro Inesperado", desc: "Ocorreu um erro no nosso sistema. A nossa equipa já foi notificada.", btn: "Tentar Novamente" },
-  uk: { title: "Несподівана помилка", desc: "З нашого боку щось пішло не так. Ми вже повідомлені.", btn: "Спробувати ще раз" }
+const TRANSLATIONS: Record<
+  string,
+  { title: string; desc: string; btn: string }
+> = {
+  ar: {
+    title: "خطأ غير متوقع",
+    desc: "حدث خطأ ما من جانبنا. تم إبلاغ فريقنا.",
+    btn: "حاول مرة أخرى",
+  },
+  de: {
+    title: "Unerwarteter Fehler",
+    desc: "Auf unserer Seite ist etwas schiefgelaufen. Wir wurden benachrichtigt.",
+    btn: "Erneut versuchen",
+  },
+  en: {
+    title: "Unexpected Error",
+    desc: "Something went wrong on our end. We have been notified.",
+    btn: "Try Again",
+  },
+  es: {
+    title: "Error Inesperado",
+    desc: "Algo salió mal de nuestra parte. Nuestro equipo ha sido notificado.",
+    btn: "Intentar de nuevo",
+  },
+  fr: {
+    title: "Erreur Inattendue",
+    desc: "Quelque chose s'est mal passé. Notre équipe a été notifiée.",
+    btn: "Réessayer",
+  },
+  hi: {
+    title: "अप्रत्याशित त्रुटि",
+    desc: "हमारी ओर से कुछ गलत हो गया। हमें सूचित कर दिया गया है।",
+    btn: "पुनः प्रयास करें",
+  },
+  it: {
+    title: "Errore Inaspettato",
+    desc: "Qualcosa è andato storto. Il nostro team è stato informato.",
+    btn: "Riprova",
+  },
+  ja: {
+    title: "予期せぬエラー",
+    desc: "こちら側で問題が発生しました。チームに通知されました。",
+    btn: "もう一度試す",
+  },
+  pt: {
+    title: "Erro Inesperado",
+    desc: "Ocorreu um erro no nosso sistema. A nossa equipa já foi notificada.",
+    btn: "Tentar Novamente",
+  },
+  uk: {
+    title: "Несподівана помилка",
+    desc: "З нашого боку щось пішло не так. Ми вже повідомлені.",
+    btn: "Спробувати ще раз",
+  },
 };
 
 export default function GlobalError({
@@ -30,7 +73,7 @@ export default function GlobalError({
   useEffect(() => {
     // Log the error to Sentry
     Sentry.captureException(error);
-    
+
     // Detect locale from cookie or browser
     const match = document.cookie.match(/(?:^|;) *NEXT_LOCALE=([^;]*)/);
     if (match && match[1] && TRANSLATIONS[match[1]]) {
@@ -52,7 +95,7 @@ export default function GlobalError({
             <div className="relative h-32 w-32 drop-shadow-md">
               <Image
                 src="/mascot.svg"
-                alt="MyDuolingo Icon"
+                alt="Faro Icon"
                 fill
                 className="object-contain"
                 onError={(e) => {

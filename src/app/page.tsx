@@ -55,13 +55,13 @@ export default async function Home() {
             <div className="relative h-11 w-11 overflow-hidden rounded-xl shadow-sm border-2 border-stone-100 dark:border-slate-800 shadow-stone-200 dark:shadow-none">
               <Image
                 src="/icon.png"
-                alt="MyDuolingo Logo"
+                alt="Faro Logo"
                 fill
                 className="object-cover"
               />
             </div>
             <span className="text-3xl font-black tracking-tight text-green-500 drop-shadow-sm">
-              duolingo
+              Faro
             </span>
           </Link>
         </div>

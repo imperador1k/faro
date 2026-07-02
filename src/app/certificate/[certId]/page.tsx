@@ -63,7 +63,7 @@ export default async function CertificatePage({ params }: Props) {
             />
           </div>
           <span className="text-2xl font-black text-stone-700 dark:text-slate-200 tracking-widest uppercase drop-shadow-sm">
-            MyDuolingo
+            Faro
           </span>
         </Link>
 
@@ -101,7 +101,7 @@ export default async function CertificatePage({ params }: Props) {
           </h1>
           <div className="w-48 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent my-2"></div>
           <p className="text-stone-500 dark:text-slate-400 font-medium uppercase tracking-[0.3em] text-sm sm:text-base">
-            MyDuolingo Academy
+            Faro Academy
           </p>
         </div>
 
@@ -153,7 +153,7 @@ export default async function CertificatePage({ params }: Props) {
               className="text-stone-800 dark:text-slate-100 font-black text-xl italic mb-2"
               style={{ fontFamily: "Georgia, serif" }}
             >
-              MyDuolingo
+              Faro
             </span>
             <div className="w-32 h-[2px] bg-stone-300 dark:bg-slate-600"></div>
             <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest text-[10px] sm:text-xs mt-2">
