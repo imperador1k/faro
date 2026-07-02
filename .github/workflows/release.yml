@@ -24,6 +24,15 @@ jobs:
       - name: Install Frontend Dependencies
         run: npm install
 
+      - name: Build Uninstaller
+        run: |
+          cd uninstaller-app
+          npm install
+          npm run tauri build
+          cd src-tauri/target/release
+          mv faro-uninstaller.exe faro-uninstaller-x86_64-pc-windows-msvc.exe
+          cd ../../../..
+
       - name: Build and Release Tauri App
         uses: tauri-apps/tauri-action@v0
         env:
