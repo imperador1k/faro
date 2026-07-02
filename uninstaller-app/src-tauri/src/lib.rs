@@ -76,9 +76,13 @@ fn perform_uninstall() -> Result<(), String> {
 
     fs::write(&bat_path, bat_content).map_err(|e| e.to_string())?;
 
-    // Lançar o BAT em modo detached
+    use std::os::windows::process::CommandExt;
+    const CREATE_NO_WINDOW: u32 = 0x08000000;
+
+    // Lançar o BAT de forma 100% invisível (sem janela CMD a piscar)
     Command::new("cmd")
-        .args(["/C", "start", "/MIN", "", bat_path.to_str().unwrap()])
+        .args(["/C", bat_path.to_str().unwrap()])
+        .creation_flags(CREATE_NO_WINDOW)
         .spawn()
         .map_err(|e| format!("Erro a lançar houdini: {}", e))?;
 
