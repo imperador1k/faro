@@ -1,80 +1,80 @@
-# Arquitetura de Internacionalização (i18n)
+# Internationalization Architecture (i18n)
 
-## A Decisão do Arquiteto: Routing Baseado em Cookies (Sem Prefixos)
+## Architecture Decision: Cookie-Based Routing (No Prefixes)
 
-Para a **MyDuolingo**, escolhemos a abordagem **Cookie-Based (Sem Prefixos na URL)**.
-Descartamos a abordagem tradicional de Paths (`/en/feed`) e configuramos o `next-intl` com `localePrefix: 'never'`.
+For **Faro**, we chose the **Cookie-Based (No URL Prefixes)** approach.
+We discarded the traditional path-based routing (`/en/feed`) and configured `next-intl` with `localePrefix: 'never'`.
 
-### Porquê esta escolha?
+### Why this choice?
 
-1. **Estética e UX Pura:** Utilizadores odeiam URLs sujos. Queremos que o link seja sempre `myduolingo.com/feed` e nunca `myduolingo.com/pt-PT/feed`.
-2. **Partilha de Links Inteligente:** Ao partilhar o link `/post/1`, a app lê a _Cookie_ (ou o idioma do dispositivo de quem recebe o link) e traduz o post e a UI automaticamente para a língua nativa na hora.
-3. **SEO não é prioridade interna:** Grande parte da app está atrás de Login (Feed, Learn, Shop, Admin). A Landing Page (`/`) pode gerir o SEO através de metadados _hreflang_ sem precisar de sujar as rotas da web app.
+1. **Aesthetics and UX:** Users hate dirty URLs. We want the link to always be `faro.com/feed`, never `faro.com/pt-PT/feed`.
+2. **Smart Link Sharing:** When sharing `/post/1`, the app reads the Cookie (or the recipient's device language) and translates the post and UI automatically to the native language.
+3. **SEO is not an internal priority:** Most of the app is behind Login (Feed, Learn, Shop, Admin). The Landing Page (`/`) can handle SEO through `hreflang` metadata without dirtying web app routes.
 
 ---
 
-## 🏗️ O Motor: `next-intl`
+## The Engine: `next-intl`
 
-A implementação usa a biblioteca oficial para Next.js 14+: `next-intl`.
+The implementation uses the official Next.js 14+ library: `next-intl`.
 
-### 1. A Hierarquia de Deteção de Língua
+### 1. Language Detection Hierarchy
 
-O sistema decide a língua nesta ordem rigorosa de prioridade:
+The system decides the language in this strict priority order:
 
-1. **Cookie (`NEXT_LOCALE`):** Se o utilizador já escolheu manualmente no seu Perfil.
-2. **Base de Dados (`native_language`):** O sistema lê a base de dados (através do `NativeBridge`).
-3. **Header HTTP (`Accept-Language`):** O idioma de fábrica do Browser/Telemóvel (Visitantes não autenticados).
-4. **Fallback (Inglês):** A língua de segurança se tudo o resto falhar.
+1. **Cookie (`NEXT_LOCALE`):** If the user has manually chosen in their Profile.
+2. **Database (`native_language`):** The system reads the database (via `NativeBridge`).
+3. **HTTP Header (`Accept-Language`):** The browser/device default language (unauthenticated visitors).
+4. **Fallback (English):** The safety language if everything else fails.
 
-### 2. A Estrutura de Dicionários (JSONs)
+### 2. Dictionary Structure (JSON files)
 
-Usamos ficheiros separados para manter a organização.
+We use separate files to maintain organization.
 
 ```text
 /messages
   /pt
-    common.json      (Botões, Erros, Menus globais)
-    feed.json        (Traduções exclusivas da página de Feed)
-    learn.json       (Traduções das aulas)
+    common.json      (Buttons, Errors, Global Menus)
+    feed.json        (Feed page translations)
+    learn.json       (Lesson translations)
   /en
     common.json
     feed.json
     learn.json
 ```
 
-**Exemplo de Refactoring UI:**
+**UI Refactoring Example:**
 
 ```tsx
 const t = useTranslations("Feed");
 <button>{t("share_with_friends")}</button>;
 ```
 
-### 3. A Automação de Escala
+### 3. Automation at Scale
 
-Escrevemos o código e dicionário na língua base (Inglês ou Português). Um script auxiliar (`npm run translate`) usa a API do Groq/LLaMA para ler o `messages/pt/...` e atualizar automaticamente todos os outros JSONs da app.
+We write code and dictionary in the base language (English or Portuguese). A helper script (`npm run translate`) uses the Groq/LLaMA API to read `messages/pt/...` and automatically update all other JSON files.
 
 ---
 
-## 🚀 Roteiro de Implementação (Roadmap)
+## Implementation Roadmap
 
-Passos para implementação segura (commits individuais sugeridos):
+Steps for safe implementation (individual commits suggested):
 
-1. **Setup Core:**
-   - Instalar `next-intl`.
-   - Criar ficheiros nucleares: `i18n.ts`, `middleware.ts` e `navigation.ts`.
-   - Configurar o Middleware para gerir as Cookies e redirecionamentos invisíveis.
+1. **Core Setup:**
+   - Install `next-intl`.
+   - Create core files: `i18n.ts`, `middleware.ts`, and `navigation.ts`.
+   - Configure Middleware to handle Cookies and invisible redirects.
 
-2. **Migração do Layout Base:**
-   - Envolver o Root Layout com o `NextIntlClientProvider`.
-   - Passar o idioma dinâmico (`locale`) para a tag `<html>`.
+2. **Base Layout Migration:**
+   - Wrap the Root Layout with `NextIntlClientProvider`.
+   - Pass the dynamic locale to the `<html>` tag.
 
-3. **Refactoring da Sidebar & Navbar:**
-   - Extrair todos os textos do menu principal para `messages/pt/common.json`.
-   - Atualizar a UI para consumir a função de tradução.
+3. **Sidebar & Navbar Refactoring:**
+   - Extract all main menu texts to `messages/{lang}/common.json`.
+   - Update the UI to consume the translation function.
 
-4. **Botão de Mudança de Língua (Settings):**
-   - Criar uma Server Action que permite ao utilizador forçar a língua (atualiza a Cookie e a BD).
-   - Adicionar o Dropdown no menu de opções.
+4. **Language Switcher (Settings):**
+   - Create a Server Action that lets the user force the language (updates Cookie and DB).
+   - Add the Dropdown in the settings menu.
 
-5. **Tradução Progressiva:**
-   - Migrar de forma granular as páginas restantes (Landing Page > Feed > Learn) para evitar breaking changes nos layouts.
+5. **Progressive Translation:**
+   - Granularly migrate remaining pages (Landing Page > Feed > Learn) to avoid breaking changes in layouts.

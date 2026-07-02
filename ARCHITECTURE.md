@@ -1,120 +1,329 @@
-# Visão Geral da Arquitetura Enterprise
+# Faro Architecture
 
-Este documento mapeia o ecossistema holístico da plataforma **MyDuolingo**, desconstruindo a intersecção simbiótica entre React, APIs Generativas, WebSockets e as trincheiras blindadas da Data Layer.
+> A comprehensive overview of Faro's system architecture, data flow, and engineering decisions.
+>
+> **Applies to version 0.2.0+** — Last updated: 2026-07-02
 
 ---
 
-## 1. Topologia Macro (Flowchart do Ecossistema)
+## Table of Contents
 
-A arquitetura reflete um padrão Serverless imaculado focado numa clara segregação Client vs Server.
+1. [Topology Overview](#1-topology-overview)
+2. [Data Layer](#2-data-layer)
+3. [AI & Content Pipeline](#3-ai--content-pipeline)
+4. [Real-Time Communication](#4-real-time-communication)
+5. [Security & Anti-Cheat](#5-security--anti-cheat)
+6. [Native Integration](#6-native-integration)
+7. [Key Design Decisions](#7-key-design-decisions)
+
+---
+
+## 1. Topology Overview
+
+Faro follows a **Server-Centric** architecture. All data mutations happen on the server through Next.js Server Actions, never on the client. The client is a thin UI layer that communicates exclusively through typed Server Actions and React Server Components.
+
+### Layer Diagram
 
 ```mermaid
 flowchart TD
-    %% Next.js & UI Layer
-    subgraph UI [Next.js 14 App Router]
-        Client(Client Components <br/> Zustand, Lottie, UI)
-        Server(Server Components <br/> Edge Rendering)
+    subgraph UI ["UI Layer (React 18)"]
+        RSC["Server Components<br/>(React.cache + Drizzle)"]
+        Client["Client Components<br/>(Zustand, Lottie, Framer)"]
     end
 
-    %% API & Actions
-    subgraph Actions [Next.js Server Actions]
-        Mutation(Gamification & Mutators)
-        AIx(CMS AI Generator)
-        Zod{Zod Validation <br/> Anti-Cheat}
-        Mutation --> Zod
-        AIx --> Zod
+    subgraph Actions ["Actions Layer (Next.js Server Actions)"]
+        Mutation["Gamification & CRUD"]
+        AIx["AI Content Generator"]
+        Zod{"Zod Validation"}
+        Auth{"Clerk Auth Guard"}
+        Mutation --> Zod --> Auth
+        AIx --> Zod --> Auth
     end
 
-    %% Providers
-    Clerk[Clerk Auth <br/> Identity & JWT]
-    SupabaseRealtime((Supabase Realtime <br/> WebSockets & Presence))
-    Gemini([Google Gemini 2.5 SDK])
-    Stripe([Stripe API <br/> Subscriptions])
-
-    %% Database Layer
-    subgraph Data [Data Layer]
-        Drizzle[(Drizzle ORM)]
-        DB[(PostgreSQL Neon/Supabase)]
-        RLS{Row Level Security <br/> JWT Policies}
-        Storage[Supabase Storage]
+    subgraph Providers ["Providers Layer"]
+        Clerk["Clerk Auth Provider"]
+        Theme["next-themes"]
+        i18n["next-intl"]
+        Presence["Supabase Realtime Presence"]
+        Sounds["useSound Provider"]
     end
 
-    %% Relationships
-    Client <-->|Optimistic UI| Server
-    Client -->|Invokes| Actions
-    Client <-->|WebSockets| SupabaseRealtime 
-    
+    subgraph Data ["Data Layer"]
+        Drizzle["Drizzle ORM"]
+        DB[("PostgreSQL<br/>(Supabase/Neon)")]
+        RLS{"Row Level Security<br/>(Clerk JWT)"}
+        Storage["Supabase Storage<br/>(Images)"]
+        Redis["Upstash Redis<br/>(Rate Limiting)"]
+    end
+
+    subgraph External ["External Services"]
+        Gemini["Google Gemini 2.5 Flash"]
+        StripeAPI["Stripe API"]
+        Resend["Resend (Email)"]
+        OneSignal["OneSignal (Push)"]
+        Giphy["Giphy API"]
+        Sentry["Sentry (Monitoring)"]
+    end
+
+    RSC --> Drizzle
+    Client -->|invokes| Actions
+    Client <-->|WebSockets| Presence
     Actions --> Drizzle
     Actions --> Gemini
     Actions --> Storage
-    Actions --> Stripe
-
+    Actions --> StripeAPI
+    Actions --> Resend
+    Actions --> Redis
     Drizzle --> DB
     RLS --- DB
-    
-    Clerk -->|Token Injection| Client
-    Clerk -->|RBAC/Auth Check| Actions
-    Clerk -->|Custom JWT Template| SupabaseRealtime
+    Clerk --> Client
+    Clerk --> Actions
+```
+
+### Request Flow
+
+```
+User → Browser/Tauri/Capacitor
+  → Clerk Auth (middleware.ts)
+    → RSC loads data (React.cache + Drizzle)
+      → Client Component renders UI
+        → User interacts → Server Action fired
+          → Clerk auth() verifies userId
+            → Zod validates input payload
+              → Drizzle ORM executes typed query
+                → ActionResponse<T> returned to client
+                  → UI updates (router.refresh / setState)
 ```
 
 ---
 
-## 2. Camada de Dados Opressiva
+## 2. Data Layer
 
-### Segurança Tipada sob Drizzle ORM
-A interação é efetuada através de transações SQL rigorosamente compiladas originando **0 overhead de tradução C++** que outros ORMs tradicionais causam. Os construtos não necessitam modeladores abstratos pesados.
+### Database
 
-### Gestão Passiva de Motor Assíncrono (Vidas & Recursos)
-A economia central não recorre a CRON Jobs instáveis que derretem as pools partilhadas. A "Regeneração Passiva" opera através de avaliações algorítmicas Preguiçosas ("Lazy Loading Checks"). Corações regeneram para 5 baseado na comparação matemática exata de `lastHeartChange` temporalidade UTC contra `Date.now()`.
+- **PostgreSQL 15** hosted on Supabase (or Neon)
+- **Drizzle ORM** for all database interactions (no raw SQL in production code)
+- **35 tables** covering courses, users, gamification, chat, social, and AI content
+- **React.cache()** wrapping for all server-side queries to prevent redundant fetches
 
-### MyDuolingo PRO: Validação de Subscrição
-O status PRO é governado por uma pipeline híbrida. O backend armazena o `stripeCurrentPeriodEnd` via webhooks. A aplicação utiliza um helper centralizado `calculateIsPro` (em `src/lib/subscription.ts`) que implementa um **período de carência de 24 horas**. Este buffer assegura que pequenos atrasos no processamento do Stripe não interrompam a experiência do utilizador. O status é injetado via Drizzle Joins em queries críticas (Leaderboard, Chat) para evitar requests N+1.
+### Key Schema Highlights
+
+```typescript
+// All tables use Drizzle's pgTable with full TypeScript inference
+export const userProgress = pgTable(
+  "user_progress",
+  {
+    userId: text("user_id").notNull().unique(),
+    hearts: integer("hearts").notNull().default(5),
+    points: integer("points").notNull().default(0),
+    streak: integer("streak").notNull().default(0),
+    league: text("league").notNull().default("BRONZE"),
+    // ... plus XP, power-ups, E2EE keys, preferences
+  },
+  (t) => ({
+    leagueIdx: index("user_progress_league_idx").on(t.league),
+    pointsIdx: index("user_progress_points_idx").on(t.points),
+  }),
+);
+```
+
+### Passive Heart Regeneration
+
+Hearts regenerate using a **lazy UTC check** — no CRON jobs:
+
+```
+When user accesses any page:
+  1. Calculate hours since lastHeartChange
+  2. If >= 5 hours → refill 1 heart
+  3. Update lastHeartChange
+
+This avoids background jobs entirely.
+```
+
+### PRO Subscription
+
+The `calculateIsPro()` helper in `src/lib/subscription.ts` implements a **24-hour grace period** to prevent Stripe processing delays from interrupting the user experience.
 
 ---
 
-## 3. Inteligência Artificial e Headless CMS Workflow
+## 3. AI & Content Pipeline
 
-### Substituição Global do Pipeline Estático
-Abandonando lógicas arcaicas CLI que obrigavam scripts JSON em Python, foi imbuído um painel administrativo Headless `(/admin)`. Isto significa que a equipa pedagógica detém autorização RBAC autossustentável para gerar fluxos completos através do interface gráfico. As Server Actions do Next.js invocam diretamente o **Google Gemini 2.5 SDK** com os Prompts de Contexto, injetando instantaneamente Unidades e Lições complexas no Drizzle ORM paralelamente gerindo Media e Imagens através da cache do Supabase Storage.
+### Architecture
 
-### Linha de Vida AI e Raciocínio (Active Recall)
-O modelo `gemini-2.5-flash` encontra-se acoplado nas próprias dinâmicas da gameplay simulando de "Mentores Linguísticos Personalizados" até ferramentas ativas de Feedback de Vocabulário. Nenhuma frase gramatical estática tem de ser escrita à mão.
+```mermaid
+flowchart LR
+    CLI["Python CLI<br/>(content_pipeline.py)"] --> Prompt["Build Structured Prompt"]
+    Admin["Admin Panel<br/>(ai-generator-form.tsx)"] --> Prompt
+
+    Prompt --> Gemini["Google Gemini 2.5 Flash"]
+    Gemini --> JSON["JSON Response"]
+
+    JSON --> Validate["Parse & Validate"]
+    Validate --> Insert["Insert into PostgreSQL<br/>(psycopg2 / Drizzle)"]
+
+    subgraph PromptSpec ["Prompt Structure"]
+        Topic["27 Thematic Topics"]
+        Level["4 CEFR Levels (A1-C2)"]
+        Style["8 Generation Styles"]
+        Rules["Pedagogical Rules<br/>(Hybrid Sliding Scale)"]
+    end
+
+    Prompt --> PromptSpec
+```
+
+### Key Design Decisions
+
+- **No static JSON content** — all curriculum is AI-generated on demand
+- **Hybrid Sliding Scale pedagogy** — ratio of direct translation to contextual inference varies by CEFR level
+  - A1: 80% direct / 20% context
+  - C1-C2: 0% direct / 100% complex context
+- **Multiple Gemini API keys** (up to 4) with round-robin rotation and 60s timeout
+- **Fallback chain**: key_1 → key_2 → key_3 → key_4 → GEMINI_API_KEY
+
+### Content Types Generated
+
+| Type          | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| Unit          | Thematic grouping of lessons (e.g., "Corporate Strategy") |
+| Lesson        | 3 per unit, each with 4-5 challenges                      |
+| Challenge     | SELECT (MCQ), INSERT (cloze), MATCH (pairs), DICTATION    |
+| Voice Tutor   | Real-time conversation practice with Gemini Live API      |
+| Survival Mode | Roleplay NPC conversations with adaptive difficulty       |
 
 ---
 
-## 4. O Cérebro das Comunicações: Real-Time & WebSockets
+## 4. Real-Time Communication
 
-Separamos a veracidade transacional dos estados sociais passageiros:
+### Supabase Realtime Channels
 
-- **Efémero contra Persistente:** Modestos e potentes blocos de arquitetura asseguram conectividades multi-region sem derrames monetários de Base de Dados. Um subsistema **Supabase Realtime Presence** trata eventos assíncronos — Onde subscrições dinâmicas a canais indexados por Identidade UUID `chat_${userIdA}_${userIdB}` reportam os sinalizadores "Online" e indicadores "A escrever..." emitindo pacotes websocket cruamente (`0 database writes`). As Mensagens físicas mantêm-se registadas pelo modelo nativo.
+| Channel                   | Purpose                   | Events                                           |
+| ------------------------- | ------------------------- | ------------------------------------------------ |
+| `chat_{conversationId}`   | Live message updates      | postgres_changes on messages + message_reactions |
+| `global_presence`         | Online status tracking    | Presence sync (0 DB writes)                      |
+| `channel` (notifications) | Live notification updates | postgres_changes on notifications                |
+
+### Presence Architecture
 
 ```mermaid
 sequenceDiagram
     participant Alice (Client)
     participant Channel (WebSocket)
     participant Bob (Client)
-    participant Supabase (DB)
 
-    Alice->>Channel: Subscribe to presence_alice_bob
-    Bob->>Channel: Subscribe to presence_alice_bob
-    
-    Note over Channel: Sync Active "Green Dot" Status
-    
-    Alice->>Channel: Event: track({ isTyping: true })
+    Alice->>Channel: Subscribe to chat_{id}
+    Bob->>Channel: Subscribe to chat_{id}
+
+    Note over Channel: Track presence {"online_at", "username"}
+
+    Alice->>Channel: track({ isTyping: true })
     Channel-->>Bob: Presence Update (Alice typing...)
-    
-    Alice->>Supabase: POST /actions (Insert Message) via Drizzle
-    Supabase-->>Channel: Broadcast Postgres Changes
-    Channel-->>Bob: Event: INSERT (New Message)
-    Note over Bob: Optimistic UI appends message immediately
+
+    Alice->>Supabase: Server Action (Insert Message)
+    Supabase-->>Channel: Broadcast postgres_changes
+    Channel-->>Bob: New message event
+    Note over Bob: Optimistic append
+```
+
+### E2EE (End-to-End Encryption)
+
+- **Algorithm**: AES-GCM with 256-bit keys
+- **Key exchange**: WebCrypto `subtle.generateKey()` / `subtle.exportKey()`
+- **Storage**: Public keys in `user_progress.e2e_public_key`, encrypted room keys in `conversationKeys`
+- **Legacy**: Signal Protocol fields remain in schema but are deprecated
+
+---
+
+## 5. Security & Anti-Cheat
+
+### Defense Layers
+
+| Layer                | Technology                  | What It Protects                             |
+| -------------------- | --------------------------- | -------------------------------------------- |
+| Authentication       | Clerk middleware            | All non-public routes                        |
+| Admin Vault          | HMAC-signed cookie          | `/admin` panel access                        |
+| Input Validation     | Zod schemas                 | Every Server Action payload                  |
+| Rate Limiting        | Upstash Redis               | Login attempts, AI generation, heart actions |
+| XSS Prevention       | DOMPurify (server-side)     | AI-generated content, user input             |
+| CSP Headers          | next.config.mjs             | Iframe/XSS/connect-src restrictions          |
+| SQL Injection        | Drizzle ORM (parameterized) | All database queries                         |
+| Anti-Spoofing        | Drizzle boundaries          | Challenge ID verification, XP validation     |
+| RLS                  | Supabase + Clerk JWT        | Row-level database security                  |
+| Webhook Verification | Stripe signature            | Payment event authenticity                   |
+
+### Anti-Cheat Rules
+
+```
+1. All XP mutations happen server-side (no client-side XP manipulation)
+2. Each challenge progress is verified against the actual lesson
+3. Power-up consumption is validated against user's inventory
+4. Rate limits prevent automated exploitation
+5. Generic error messages never expose internals
 ```
 
 ---
 
-## 5. Security Protocol & DevSecOps Anti-Cheat
+## 6. Native Integration
 
-Mutações do servidor desprotegidas resultam em manipulações client-side que corrompem Ligas Leaderboard competivas. Para travar payloads arbitrários que inflacionem o modelo, adotamos o princípio **Zero-Trust**:
+### Desktop (Tauri v2)
 
-1. **Payload Fortification (Zod):** Todas as Server Actions passam por dissecções impiedosas validando tipos absolutos, descartando intrusos injetáveis.
-2. **Anti-Spoofing (Drizzle Boundaries):** Um sub-engine confirma matematicamente que o `challengeId` submetido, reside atualmente no Drizzle sem interferências; e que a carteira do sujeito contempla o recurso XP necessário para agir (sequestrando pedidos via API cURLs externos). Os Multiplicadores Bónus não podem ser requisitados pela request (ex: giveXp(100) é rejeitado; Server apenas outorga o standard).
-3. **Database RLS Custom Lockdowns:** Interligação de Segurança de Classe Mundial - Os *tokens Session* transmutados do painel Clerk convertem-se em *JWT Templates Customizados* para o Supabase Client. As tabelas da Database recusam ativamente inserções externas que não coincidam o campo `request.jwt.claims->sub` idêntico à autoria explícita da Row submetida. Impenetrável contra agentes exógenos.
+```
+┌─────────────────────────────────────┐
+│      WebView2 (Next.js App)          │
+├─────────────────────────────────────┤
+│      Tauri Bridge (Rust)             │
+│  ┌──────────┐ ┌──────────────────┐  │
+│  │ Plugins  │ │ Commands         │  │
+│  │ - deep-  │ │ - Uninstaller    │  │
+│  │   link   │ │   injection      │  │
+│  │ - opener │ │ - Window mgmt    │  │
+│  │ - process│ │ - Deep link      │  │
+│  │ - updater│ │   routing        │  │
+│  │ - single │ └──────────────────┘  │
+│  │   inst.  │                       │
+│  │ - log    │                       │
+│  └──────────┘                       │
+├─────────────────────────────────────┤
+│      Operating System                │
+│  Win32 / macOS / Linux              │
+└─────────────────────────────────────┘
+```
+
+**Key capabilities** (defined in `src-tauri/capabilities/`):
+
+- `core:default` — Core Tauri operations
+- `opener:allow-open-url` — Open external URLs
+- `deep-link:default` — Custom scheme `myduolingo://`
+- `updater:default` — Auto-updates via GitHub Releases
+- `process:allow-restart` — App restart capability
+
+### Mobile (Capacitor v8 Android)
+
+- Deep links via `App.addListener("appUrlOpen")`
+- Hardware back button interception
+- Native language detection via `navigator.language`
+- OneSignal push notifications
+
+---
+
+## 7. Key Design Decisions
+
+| Decision                           | Rationale                                                             |
+| ---------------------------------- | --------------------------------------------------------------------- |
+| **Server Actions over API Routes** | Simpler data flow, same security, no CORS                             |
+| **Zustand over Redux**             | Minimal boilerplate, built-in persist middleware, tree-shakeable      |
+| **Drizzle over Prisma**            | Lighter, SQL-like syntax, better Postgres feature support             |
+| **Python for content pipeline**    | Better for data processing scripts, Gemini SDK for Python more mature |
+| **window.location.href for OAuth** | Forces Clerk to re-initialize from cookies (SPA routing breaks OAuth) |
+| **No CRON for hearts**             | Lazy UTC check eliminates complexity and DB pool pressure             |
+| **Multiple Gemini keys**           | API rate limits and redundancy without single point of failure        |
+| **Custom NSIS installer**          | Full control over Windows installation UX (privacy, uninstall)        |
+
+---
+
+## Related Documentation
+
+- [FARO_MASTER_BLUEPRINT.md](FARO_MASTER_BLUEPRINT.md) — Complete codebase analysis
+- [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) — UI/UX design tokens and components
+- [SETUP.md](SETUP.md) — Local development setup
+- [API.md](API.md) — API route documentation
+- [CONTRIBUTING.md](CONTRIBUTING.md) — How to contribute

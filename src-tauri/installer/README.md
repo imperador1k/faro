@@ -1,55 +1,45 @@
-<div align="center">
-  <img src="./public/icon.png" width="120" alt="MyDuolingo Installer Logo" />
-  <h1>🚀 MyDuolingo Web-Installer & Uninstaller</h1>
-  <p><strong>A Premium, Feedback-Driven, Single-Binary Custom Setup Engine</strong></p>
+# Faro Custom Installer & Uninstaller
 
-  [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](#)
-  [![Tauri](https://img.shields.io/badge/Tauri-FFC131?style=for-the-badge&logo=Tauri&logoColor=white)](#)
-  [![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)](#)
-</div>
+> A premium, feedback-driven, single-binary custom setup engine for Faro Desktop.
 
----
+## Overview
 
-## 🌟 O que é isto?
+Most applications use the standard gray Windows installers. This project provides an **Elite-level** installation experience (JetBrains / Adobe style) from the very first click.
 
-A maioria das aplicações usa os instaladores padrão e cinzentos do Windows. Nós queríamos proporcionar uma experiência de **nível Elite** (estilo JetBrains / Adobe) desde o primeiro clique. 
+This folder contains a completely independent **Tauri/React** project that serves as the Installation and Uninstallation engine for the main Faro Desktop application.
 
-Esta pasta contém um projeto Tauri/React **completamente independente** que serve como o motor de Instalação e Desinstalação da aplicação principal. 
+## Single-Binary Architecture
 
-## 🏗️ Arquitetura "Single-Binary" Avançada
+To save space and maintain elegance, this installer uses a **Dual-Face (Single-Binary)** architecture. A single `.exe` (~8MB) does everything depending on the filename used to invoke it:
 
-Para poupar espaço e manter a elegância, este instalador adota uma arquitetura **Duas Caras (Single-Binary)**. Um único executável `.exe` (de cerca de 8MB) faz tudo, dependendo do nome com que é executado:
+- **SETUP mode (`*setup.exe` or `*installer.exe`):**
+  - Renders an immersive Glassmorphism UI
+  - Streams the latest binary silently from GitHub releases
+  - Runs the NSIS installer invisibly in the background
+  - Hijacks the Windows Registry to replace the default uninstaller with itself
 
-*   **Modo SETUP (`*setup.exe` ou `*installer.exe`):**
-    *   Exibe um design Glassmorphism imersivo.
-    *   Descarrega o binário mais recente silenciosamente do GitHub via stream.
-    *   Executa o instalador NSIS invisivelmente em *background*.
-    *   Executa um "Hijack" no Registo do Windows para substituir o desinstalador padrão por si próprio.
-*   **Modo UNINSTALL (`*uninstall.exe`):**
-    *   Exibe um Formulário de Feedback (Feedback-Driven Uninstallation).
-    *   Limpa atalhos e as chaves de Registo do Windows.
-    *   **Auto-Destruição Kamikaze:** Gera um script `.bat` na cache do Windows que mata a app, apaga todos os ficheiros locais e depois apaga-se a si próprio sem deixar rasto.
+- **UNINSTALL mode (`*uninstall.exe`):**
+  - Displays a feedback form (Feedback-Driven Uninstallation)
+  - Cleans shortcuts and Windows Registry keys
+  - **Kamikaze Self-Destruction:** Spawns a `.bat` script in Windows cache that kills the app, deletes all local files, and deletes itself without leaving a trace
 
-## 🎨 Design System
-O frontend foi construído com **React** e **CSS Puro**, focado em performance extrema e beleza:
-*   Múltiplos gradientes radiais.
-*   *Backdrop filters* (Glassmorphism).
-*   Micro-interações fluídas.
-*   Barra de título customizada (`data-tauri-drag-region`).
+## Design System
 
-## 🛠️ Como Compilar para Produção
+The frontend is built with **React** and **Pure CSS**, focused on extreme performance and beauty:
 
-Se pretendes contribuir ou gerar o instalador do zero, certifica-te de que o teu URL no `src-tauri/src/lib.rs` aponta para o teu release no GitHub.
+- Multiple radial gradients
+- Backdrop filters (Glassmorphism)
+- Fluid micro-interactions
+- Custom title bar (`data-tauri-drag-region`)
+
+## Building for Production
 
 ```bash
-# 1. Instalar dependências Node
 npm install
-
-# 2. Compilar o binário Windows (.exe)
 npm run tauri build
 ```
-O teu executável final com poderes mágicos estará em:
-`src-tauri/target/release/myduolingo-installer.exe`
 
----
-> Desenvolvido com 🥷 sabedoria para proporcionar a melhor UI/UX desde o primeiro contacto.
+The final executable will be at:
+`src-tauri/target/release/faro-installer.exe`
+
+> **Note**: Before building, ensure the download URL in `src-tauri/src/lib.rs` points to your GitHub release.

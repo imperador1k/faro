@@ -1,57 +1,57 @@
-# MyDuolingo: Arquitetura do Knowledge Feed (TikTok Style) 📱🧠
+# Faro: Knowledge Feed Architecture (TikTok-Style)
 
-Este documento documenta o funcionamento, as tecnologias e a visão arquitetural do **Knowledge Feed** (disponível na rota `/feed`), criado para ser uma funcionalidade altamente viciante e educativa, semelhante ao feed do TikTok.
-
----
-
-## 1. Como funciona atualmente? (O que está implementado)
-
-O Feed é um ecossistema 100% automatizado, composto por duas grandes vertentes: **Geração de Conteúdo Diária** e **Consumo Interativo**.
-
-### A. Motor de Ingestão Diário (Backend / Cron Job)
-
-O conteúdo não é inserido manualmente. Existe um endpoint cron (`/api/cron/ingest-feed`) que deve ser executado diariamente.
-
-- **Segurança da API Cron:** A rota está protegida nativamente! Quando a Vercel chama o cron job, ela injeta silenciosamente um cabeçalho `Authorization: Bearer <CRON_SECRET>`. Se um utilizador ou bot externo tentar aceder ao link em Produção sem este _Secret_, o servidor rejeita o pedido com um **Error 401 Unauthorized**.
-- **Implementação Vercel:** A periodicidade do cron está definida no ficheiro raiz `vercel.json`. Configurado para correr todos os dias (`0 8 * * *` - 08:00 UTC).
-- **A IA Nativa (Groq + LLaMA 3.1):** Originalmente, ponderou-se fazer _scraping_ ao Reddit (`r/todayilearned`) e à Wikipedia. Devido às robustas proteções contra bots destas plataformas (como a Cloudflare que causava o erro `403 Forbidden`), a arquitetura foi **pivotada**.
-- Atualmente, o script comunica **exclusivamente com a API da Groq** (usando o modelo ultrarrápido `llama-3.1-8b-instant`).
-- **Processo:** A IA é instruída a _inventar_ 5 factos/curiosidades verídicas em Inglês, traduzi-las imediatamente para a linguagem-alvo do utilizador (ex: Português, Nível B1) e associar a cada facto uma palavra-chave (ex: "volcano", "computer"). Estes dados são guardados diretamente na base de dados PostgreSQL (via Drizzle).
-- **Imagens (LoremFlickr):** As imagens de fundo dinâmicas não usam IA para evitar custos de geração. Pegamos na palavra-chave que o Groq extraiu sobre o assunto (ex: `computer`) e chamamos a API pública do **LoremFlickr** (`https://loremflickr.com/800/1200/computer`).
-
-### B. Consumo e Interatividade (Frontend)
-
-- **O Swipe Infinito:** Os posts carregam em ecrã inteiro com a mecânica clássica de _scroll vertical_.
-- **Histórico de Leitura:** Assim que um post fica visível (através da Web API `IntersectionObserver`), ele é marcado silenciosamente como lido na base de dados (`user_read_history`). Ao recarregar a app, posts já vistos não voltam a aparecer, garantindo sempre conteúdo novo.
-- **Dicionário Fantasma V2 (Groq + Redis Caching):** Cada palavra do post (e do título) tem um sublinhado tracejado interativo. Ao clicar na palavra, o sistema faz a tradução contextual "on-the-fly" usando a IA da Groq. Para evitar elevados custos de API e limites, a resposta é guardada permanentemente numa memória RAM ultrarrápida (Upstash Redis). Futuros cliques na mesma palavra/contexto carregam a tradução do Redis em 5 milissegundos a custo zero.
-
-| Componente                          | Tecnologia Atual                     | Motivo da Escolha                                                                                                       |
-| :---------------------------------- | :----------------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
-| **Geração de Conteúdo**             | `Groq` + `LLaMA-3.1`                 | Extremamente rápido (tokens/segundo absurdos) e gratuito no tier atual. Elimina a necessidade de Web Scraping.          |
-| **Imagens de Fundo**                | `LoremFlickr`                        | Gratuito, rápido, não exige API Key e permite _fetching_ via palavra-chave exata.                                       |
-| **Tradução Instantânea Contextual** | `Groq (LLaMA-3.1)` + `Upstash Redis` | Traduções perfeitas porque analisam a frase inteira. O Redis garante que a IA só trabalha uma vez por palavra/contexto. |
-| **Base de Dados**                   | `Supabase` (PostgreSQL) + `Drizzle`  | Suporte transacional, rapidez e integração perfeita com a tipagem do TypeScript.                                        |
+This document describes the workings, technologies, and architectural vision of the **Knowledge Feed** (available at `/feed`), designed as a highly addictive and educational feature similar to TikTok's feed.
 
 ---
 
-## 3. Escalabilidade e Melhorias Futuras 🚀
+## 1. How It Works (Current Implementation)
 
-Caso a aplicação cresça para milhares de utilizadores, a fundação em Redis (para traduções) e Groq (para geração) já nos dá um suporte monstruoso. No entanto, aqui está o plano de evolução:
+The Feed is a 100% automated ecosystem composed of two major parts: **Daily Content Generation** and **Interactive Consumption**.
 
-### A. Solução Offline / Edge (Local AI)
+### A. Daily Ingestion Engine (Backend / Cron Job)
 
-- Como o projeto já está a escalar para apps _Desktop_ (usando Tauri/Capacitor), poderíamos correr modelos minúsculos como o `Gemma-2b` diretamente no _browser_ do utilizador (via WebGPU / Transformers.js) para fazer traduções e validações **100% offline**, sem sequer contactar o servidor Redis ou Groq.
+Content is not inserted manually. A cron endpoint (`/api/cron/ingest-feed`) runs daily.
 
-### B. Ingestão Distribuída e Ponderada
+- **Cron API Security:** The route is natively protected! When Vercel calls the cron job, it silently injects an `Authorization: Bearer <CRON_SECRET>` header. If an external user or bot tries to access the endpoint in Production without this Secret, the server rejects the request with a **401 Unauthorized** error.
+- **Vercel Implementation:** The cron periodicity is defined in `vercel.json`. Configured to run daily (`0 8 * * *` - 08:00 UTC).
+- **Native AI (Groq + LLaMA 3.1):** Initially, we considered scraping Reddit (`r/todayilearned`) and Wikipedia. Due to robust anti-bot protections on these platforms (like Cloudflare causing `403 Forbidden` errors), the architecture was **pivoted**.
+- Currently, the script communicates **exclusively with the Groq API** (using the ultra-fast `llama-3.1-8b-instant` model).
+- **Process:** The AI is instructed to _invent_ 5 factual curiosities in English, immediately translate them to the user's target language (e.g., Portuguese, B1 Level), and associate a keyword with each fact (e.g., "volcano", "computer"). This data is saved directly to the PostgreSQL database (via Drizzle).
+- **Images (LoremFlickr):** Dynamic background images don't use AI to avoid generation costs. We take the keyword Groq extracted (e.g., `computer`) and call the public **LoremFlickr** API (`https://loremflickr.com/800/1200/computer`).
 
-- O Cron Job está configurado para o Vercel. A limitação gratuita da Vercel para _Serverless Functions_ é de 10 a 60 segundos. O script pode ir abaixo (Timeout) se gerarmos 50 posts de uma vez.
-- **Solução:** Migrar a execução do cron para serviços assíncronos focados em _Background Jobs_ (como o **Upstash QStash** ou o **Inngest**).
-- Isto permitiria que o motor de Ingestão executasse ao longo de horas, gerando centenas de posts diariamente para preencher uma base de dados global.
+### B. Consumption and Interactivity (Frontend)
 
-### C. Sistema de Recomendação de Vídeos (Áudio)
+- **Infinite Swipe:** Posts load in fullscreen with the classic vertical scroll mechanic.
+- **Read History:** As soon as a post becomes visible (via the Web `IntersectionObserver` API), it is silently marked as read in the database (`user_read_history`). On reloading the app, already-seen posts won't appear again, ensuring fresh content.
+- **Ghost Dictionary V2 (Groq + Redis Caching):** Each word in the post (and title) has an interactive dashed underline. Clicking a word triggers an on-the-fly contextual translation using the Groq AI. To avoid high API costs and limits, the response is permanently stored in ultra-fast RAM (Upstash Redis). Future clicks on the same word/context load the translation from Redis in 5ms at zero cost.
 
-- Substituir as imagens estáticas do LoremFlickr por vídeos dinâmicos verticais livres de direitos de autor (via `Pexels Video API`), cruzados com uma API de Text-to-Speech (como a `ElevenLabs` ou a `OpenAI TTS`), criando literalmente a ilusão completa de um Reels / TikTok narrado por inteligência artificial.
+| Component                          | Technology                           | Rationale                                                                                                       |
+| ---------------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| **Content Generation**             | `Groq` + `LLaMA-3.1`                 | Extremely fast (absurd tokens/second) and free on current tier. Eliminates need for Web Scraping.               |
+| **Background Images**              | `LoremFlickr`                        | Free, fast, no API Key required, allows keyword-based fetching.                                                 |
+| **Contextual Instant Translation** | `Groq (LLaMA-3.1)` + `Upstash Redis` | Perfect translations because they analyze the full sentence. Redis ensures AI only works once per word/context. |
+| **Database**                       | `Supabase` (PostgreSQL) + `Drizzle`  | Transactional support, speed, and perfect TypeScript integration.                                               |
 
-### D. Gamificação do Feed
+---
 
-- Dar recompensas em moedas (Coins) sempre que o utilizador clica para traduzir uma palavra que o sistema considere "Avançada", encorajando o estudo ativo mesmo quando o utilizador está em modo "Scroll Passivo".
+## 3. Scalability and Future Improvements
+
+If the application grows to thousands of users, the Redis (for translations) and Groq (for generation) foundation already provides massive support. However, here is the evolution plan:
+
+### A. Offline / Edge Solution (Local AI)
+
+- Since the project already scales to Desktop apps (using Tauri/Capacitor), we could run tiny models like `Gemma-2b` directly in the user's browser (via WebGPU / Transformers.js) to do translations and validations **100% offline**, without ever contacting the Redis or Groq servers.
+
+### B. Distributed Weighted Ingestion
+
+- The Cron Job is configured for Vercel. Vercel's free tier limit for Serverless Functions is 10 to 60 seconds. The script can time out if generating 50 posts at once.
+- **Solution:** Migrate cron execution to asynchronous Background Job services (like **Upstash QStash** or **Inngest**).
+- This would allow the Ingestion Engine to run over hours, generating hundreds of posts daily to populate a global database.
+
+### C. Video / Audio Recommendation System
+
+- Replace static LoremFlickr images with dynamic vertical royalty-free videos (via `Pexels Video API`), crossed with a Text-to-Speech API (like `ElevenLabs` or `OpenAI TTS`), creating the full illusion of an AI-narrated Reels / TikTok.
+
+### D. Feed Gamification
+
+- Reward coins whenever a user clicks to translate a word the system considers "Advanced," encouraging active study even in "Passive Scroll" mode.

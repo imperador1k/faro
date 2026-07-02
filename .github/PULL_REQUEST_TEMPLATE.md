@@ -1,28 +1,54 @@
+---
+name: Pull Request
+about: Submit changes to Faro
+title: "type(scope): brief description"
+labels: ""
+assignees: ""
+---
+
 ## Description
-Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change.
 
-Fixes # (issue)
+Please include a summary of the changes and the related issue. Explain the motivation and context of the change.
 
-## Type of change
-Please delete options that are not relevant.
+Fixes #(issue)
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
+## Type of Change
+
+- [ ] 🚀 New feature (non-breaking)
+- [ ] 🐛 Bug fix (non-breaking)
+- [ ] 💥 Breaking change
+- [ ] 📝 Documentation update
+- [ ] 🎨 UI/UX change
+- [ ] 🔒 Security fix
+- [ ] ⚡ Performance improvement
+- [ ] 🔧 Refactoring
+- [ ] ✅ Test update
 
 ## How Has This Been Tested?
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration.
 
-- [ ] Local Environment Testing
-- [ ] E2E Testing (Playwright)
-- [ ] Added new unit tests
+- [ ] `npm run test:run` — All unit tests pass
+- [ ] `npm run lint` — No linting errors
+- [ ] `npx tsc --noEmit` — No TypeScript errors
+- [ ] Manual testing in browser
 
-## Checklist:
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code (in English), particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings or linting errors
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
+### Test Configuration
+
+- OS: [e.g. Windows, macOS, Linux]
+- Browser/Environment: [e.g. Chrome 125, Tauri dev, Capacitor Android]
+
+## Checklist
+
+- [ ] My code follows the [STYLE_GUIDE.md](../STYLE_GUIDE.md) conventions
+- [ ] I have performed a self-review of my code
+- [ ] I have added tests that prove my fix is effective or feature works
+- [ ] New and existing tests pass locally
+- [ ] I have updated relevant documentation
+- [ ] My changes generate no new warnings
+
+## Screenshots (for UI changes)
+
+If applicable, add screenshots or a screen recording.
+
+## Additional Context
+
+Add any other context about the PR here.
