@@ -43,7 +43,7 @@ async fn download_and_install_faro(app: AppHandle) -> Result<(), String> {
 
     if download_url.is_empty() {
         // Fallback to a hardcoded URL if the GitHub API parsing fails or it's a pre-release
-        download_url = "https://github.com/imperador1k/myduolingo/releases/download/MyDuolingo_v0.1.0/MyDuolingo_0.1.0_x64-setup.exe".to_string();
+        download_url = "https://github.com/imperador1k/myduolingo/releases/latest/download/Faro_0.1.9_x64-setup.exe".to_string();
     }
 
     let temp_dir = std::env::temp_dir();
@@ -84,6 +84,21 @@ async fn download_and_install_faro(app: AppHandle) -> Result<(), String> {
         return Err(format!("Installer failed with code: {:?}", status.code()));
     }
 
+    // INJECT CUSTOM UNINSTALLER REGISTRY KEY IMMEDIATELY AFTER INSTALLATION
+    #[cfg(windows)]
+    {
+        use winreg::enums::*;
+        use winreg::RegKey;
+        let local_app_data = std::env::var("LOCALAPPDATA").unwrap_or_default();
+        let uninstaller_path = format!("{}\\Faro\\faro-uninstaller.exe", local_app_data);
+        
+        let hkcu = RegKey::predef(HKEY_CURRENT_USER);
+        if let Ok((key, _)) = hkcu.create_subkey(r"Software\Microsoft\Windows\CurrentVersion\Uninstall\Faro") {
+            let _ = key.set_value("UninstallString", &format!("\"{}\"", uninstaller_path));
+            let _ = key.set_value("QuietUninstallString", &format!("\"{}\"", uninstaller_path));
+        }
+    }
+
     Ok(())
 }
 
@@ -93,8 +108,14 @@ async fn launch_faro() -> Result<(), String> {
     let program_files = std::env::var("PROGRAMFILES").unwrap_or_default();
     
     let paths = vec![
+        format!("{}\\Faro\\myduolingo.exe", local_app_data),
+        format!("{}\\Faro\\Faro.exe", local_app_data),
+        format!("{}\\Faro\\faro.exe", local_app_data),
         format!("{}\\myduolingo\\myduolingo.exe", local_app_data),
         format!("{}\\myduolingo\\MyDuolingo.exe", local_app_data),
+        format!("{}\\Faro\\myduolingo.exe", program_files),
+        format!("{}\\Faro\\Faro.exe", program_files),
+        format!("{}\\Faro\\faro.exe", program_files),
         format!("{}\\myduolingo\\myduolingo.exe", program_files),
         format!("{}\\MyDuolingo\\MyDuolingo.exe", program_files),
     ];
