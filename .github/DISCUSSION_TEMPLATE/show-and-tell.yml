@@ -1,0 +1,23 @@
+title: "[Show & Tell] "
+labels: ["show-and-tell"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🎉 Show & Tell
+
+        Share what you've built with Faro — a fork, a feature, a translation, or a deployment!
+  - type: textarea
+    attributes:
+      label: What did you build?
+      description: Describe what you made and what inspired it.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Link (if applicable)
+      description: A link to your deployment, PR, or fork.
+  - type: textarea
+    attributes:
+      label: Screenshots
+      description: Drop images or links to show off your work.

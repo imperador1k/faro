@@ -1,0 +1,32 @@
+title: "[Q&A] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ❓ Questions & Help
+
+        Stuck on something? Ask the community for help.
+  - type: textarea
+    attributes:
+      label: Your question
+      description: What do you need help with? Include what you've already tried.
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Category
+      description: What area does your question relate to?
+      multiple: false
+      options:
+        - "Setup / installation"
+        - "Development / coding"
+        - "Deployment / hosting"
+        - "Configuration / environment"
+        - "Usage / features"
+        - "Other"
+  - type: textarea
+    attributes:
+      label: Environment (if relevant)
+      description: OS, Node version, browser, etc.
+      render: text

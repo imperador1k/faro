@@ -24,7 +24,9 @@
     ·
     <a href="CONTRIBUTING.md">Contributing</a>
     ·
-    <a href="https://github.com/imperador1k/myduolingo/issues">Report Bug</a>
+    <a href="#-community">Community</a>
+    ·
+    <a href="https://github.com/imperador1k/myduolingo/issues">Issues</a>
   </p>
 
   <!-- Badges -->
@@ -81,6 +83,21 @@
 </div>
 
 <br />
+
+---
+
+## 📑 Table of Contents
+
+- [About](#-about)
+- [Features](#-features)
+- [Screenshots](#-screenshots)
+- [Architecture](#-architecture)
+- [Quick Start](#-quick-start)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Contributing](#-contributing)
+- [Community](#-community)
+- [License](#-license)
 
 ---
 
@@ -235,16 +252,27 @@ cp .env.example .env
 
 Then edit `.env` with your keys. See [SETUP.md](SETUP.md) for a detailed walkthrough.
 
-### 3. Database Setup
+### 3. Database & Redis Setup
+
+**Option A: Docker (recommended)**
+
+Starts PostgreSQL 15 and Redis 7 with one command:
 
 ```bash
-# Option A: Docker (recommended)
 docker compose up -d
+```
 
-# Option B: Use your own PostgreSQL instance
-# Just set DATABASE_URL in .env
+Then run migrations and seed test data:
 
-# Push the schema
+```bash
+docker compose run --rm setup
+```
+
+**Option B: Own PostgreSQL instance**
+
+Set `DATABASE_URL` in `.env` and push the schema:
+
+```bash
 npx drizzle-kit push
 ```
 
@@ -256,11 +284,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) and you're in.
 
-**Pro tip:** Seed some test data:
-
-```bash
-npx tsx scripts/seed.ts
-```
+> **New to Faro?** See [SETUP.md](SETUP.md) for the complete walkthrough with all required accounts.
 
 ---
 
@@ -322,6 +346,25 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of Conduct](CODE_OF
 - [Style Guide](STYLE_GUIDE.md) — Code conventions
 - [API Docs](API.md) — API route reference
 - [Architecture](ARCHITECTURE.md) — System design deep dive
+
+---
+
+## 💬 Community
+
+Join the Faro community — ask questions, share ideas, show what you've built, or help others.
+
+| Platform | Purpose | Link |
+| -------- | ------- | ---- |
+| 💬 **GitHub Discussions** | Questions, ideas, show & tell | [Join](https://github.com/imperador1k/myduolingo/discussions) |
+| 🐛 **GitHub Issues** | Bug reports & feature requests | [Open](https://github.com/imperador1k/myduolingo/issues) |
+| ⭐ **GitHub Stars** | Show your support | [Star](https://github.com/imperador1k/myduolingo/stargazers) |
+| 🍴 **Forks** | Build your own version | [Fork](https://github.com/imperador1k/myduolingo/fork) |
+
+### 🌟 Contributors
+
+<a href="https://github.com/imperador1k/myduolingo/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=imperador1k/myduolingo" alt="Contributors" width="600" />
+</a>
 
 ---
 

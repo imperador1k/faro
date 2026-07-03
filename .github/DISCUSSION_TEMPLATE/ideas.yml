@@ -1,0 +1,34 @@
+title: "[Idea] "
+labels: ["idea"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 💡 Feature Ideas
+
+        Have an idea for improving Faro? Share it here!
+  - type: textarea
+    attributes:
+      label: Your idea
+      description: What would you like to see in Faro? Be as detailed as you'd like.
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Category
+      description: What area does your idea affect?
+      multiple: false
+      options:
+        - "Lesson player / challenges"
+        - "Gamification (XP, streaks, leagues)"
+        - "Social features (chat, friends)"
+        - "AI content generation"
+        - "Admin panel"
+        - "Desktop / mobile app"
+        - "Performance / infrastructure"
+        - "Other"
+  - type: checkboxes
+    attributes:
+      label: Would you like to contribute?
+      options:
+        - label: I'd be interested in implementing this

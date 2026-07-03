@@ -1,0 +1,41 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Source code
+*.ts text diff=typescript
+*.tsx text diff=typescript
+*.js text diff=javascript
+*.jsx text diff=javascript
+*.css text diff=css
+*.scss text diff=css
+*.json text
+*.yml text
+*.yaml text
+*.md text diff=markdown
+*.sh text eol=lf
+*.ps1 text eol=crlf
+
+# Binaries
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg text
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
+# Rust / Tauri
+*.rs text diff=rust
+*.toml text
+
+# Python scripts
+*.py text diff=python
+
+# Generated / build output — don't diff
+.next/ -diff
+node_modules/ -diff
+.gitattributes linguist-generated
+.gitignore linguist-generated

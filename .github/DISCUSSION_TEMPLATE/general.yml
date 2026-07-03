@@ -1,0 +1,15 @@
+title: ""
+labels: ["general"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 💬 General Discussion
+
+        Use this category for anything Faro-related that doesn't fit elsewhere.
+  - type: textarea
+    attributes:
+      label: What's on your mind?
+      description: Share your thoughts, questions, or ideas about Faro.
+    validations:
+      required: true

@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/imperador1k/myduolingo/discussions
+    about: Ask questions, share ideas, or get help from the community
+  - name: 📖 FAQ
+    url: https://github.com/imperador1k/myduolingo/blob/main/FAQ.md
+    about: Check our Frequently Asked Questions first
+  - name: 🛡️ Security Issue
+    url: https://github.com/imperador1k/myduolingo/blob/main/SECURITY.md
+    about: Report security vulnerabilities privately — do NOT file a public issue
+  - name: 📚 Documentation
+    url: https://github.com/imperador1k/myduolingo/blob/main/SETUP.md
+    about: Setup guide and troubleshooting
