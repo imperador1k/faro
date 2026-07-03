@@ -39,8 +39,8 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/imperador1k/myduolingo.git
-cd myduolingo
+git clone https://github.com/imperador1k/faro.git
+cd faro
 ```
 
 ### 2. Install Dependencies

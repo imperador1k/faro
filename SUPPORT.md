@@ -8,14 +8,14 @@
 
 For questions, ideas, and community support:
 
-- [Start a Discussion](https://github.com/imperador1k/myduolingo/discussions)
+- [Start a Discussion](https://github.com/imperador1k/faro/discussions)
 
 ### GitHub Issues
 
 For bug reports and feature requests:
 
-- [Report a Bug](https://github.com/imperador1k/myduolingo/issues/new?template=bug_report.md)
-- [Request a Feature](https://github.com/imperador1k/myduolingo/issues/new?template=feature_request.md)
+- [Report a Bug](https://github.com/imperador1k/faro/issues/new?template=bug_report.md)
+- [Request a Feature](https://github.com/imperador1k/faro/issues/new?template=feature_request.md)
 
 ### Documentation
 
@@ -49,7 +49,7 @@ All documentation is in the repository as Markdown files:
 ## Before Asking
 
 1. Check the [FAQ](FAQ.md) — your question may already be answered
-2. Search [GitHub Issues](https://github.com/imperador1k/myduolingo/issues) — your problem may already be reported
+2. Search [GitHub Issues](https://github.com/imperador1k/faro/issues) — your problem may already be reported
 3. Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md) — common issues with solutions
 
 ---

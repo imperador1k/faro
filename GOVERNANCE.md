@@ -87,9 +87,9 @@ Faro follows [Semantic Versioning](https://semver.org/):
 
 | Channel                                                                     | Purpose                       |
 | --------------------------------------------------------------------------- | ----------------------------- |
-| [GitHub Issues](https://github.com/imperador1k/myduolingo/issues)           | Bug reports, feature requests |
-| [GitHub Discussions](https://github.com/imperador1k/myduolingo/discussions) | General discussion, Q&A, RFCs |
-| [GitHub Pull Requests](https://github.com/imperador1k/myduolingo/pulls)     | Code contributions            |
+| [GitHub Issues](https://github.com/imperador1k/faro/issues)           | Bug reports, feature requests |
+| [GitHub Discussions](https://github.com/imperador1k/faro/discussions) | General discussion, Q&A, RFCs |
+| [GitHub Pull Requests](https://github.com/imperador1k/faro/pulls)     | Code contributions            |
 
 ## Code of Conduct
 

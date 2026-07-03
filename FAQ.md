@@ -66,11 +66,11 @@ We welcome all contributions! Start by reading [CONTRIBUTING.md](CONTRIBUTING.md
 
 ### How do I report a bug?
 
-Open a [GitHub Issue](https://github.com/imperador1k/myduolingo/issues) with the `bug` label. See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for common issues.
+Open a [GitHub Issue](https://github.com/imperador1k/faro/issues) with the `bug` label. See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for common issues.
 
 ### How do I request a feature?
 
-Open a [GitHub Issue](https://github.com/imperador1k/myduolingo/issues) with the `enhancement` label.
+Open a [GitHub Issue](https://github.com/imperador1k/faro/issues) with the `enhancement` label.
 
 ### How do I report a security vulnerability?
 
@@ -147,4 +147,4 @@ See [ROADMAP.md](ROADMAP.md) for planned features and improvements.
 
 ## Still Have Questions?
 
-Open a [GitHub Discussion](https://github.com/imperador1k/myduolingo/discussions) — we're happy to help!
+Open a [GitHub Discussion](https://github.com/imperador1k/faro/discussions) — we're happy to help!

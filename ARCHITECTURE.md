@@ -87,8 +87,8 @@ flowchart TB
     Theme -.-> Client
     Clerk -.-> ActionsLayer
 
-    click RSC "https://github.com/imperador1k/myduolingo/tree/main/src/app"
-    click Client "https://github.com/imperador1k/myduolingo/tree/main/src/components"
+    click RSC "https://github.com/imperador1k/faro/tree/main/src/app"
+    click Client "https://github.com/imperador1k/faro/tree/main/src/components"
 ```
 
 ### Request Flow

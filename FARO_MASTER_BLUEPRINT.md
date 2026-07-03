@@ -30,7 +30,7 @@
 | **Modelo de Negócio** | Subscrição PRO (Stripe) + Power-ups (XP Boost, Heart Shields, Streak Freezes)   |
 | **Público-alvo**      | Utilizadores lusófonos a aprender idiomas (12 línguas suportadas)               |
 | **Autor**             | Miguel Pereira Santos                                                           |
-| **Repositório**       | GitHub: `imperador1k/myduolingo`                                                |
+| **Repositório**       | GitHub: `imperador1k/faro`                                                |
 | **Domínio**           | `https://myduolingo.vercel.app`                                                 |
 | **Licença**           | MIT                                                                             |
 
@@ -192,7 +192,7 @@ Capacitor Android:
 ### 3.1 Raiz do Projeto
 
 ```
-myduolingo/
+faro/
 ├── src/                    # Código-fonte principal (Next.js App Router)
 ├── src-tauri/              # Tauri v2 (Rust + config NSIS)
 ├── scripts/                # Scripts Python/TS (pipeline IA, migrações, seeds)

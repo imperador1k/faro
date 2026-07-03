@@ -15,7 +15,7 @@ We take the security of Faro seriously. If you believe you have found a security
 
 ### Disclosure Process
 
-1. **Report via email** to the project maintainer at the address listed in the [security advisory page](https://github.com/imperador1k/myduolingo/security/advisories)
+1. **Report via email** to the project maintainer at the address listed in the [security advisory page](https://github.com/imperador1k/faro/security/advisories)
 2. You should receive a response within **48 hours**
 3. If you don't receive a response, please follow up
 4. We will investigate and release a patch as soon as possible
@@ -146,7 +146,7 @@ CRON_SECRET="long-random-string"
 
 If you have questions about Faro's security, please:
 
-1. Check our [GitHub Security Advisories](https://github.com/imperador1k/myduolingo/security/advisories)
-2. Open a discussion in [GitHub Discussions](https://github.com/imperador1k/myduolingo/discussions)
+1. Check our [GitHub Security Advisories](https://github.com/imperador1k/faro/security/advisories)
+2. Open a discussion in [GitHub Discussions](https://github.com/imperador1k/faro/discussions)
 
 > **Last updated:** 2026-07-02 | **Applies to:** Faro 0.2.x

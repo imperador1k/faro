@@ -104,7 +104,7 @@ Faro uses `tauri-plugin-updater` for automatic updates:
      "plugins": {
        "updater": {
          "endpoints": [
-           "https://github.com/imperador1k/myduolingo/releases/latest/download/updater.json"
+           "https://github.com/imperador1k/faro/releases/latest/download/updater.json"
          ]
        }
      }
@@ -121,7 +121,7 @@ Faro uses `tauri-plugin-updater` for automatic updates:
      "platforms": {
        "windows-x86_64": {
          "signature": "...",
-         "url": "https://github.com/imperador1k/myduolingo/releases/download/v0.2.0/Faro_0.2.0_x64_en-US.msi.zip"
+         "url": "https://github.com/imperador1k/faro/releases/download/v0.2.0/Faro_0.2.0_x64_en-US.msi.zip"
        }
      }
    }

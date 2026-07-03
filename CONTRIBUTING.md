@@ -38,8 +38,8 @@ This project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md). By participatin
 ```bash
 # 1. Fork the repository
 # 2. Clone your fork
-git clone https://github.com/YOUR_USERNAME/myduolingo.git
-cd myduolingo
+git clone https://github.com/YOUR_USERNAME/faro.git
+cd faro
 
 # 3. Install dependencies
 npm install
@@ -67,7 +67,7 @@ npm run dev
 
 ### 1. Pick an Issue
 
-Browse our [issues](https://github.com/imperador1k/myduolingo/issues) for something that interests you. Issues labeled `good first issue` are great for newcomers.
+Browse our [issues](https://github.com/imperador1k/faro/issues) for something that interests you. Issues labeled `good first issue` are great for newcomers.
 
 ### 2. Create a Branch
 
@@ -270,8 +270,8 @@ See [TRANSLATION.md](TRANSLATION.md) for the full guide.
 
 ## Need Help?
 
-- **Issues**: [GitHub Issues](https://github.com/imperador1k/myduolingo/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/imperador1k/myduolingo/discussions)
+- **Issues**: [GitHub Issues](https://github.com/imperador1k/faro/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/imperador1k/faro/discussions)
 - **Security**: See [SECURITY.md](SECURITY.md)
 
 ---

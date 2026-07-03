@@ -134,6 +134,6 @@ We prioritize features based on:
 
 ## Get Involved
 
-Want to help build these features? Check our [issues page](https://github.com/imperador1k/myduolingo/issues) for open tasks. See [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
+Want to help build these features? Check our [issues page](https://github.com/imperador1k/faro/issues) for open tasks. See [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
 
-Have a suggestion? Open a [GitHub Discussion](https://github.com/imperador1k/myduolingo/discussions) or feature request.
+Have a suggestion? Open a [GitHub Discussion](https://github.com/imperador1k/faro/discussions) or feature request.

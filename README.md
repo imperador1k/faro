@@ -26,7 +26,7 @@
     ·
     <a href="#-community">Community</a>
     ·
-    <a href="https://github.com/imperador1k/myduolingo/issues">Issues</a>
+    <a href="https://github.com/imperador1k/faro/issues">Issues</a>
   </p>
 
   <!-- Badges -->
@@ -34,11 +34,11 @@
 
   <!-- Row 1: Project Status & Social Proof -->
 
-<a href="https://github.com/imperador1k/myduolingo/releases"><img src="https://img.shields.io/github/v/release/imperador1k/myduolingo?style=flat-square&label=Release&color=58CC02" alt="Release"></a>
-<a href="https://github.com/imperador1k/myduolingo/commits/main"><img src="https://img.shields.io/github/last-commit/imperador1k/myduolingo?style=flat-square&label=Last%20Commit&color=58CC02" alt="Last Commit"></a>
+<a href="https://github.com/imperador1k/faro/releases"><img src="https://img.shields.io/github/v/release/imperador1k/faro?style=flat-square&label=Release&color=58CC02" alt="Release"></a>
+<a href="https://github.com/imperador1k/faro/commits/main"><img src="https://img.shields.io/github/last-commit/imperador1k/faro?style=flat-square&label=Last%20Commit&color=58CC02" alt="Last Commit"></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License"></a>
 <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen?style=flat-square" alt="PRs Welcome"></a>
-<a href="https://github.com/imperador1k/myduolingo/stargazers"><img src="https://img.shields.io/github/stars/imperador1k/myduolingo?style=flat-square&label=Stars&color=FF9600&logo=github" alt="GitHub Stars"></a>
+<a href="https://github.com/imperador1k/faro/stargazers"><img src="https://img.shields.io/github/stars/imperador1k/faro?style=flat-square&label=Stars&color=FF9600&logo=github" alt="GitHub Stars"></a>
 <br />
 
   <!-- Row 2: Core Stack -->
@@ -74,10 +74,10 @@
 
   <!-- Row 5: Quality & Security -->
 
-<a href="https://github.com/imperador1k/myduolingo/actions"><img src="https://img.shields.io/github/actions/workflow/status/imperador1k/myduolingo/ci.yml?style=flat-square&label=CI&color=58CC02" alt="CI"></a>
-<a href="https://codecov.io/gh/imperador1k/myduolingo"><img src="https://img.shields.io/codecov/c/github/imperador1k/myduolingo?style=flat-square&label=Coverage&color=58CC02" alt="Code Coverage"></a>
-<a href="https://github.com/imperador1k/myduolingo/security/code-scanning"><img src="https://img.shields.io/badge/CodeQL-Passing-58CC02?style=flat-square&logo=github" alt="CodeQL"></a>
-<a href="https://github.com/imperador1k/myduolingo/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/Conventional_Commits-FE5196?style=flat-square&logo=conventionalcommits&logoColor=white" alt="Conventional Commits"></a>
+<a href="https://github.com/imperador1k/faro/actions"><img src="https://img.shields.io/github/actions/workflow/status/imperador1k/faro/ci.yml?style=flat-square&label=CI&color=58CC02" alt="CI"></a>
+<a href="https://codecov.io/gh/imperador1k/faro"><img src="https://img.shields.io/codecov/c/github/imperador1k/faro?style=flat-square&label=Coverage&color=58CC02" alt="Code Coverage"></a>
+<a href="https://github.com/imperador1k/faro/security/code-scanning"><img src="https://img.shields.io/badge/CodeQL-Passing-58CC02?style=flat-square&logo=github" alt="CodeQL"></a>
+<a href="https://github.com/imperador1k/faro/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/Conventional_Commits-FE5196?style=flat-square&logo=conventionalcommits&logoColor=white" alt="Conventional Commits"></a>
 
   </div>
 </div>
@@ -239,8 +239,8 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the full deep dive.
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/imperador1k/myduolingo.git
-cd myduolingo
+git clone https://github.com/imperador1k/faro.git
+cd faro
 npm install
 ```
 
@@ -355,15 +355,15 @@ Join the Faro community — ask questions, share ideas, show what you've built, 
 
 | Platform | Purpose | Link |
 | -------- | ------- | ---- |
-| 💬 **GitHub Discussions** | Questions, ideas, show & tell | [Join](https://github.com/imperador1k/myduolingo/discussions) |
-| 🐛 **GitHub Issues** | Bug reports & feature requests | [Open](https://github.com/imperador1k/myduolingo/issues) |
-| ⭐ **GitHub Stars** | Show your support | [Star](https://github.com/imperador1k/myduolingo/stargazers) |
-| 🍴 **Forks** | Build your own version | [Fork](https://github.com/imperador1k/myduolingo/fork) |
+| 💬 **GitHub Discussions** | Questions, ideas, show & tell | [Join](https://github.com/imperador1k/faro/discussions) |
+| 🐛 **GitHub Issues** | Bug reports & feature requests | [Open](https://github.com/imperador1k/faro/issues) |
+| ⭐ **GitHub Stars** | Show your support | [Star](https://github.com/imperador1k/faro/stargazers) |
+| 🍴 **Forks** | Build your own version | [Fork](https://github.com/imperador1k/faro/fork) |
 
 ### 🌟 Contributors
 
-<a href="https://github.com/imperador1k/myduolingo/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=imperador1k/myduolingo" alt="Contributors" width="600" />
+<a href="https://github.com/imperador1k/faro/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=imperador1k/faro" alt="Contributors" width="600" />
 </a>
 
 ---

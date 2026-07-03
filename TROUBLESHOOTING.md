@@ -250,7 +250,7 @@ npm run tauri build
 
 If your issue isn't listed here:
 
-1. Search [GitHub Issues](https://github.com/imperador1k/myduolingo/issues)
+1. Search [GitHub Issues](https://github.com/imperador1k/faro/issues)
 2. Open a new issue with:
    - Steps to reproduce
    - Expected vs actual behavior

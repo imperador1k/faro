@@ -125,4 +125,4 @@ Translation files are organized by namespace, matching the `useTranslations("nam
 
 ## Questions?
 
-Open a [GitHub Discussion](https://github.com/imperador1k/myduolingo/discussions) with the `i18n` tag.
+Open a [GitHub Discussion](https://github.com/imperador1k/faro/discussions) with the `i18n` tag.
