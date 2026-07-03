@@ -2,7 +2,7 @@
 
 > A comprehensive overview of Faro's system architecture, data flow, and engineering decisions.
 >
-> **Applies to version 0.2.0+** — Last updated: 2026-07-02
+> **Applies to version 0.2.0+** — Last updated: 2026-07-03
 
 ---
 
@@ -25,59 +25,70 @@ Faro follows a **Server-Centric** architecture. All data mutations happen on the
 ### Layer Diagram
 
 ```mermaid
-flowchart TD
-    subgraph UI ["UI Layer (React 18)"]
-        RSC["Server Components<br/>(React.cache + Drizzle)"]
-        Client["Client Components<br/>(Zustand, Lottie, Framer)"]
+%%{init: {'theme': 'neutral', 'themeVariables': { 'primaryColor': '#58CC02', 'primaryTextColor': '#000', 'primaryBorderColor': '#46a302', 'lineColor': '#94a3b8', 'tertiaryColor': '#f0f8e2'}}}%%
+flowchart TB
+    classDef ui fill:#ddf4ff,stroke:#1899d6,stroke-width:2px,color:#1e293b
+    classDef action fill:#f0f8e2,stroke:#58cc02,stroke-width:2px,color:#1e293b
+    classDef provider fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#1e293b
+    classDef data fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px,color:#1e293b
+    classDef external fill:#ffe4e6,stroke:#ff4b4b,stroke-width:2px,color:#1e293b
+    classDef gateway fill:#fff,stroke:#94a3b8,stroke-width:2px,stroke-dasharray:5,color:#1e293b
+
+    subgraph ClientLayer ["🌐 Client Layer"]
+        RSC["RSC (Server Components)<br/>React.cache + Drizzle"]
+        Client["Client Components<br/>Zustand · Lottie · Framer Motion"]
     end
 
-    subgraph Actions ["Actions Layer (Next.js Server Actions)"]
-        Mutation["Gamification & CRUD"]
-        AIx["AI Content Generator"]
-        Zod{"Zod Validation"}
-        Auth{"Clerk Auth Guard"}
-        Mutation --> Zod --> Auth
-        AIx --> Zod --> Auth
+    subgraph ActionsLayer ["⚡ Actions Layer (Next.js Server Actions)"]
+        direction TB
+        User["User Actions<br/>Progress · Hearts · Streak"]
+        Gamification["Gamification<br/>Quests · Leagues · Shop"]
+        AI["AI Generation<br/>Curriculum · Tutor · Feed"]
+        Social["Social<br/>Messages · Friends · Feed"]
+        Zod{"Zod<br/>Validation"}
+        Auth{"Clerk<br/>Auth Guard"}
+
+        User & Gamification & AI & Social --> Zod --> Auth
     end
 
-    subgraph Providers ["Providers Layer"]
-        Clerk["Clerk Auth Provider"]
+    subgraph ProvidersLayer ["🧩 Providers Layer"]
+        Clerk["Clerk Auth"]
         Theme["next-themes"]
         i18n["next-intl"]
-        Presence["Supabase Realtime Presence"]
-        Sounds["useSound Provider"]
+        Presence["Supabase Realtime"]
+        Sounds["Sound Effects"]
     end
 
-    subgraph Data ["Data Layer"]
+    subgraph DataLayer ["💾 Data Layer"]
         Drizzle["Drizzle ORM"]
-        DB[("PostgreSQL<br/>(Supabase/Neon)")]
-        RLS{"Row Level Security<br/>(Clerk JWT)"}
-        Storage["Supabase Storage<br/>(Images)"]
-        Redis["Upstash Redis<br/>(Rate Limiting)"]
+        DB[("PostgreSQL<br/>Supabase")]
+        Storage[("Object Storage<br/>Images · Avatars")]
+        Redis[("Redis<br/>Rate Limiting")]
     end
 
-    subgraph External ["External Services"]
+    subgraph ExternalLayer ["☁️ External Services"]
         Gemini["Google Gemini 2.5 Flash"]
-        StripeAPI["Stripe API"]
-        Resend["Resend (Email)"]
-        OneSignal["OneSignal (Push)"]
-        Giphy["Giphy API"]
-        Sentry["Sentry (Monitoring)"]
+        Stripe["Stripe API"]
+        Resend["Resend · Email"]
+        Sentry["Sentry · Monitoring"]
+        Giphy["Giphy · GIFs"]
     end
 
-    RSC --> Drizzle
-    Client -->|invokes| Actions
+    RSC -.->|reads| Drizzle
+    Client -->|invokes| ActionsLayer
     Client <-->|WebSockets| Presence
-    Actions --> Drizzle
-    Actions --> Gemini
-    Actions --> Storage
-    Actions --> StripeAPI
-    Actions --> Resend
-    Actions --> Redis
+    ActionsLayer --> Drizzle
+    ActionsLayer --> Gemini
+    ActionsLayer --> Storage
+    ActionsLayer --> Stripe
+    ActionsLayer --> Resend
+    ActionsLayer --> Redis
     Drizzle --> DB
-    RLS --- DB
-    Clerk --> Client
-    Clerk --> Actions
+    Theme -.-> Client
+    Clerk -.-> ActionsLayer
+
+    click RSC "https://github.com/imperador1k/myduolingo/tree/main/src/app"
+    click Client "https://github.com/imperador1k/myduolingo/tree/main/src/components"
 ```
 
 ### Request Flow
@@ -151,24 +162,32 @@ The `calculateIsPro()` helper in `src/lib/subscription.ts` implements a **24-hou
 ### Architecture
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 flowchart LR
-    CLI["Python CLI<br/>(content_pipeline.py)"] --> Prompt["Build Structured Prompt"]
-    Admin["Admin Panel<br/>(ai-generator-form.tsx)"] --> Prompt
+    classDef source fill:#ddf4ff,stroke:#1899d6,stroke-width:2px
+    classDef process fill:#f0f8e2,stroke:#58cc02,stroke-width:2px
+    classDef ai fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    classDef output fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px
+    classDef spec fill:#ffe4e6,stroke:#ff4b4b,stroke-width:1px,stroke-dasharray:4
 
-    Prompt --> Gemini["Google Gemini 2.5 Flash"]
-    Gemini --> JSON["JSON Response"]
+    CLI["Python CLI<br/>content_pipeline.py"]:::source --> Prompt["Build Prompt"]:::process
+    Admin["Admin Panel<br/>ai-generator-form.tsx"]:::source --> Prompt
 
-    JSON --> Validate["Parse & Validate"]
-    Validate --> Insert["Insert into PostgreSQL<br/>(psycopg2 / Drizzle)"]
+    Prompt --> Gemini["Google Gemini 2.5 Flash"]:::ai
+    Gemini --> JSON["JSON Response"]:::process
 
-    subgraph PromptSpec ["Prompt Structure"]
-        Topic["27 Thematic Topics"]
-        Level["4 CEFR Levels (A1-C2)"]
-        Style["8 Generation Styles"]
-        Rules["Pedagogical Rules<br/>(Hybrid Sliding Scale)"]
+    JSON --> Validate["Parse & Validate<br/>Zod Schema"]:::process
+    Validate --> Insert["Persist to PostgreSQL<br/>Drizzle ORM"]:::output
+
+    subgraph Spec ["Prompt Configuration"]
+        direction TB
+        Topic["27 Thematic Topics<br/>Corporate · Tech · Slang · ..."]:::spec
+        Level["4 CEFR Levels<br/>A1 · A2 · B1 · B2 · C1/C2"]:::spec
+        Style["8 Generation Styles<br/>Standard · Roleplay · Quiz · ..."]:::spec
+        Rules["Pedagogical Rules<br/>Hybrid Sliding Scale"]:::spec
     end
 
-    Prompt --> PromptSpec
+    Prompt -.-> Spec
 ```
 
 ### Key Design Decisions
@@ -205,23 +224,50 @@ flowchart LR
 ### Presence Architecture
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 sequenceDiagram
-    participant Alice (Client)
-    participant Channel (WebSocket)
-    participant Bob (Client)
+    participant Alice as 👤 Alice
+    participant Channel as 📡 Supabase Realtime
+    participant Server as ⚡ Server Action
+    participant DB as 💾 PostgreSQL
+    participant Bob as 👤 Bob
 
-    Alice->>Channel: Subscribe to chat_{id}
-    Bob->>Channel: Subscribe to chat_{id}
+    Note over Alice,Bob: 🔗 Connection Setup
+    Alice->>Channel: Subscribe to chat_{conversationId}
+    Bob->>Channel: Subscribe to chat_{conversationId}
+    Channel-->>Alice: ✅ Subscribed (presence: online)
+    Channel-->>Bob: ✅ Subscribed (presence: online)
 
-    Note over Channel: Track presence {"online_at", "username"}
+    Note over Channel: Presence State: {userId, online_at, username}
 
-    Alice->>Channel: track({ isTyping: true })
-    Channel-->>Bob: Presence Update (Alice typing...)
+    rect rgb(240, 248, 226)
+        Note over Alice,Bob: 💬 Typing Indicator
+        Alice->>Channel: track({ isTyping: true })
+        Channel-->>Bob: Alice is typing...
+        Alice->>Channel: track({ isTyping: false })
+        Channel-->>Bob: Alice stopped typing
+    end
 
-    Alice->>Supabase: Server Action (Insert Message)
-    Supabase-->>Channel: Broadcast postgres_changes
-    Channel-->>Bob: New message event
-    Note over Bob: Optimistic append
+    rect rgb(221, 244, 255)
+        Note over Alice,Bob: ✉️ Message Send
+        Alice->>Server: Server Action: sendMessage()
+        Server->>DB: INSERT into messages (E2EE encrypted)
+        DB-->>Server: ✅ Inserted
+        Server-->>Alice: ActionResponse { success: true }
+        Server->>Channel: Broadcast postgres_changes
+        Channel-->>Bob: New message event
+        Note over Bob: 🔓 Decrypt & append optimistically
+    end
+
+    rect rgb(255, 237, 213)
+        Note over Alice,Bob: 📖 Read Receipt
+        Bob->>Server: Server Action: markAsRead(messageId)
+        Server->>DB: UPDATE read_receipts
+        DB-->>Server: ✅ Updated
+        Server-->>Bob: ActionResponse { success: true }
+        Server->>Channel: Broadcast read receipt
+        Channel-->>Alice: Bob read your message
+    end
 ```
 
 ### E2EE (End-to-End Encryption)

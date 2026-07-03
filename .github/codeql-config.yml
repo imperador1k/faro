@@ -1,0 +1,14 @@
+name: "Faro CodeQL Configuration"
+
+paths:
+  - src
+paths-ignore:
+  - "**/node_modules/**"
+  - "**/__tests__/**"
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/*.spec.ts"
+  - "**/*.d.ts"
+
+queries:
+  - uses: security-and-quality

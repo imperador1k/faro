@@ -2,6 +2,41 @@
 
 > **Purpose**: Reference for replicating Faro's "HD Play" aesthetic in any new project or component.
 
+<div align="center">
+  <img src="public/banner_faro.png" alt="Faro Banner" width="800" style="max-width: 100%; border-radius: 16px;">
+</div>
+
+<br />
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" width="50%">
+        <img src="public/learn_faro.png" alt="Learning Path" width="100%" style="border-radius: 12px;">
+        <br />
+        <sub><strong>Learning Path</strong> — Unit map with 3D lesson nodes</sub>
+      </td>
+      <td align="center" width="50%">
+        <img src="public/lesson_faro.png" alt="Lesson Player" width="100%" style="border-radius: 12px;">
+        <br />
+        <sub><strong>Lesson Player</strong> — Challenge cards with tactile buttons</sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" width="50%">
+        <img src="public/shop_faro.png" alt="Shop" width="100%" style="border-radius: 12px;">
+        <br />
+        <sub><strong>Shop</strong> — Bento box cards with 3D press</sub>
+      </td>
+      <td align="center" width="50%">
+        <img src="public/quests_faro.png" alt="Quests" width="100%" style="border-radius: 12px;">
+        <br />
+        <sub><strong>Quests</strong> — Gamified progress UI</sub>
+      </td>
+    </tr>
+  </table>
+</div>
+
 ## 1. Core Tokens
 
 ### 1.1 Brand Colors

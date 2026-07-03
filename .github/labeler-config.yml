@@ -1,0 +1,64 @@
+# Auto-label PRs based on changed file paths
+"src/actions/**":
+  - actions
+  - backend
+
+"src/app/**":
+  - frontend
+  - pages
+
+"src/components/**":
+  - frontend
+  - components
+
+"src/db/**":
+  - database
+
+"src/lib/**":
+  - backend
+  - lib
+
+"src/hooks/**":
+  - frontend
+  - hooks
+
+"src/store/**":
+  - frontend
+  - state
+
+"src/types/**":
+  - types
+
+"src/__tests__/**":
+  - tests
+
+"tests/**":
+  - tests
+  - e2e
+
+"src-tauri/**":
+  - desktop
+  - tauri
+
+"android/**":
+  - mobile
+  - android
+
+"*.md":
+  - documentation
+
+"scripts/**":
+  - tooling
+
+".github/**":
+  - ci
+  - devops
+
+"public/**":
+  - assets
+
+"messages/**":
+  - i18n
+
+"package.json":
+  - dependencies
