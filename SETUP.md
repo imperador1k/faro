@@ -13,10 +13,12 @@
 
 ### Required Accounts (Free Tiers Work)
 
+> Docker replaces Supabase + Upstash for local development. You only need cloud accounts for production/staging.
+
 | Service                                          | Sign Up | Why You Need It                 |
 | ------------------------------------------------ | ------- | ------------------------------- |
 | [Clerk](https://clerk.com/)                      | Free    | Authentication (users + admin)  |
-| [Supabase](https://supabase.com/)                | Free    | PostgreSQL database + Realtime  |
+| [Supabase](https://supabase.com/)                | Free    | PostgreSQL database (or use Docker) |
 | [Google AI Studio](https://aistudio.google.com/) | Free    | Gemini API keys for AI features |
 | [Stripe](https://stripe.com/)                    | Free    | Test mode for PRO subscriptions |
 | [Upstash](https://upstash.com/)                  | Free    | Redis for rate limiting         |
@@ -59,15 +61,20 @@ Open `.env` and fill in the values. Here's what each section needs:
 
 **Option A: Local Docker (Recommended)**
 
+Starts PostgreSQL 15, Redis 7, and runs migrations + seed automatically:
+
 ```bash
 docker compose up -d
+docker compose run --rm setup
 ```
 
 Your DATABASE_URL will be:
 
 ```
-postgresql://postgres:password@localhost:5432/myduolingo
+postgresql://postgres:password@localhost:5432/faro
 ```
+
+Redis (rate limiting) is available at `http://localhost:6379` — no token needed.
 
 **Option B: Supabase Cloud**
 
