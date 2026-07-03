@@ -1,4 +1,14 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+
+vi.mock("react", async (importOriginal) => {
+  const actual = await importOriginal();
+  return { ...actual, cache: (fn: any) => fn };
+});
+
+vi.mock("@clerk/nextjs/server", () => ({
+  auth: vi.fn().mockResolvedValue({ userId: "test-user" }),
+}));
+
 import { calculateIsPro, DAY_IN_MS } from "@/lib/subscription";
 import type { SubscriptionStatus } from "@/types";
 
