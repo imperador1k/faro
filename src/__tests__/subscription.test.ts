@@ -1,9 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
-vi.mock("react", async (importOriginal) => {
-  const actual = await importOriginal();
-  return { ...actual, cache: (fn: any) => fn };
-});
+vi.mock("react", () => ({
+  cache: (fn: (...args: any[]) => any) => fn,
+  default: {},
+  createElement: (type: any, props: any, ...children: any[]) => ({ type, props, children }),
+}));
 
 vi.mock("@clerk/nextjs/server", () => ({
   auth: vi.fn().mockResolvedValue({ userId: "test-user" }),
