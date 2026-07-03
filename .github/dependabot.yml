@@ -1,21 +1,15 @@
 version: 2
 updates:
-  - package-ecosystem: npm
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: weekly
-      day: monday
-      time: "08:00"
-      timezone: Europe/Lisbon
+      interval: "weekly"
+      day: "monday"
     open-pull-requests-limit: 10
-    versioning-strategy: increase
     labels:
-      - dependencies
-      - automated
+      - "dependencies"
     commit-message:
       prefix: "chore"
-      prefix-development: "chore"
-      include: scope
     groups:
       react:
         patterns:
@@ -24,54 +18,8 @@ updates:
           - "@types/react"
           - "@types/react-dom"
         update-types:
-          - minor
-          - patch
-      nextjs:
-        patterns:
-          - "next"
-          - "eslint-config-next"
-        update-types:
-          - minor
-          - patch
-      tauri:
-        patterns:
-          - "@tauri-apps/*"
-        update-types:
-          - minor
-          - patch
-      capacitor:
-        patterns:
-          - "@capacitor/*"
-        update-types:
-          - minor
-          - patch
-      sentry:
-        patterns:
-          - "@sentry/*"
-        update-types:
-          - minor
-          - patch
-      tailwind:
-        patterns:
-          - "tailwindcss"
-          - "tailwindcss-animate"
-          - "tailwind-merge"
-        update-types:
-          - minor
-          - patch
-      drizzle:
-        patterns:
-          - "drizzle-orm"
-          - "drizzle-kit"
-        update-types:
-          - minor
-          - patch
-      clerk:
-        patterns:
-          - "@clerk/*"
-        update-types:
-          - minor
-          - patch
+          - "minor"
+          - "patch"
       testing:
         patterns:
           - "vitest"
@@ -79,29 +27,25 @@ updates:
           - "@playwright/*"
           - "jsdom"
         update-types:
-          - minor
-          - patch
+          - "minor"
+          - "patch"
     ignore:
       - dependency-name: "next"
         update-types:
-          - major
+          - "major"
       - dependency-name: "react"
         update-types:
-          - major
+          - "major"
       - dependency-name: "react-dom"
         update-types:
-          - major
+          - "major"
 
-  - package-ecosystem: github-actions
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: weekly
-      day: monday
-      time: "08:00"
-      timezone: Europe/Lisbon
+      interval: "weekly"
+      day: "monday"
     labels:
-      - dependencies
-      - automated
+      - "dependencies"
     commit-message:
       prefix: "chore"
-      include: scope
