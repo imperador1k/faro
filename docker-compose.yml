@@ -1,23 +1,78 @@
-version: '3.8'
+version: "3.8"
+
+name: faro
 
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: myduolingo_postgres
+    container_name: faro_postgres
     restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: myduolingo
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-faro}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - faro_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d myduolingo"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-faro}"]
       interval: 5s
       timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - faro_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: faro_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - faro_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
       retries: 5
+    networks:
+      - faro_net
+
+  setup:
+    image: node:22-alpine
+    container_name: faro_setup
+    profiles:
+      - setup
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-faro}
+      UPSTASH_REDIS_REST_URL: http://redis:6379
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: >
+      sh -c "
+        npm install --ignore-scripts &&
+        npx drizzle-kit push &&
+        npx tsx scripts/seed.ts &&
+        echo '✅ Setup complete! Run: npm run dev'
+      "
+    networks:
+      - faro_net
 
 volumes:
-  postgres_data:
+  faro_postgres_data:
+    name: faro_postgres_data
+  faro_redis_data:
+    name: faro_redis_data
+
+networks:
+  faro_net:
+    name: faro_net
