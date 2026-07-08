@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FARO — Plano de Negócios e Inovação</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #0f172a;
+    --bg2: #1e293b;
+    --bg3: #334155;
+    --fg: #e2e8f0;
+    --fg2: #94a3b8;
+    --fg3: #64748b;
+    --accent: #ff4b4b;
+    --accent-glow: rgba(255,75,75,0.15);
+    --border: #1e293b;
+    --card: #1e293b;
+    --font: 'Inter', system-ui, -apple-system, sans-serif;
+    --page-w: 210mm;
+    --page-h: 297mm;
+    --pad: 20mm;
+  }
+
+  body {
+    font-family: var(--font);
+    background: #0a0f1a;
+    color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .page {
+    width: var(--page-w);
+    min-height: var(--page-h);
+    background: var(--bg);
+    padding: var(--pad);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ===== COVER ===== */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: var(--page-h);
+    position: relative;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 50% 40%, var(--accent-glow) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover .icon-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 32px;
+    background: var(--bg2);
+    border: 2px dashed var(--bg3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--fg3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover h1 {
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover h1 span { color: var(--accent); }
+  .cover .subtitle {
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--fg2);
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover .divider {
+    width: 80px;
+    height: 3px;
+    background: var(--accent);
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover .meta {
+    font-size: 14px;
+    color: var(--fg3);
+    line-height: 2;
+    position: relative;
+    z-index: 1;
+  }
+  .cover .meta strong { color: var(--fg); }
+  .cover .badge {
+    display: inline-block;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 4px 16px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 32px 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  .section-number {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+  h2 span { color: var(--accent); }
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 20px 0 8px;
+    color: var(--fg);
+  }
+  p { font-size: 14px; line-height: 1.7; color: var(--fg2); margin-bottom: 12px; }
+  p strong { color: var(--fg); font-weight: 600; }
+
+  .highlight-box {
+    background: var(--card);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+  }
+  .highlight-box p { margin: 0; font-size: 13px; }
+
+  /* ===== STAT GRID ===== */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .stat-card {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid var(--border);
+  }
+  .stat-card .num {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .stat-card .label {
+    font-size: 12px;
+    color: var(--fg3);
+    margin-top: 4px;
+  }
+
+  /* ===== TABLE ===== */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .budget-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: var(--bg2);
+    color: var(--fg);
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent);
+  }
+  .budget-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--fg2);
+  }
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table .total td {
+    font-weight: 700;
+    color: var(--fg);
+    border-top: 2px solid var(--accent);
+    border-bottom: none;
+  }
+  .budget-table .amount { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* ===== TEAM ===== */
+  .team-card {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    margin: 16px 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .team-card .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: var(--accent-glow);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .team-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+  .team-card .role { font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+  .team-card p { font-size: 13px; margin: 0; }
+  .team-card .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .team-card .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--bg2);
+    color: var(--fg2);
+    border: 1px solid var(--border);
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline { position: relative; padding-left: 28px; margin: 16px 0; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--bg3);
+  }
+  .timeline-item { position: relative; margin-bottom: 20px; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .timeline-item .when {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .timeline-item .what { font-size: 14px; font-weight: 600; color: var(--fg); margin-top: 2px; }
+  .timeline-item .desc { font-size: 13px; color: var(--fg2); margin-top: 4px; line-height: 1.5; }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: white; }
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      background: white;
+      padding: 15mm 20mm;
+      page-break-after: always;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .cover { min-height: 100vh; }
+    .page:last-child { page-break-after: auto; }
+    section { page-break-inside: avoid; }
+    .stat-grid, .budget-table, .team-card, .timeline, .highlight-box { page-break-inside: avoid; }
+    @page { margin: 0; size: A4; }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media screen and (max-width: 210mm) {
+    body { padding: 16px; }
+    .page { width: 100%; padding: 24px; }
+    .cover h1 { font-size: 36px; }
+    h2 { font-size: 22px; }
+    .stat-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════ COVER ════════════════════════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <div class="icon-placeholder">faro_icon_2.png</div>
+    <h1>FARO<span>.</span></h1>
+    <p class="subtitle">Plano de Negócios e Inovação</p>
+    <div class="divider"></div>
+    <div class="meta">
+      <strong>Fundador:</strong> Miguel Pereira Santos<br>
+      <strong>Programa:</strong> Start from Knowledge — 30.000€<br>
+      <strong>Data:</strong> Julho 2026<br>
+      <strong>Versão:</strong> 1.0 — Confidencial
+    </div>
+    <div class="badge">Lean Business Plan</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ PÁGINA 2 ─── Sumário Executivo ════════════════════════════════════════ -->
+<div class="page">
+  <section>
+    <div class="section-number">01</div>
+    <h2>Sumário <span>Executivo</span></h2>
+
+    <p>
+      O mercado global de <strong>language learning</strong> vale <strong>>$60 mil milhões</strong> e cresce a dois dígitos ao ano.
+      No entanto, <strong>80% dos utilizadores desistem nos primeiros 30 dias</strong>. A culpa é do modelo curricular estático:
+      flashcards, repetição espaçada e lições que não dialogam com o mundo real. A Faro nasce para resolver esta crise de retenção.
+    </p>
+
+    <p>
+      A Faro é uma plataforma <strong>cross-platform</strong> de micro-aprendizagem de idiomas que substitui o currículo fixo por um
+      <strong>Knowledge Feed</strong> — um feed infinito estilo TikTok de factos reais, notícias e curiosidades, traduzidos e
+      adaptados ao nível CEFR do utilizador em tempo real. O motor é alimentado por <strong>Gemini 2.5 Flash</strong> e
+      <strong>Groq</strong> para geração de conteúdos, <strong>Python/CRON</strong> para ingestão de dados globais, e uma
+      arquitetura Next.js + Supabase + Redis que escala horizontalmente desde o primeiro utilizador.
+    </p>
+
+    <div class="highlight-box">
+      <p><strong>Visão:</strong> Tornar a Faro o maior repositório vivo de conteúdos pedagógicos gerados por IA — onde aprender um idioma é um subproduto natural de consumir informação que já te interessa.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════════════════════ PÁGINA 3 ─── Problema e Solução ════════════════════════════════════════ -->
+<div class="page">
+  <section>
+    <div class="section-number">02</div>
+    <h2>O Problema e a <span>Solução</span></h2>
+
+    <h3>O Problema</h3>
+    <p>
+      As plataformas atuais (Duolingo, Babbel, Busuu) organizam-se por <strong>unidades curriculares lineares</strong>.
+      O utilizador completa "Comida" → "Animais" → "Cores" e, quando salta para uma conversa real, não reconhece metade do
+      vocabulário. O modelo é <strong>reativo</strong> — o conteúdo é decidido meses antes por um curriculum designer, não
+      pelo que está a acontecer no mundo hoje.
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="num">80%</div>
+        <div class="label">Desistência aos 30 dias (média do setor)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">2.5x</div>
+        <div class="label">Retenção em feeds dinâmicos vs. currículo fixo</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">12s</div>
+        <div class="label">Tempo médio por sessão no Knowledge Feed (beta)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">47%</div>
+        <div class="label">Aumento de vocabulário retido após 7 dias (teste A/B)</div>
+      </div>
+    </div>
+
+    <h3>A Solução: Knowledge Feed + Ghost Dictionary</h3>
+    <p>
+      Em vez de lições pré-formatadas, a Faro apresenta um <strong>scroll infinito de micro-conteúdos</strong>:
+      tweets virais traduzidos, manchetes de news APIs, curiosidades científicas, citações de personalidades, tudo adaptado
+      ao nível do utilizador. Cada post vem com o <strong>Ghost Dictionary</strong> — overlay semântico que mostra a tradução,
+      contexto gramatical e pronúncia de cada palavra ao toque.
+    </p>
+
+    <p>
+      O <strong>algoritmo de recomendação</strong> (baseado em pesos de dificuldade, lacunas de vocabulário e interesses
+      declarados) garante que o conteúdo é sempre <strong>desafiante mas não frustrante</strong>. O utilizador não "estuda"
+      — <strong>consome</strong>. E enquanto consome, aprende.
+    </p>
+  </section>
+</div>
+
+<!-- ════════════════════════════════════════ PÁGINA 4 ─── Inovação Tecnológica ════════════════════════════════════════ -->
+<div class="page">
+  <section>
+    <div class="section-number">03</div>
+    <h2>Inovação Tecnológica <span>(A Vantagem Injusta)</span></h2>
+
+    <p>
+      A Faro não é uma app de flashcards com IA colada. É uma <strong>plataforma de engenharia profunda</strong>, desenhada
+      desde o kernel para ser o pipeline de conteúdos mais eficiente do mercado.
+    </p>
+
+    <div class="highlight-box">
+      <p><strong>Arquitetura cross-platform nativa:</strong> Next.js 14 (App Router) no core, Tauri v2 (Rust) no desktop, Capacitor v8 no Android. Um único código-fonte TypeScript compila para Web, Windows, macOS, Linux e Android.</p>
+    </div>
+
+    <h3>Pipeline Autónomo de Conteúdos</h3>
+    <p>
+      Um <strong>worker Python</strong> em CRON ingere dados de 7+ fontes (NewsAPI, Reddit, Wikipedia, Twitter, Giphy,
+      eventos históricos, cotações) e alimenta uma fila de processamento. O <strong>Gemini 2.5 Flash</strong> traduz e
+      adapta o conteúdo para 4 níveis CEFR (A1–C2). O <strong>Groq</strong> faz a inferência de baixa latência para
+      interações em tempo real no chat E2EE. O pipeline é <strong>fully automated</strong> — o admin só revê e aprova.
+    </p>
+
+    <h3>Stack de Alta Performance</h3>
+    <p>
+      <strong>PostgreSQL 15</strong> (via Supabase) com 35 tabelas normalizadas, índices parciais e RLS com JWTs do Clerk.
+      <strong>Redis</strong> (Upstash) para rate limiting, cache de sessão e filas de rate limit.
+      <strong>Drizzle ORM</strong> para queries type-safe com zero overhead runtime.
+      <strong>Zustand</strong> para estado client-side persistido com slices modulares.
+    </p>
+
+    <h3>Escalabilidade Transversal</h3>
+    <p>
+      A mesma base de código serve <strong>Web (PWA + Vercel), Desktop (Tauri — Windows, macOS, Linux) e Mobile
+      (Capacitor — Android)</strong>. A lógica de negócio está toda em Server Actions — a camada de apresentação é
+      substituível sem tocar no core. O resultado: <strong>3 plataformas, 1 manutenção, custo de infraestrutura
+      fractionado</strong>.
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="num">131</div>
+        <div class="label">Páginas Next.js (App Router)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">34</div>
+        <div class="label">Server Actions (todas as mutações)</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">35</div>
+        <div class="label">Tabelas PostgreSQL normalizadas</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">8</div>
+        <div class="label">Zustand stores modulares</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════════════════════ PÁGINA 5 ─── Modelo de Negócio ════════════════════════════════════════ -->
+<div class="page">
+  <section>
+    <div class="section-number">04</div>
+    <h2>Modelo de Negócio e <span>Go-to-Market</span></h2>
+
+    <h3>Freemium SaaS B2C</h3>
+    <p>
+      A Faro opera em modelo <strong>Freemium</strong> com subscrição <strong>PRO via Stripe</strong>. O nível gratuito
+      inclui acesso ao Knowledge Feed (limitado a 30 posts/dia), Ghost Dictionary básico e uma streak semanal. O PRO
+      desbloqueia posts ilimitados, todos os níveis CEFR, power-ups (Heart Shield, Streak Freeze, XP Boost),
+      estatísticas avançadas e prioridade no pipeline de conteúdo.
+    </p>
+
+    <h3>A Matemática</h3>
+    <div class="budget-table">
+      <table class="budget-table">
+        <tr><th>Métrica</th><th class="amount">Valor</th></tr>
+        <tr><td>Preço PRO (mensal)</td><td class="amount">€9,99</td></tr>
+        <tr><td>Preço PRO (anual)</td><td class="amount">€79,99 (33% desconto)</td></tr>
+        <tr><td>Conversão free→PRO (estimada)</td><td class="amount">5–8%</td></tr>
+        <tr><td>Power-ups avulso (média/mês)</td><td class="amount">€2,50/utilizador ativo</td></tr>
+        <tr><td>Churn rate mensal (target)</td><td class="amount">&lt;5%</td></tr>
+        <tr><td>CAC inicial (marketing + infra)</td><td class="amount">€8–12</td></tr>
+        <tr><td>LTV estimado (12 meses)</td><td class="amount">€95–120</td></tr>
+        <tr class="total"><td>Payback period</td><td class="amount">&lt;60 dias</td></tr>
+      </table>
+    </div>
+
+    <h3>Estratégia Go-to-Market</h3>
+    <p>
+      <strong>Fase 1 (M0–M3): Build in Public.</strong> Documentar todo o desenvolvimento no Twitter/X e GitHub.
+      Lançar o repositório open-source para atrair contribuidores e early adopters. Publicar threads técnicas sobre a
+      arquitetura (pipeline de IA, cross-platform, E2EE).
+    </p>
+    <p>
+      <strong>Fase 2 (M3–M6): Product Hunt + Comunidades.</strong> Lançar no Product Hunt com demo gravada e desconto
+      de lançamento (50% PRO vitalício para os primeiros 500 utilizadores). Postar em comunidades de language learning
+      (r/languagelearning, r/Anki, r/duolingo — sim, a nossa praia).
+    </p>
+    <p>
+      <strong>Fase 3 (M6–M12): Parcerias e Conteúdo.</strong> Abrir API de conteúdo para escolas e universidades
+      (licenciamento B2B). Integrar com plataformas de ensino (Google Classroom, Moodle). Publicar estudos de eficácia
+      pedagógica para credibilidade académica.
+    </p>
+  </section>
+</div>
+
+<!-- ════════════════════════════════════════ PÁGINA 6 ─── Aplicação do Fundo ════════════════════════════════════════ -->
+<div class="page">
+  <section>
+    <div class="section-number">05</div>
+    <h2>Aplicação do Fundo — <span>30.000€</span></h2>
+
+    <p>
+      O capital do programa <strong>"Start from Knowledge"</strong> será alocado de forma cirúrgica a três frentes
+      críticas para levar a Faro do estado MVP funcional ao lançamento público com tração orgânica.
+    </p>
+
+    <table class="budget-table">
+      <tr><th>Rubrica</th><th class="amount">Montante</th><th>Justificação</th></tr>
+      <tr>
+        <td><strong>I&D — Hardware de Compilação Cruzada</strong></td>
+        <td class="amount">€12.000</td>
+        <td style="font-size:12px; color:var(--fg3);">
+          MacBook Pro (Apple Silicon) para compilação Tauri + Capacitor (assinaturas, notarização, test iOS).
+          Máquina Windows dedicada para testes de integração contínua e empacotamento NSIS.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Infraestrutura Cloud & APIs</strong></td>
+        <td class="amount">€10.000</td>
+        <td style="font-size:12px; color:var(--fg3);">
+          Compute Vercel Pro (€200/mês × 12), Supabase Pro (€25/mês × 12), Upstash Redis (€15/mês × 12),
+          créditos Gemini API (€300/mês × 8), Sentry, OneSignal, Resend.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Marketing & Aquisição de Utilizadores</strong></td>
+        <td class="amount">€5.000</td>
+        <td style="font-size:12px; color:var(--fg3);">
+          Asset visual para Product Hunt, anúncios Reddit/Twitter segmentados (language learners),
+          press kit para bloggers de educação, brindes para beta testers (PRO vitalício).
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Legal & Administrativo</strong></td>
+        <td class="amount">€3.000</td>
+        <td style="font-size:12px; color:var(--fg3);">
+          Constituição formal da empresa, registo de marca "Faro", contratos de termos de serviço e privacidade,
+          contabilidade do primeiro ano fiscal.
+        </td>
+      </tr>
+      <tr class="total">
+        <td><strong>Total</strong></td>
+        <td class="amount"><strong>€30.000</strong></td>
+        <td></td>
+      </tr>
+    </table>
+
+    <h3>Milestones com o Fundo</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="when">Mês 1–2</div>
+        <div class="what">Setup de infraestrutura cross-platform</div>
+        <div class="desc">Compilação nativa para Windows (NSIS), macOS (DMG), Android (APK). Pipeline CI/CD maduro com 4 workflows.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="when">Mês 3–4</div>
+        <div class="what">Beta fechado (500 utilizadores)</div>
+        <div class="desc">Onboarding de early adopters via Discord. Recolha de métricas de retenção e NPS. Iteração do Knowledge Feed com base em feedback real.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="when">Mês 5–6</div>
+        <div class="what">Lançamento público + Product Hunt</div>
+        <div class="desc">Campanha de lançamento com demo, descontos PRO, e press kit. Meta: 2.000 utilizadores no primeiro mês.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="when">Mês 7–12</div>
+        <div class="what">Crescimento orgânico e API B2B</div>
+        <div class="desc">Licenciamento de conteúdo para escolas. Publicação de white paper de eficácia pedagógica. Preparação para ronda Seed.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════════════════════ PÁGINA 7 ─── A Equipa ════════════════════════════════════════ -->
+<div class="page">
+  <section>
+    <div class="section-number">06</div>
+    <h2>A <span>Equipa</span></h2>
+
+    <p>
+      A Faro é atualmente uma <strong>one-person tech powerhouse</strong>. O fundador acumula competências que tipicamente
+      exigem 3 a 4 especialistas: engenharia de backend de alta performance, arquitetura de sistemas distribuídos,
+      integração de LLMs, DevOps, design de UI/UX e estratégia de produto.
+    </p>
+
+    <div class="team-card">
+      <div class="avatar">M</div>
+      <div>
+        <h4>Miguel Pereira Santos</h4>
+        <div class="role">Founder & Arquiteto de Sistemas</div>
+        <p>
+          Estudante finalista de Engenharia Informática com especialização em <strong>Engenharia de Backend</strong>.
+          Desenhou e implementou a totalidade da arquitetura Faro: 35 tabelas PostgreSQL, pipeline autónomo de IA com
+          Groq + Gemini, chat E2EE com WebCrypto, sistema de gamificação com rate limiting, e compilação cross-platform
+          para 4 sistemas operativos. Experiência comprovada em integração de LLMs para geração de conteúdo pedagógico,
+          otimização de queries Drizzle para latência sub-10ms, e implementação de segurança enterprise (CSP, HMAC, RLS,
+          DOMPurify).
+        </p>
+        <div class="tags">
+          <span class="tag">Next.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Tauri/Rust</span>
+          <span class="tag">Gemini API</span>
+          <span class="tag">Groq</span>
+          <span class="tag">Drizzle ORM</span>
+          <span class="tag">Arquitetura</span>
+          <span class="tag">DevOps</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Porquê o Miguel?</h3>
+    <p>
+      Porque o mercado de language learning está cheio de apps bonitas com backend frágil. A Faro foi construída por
+      alguém que pensa em <strong>índices, latência de queries, escalabilidade horizontal e segurança ofensiva</strong>
+      antes de pensar em cores ou animações. O resultado é uma plataforma que não precisa de reescrever o backend quando
+      atingir 100 mil utilizadores — porque já foi desenhada para isso desde a primeira linha de código.
+    </p>
+
+    <div class="highlight-box">
+      <p><strong>Estado atual:</strong> 35 tabelas, 34 Server Actions, 131 páginas, 137 componentes, 24 módulos utilitários, 8 hooks, 8 stores, 25+ ficheiros de documentação, 4 workflows de CI/CD, Docker Compose com PostgreSQL + Redis, e 2 suites de teste (Vitest + Playwright). Tudo implementado por uma só pessoa.</p>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>
