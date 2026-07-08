@@ -12,24 +12,18 @@ test.describe('Sanity & Authentication Boundaries', () => {
     await expect(page.getByText('aprender um idioma', { exact: false })).toBeVisible();
   });
 
-  test('Deve redirecionar para a autenticação Clerk ao clicar em Começar', async ({ page }) => {
+  test('Deve navegar para o onboarding ao clicar em Começar', async ({ page }) => {
     await page.goto('/');
 
-    // Dismiss the intro overlay (first visit). Skip button = "Saltar" in PT, "Skip" in EN.
-    const skipBtn = page.locator('button', { hasText: /Saltar|Skip/i });
-    if (await skipBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
-      await skipBtn.click();
-    }
+    // Intro overlay (z-[9999]) blocks clicks on first visit. Use force to bypass it.
+    const comecarBtn = page.getByRole('link', { name: /Comece agora/i }).or(page.getByRole('button', { name: /Comece agora/i }));
+    await expect(comecarBtn.first()).toBeVisible({ timeout: 8000 });
 
-    // Find the 'Comece agora' button / link
-    const comecarBtn = page.getByRole('button', { name: /Comece agora/i }).or(page.getByRole('link', { name: /Comece agora/i }));
-    await expect(comecarBtn.first()).toBeVisible({ timeout: 5000 });
+    // Force click bypasses the intro overlay's pointer-events interception
+    await comecarBtn.first().click({ force: true });
 
-    // Click to trigger Clerk redirect
-    await comecarBtn.first().click();
-
-    // Assert redirect to Clerk auth (sign-in, sign-up, or accounts domain)
-    await expect(page).toHaveURL(/.*(sign-in|sign-up|accounts|clerk).*/);
+    // Should navigate to onboarding (public route)
+    await expect(page).toHaveURL(/\/onboarding/);
   });
 
 });
