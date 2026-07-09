@@ -11,6 +11,7 @@ import { TTSUnlocker } from "@/components/shared/tts-unlocker";
 import { ReviewModal } from "@/components/modals/review-modal";
 import { GlobalPresenceProvider } from "@/components/providers/global-presence-provider";
 import { NativeBridge } from "@/components/providers/native-bridge";
+import { OfflineBanner } from "@/components/shared/offline-banner";
 import { NativeUpdater } from "@/components/providers/native-updater";
 import { OnboardingSync } from "@/components/onboarding-sync";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -139,6 +140,7 @@ export default async function RootLayout({
                       <OnboardingSync />
                       <TTSUnlocker />
                       <ReviewModal />
+                      <OfflineBanner />
                       {children}
                       <FloatingMarco />
                     </GlobalPresenceProvider>

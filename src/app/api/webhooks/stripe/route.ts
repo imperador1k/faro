@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
@@ -37,10 +38,11 @@ export async function POST(req: Request) {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!,
     );
-  } catch (error) {
-    console.error("Webhook signature verification failed");
-    return new NextResponse("Webhook Error", { status: 400 });
-  }
+    } catch (error) {
+      Sentry.captureException(error);
+      console.error("Webhook signature verification failed");
+      return new NextResponse("Webhook Error", { status: 400 });
+    }
 
   if (!event.id || isEventProcessed(event.id)) {
     return new NextResponse(null, { status: 200 });
@@ -71,6 +73,7 @@ export async function POST(req: Request) {
         ),
       });
     } catch (error) {
+      Sentry.captureException(error);
       console.error("DB error on checkout.session.completed");
       return new NextResponse("Database Error", { status: 500 });
     }
@@ -93,6 +96,7 @@ export async function POST(req: Request) {
         })
         .where(eq(userSubscriptions.stripeSubscriptionId, subscription.id));
     } catch (error) {
+      Sentry.captureException(error);
       console.error("DB error on invoice.payment_succeeded");
       return new NextResponse("Database Error", { status: 500 });
     }

@@ -11,6 +11,7 @@ import {
 import { CommandMenu } from "@/components/shared/command-menu";
 import { GlobalModals } from "@/components/modals/global-modals";
 import { LeagueResultModal } from "@/components/modals/league-result-modal";
+import { ErrorBoundary } from "@/components/shared/error-boundary";
 import { PreferencesLoader } from "@/components/shared/preferences-loader";
 import type { LeagueResult } from "@/types";
 
@@ -56,7 +57,9 @@ export default async function MainLayout({ children }: Props) {
         />
 
         <div className="relative max-w-[1056px] mx-auto pt-6 px-6 pb-24 lg:pb-8 min-h-full">
-          {children}
+          <ErrorBoundary>
+            {children}
+          </ErrorBoundary>
         </div>
       </main>
 

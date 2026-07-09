@@ -1,6 +1,7 @@
 "use server";
 
 import { auth, currentUser } from "@clerk/nextjs/server";
+import * as Sentry from "@sentry/nextjs";
 import { stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
 import { db } from "@/db/drizzle";
@@ -85,6 +86,7 @@ export const createStripeUrl = async () => {
 
     return { data: stripeSession.url };
   } catch (error) {
+    Sentry.captureException(error);
     console.error("STRIPE_CHECKOUT_ERROR:", error);
     return actionError(
       "SERVER_ERROR",

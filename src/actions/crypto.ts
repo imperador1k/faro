@@ -1,5 +1,6 @@
 "use server";
 
+import * as Sentry from "@sentry/nextjs";
 import { db } from "@/db/drizzle";
 import { userProgress, conversationKeys } from "@/db/schema";
 import { eq, and, inArray } from "drizzle-orm";
@@ -63,6 +64,7 @@ export async function saveConversationKeys(
     await db.insert(conversationKeys).values(values);
     return true;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Failed to save conversation keys", error);
     return false;
   }

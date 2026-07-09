@@ -1,5 +1,6 @@
 "use server";
 
+import * as Sentry from "@sentry/nextjs";
 import { generateTextWithFallback } from "@/lib/ai-manager";
 
 import { auth } from "@clerk/nextjs/server";
@@ -586,6 +587,7 @@ export const savePlacementResult = async (
 
     return { success: true };
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error saving placement result:", error);
     return { success: false };
   }
