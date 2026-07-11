@@ -1,6 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { validateVaultToken } from "@/lib/vault-token";
+
+type ClerkAuthFn = () => Promise<{ userId: string | null }> & { protect: () => Promise<void> };
 
 const isPublicRoute = createRouteMatcher([
   "/",
@@ -22,7 +25,7 @@ const isPublicRoute = createRouteMatcher([
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
-export default clerkMiddleware(async (auth, request) => {
+export default clerkMiddleware(async (auth: ClerkAuthFn, request: NextRequest) => {
   if (request.nextUrl.pathname.startsWith("/admin-login")) {
     return NextResponse.next();
   }
