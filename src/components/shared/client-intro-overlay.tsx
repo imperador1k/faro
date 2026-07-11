@@ -33,7 +33,7 @@ export const ClientIntroOverlay = () => {
   const t = useTranslations("intro");
   const locale = useLocale();
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const { playClick, playWhoosh, playReward, isMuted, toggleMute } =
     useUISounds();
   const [isVisible, setIsVisible] = useState(false);
@@ -150,11 +150,11 @@ export const ClientIntroOverlay = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
         transition={{ duration: 0.5 }}
-        className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center p-6 overflow-hidden ${theme === "dark" ? "bg-slate-900" : "bg-slate-50"}`}
+        className="fixed inset-0 z-[9999] flex flex-col items-center justify-center p-6 overflow-hidden bg-slate-50 dark:bg-slate-900"
         onClick={handleNext} // Clicking anywhere advances the text
       >
         {/* Animated Radial Background for cinematic feel */}
-        {theme === "dark" ? (
+        {resolvedTheme === "dark" ? (
           <motion.div
             className="absolute inset-0 z-0 opacity-60"
             animate={{
@@ -183,7 +183,7 @@ export const ClientIntroOverlay = () => {
         )}
 
         {/* Star Particles Layer */}
-        {theme === "dark" && (
+        {resolvedTheme === "dark" && (
           <div className="absolute inset-0 z-0 bg-[url('/bg-stars.svg')] opacity-20 animate-pulse pointer-events-none" />
         )}
 
@@ -258,14 +258,14 @@ export const ClientIntroOverlay = () => {
                   variant="ghost"
                   size="sm"
                   className="flex-1 font-bold text-stone-500 dark:text-slate-400"
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
                 >
-                  {theme === "dark" ? (
+                  {resolvedTheme === "dark" ? (
                     <Sun className="w-4 h-4 mr-2" />
                   ) : (
                     <Moon className="w-4 h-4 mr-2" />
                   )}
-                  Tema: {theme === "dark" ? "Escuro" : "Claro"}
+                  Tema: {resolvedTheme === "dark" ? "Escuro" : "Claro"}
                 </Button>
                 <Button
                   variant="ghost"
