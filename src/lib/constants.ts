@@ -18,7 +18,7 @@ export const SUPPORTED_LANGUAGES: SupportedLanguage[] = [
     { value: "English", label: "🇬🇧 English", locale: "en-US" },
     { value: "Spanish", label: "🇪🇸 Español", locale: "es-ES" },
     { value: "French", label: "🇫🇷 Français", locale: "fr-FR" },
-    { value: "Portuguese", label: "🇧🇷 Português", locale: "pt-BR" },
+    { value: "Portuguese", label: "🇵🇹 Português", locale: "pt-PT" },
     { value: "German", label: "🇩🇪 Deutsch", locale: "de-DE" },
     { value: "Italian", label: "🇮🇹 Italiano", locale: "it-IT" },
     { value: "Japanese", label: "🇯🇵 日本語", locale: "ja-JP" },

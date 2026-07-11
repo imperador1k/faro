@@ -1,46 +1,17 @@
 {
+  "name": "Faro",
+  "short_name": "Faro",
+  "description": "Aprende idiomas com a Faro — a tua lighthouse para linguas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#58cc02",
+  "orientation": "portrait",
+  "categories": ["education", "languages"],
+  "lang": "pt",
+  "scope": "/",
   "icons": [
-    {
-      "src": "../icons/icon-48.webp",
-      "type": "image/png",
-      "sizes": "48x48",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-72.webp",
-      "type": "image/png",
-      "sizes": "72x72",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-96.webp",
-      "type": "image/png",
-      "sizes": "96x96",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-128.webp",
-      "type": "image/png",
-      "sizes": "128x128",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-192.webp",
-      "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-256.webp",
-      "type": "image/png",
-      "sizes": "256x256",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-512.webp",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "any maskable"
-    }
+    { "src": "/icons/icon-192.webp", "type": "image/webp", "sizes": "192x192", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.webp", "type": "image/webp", "sizes": "512x512", "purpose": "any maskable" }
   ]
 }

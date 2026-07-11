@@ -11,6 +11,7 @@ import { ReviewModal } from "@/components/modals/review-modal";
 import { GlobalPresenceProvider } from "@/components/providers/global-presence-provider";
 import { NativeBridge } from "@/components/providers/native-bridge";
 import { OfflineBanner } from "@/components/shared/offline-banner";
+import { PwaWrapper } from "@/components/shared/pwa-wrapper";
 import { NativeUpdater } from "@/components/providers/native-updater";
 import { OnboardingSync } from "@/components/onboarding-sync";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -30,6 +31,13 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(APP_URL),
     applicationName: "Faro",
+    manifest: "/manifest.webmanifest",
+    other: {
+      "theme-color": "#58cc02",
+      "apple-mobile-web-app-capable": "yes",
+      "apple-mobile-web-app-status-bar-style": "default",
+      "mobile-web-app-capable": "yes",
+    },
     title: {
       template: "%s | Faro",
       default: t("title"),
@@ -89,20 +97,18 @@ export default async function RootLayout({
   const locale = await getLocale();
   const messages = await getMessages();
 
-  const clerkLocaleMap: Record<string, () => Promise<{ default: unknown }>> = {
-    pt: () => import("@clerk/localizations/pt-BR"),
-    en: () => import("@clerk/localizations/en-US"),
-    es: () => import("@clerk/localizations/es-ES"),
-    fr: () => import("@clerk/localizations/fr-FR"),
-    de: () => import("@clerk/localizations/de-DE"),
-    it: () => import("@clerk/localizations/it-IT"),
-    ja: () => import("@clerk/localizations/ja-JP"),
-    uk: () => import("@clerk/localizations/uk-UA"),
-    ar: () => import("@clerk/localizations/ar-SA"),
+  const clerkLocaleImport = {
+    pt: () => import("@clerk/localizations/pt-PT").then((m) => m.ptPT),
+    en: () => import("@clerk/localizations/en-US").then((m) => m.enUS),
+    es: () => import("@clerk/localizations/es-ES").then((m) => m.esES),
+    fr: () => import("@clerk/localizations/fr-FR").then((m) => m.frFR),
+    de: () => import("@clerk/localizations/de-DE").then((m) => m.deDE),
+    it: () => import("@clerk/localizations/it-IT").then((m) => m.itIT),
+    ja: () => import("@clerk/localizations/ja-JP").then((m) => m.jaJP),
+    uk: () => import("@clerk/localizations/uk-UA").then((m) => m.ukUA),
+    ar: () => import("@clerk/localizations/ar-SA").then((m) => m.arSA),
   };
-  const clerkLocale = clerkLocaleMap[locale]
-    ? (await clerkLocaleMap[locale]()).default
-    : undefined;
+  const clerkLocale = clerkLocaleImport[locale]?.() ?? undefined;
 
   return (
     <ClerkProvider localization={clerkLocale}>
@@ -155,6 +161,7 @@ export default async function RootLayout({
                       <TTSUnlocker />
                       <ReviewModal />
                       <OfflineBanner />
+                      <PwaWrapper />
                       {children}
                       <FloatingMarco />
                     </GlobalPresenceProvider>

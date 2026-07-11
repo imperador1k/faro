@@ -41,7 +41,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
 
   filteredHistory.forEach((session) => {
     const date = session.createdAt
-      ? new Date(session.createdAt).toLocaleDateString("pt-BR", {
+      ? new Date(session.createdAt).toLocaleDateString("pt-PT", {
           day: "2-digit",
           month: "long",
           year: "numeric",

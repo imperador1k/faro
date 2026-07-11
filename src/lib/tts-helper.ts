@@ -3,7 +3,7 @@ import { franc } from 'franc-min';
 // Map ISO 639-3 codes (franc) to BCP-47 codes (SpeechSynthesis)
 const LANGUAGE_MAP: Record<string, string> = {
     // Portuguese
-    'por': 'pt-BR', // Defaulting to Brazilian Portuguese as user seems to prefer it based on context, 
+    'por': 'pt-PT',
     // or I can check if 'pt-PT' is preferred. User mentioned "Língua" broadly. 
     // Let's stick to a standard and maybe refine later or allow a way to bias.
     // Actually, franc detects 'por'.
