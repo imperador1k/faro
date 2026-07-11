@@ -86,8 +86,10 @@ export async function POST(req: Request) {
     return new NextResponse(null, { status: 200 });
   }
 
-  const emailAddress = data.email_address as string;
+  console.log("[clerk-webhook] Payload data keys:", Object.keys(data));
+  const emailAddress = (data.email_address as string) || (data.to as string) || (data.recipient as string) || "";
   const clerkUserId = data.user_id as string;
+  console.log("[clerk-webhook] Extracted email:", emailAddress, "userId:", clerkUserId);
 
   // Determine user's language preference
   let locale = "pt";
@@ -135,14 +137,22 @@ export async function POST(req: Request) {
   }
 
   try {
+    if (!emailAddress) {
+      console.warn("[clerk-webhook] No recipient email found in payload");
+      return new NextResponse("No recipient", { status: 200 });
+    }
     let fromAddress = process.env.RESEND_FROM_EMAIL ?? "Faro <noreply@miguelweb.dev>";
     fromAddress = fromAddress.replace(/^"|"$/g, "");
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: fromAddress,
       to: emailAddress,
       subject: html.subject,
       html: html.html,
     });
+    if (error) {
+      console.error("[clerk-webhook] Resend API error:", error);
+      return new NextResponse("Send failed", { status: 500 });
+    }
   } catch (err) {
     console.error("[clerk-webhook] Resend send failed", err);
     return new NextResponse("Send failed", { status: 500 });

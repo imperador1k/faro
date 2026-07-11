@@ -1,4 +1,5 @@
-import { clerkClient } from "@clerk/nextjs/server";
+import { clerkClient, auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import { Users, Shield, UserIcon } from "lucide-react";
 import { DeleteUserButton } from "@/components/admin/delete-user-button";
@@ -6,6 +7,13 @@ import { DeleteUserButton } from "@/components/admin/delete-user-button";
 export const dynamic = "force-dynamic";
 
 export default async function AdminUsersPage() {
+  const { userId } = await auth();
+  if (!userId) redirect("/");
+
+  const allowedIds =
+    process.env.ADMIN_ALLOWED_USER_IDS?.split(",").map((id) => id.trim()) || [];
+  if (!allowedIds.includes(userId)) redirect("/");
+
   const client = await clerkClient();
   const { data: users } = await client.users.getUserList({
     limit: 100,
