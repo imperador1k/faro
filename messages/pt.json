@@ -83,7 +83,13 @@
     "login_link": "Inicia sessão",
     "sign_in_title": "Entrar",
     "sign_in_subtitle": "Inicia sessão para salvar o teu progresso",
-    "continue_with_google": "Continuar com Google"
+    "continue_with_google": "Continuar com Google",
+    "carousel_1_title": "Aprende um novo idioma",
+    "carousel_1_desc": "Domina o vocabulário com o nosso sistema gamificado.",
+    "carousel_2_title": "Mantém a tua Ofensiva",
+    "carousel_2_desc": "Pratica todos os dias para subires de nível e ganhares recompensas.",
+    "carousel_3_title": "Desafia os teus amigos",
+    "carousel_3_desc": "Compete nas ligas e descobre quem aprende mais rápido."
   },
   "Feed": {
     "image_size_error": "A imagem não pode ter mais de 5MB.",

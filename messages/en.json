@@ -83,7 +83,13 @@
     "login_link": "Log in",
     "sign_in_title": "Sign In",
     "sign_in_subtitle": "Sign in to save your progress",
-    "continue_with_google": "Continue with Google"
+    "continue_with_google": "Continue with Google",
+    "carousel_1_title": "Learn a new language",
+    "carousel_1_desc": "Master vocabulary with our gamified system.",
+    "carousel_2_title": "Maintain your Streak",
+    "carousel_2_desc": "Practice every day to level up and earn rewards.",
+    "carousel_3_title": "Challenge your friends",
+    "carousel_3_desc": "Compete in leagues and see who learns faster."
   },
   "Feed": {
     "image_size_error": "The image cannot be larger than 5MB.",

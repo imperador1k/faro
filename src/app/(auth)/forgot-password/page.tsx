@@ -145,7 +145,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center p-4 sm:p-8 relative overflow-hidden bg-sky-50 font-nunito">
+    <div className="w-full max-w-[420px] relative select-none font-nunito">
       {/* Background Animated Blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -170,7 +170,7 @@ export default function ForgotPasswordPage() {
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-[120px] lg:-top-[140px] left-1/2 -translate-x-1/2 w-48 h-48 lg:w-56 lg:h-56 drop-shadow-2xl z-20 pointer-events-none"
+          className="absolute -top-[120px] lg:-top-[140px] left-1/2 -translate-x-1/2 w-48 h-48 lg:w-56 lg:h-56 z-20 pointer-events-none"
         >
           <Image src="/marco.png" alt="Marco" fill className="object-contain" />
         </motion.div>
@@ -279,7 +279,7 @@ export default function ForgotPasswordPage() {
                   <p className="text-slate-400 font-bold text-base">
                     {t.rich("forgot_pwd_code_desc_rich", {
                       email: email,
-                      highlight: (chunks) => (
+                      highlight: (chunks: React.ReactNode) => (
                         <span className="text-[#1cb0f6]">{chunks}</span>
                       ),
                     })}

@@ -136,10 +136,18 @@ export default function CustomSignUp() {
           setTimeout(() => setIsLoading(false), 3000);
         }
       } else {
+        const state = useOnboardingStore.getState();
         await signUp.authenticateWithRedirect({
           strategy: "oauth_google",
           redirectUrl: "/sso-callback",
           redirectUrlComplete: "/learn",
+          unsafeMetadata: {
+            onboarding: {
+              experienceLevel: state.experienceLevel,
+              motivation: state.motivation,
+              selectedCourse: state.selectedCourse,
+            },
+          },
         });
       }
     } catch (err) {
@@ -155,9 +163,17 @@ export default function CustomSignUp() {
     setIsLoading(true);
     setError("");
     try {
+      const state = useOnboardingStore.getState();
       await signUp.create({
         emailAddress: email,
         password,
+        unsafeMetadata: {
+          onboarding: {
+            experienceLevel: state.experienceLevel,
+            motivation: state.motivation,
+            selectedCourse: state.selectedCourse,
+          },
+        },
       });
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
@@ -216,7 +232,7 @@ export default function CustomSignUp() {
 
   if (showLoading) {
     return (
-      <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center bg-sky-50 dark:bg-slate-900 overflow-hidden">
+      <div className="w-full flex flex-col items-center justify-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -250,7 +266,7 @@ export default function CustomSignUp() {
   }
 
   return (
-    <div className="min-h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-center bg-sky-50 dark:bg-slate-900 relative p-4 sm:p-6 select-none">
+    <div className="w-full max-w-[420px] relative select-none">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(#1cb0f6_1.5px,transparent_1.5px)] [background-size:32px_32px] opacity-[0.15] dark:opacity-[0.05] pointer-events-none z-0"></div>
 
@@ -263,7 +279,7 @@ export default function CustomSignUp() {
       >
         {/* Playful Mascot Top */}
         <motion.div
-          className="w-32 h-32 absolute -top-[70px] left-1/2 -translate-x-1/2 z-30 drop-shadow-xl pointer-events-none"
+          className="w-32 h-32 absolute -top-[70px] left-1/2 -translate-x-1/2 z-30 pointer-events-none"
           animate={{ y: [-4, 4, -4], rotate: [-2, 2, -2] }}
           transition={{
             repeat: Infinity,

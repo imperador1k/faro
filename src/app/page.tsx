@@ -7,6 +7,7 @@ import Image from "next/image";
 import { LandingCTA } from "@/components/shared/landing-cta";
 import { LoopingFlowerLottie } from "@/components/ui/lottie-animation";
 import { ClientIntroOverlay } from "@/components/shared/client-intro-overlay";
+import { HeaderActions } from "@/components/shared/header-actions";
 
 export const dynamic = "force-dynamic";
 
@@ -54,9 +55,10 @@ export default async function Home() {
           >
             <div className="relative h-11 w-11 overflow-hidden rounded-xl shadow-sm border-2 border-stone-100 dark:border-slate-800 shadow-stone-200 dark:shadow-none">
               <Image
-                src="/icon.png"
+                src="/faro_icon.png"
                 alt="Faro Logo"
                 fill
+                unoptimized
                 className="object-cover"
               />
             </div>
@@ -64,6 +66,7 @@ export default async function Home() {
               Faro
             </span>
           </Link>
+          <HeaderActions />
         </div>
       </header>
 

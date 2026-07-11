@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Offline | Faro</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #374151;
+      --text-muted: #6b7280;
+      --btn-bg: #58cc02;
+      --btn-border: #46a302;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --text: #f8fafc;
+        --text-muted: #94a3b8;
+      }
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      text-align: center;
+      padding: 1.5rem;
+    }
+    .container {
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    img {
+      width: 160px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 1.75rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      border-radius: 1rem;
+      font-weight: 800;
+      font-size: 1.125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      color: #ffffff;
+      background-color: var(--btn-bg);
+      border: none;
+      border-bottom: 4px solid var(--btn-border);
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      margin-top: 1rem;
+    }
+    .btn:active {
+      transform: translateY(4px);
+      border-bottom-width: 0px;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="/duo_crying.png" alt="Mascote Triste" />
+    <h1>Parece que estás offline!</h1>
+    <p>Sem ligação à internet no momento. As funcionalidades offline estão disponíveis mas algumas ações precisam de rede.</p>
+    <button class="btn" onclick="window.location.reload()">Tentar Novamente</button>
+  </div>
+</body>
+</html>

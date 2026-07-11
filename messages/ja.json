@@ -83,7 +83,13 @@
     "login_link": "今すぐログイン",
     "sign_in_title": "ログイン",
     "sign_in_subtitle": "進行状況を保存するにはログインしてください",
-    "continue_with_google": "Googleで続行"
+    "continue_with_google": "Googleで続行",
+    "carousel_1_title": "新しい言語を学ぶ",
+    "carousel_1_desc": "ゲーム化されたシステムで語彙をマスターしましょう。",
+    "carousel_2_title": "連続記録を維持する",
+    "carousel_2_desc": "毎日練習してレベルアップし、報酬を獲得しましょう。",
+    "carousel_3_title": "友達に挑戦する",
+    "carousel_3_desc": "リーグで競い合い、誰が一番早く学ぶか見てみましょう。"
   },
   "Feed": {
     "image_size_error": "画像は5MB以下である必要があります。",
@@ -2337,12 +2343,13 @@
     "no_results": "\"{query}\" に一致する単語が見つかりませんでした。",
     "dojo_button": "道場を開始",
     "dojo_subtitle": "クイックミッション (+20 XP)",
-  "pwa": {
-    "title": "Faroアプリを入手",
-    "description": "インストールして高速アクセスとオフライン学習。",
-    "install_button": "インストール",
-    "download_button": "ダウンロード",
-    "later": "後で",
-    "dismiss": "閉じる"
+    "pwa": {
+      "title": "Faroアプリを入手",
+      "description": "インストールして高速アクセスとオフライン学習。",
+      "install_button": "インストール",
+      "download_button": "ダウンロード",
+      "later": "後で",
+      "dismiss": "閉じる"
+    }
   }
 }

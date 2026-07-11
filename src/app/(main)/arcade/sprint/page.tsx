@@ -174,7 +174,7 @@ export default function VocabularySprint() {
       <div className="flex items-center justify-between mb-12">
         <button
           onClick={() => router.push("/arcade")}
-          className="text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 font-bold uppercase text-sm tracking-wider"
+          className="text-stone-400 dark:text-slate-400 hover:text-stone-600 dark:hover:text-slate-300 font-bold uppercase text-sm tracking-wider"
         >
           &larr; {t("exit")}
         </button>

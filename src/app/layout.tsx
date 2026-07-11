@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
       default: t("title"),
     },
     description: t("description"),
-    keywords: t("keywords").split(",").map((k) => k.trim()),
+    keywords: t("keywords").split(",").map((k: string) => k.trim()),
     authors: [{ name: "Faro" }],
     openGraph: {
       type: "website",
@@ -86,6 +86,7 @@ import { UISoundsProvider } from "@/components/providers/ui-sound-provider";
 export const dynamic = "force-dynamic";
 
 import { Analytics } from "@vercel/analytics/react";
+import { ptPT, enUS, esES, frFR, deDE, itIT, jaJP, ukUA, arSA } from "@clerk/localizations";
 import { NextIntlClientProvider } from "next-intl";
 
 
@@ -97,18 +98,18 @@ export default async function RootLayout({
   const locale = await getLocale();
   const messages = await getMessages();
 
-  const clerkLocaleImport: Record<string, () => Promise<any>> = {
-    pt: () => import("@clerk/localizations/pt-PT").then((m) => m.ptPT),
-    en: () => import("@clerk/localizations/en-US").then((m) => m.enUS),
-    es: () => import("@clerk/localizations/es-ES").then((m) => m.esES),
-    fr: () => import("@clerk/localizations/fr-FR").then((m) => m.frFR),
-    de: () => import("@clerk/localizations/de-DE").then((m) => m.deDE),
-    it: () => import("@clerk/localizations/it-IT").then((m) => m.itIT),
-    ja: () => import("@clerk/localizations/ja-JP").then((m) => m.jaJP),
-    uk: () => import("@clerk/localizations/uk-UA").then((m) => m.ukUA),
-    ar: () => import("@clerk/localizations/ar-SA").then((m) => m.arSA),
+  const clerkLocales: Record<string, any> = {
+    pt: ptPT,
+    en: enUS,
+    es: esES,
+    fr: frFR,
+    de: deDE,
+    it: itIT,
+    ja: jaJP,
+    uk: ukUA,
+    ar: arSA,
   };
-  const clerkLocale = clerkLocaleImport[locale] ? await clerkLocaleImport[locale]() : undefined;
+  const clerkLocale = clerkLocales[locale] || enUS;
 
   return (
     <ClerkProvider localization={clerkLocale}>
@@ -176,3 +177,4 @@ export default async function RootLayout({
     </ClerkProvider>
   );
 }
+ 

@@ -2,8 +2,7 @@
 
 import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { motion } from "framer-motion";
-import { Check, Sparkles } from "lucide-react";
-import Image from "next/image";
+import { Check, Sparkles, BookOpen, Brain, GraduationCap, Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const LEVELS = [
@@ -11,7 +10,7 @@ const LEVELS = [
     id: "beginner",
     titleKey: "levels.beginner.title",
     descriptionKey: "levels.beginner.description",
-    icon: "/duo_happy.png",
+    icon: BookOpen,
     color: "bg-green-100",
     borderColor: "border-green-200",
     accent: "text-green-600",
@@ -20,7 +19,7 @@ const LEVELS = [
     id: "basic",
     titleKey: "levels.basic.title",
     descriptionKey: "levels.basic.description",
-    icon: "/duo_thinking.png",
+    icon: Brain,
     color: "bg-blue-100",
     borderColor: "border-blue-200",
     accent: "text-blue-600",
@@ -29,7 +28,7 @@ const LEVELS = [
     id: "intermediate",
     titleKey: "levels.intermediate.title",
     descriptionKey: "levels.intermediate.description",
-    icon: "/duo_gentleman.png",
+    icon: GraduationCap,
     color: "bg-amber-100",
     borderColor: "border-amber-200",
     accent: "text-amber-600",
@@ -38,7 +37,7 @@ const LEVELS = [
     id: "advanced",
     titleKey: "levels.advanced.title",
     descriptionKey: "levels.advanced.description",
-    icon: "/duo_detective.png",
+    icon: Trophy,
     color: "bg-purple-100",
     borderColor: "border-purple-200",
     accent: "text-purple-600",
@@ -78,11 +77,10 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
           className="w-28 h-28 relative"
         >
           <div className="absolute inset-0 bg-yellow-100 rounded-full blur-2xl opacity-50 animate-pulse" />
-          <Image
+          <img
             src="/marco.png"
             alt={t("marco_mascot_alt")}
-            fill
-            className="object-contain relative z-10"
+            className="object-contain relative z-10 w-full h-full"
           />
         </motion.div>
 
@@ -136,14 +134,9 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
 
             <div className="flex items-center gap-4 mb-4 relative z-10">
               <div
-                className={`w-16 h-16 relative flex-shrink-0 rounded-2xl p-2 bg-white dark:bg-slate-900 shadow-sm border border-gray-100`}
+                className={`w-16 h-16 flex items-center justify-center flex-shrink-0 rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-gray-100`}
               >
-                <Image
-                  src={level.icon}
-                  alt={t(level.titleKey)}
-                  fill
-                  className="object-contain p-1"
-                />
+                <level.icon className={`w-8 h-8 ${level.accent}`} strokeWidth={2.5} />
               </div>
               <div className="flex-1">
                 <h3 className="font-black text-xl text-[#042c60] leading-none mb-1">

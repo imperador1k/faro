@@ -83,7 +83,13 @@
     "login_link": "Inicia sesión ahora",
     "sign_in_title": "Entrar",
     "sign_in_subtitle": "Inicia sesión para guardar tu progreso",
-    "continue_with_google": "Continuar con Google"
+    "continue_with_google": "Continuar con Google",
+    "carousel_1_title": "Aprende un nuevo idioma",
+    "carousel_1_desc": "Domina el vocabulario con nuestro sistema gamificado.",
+    "carousel_2_title": "Mantén tu Racha",
+    "carousel_2_desc": "Practica todos los días para subir de nivel y ganar recompensas.",
+    "carousel_3_title": "Desafía a tus amigos",
+    "carousel_3_desc": "Compite en ligas y descubre quién aprende más rápido."
   },
   "Feed": {
     "image_size_error": "La imagen no puede tener más de 5MB.",
@@ -2337,12 +2343,13 @@
     "no_results": "No se encontraron palabras para \"{query}\".",
     "dojo_button": "INICIAR DOJO",
     "dojo_subtitle": "Misión rápida (+20 XP)",
-  "pwa": {
-    "title": "Consigue la app de Faro",
-    "description": "Instala para acceso más rápido y aprendizaje sin conexión.",
-    "install_button": "Instalar",
-    "download_button": "Descargar",
-    "later": "Ahora no",
-    "dismiss": "Cerrar"
+    "pwa": {
+      "title": "Consigue la app de Faro",
+      "description": "Instala para acceso más rápido y aprendizaje sin conexión.",
+      "install_button": "Instalar",
+      "download_button": "Descargar",
+      "later": "Ahora no",
+      "dismiss": "Cerrar"
+    }
   }
 }

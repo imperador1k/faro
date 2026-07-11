@@ -92,8 +92,12 @@ async function notifyClients(type, data) {
 
 // ---- Install & Activate ----
 
-self.addEventListener("install", () => {
-  self.skipWaiting();
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE.STATIC).then((cache) => {
+      return cache.addAll(["/offline.html", "/duo_crying.png"]);
+    }).then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener("activate", (event) => {
@@ -139,10 +143,8 @@ async function networkFirst(request, cacheName) {
     const cached = await caches.match(request);
     if (cached) return cached;
     if (request.destination === "document") {
-      return new Response(
-        "<html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Faro</title><style>body{font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#f8fafc;color:#0f172a;text-align:center;padding:2rem}div{max-width:400px}h1{font-size:1.5rem;margin-bottom:0.5rem}p{color:#475569;line-height:1.5}</style></head><body><div><h1>Sem ligacao a internet</h1><p>As funcionalidades offline estao disponiveis mas algumas acoes precisam de rede.</p></div></body></html>",
-        { headers: { "Content-Type": "text/html;charset=UTF-8" } },
-      );
+      const offlinePage = await caches.match("/offline.html");
+      if (offlinePage) return offlinePage;
     }
   }
 }

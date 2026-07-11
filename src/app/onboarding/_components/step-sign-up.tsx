@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 export const StepSignUp = () => {
-  const t = useTranslations("onboarding");
+  const t = useTranslations("Onboarding");
   const { placementResults, experienceLevel } = useOnboardingStore();
 
   // Calculate potential rewards to show
@@ -39,8 +39,8 @@ export const StepSignUp = () => {
         >
           <div className="absolute inset-0 bg-yellow-400/20 rounded-full blur-3xl animate-pulse" />
           <Image
-            src="/duo_happy.png"
-            alt="Happy Duo"
+            src="/marco.png"
+            alt="Faro Mascot"
             fill
             className="object-contain relative z-10"
           />
