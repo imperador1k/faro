@@ -11,7 +11,6 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-// Maps Clerk's webhook slug → our internal template type
 const TEMPLATE_MAP: Record<string, string> = {
   email_link_sign_in: "email_link_sign_in",
   email_link_sign_up: "email_link_sign_up",
@@ -26,24 +25,9 @@ const TEMPLATE_MAP: Record<string, string> = {
   sign_in_from_new_device: "sign_in_from_new_device",
 };
 
-// Extract the first href from Clerk's rendered HTML
 function extractLink(html: string): string | undefined {
   const match = html.match(/<a[^>]+href="([^"]+)"/i);
   return match?.[1];
-}
-
-// Extract a 6-digit OTP code from rendered HTML
-function extractOtp(html: string): string | undefined {
-  for (const pattern of [/\b(\d{6})\b/, /(\d{6})/, /(\d{3}\s?\d{3})/]) {
-    const match = html.match(pattern);
-    if (match) return match[1].replace(/\s/g, "");
-  }
-  // Fallback: look for common Clerk OTP patterns
-  if (html.includes("otp_code")) {
-    const fallback = html.match(/>(\d{6})</);
-    return fallback?.[1];
-  }
-  return undefined;
 }
 
 export async function POST(req: Request) {
@@ -86,12 +70,17 @@ export async function POST(req: Request) {
     return new NextResponse(null, { status: 200 });
   }
 
-  console.log("[clerk-webhook] Payload data keys:", Object.keys(data));
-  const emailAddress = (data.email_address as string) || (data.to as string) || (data.recipient as string) || "";
-  const clerkUserId = data.user_id as string;
-  console.log("[clerk-webhook] Extracted email:", emailAddress, "userId:", clerkUserId);
+  // Extract email address and user ID from Clerk payload
+  const emailAddress = (data.to_email_address as string) || "";
+  const clerkUserId = (data.user_id as string) || null;
+  const clerkBody = (data.body as string) ?? "";
 
-  // Determine user's language preference
+  // Nested data block with template variables
+  const nestedData = data.data as Record<string, unknown> | undefined;
+  const clerkUser = nestedData?.user as Record<string, unknown> | undefined;
+  const effectiveUserId = clerkUserId || (clerkUser?.email_address as string) || null;
+
+  // Determine user's language preference from DB
   let locale = "pt";
   if (clerkUserId) {
     try {
@@ -107,17 +96,11 @@ export async function POST(req: Request) {
     }
   }
 
-  // Extract dynamic values from Clerk's rendered body
-  const clerkBody = (data.body as string) ?? "";
+  // Extract values from Clerk's payload — prefer nested data, fallback to HTML parsing
+  const otpCode = (nestedData?.otp_code as string) || "";
   const magicLink = extractLink(clerkBody);
-  const otpCode = extractOtp(clerkBody);
-
-  const now = new Date();
-  const requestedAt = now.toLocaleTimeString(locale === "en" ? "en-US" : "pt-PT", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  const requestedFrom = (data.from_email_name as string) || "localização desconhecida";
+  const requestedFrom = (nestedData?.requested_from as string) || "";
+  const requestedAt = (nestedData?.requested_at as string) || "";
 
   const html = renderClerkEmail(templateType, locale, {
     magic_link: magicLink,
@@ -136,11 +119,12 @@ export async function POST(req: Request) {
     return new NextResponse("Resend not configured", { status: 200 });
   }
 
+  if (!emailAddress) {
+    console.warn("[clerk-webhook] No recipient email found in payload");
+    return new NextResponse("No recipient", { status: 200 });
+  }
+
   try {
-    if (!emailAddress) {
-      console.warn("[clerk-webhook] No recipient email found in payload");
-      return new NextResponse("No recipient", { status: 200 });
-    }
     let fromAddress = process.env.RESEND_FROM_EMAIL ?? "Faro <noreply@miguelweb.dev>";
     fromAddress = fromAddress.replace(/^"|"$/g, "");
     const { error } = await resend.emails.send({
