@@ -108,7 +108,7 @@ export default async function RootLayout({
     uk: () => import("@clerk/localizations/uk-UA").then((m) => m.ukUA),
     ar: () => import("@clerk/localizations/ar-SA").then((m) => m.arSA),
   };
-  const clerkLocale = clerkLocaleImport[locale]?.() ?? undefined;
+  const clerkLocale = clerkLocaleImport[locale] ? await clerkLocaleImport[locale]() : undefined;
 
   return (
     <ClerkProvider localization={clerkLocale}>
