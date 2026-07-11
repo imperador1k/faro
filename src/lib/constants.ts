@@ -38,3 +38,36 @@ export function getLocaleForLanguage(language: string): string {
 
 /** Default language if nothing else is available */
 export const DEFAULT_LANGUAGE = "English";
+
+// ============================================================
+// NATIVE APP DOWNLOADS — Platform-specific install URLs
+// ============================================================
+// Set to empty string to hide the download option for a platform.
+// The PWA installer will show the native download button for
+// the detected platform if a URL is configured, otherwise
+// falls back to the PWA beforeinstallprompt.
+
+export const APP_DOWNLOADS: Record<string, string> = {
+  android: "",
+  ios: "",
+  windows: "",
+  macos: "",
+  linux: "",
+};
+
+// ============================================================
+// PWA INSTALLER SETTINGS
+// ============================================================
+
+export const PWA_INSTALLER = {
+  /** Minimum page views before the prompt is first shown */
+  engagementThreshold: 3,
+  /** Days to wait after dismissal before showing again */
+  dismissCooldownDays: 7,
+  /** localStorage keys */
+  storageKeys: {
+    engagement: "faro-pwa-engagement",
+    dismissed: "faro-pwa-dismissed",
+    installed: "faro-pwa-installed",
+  },
+};

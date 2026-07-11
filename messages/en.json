@@ -2331,5 +2331,13 @@
     "no_results": "No words found for \"{query}\".",
     "dojo_button": "START DOJO",
     "dojo_subtitle": "Quick Mission (+20 XP)"
+  },
+  "pwa": {
+    "title": "Get the Faro App",
+    "description": "Install for faster access and offline learning.",
+    "install_button": "Install",
+    "download_button": "Download",
+    "later": "Not now",
+    "dismiss": "Dismiss"
   }
 }

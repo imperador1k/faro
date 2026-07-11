@@ -2337,5 +2337,13 @@
     "no_results": "Nenhuma palavra encontrada para \"{query}\".",
     "dojo_button": "INICIAR DOJO",
     "dojo_subtitle": "Missão Rápida (+20 XP)"
+  },
+  "pwa": {
+    "title": "Instala a Faro no teu dispositivo",
+    "description": "Acede mais rápido e aprende mesmo offline.",
+    "install_button": "Instalar",
+    "download_button": "Descarregar",
+    "later": "Agora não",
+    "dismiss": "Fechar"
   }
 }
