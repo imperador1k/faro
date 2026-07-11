@@ -110,13 +110,20 @@ export async function POST(req: Request) {
   const magicLink = extractLink(clerkBody);
   const otpCode = extractOtp(clerkBody);
 
+  const now = new Date();
+  const requestedAt = now.toLocaleTimeString(locale === "en" ? "en-US" : "pt-PT", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const requestedFrom = (data.from_email_name as string) || "localização desconhecida";
+
   const html = renderClerkEmail(templateType, locale, {
     magic_link: magicLink,
     action_url: magicLink,
     otp_code: otpCode,
     ttl_minutes: "10",
-    requested_from: "",
-    requested_at: "",
+    requested_from: requestedFrom,
+    requested_at: requestedAt,
     inviter_name: data.inviter_name as string | undefined,
     inviter_email: data.inviter_email as string | undefined,
     user_email_address: emailAddress,
@@ -128,7 +135,8 @@ export async function POST(req: Request) {
   }
 
   try {
-    const fromAddress = process.env.RESEND_FROM_EMAIL ?? "Faro <noreply@miguelweb.dev>";
+    let fromAddress = process.env.RESEND_FROM_EMAIL ?? "Faro <noreply@miguelweb.dev>";
+    fromAddress = fromAddress.replace(/^"|"$/g, "");
     await resend.emails.send({
       from: fromAddress,
       to: emailAddress,
