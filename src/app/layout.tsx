@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import { ClerkProvider, ClerkLoading, ClerkLoaded } from "@clerk/nextjs";
-import { ptBR } from "@clerk/localizations";
 import { Toaster } from "sonner";
 import { OneSignalProvider } from "@/components/shared/OneSignalProvider";
 import { LoadingScreen } from "@/components/ui/loading-screen";
@@ -90,8 +89,23 @@ export default async function RootLayout({
   const locale = await getLocale();
   const messages = await getMessages();
 
+  const clerkLocaleMap: Record<string, () => Promise<{ default: unknown }>> = {
+    pt: () => import("@clerk/localizations/pt-BR"),
+    en: () => import("@clerk/localizations/en-US"),
+    es: () => import("@clerk/localizations/es-ES"),
+    fr: () => import("@clerk/localizations/fr-FR"),
+    de: () => import("@clerk/localizations/de-DE"),
+    it: () => import("@clerk/localizations/it-IT"),
+    ja: () => import("@clerk/localizations/ja-JP"),
+    uk: () => import("@clerk/localizations/uk-UA"),
+    ar: () => import("@clerk/localizations/ar-SA"),
+  };
+  const clerkLocale = clerkLocaleMap[locale]
+    ? (await clerkLocaleMap[locale]()).default
+    : undefined;
+
   return (
-    <ClerkProvider localization={ptBR}>
+    <ClerkProvider localization={clerkLocale}>
       <html lang={locale} suppressHydrationWarning>
         <body
           className={`${nunito.className} bg-slate-50 dark:bg-slate-950 transition-colors duration-300`}
