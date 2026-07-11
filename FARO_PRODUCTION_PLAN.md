@@ -14,6 +14,7 @@
 6. [Monetização & Negócio](#6-monetização--negócio)
 7. [Qualidade & Testes](#7-qualidade--testes)
 8. [Referências Técnicas](#8-referências-técnicas)
+9. [Marketing & Re-Engagement Email System](#9-marketing--re-engagement-email-system-plano-detalhado)
 
 ---
 
@@ -90,12 +91,193 @@
 | O quê | Status |
 |---|---|
 | **Resend configurado** | ✅ No package.json |
-| **Email templates Clerk** | ⚠️ Template básico, precisa de design Faro (já iniciado) |
-| **Transactional emails** (bem-vindo, recovery, subscrição) | ❌ Não implementados |
-| **Email de confirmação de pagamento** | ❌ Não implementado |
-| **Weekly report / streak reminder** | ❌ Não implementado |
+| **Email templates Clerk (transacionais: OTP, magic link, segurança)** | ✅ 11 templates, PT/EN, Faro design, enviados via Resend webhook |
+| **Transactional emails** (bem-vindo, recovery, subscrição) | ⚠️ Parcial (Clerk cobre recovery e verificação). Faltam: confirmação pagamento, boas-vindas pós-registo |
+| **Email marketing / re-engagement** | ❌ Não implementado (ver plano detalhado na secção 9) |
 | **Email delivery monitoring** | ❌ Resend webhooks não configurados |
 | **SPF/DKIM/DMARC** | ❌ Não configurado no domínio |
+
+---
+
+## 9. Marketing & Re-Engagement Email System (Plano Detalhado)
+
+> Estratégia completa para campanhas de email automáticas: re-engagement, streak, notificações, upsell.
+> Toda a comunicação usa o design Faro (ver `src/lib/clerk-emails.ts` + `renderClerkEmail()`).
+
+### 9.1 Dados Disponíveis para Segmentação
+
+| Dado | Tabela / Fonte | Exemplo |
+|---|---|---|
+| **Idioma nativo** | `userProgress.nativeLanguage` | `"pt"`, `"en"`, `"es"` |
+| **Idioma a aprender** | `userProgress.activeLanguage` | `"English"`, `"Japanese"` |
+| **Streak atual** | `userProgress.streak` | `7` (dias consecutivos) |
+| **Maior streak** | `userProgress.longestStreak` | `30` |
+| **Último dia de atividade** | `userProgress.lastStreakDate` | `2026-07-10` |
+| **XP total** | `userProgress.totalXpEarned` | `1250` |
+| **XP hoje** | `userDailyStats.xpGained` (filtered by today) | `50` |
+| **Liga atual** | `userProgress.league` | `"GOLD"` |
+| **Nível autoavaliado** | `userProgress.experienceLevel` | `"beginner"`, `"intermediate"` |
+| **Motivação** | `userProgress.motivation` | `"viagem"`, `"trabalho"` |
+| **Nível CEFR** | `userProgress.cefrLevels` (JSONB) | `{ "English": "B1" }` |
+| **PRO?** | `userSubscriptions` (derived) | `true` / `false` |
+| **Hearts restantes** | `userProgress.hearts` | `0` (sem corações = bloqueado) |
+| **XP boosts ativos** | `userProgress.xpBoostLessons` | `3` |
+| **Streak freezes restantes** | `userProgress.streakFreezes` | `1` |
+| **Notificações push ligadas?** | `userProgress.notificationsEnabled` | `true` |
+| **Data de registo** | `userProgress.createdAt` | `2026-01-15` |
+| **Convites enviados (cópias)** | `invitation` email webhook data | `inviter_name`, `inviter_email` |
+| **Feed de atividades** | `feedActivities` | streaks, conquistas, etc. |
+| **Prática histórica** | `practiceSessions` | writing, speaking, etc. |
+
+### 9.2 Tipos de Email Marketing (por Prioridade)
+
+| # | Tipo | Gatilho | Público-alvo | Prioridade |
+|---|------|---------|-------------|-----------|
+| 1 | **Streak em Risco** | Última streak ≥ 1 dia, `lastStreakDate` < hoje, ainda não recebeu hoje | Todos os users ativos | 🔴 Crítica |
+| 2 | **Volta, estamos com saudades** | `lastStreakDate` ≥ 3 dias atrás | Users inativos 3+ dias | 🔴 Crítica |
+| 3 | **Marco de Streak** | `streak` atingiu 7, 14, 30, 50, 100, 365 | User acabou de atingir marco | 🔴 Crítica |
+| 4 | **Perda de Streak** | Streak quebrada (ontem ativo, hoje não, sem freeze) | User que perdeu streak | 🟠 Alta |
+| 5 | **Freeze a acabar** | `streakFreezes = 1` e streak em risco | Users com 1 freeze restante | 🟠 Alta |
+| 6 | **XP Boost a expirar** | `xpBoostLessons > 0` e sem uso há 2 dias | Users com boost ativo não usado | 🟠 Alta |
+| 7 | **Corações cheios** | `hearts < 5` há > 5h (regeneraram) | Users que estavam sem corações | 🟠 Alta |
+| 8 | **Perigo na Liga** | Último dia da semana, user está nos últimos 3 da liga | Users em risco de descida | 🟠 Alta |
+| 9 | **Promoção de Liga** | Acabou de ser promovido (league-reset cron) | Users que subiram de liga | 🟠 Alta |
+| 10 | **Re-engagement (longo prazo)** | Inativo 7, 14, 30, 60, 90 dias | Users inativos | 🟠 Alta |
+| 11 | **Novos conteúdos** | Unidades/lições novas adicionadas ao curso ativo | Users desse curso | 🟡 Média |
+| 12 | **PRO Upsell** | Inativo + não PRO, ou atingiu limite de hearts frequente | Free users elegíveis | 🟡 Média |
+| 13 | **Convite por email** | Amigo que recebeu invitation email registou-se | Quem convidou | 🟡 Média |
+| 14 | **Resumo Semanal** | Segunda-feira de manhã (weekly cron) | Todos os users ativos na semana | 🟢 Baixa |
+| 15 | **Testemunhos / Prova Social** | 1x por mês para users inativos | Users inativos 30+ dias | 🟢 Baixa |
+| 16 | **Aniversário na Faro** | 1 ano de registo | Todos os users | 🟢 Baixa |
+| 17 | **Vocabulary Review** | 7 dias sem abrir vocabulary vault | Users com palavras guardadas | 🟢 Baixa |
+
+### 9.3 Arquitetura de Implementação
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Vercel Cron                           │
+│  ┌─────────────────┐  ┌──────────────────┐              │
+│  │ /api/cron/       │  │ /api/cron/       │              │
+│  │ marketing-daily  │  │ marketing-weekly │              │
+│  │ (06:00 UTC)      │  │ (Mon 08:00 UTC)  │              │
+│  └────────┬────────┘  └────────┬─────────┘              │
+│           │                    │                         │
+│           ▼                    ▼                         │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │           src/lib/marketing-emails.ts              │   │
+│  │                                                    │   │
+│  │  • checkStreaksAtRisk()        → Resend            │   │
+│  │  • checkInactiveUsers()        → Resend            │   │
+│  │  • checkLeagueDanger()         → Resend            │   │
+│  │  • sendWeeklyDigest()          → Resend            │   │
+│  │  • checkExpiringBoosts()       → Resend            │   │
+│  │  • checkReplenishedHearts()    → Resend            │   │
+│  └──────────────────────────────────────────────────┘   │
+│                    │                                    │
+│                    ▼                                    │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │                Resend API                         │   │
+│  │  • Transactional (per-email)                     │   │
+│  │  • Broadcast (campaigns)                         │   │
+│  │  • Resend Audiences (segmentação)                │   │
+│  └──────────────────────────────────────────────────┘   │
+│                    │                                    │
+│                    ▼                                    │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │  Resend Webhooks → Logs / Analytics              │   │
+│  │  (delivered, opened, clicked, bounced)           │   │
+│  └──────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
+```
+
+### 9.4 Dependências a Instalar
+
+```bash
+npm install resend  # ✅ já instalado
+```
+
+— O Resend já está no projeto. Precisamos apenas da lógica.
+
+### 9.5 Estrutura de Ficheiros a Criar
+
+```
+src/
+├── lib/
+│   ├── marketing-emails.ts        # Lógica central de verificação + envio
+│   └── marketing-templates.ts     # Templates HTML de marketing (renderizados com design Faro)
+│
+├── app/api/cron/
+│   ├── marketing-daily/route.ts   # Cron diário (06:00 UTC)
+│   └── marketing-weekly/route.ts  # Cron semanal (Segunda 08:00 UTC)
+│
+└── types/
+    └── marketing.ts               # Tipos para campanhas, segmentos, etc.
+```
+
+### 9.6 Fluxo de Exemplo — "Streak em Risco"
+
+```
+1. Cron diário (06:00 UTC) → GET /api/cron/marketing-daily
+2. Valida CRON_SECRET
+3. marketing-emails.checkStreaksAtRisk():
+   a. Query DB:
+      SELECT userId, userName, nativeLanguage, streak, lastStreakDate
+      FROM userProgress
+      WHERE notificationsEnabled = true
+        AND lastStreakDate < CURRENT_DATE
+        AND streak >= 1
+   b. Para cada user:
+      i.   Skip se já recebeu email hoje (guardar em Redis/memória: "streak_email:{userId}:{date}")
+      ii.  Determinar locale = user.nativeLanguage (com fallback "pt")
+      iii. Render template:
+           - Assunto: "🔥 A tua streak de {streak} dias está em risco!" / "🔥 Your {streak}-day streak is at risk!"
+           - Corpo: "Faz uma lição hoje para manteres a tua streak ativa."
+           - CTA: "Praticar agora" → link para /learn
+           - Personalizado: nome do user, número de streak
+      iv.  Enviar via Resend:
+           resend.emails.send({
+             from: "Faro <suporte@miguelweb.dev>",
+             to: user.email,
+             subject: assunto,
+             html: htmlRenderizado,
+           })
+      v.   Log de envio (console.log → futuramente Sentry/logger)
+   c. Retornar resumo: { sent: 42, skipped: 10, failed: 1 }
+```
+
+### 9.7 Considerações Técnicas
+
+| Tópico | Decisão |
+|--------|---------|
+| **Rate limiting de envios** | Resend free: 100 emails/dia. Usar Redis para contar. Fazer batch de 10 em 10 com delays |
+| **Unsubscribe / opt-out** | Incluir link `unsubscribe` no footer. `mailto:` ou Resend suppression list |
+| **Frequência máxima por user** | Máx 1 email/dia por user. Preferência global: `notificationsEnabled` já existe |
+| **Base de users** | Começar com queries DB diretas. Escalar para filas (BullMQ + Redis) quando > 1000 users |
+| **Custos** | Resend: 100 emails/dia grátis. Depois $0.0001/email. 100k envios = $10 |
+| **Tracking** | Resend tracking pixels: opens, clicks. Verificar se domínio tem SPF/DKIM |
+| **Design** | Reutilizar `renderClerkEmail()` → refatorar para aceitar parâmetros de marketing (CTA, headline, corpo livre) |
+
+### 9.8 Ordem de Implementação Recomendada
+
+```
+FASE 1 (este mês):
+  • /api/cron/marketing-daily com 3 campanhas:
+    1. Streak em Risco
+    2. Corações Cheios
+    3. XP Boost a expirar
+
+FASE 2 (próximo mês):
+  • /api/cron/marketing-weekly:
+    4. Resumo Semanal
+    5. Perigo na Liga (domingo)
+    6. Promoção de Liga (segunda)
+
+FASE 3 (quando houver base de users > 500):
+  • Re-engagement (3/7/14/30 dias)
+  • PRO Upsell
+  • Aniversário na Faro
+  • Testemunhos / Prova Social
+```
 
 ---
 
