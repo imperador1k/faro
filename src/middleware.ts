@@ -3,7 +3,10 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { validateVaultToken } from "@/lib/vault-token";
 
-type ClerkAuthFn = () => Promise<{ userId: string | null }> & { protect: () => Promise<void> };
+interface ClerkAuthFn {
+  (): Promise<{ userId: string | null; sessionId: string | null }>;
+  protect: () => Promise<void>;
+}
 
 const isPublicRoute = createRouteMatcher([
   "/",
