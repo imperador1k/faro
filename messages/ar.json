@@ -2336,6 +2336,13 @@
     "empty_state_description": "انقر على الكلمات أثناء الدروس أو التقييم لحفظها هنا!",
     "no_results": "لم يتم العثور على كلمات لـ \"{query}\".",
     "dojo_button": "بدء الدوجو",
-    "dojo_subtitle": "مهمة سريعة (+20 نقطة خبرة)"
+    "dojo_subtitle": "مهمة سريعة (+20 نقطة خبرة)",
+  "pwa": {
+    "title": "احصل على تطبيق Faro",
+    "description": "ثبّت للوصول بشكل أسرع والتعلّم بدون إنترنت.",
+    "install_button": "تثبيت",
+    "download_button": "تنزيل",
+    "later": "ليس الآن",
+    "dismiss": "إغلاق"
   }
 }

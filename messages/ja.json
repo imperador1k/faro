@@ -2336,6 +2336,13 @@
     "empty_state_description": "レッスンや評価中に単語をクリックして、ここに保存しましょう！",
     "no_results": "\"{query}\" に一致する単語が見つかりませんでした。",
     "dojo_button": "道場を開始",
-    "dojo_subtitle": "クイックミッション (+20 XP)"
+    "dojo_subtitle": "クイックミッション (+20 XP)",
+  "pwa": {
+    "title": "Faroアプリを入手",
+    "description": "インストールして高速アクセスとオフライン学習。",
+    "install_button": "インストール",
+    "download_button": "ダウンロード",
+    "later": "後で",
+    "dismiss": "閉じる"
   }
 }

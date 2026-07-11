@@ -2336,6 +2336,13 @@
     "empty_state_description": "Cliquez sur des mots pendant les leçons ou l'évaluation pour les enregistrer ici !",
     "no_results": "Aucun mot trouvé pour \"{query}\".",
     "dojo_button": "DÉMARRER LE DOJO",
-    "dojo_subtitle": "Mission rapide (+20 XP)"
+    "dojo_subtitle": "Mission rapide (+20 XP)",
+  "pwa": {
+    "title": "Obtenez l'application Faro",
+    "description": "Installez pour un accès plus rapide et un apprentissage hors ligne.",
+    "install_button": "Installer",
+    "download_button": "Télécharger",
+    "later": "Pas maintenant",
+    "dismiss": "Fermer"
   }
 }

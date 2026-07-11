@@ -2336,6 +2336,13 @@
     "empty_state_description": "Klicke während der Lektionen oder Bewertungen auf Wörter, um sie hier zu speichern!",
     "no_results": "Keine Wörter für \"{query}\" gefunden.",
     "dojo_button": "DOJO STARTEN",
-    "dojo_subtitle": "Schnelle Mission (+20 XP)"
+    "dojo_subtitle": "Schnelle Mission (+20 XP)",
+  "pwa": {
+    "title": "Hole dir die Faro App",
+    "description": "Installieren für schnelleren Zugriff und Offline-Lernen.",
+    "install_button": "Installieren",
+    "download_button": "Herunterladen",
+    "later": "Später",
+    "dismiss": "Schließen"
   }
 }
