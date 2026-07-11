@@ -44,7 +44,7 @@ export default async function AdminUsersPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {users.map((user) => {
+              {users.map((user: { id: string; firstName: string | null; lastName: string | null; emailAddresses: { emailAddress: string }[]; imageUrl: string; publicMetadata: Record<string, unknown>; createdAt: number }) => {
                 const fullName =
                   [user.firstName, user.lastName].filter(Boolean).join(" ") ||
                   "Utilizador Anónimo";
