@@ -97,7 +97,7 @@ export default async function RootLayout({
   const locale = await getLocale();
   const messages = await getMessages();
 
-  const clerkLocaleImport = {
+  const clerkLocaleImport: Record<string, () => Promise<any>> = {
     pt: () => import("@clerk/localizations/pt-PT").then((m) => m.ptPT),
     en: () => import("@clerk/localizations/en-US").then((m) => m.enUS),
     es: () => import("@clerk/localizations/es-ES").then((m) => m.esES),
