@@ -1700,6 +1700,360 @@
       "lessons_5": "Lendário: 5 Lições",
       "xp_20": "Aquecimento: 20 XP",
       "lessons_4": "Consistência: 4 lições"
+    },
+    "items": {
+      "mente-curiosa": {
+        "title": "Neugieriger Geist",
+        "description": "Schaltet Neugieriger Geist frei"
+      },
+      "estudante-dedicado": {
+        "title": "Engagierter Student",
+        "description": "Schaltet Engagierter Student frei"
+      },
+      "aspirante": {
+        "title": "Anwärter",
+        "description": "Schaltet Anwärter frei"
+      },
+      "aprendiz": {
+        "title": "Lehrling",
+        "description": "Schaltet Lehrling frei"
+      },
+      "erudito": {
+        "title": "Gelehrter",
+        "description": "Schaltet Gelehrter frei"
+      },
+      "mestre": {
+        "title": "Meister",
+        "description": "Schaltet Meister frei"
+      },
+      "grao-mestre": {
+        "title": "Großmeister",
+        "description": "Schaltet Großmeister frei"
+      },
+      "sabio": {
+        "title": "Weiser",
+        "description": "Schaltet Weiser frei"
+      },
+      "iluminado": {
+        "title": "Der Erleuchtete",
+        "description": "Schaltet Der Erleuchtete frei"
+      },
+      "lendario": {
+        "title": "Legendär",
+        "description": "Schaltet Legendär frei"
+      },
+      "mitico": {
+        "title": "Mythisch",
+        "description": "Schaltet Mythisch frei"
+      },
+      "divino": {
+        "title": "Göttlich",
+        "description": "Schaltet Göttlich frei"
+      },
+      "omnisciente": {
+        "title": "Allwissend",
+        "description": "Schaltet Allwissend frei"
+      },
+      "o-criador": {
+        "title": "Der Schöpfer",
+        "description": "Schaltet Der Schöpfer frei"
+      },
+      "aquecimento": {
+        "title": "Aufwärmen",
+        "description": "Schaltet Aufwärmen frei"
+      },
+      "faisca": {
+        "title": "Funke",
+        "description": "Schaltet Funke frei"
+      },
+      "chama": {
+        "title": "Flamme",
+        "description": "Schaltet Flamme frei"
+      },
+      "incendio": {
+        "title": "Brand",
+        "description": "Schaltet Brand frei"
+      },
+      "inferno": {
+        "title": "Inferno",
+        "description": "Schaltet Inferno frei"
+      },
+      "centenario": {
+        "title": "Hundert",
+        "description": "Schaltet Hundert frei"
+      },
+      "obsessivo": {
+        "title": "Obsessiv",
+        "description": "Schaltet Obsessiv frei"
+      },
+      "meio-ano": {
+        "title": "Halbes Jahr",
+        "description": "Schaltet Halbes Jahr frei"
+      },
+      "imparavel": {
+        "title": "Unaufhaltsam",
+        "description": "Schaltet Unaufhaltsam frei"
+      },
+      "volta-ao-sol": {
+        "title": "Sonnenumrundung",
+        "description": "Schaltet Sonnenumrundung frei"
+      },
+      "marciano": {
+        "title": "Marsianer",
+        "description": "Schaltet Marsianer frei"
+      },
+      "milenio": {
+        "title": "Jahrtausend",
+        "description": "Schaltet Jahrtausend frei"
+      },
+      "eterno": {
+        "title": "Ewig",
+        "description": "Schaltet Ewig frei"
+      },
+      "alfabetizado": {
+        "title": "Alphabetisiert",
+        "description": "Schaltet Alphabetisiert frei"
+      },
+      "tagarela": {
+        "title": "Plaudertasche",
+        "description": "Schaltet Plaudertasche frei"
+      },
+      "poliglota-jr": {
+        "title": "Polyglotter Junior",
+        "description": "Schaltet Polyglotter Junior frei"
+      },
+      "tradutor": {
+        "title": "Übersetzer",
+        "description": "Schaltet Übersetzer frei"
+      },
+      "poeta": {
+        "title": "Dichter",
+        "description": "Schaltet Dichter frei"
+      },
+      "novelista": {
+        "title": "Romanautor",
+        "description": "Schaltet Romanautor frei"
+      },
+      "enciclopedia": {
+        "title": "Enzyklopädie",
+        "description": "Schaltet Enzyklopädie frei"
+      },
+      "bibliotecario": {
+        "title": "Bibliothekar",
+        "description": "Schaltet Bibliothekar frei"
+      },
+      "oraculo": {
+        "title": "Orakel",
+        "description": "Schaltet Orakel frei"
+      },
+      "profeta": {
+        "title": "Prophet",
+        "description": "Schaltet Prophet frei"
+      },
+      "preparado": {
+        "title": "Vorbereitet",
+        "description": "Schaltet Vorbereitet frei"
+      },
+      "tanque": {
+        "title": "Panzer",
+        "description": "Schaltet Panzer frei"
+      },
+      "intocavel": {
+        "title": "Unberührbar",
+        "description": "Schaltet Unberührbar frei"
+      },
+      "energizado": {
+        "title": "Energisch",
+        "description": "Schaltet Energisch frei"
+      },
+      "sobrecarga": {
+        "title": "Überladung",
+        "description": "Schaltet Überladung frei"
+      },
+      "alta-tensao": {
+        "title": "Hochspannung",
+        "description": "Schaltet Hochspannung frei"
+      },
+      "fresquinho": {
+        "title": "Frisch",
+        "description": "Schaltet Frisch frei"
+      },
+      "congelado": {
+        "title": "Gefroren",
+        "description": "Schaltet Gefroren frei"
+      },
+      "era-do-gelo": {
+        "title": "Eiszeit",
+        "description": "Schaltet Eiszeit frei"
+      },
+      "vivo": {
+        "title": "Lebendig",
+        "description": "Schaltet Lebendig frei"
+      },
+      "saudavel": {
+        "title": "Gesund",
+        "description": "Schaltet Gesund frei"
+      },
+      "perfeito": {
+        "title": "Perfekt",
+        "description": "Schaltet Perfekt frei"
+      },
+      "nivel-1": {
+        "title": "Stufe 1",
+        "description": "Schaltet Stufe 1 frei"
+      },
+      "nivel-5": {
+        "title": "Stufe 5",
+        "description": "Schaltet Stufe 5 frei"
+      },
+      "nivel-10": {
+        "title": "Stufe 10",
+        "description": "Schaltet Stufe 10 frei"
+      },
+      "nivel-20": {
+        "title": "Stufe 20",
+        "description": "Schaltet Stufe 20 frei"
+      },
+      "nivel-30": {
+        "title": "Stufe 30",
+        "description": "Schaltet Stufe 30 frei"
+      },
+      "nivel-40": {
+        "title": "Stufe 40",
+        "description": "Schaltet Stufe 40 frei"
+      },
+      "nivel-50": {
+        "title": "Stufe 50",
+        "description": "Schaltet Stufe 50 frei"
+      },
+      "nivel-60": {
+        "title": "Stufe 60",
+        "description": "Schaltet Stufe 60 frei"
+      },
+      "nivel-70": {
+        "title": "Stufe 70",
+        "description": "Schaltet Stufe 70 frei"
+      },
+      "nivel-80": {
+        "title": "Stufe 80",
+        "description": "Schaltet Stufe 80 frei"
+      },
+      "nivel-90": {
+        "title": "Stufe 90",
+        "description": "Schaltet Stufe 90 frei"
+      },
+      "nivel-100": {
+        "title": "Stufe 100",
+        "description": "Schaltet Stufe 100 frei"
+      },
+      "via-lactea": {
+        "title": "Milchstraße",
+        "description": "Schaltet Milchstraße frei"
+      },
+      "buraco-negro": {
+        "title": "Schwarzes Loch",
+        "description": "Schaltet Schwarzes Loch frei"
+      },
+      "multiverso": {
+        "title": "Multiversum",
+        "description": "Schaltet Multiversum frei"
+      },
+      "numero-da-besta": {
+        "title": "Zahl des Tieres",
+        "description": "Schaltet Zahl des Tieres frei"
+      },
+      "sorte-grande": {
+        "title": "Hauptgewinn",
+        "description": "Schaltet Hauptgewinn frei"
+      },
+      "ano-novo": {
+        "title": "Neues Jahr",
+        "description": "Schaltet Neues Jahr frei"
+      },
+      "futurista": {
+        "title": "Futuristisch",
+        "description": "Schaltet Futuristisch frei"
+      },
+      "over-9000": {
+        "title": "Über 9000",
+        "description": "Schaltet Über 9000 frei"
+      },
+      "fim-de-semana": {
+        "title": "Wochenende",
+        "description": "Schaltet Wochenende frei"
+      },
+      "mao-cheia": {
+        "title": "Eine Handvoll",
+        "description": "Schaltet Eine Handvoll frei"
+      },
+      "duas-maos": {
+        "title": "Zwei Hände",
+        "description": "Schaltet Zwei Hände frei"
+      },
+      "tres-semanas": {
+        "title": "Drei Wochen",
+        "description": "Schaltet Drei Wochen frei"
+      },
+      "quaresma": {
+        "title": "Fastenzeit",
+        "description": "Schaltet Fastenzeit frei"
+      },
+      "rico": {
+        "title": "Reich",
+        "description": "Schaltet Reich frei"
+      },
+      "milionario": {
+        "title": "Millionär",
+        "description": "Schaltet Millionär frei"
+      },
+      "passo-1": {
+        "title": "Schritt 1",
+        "description": "Schaltet Schritt 1 frei"
+      },
+      "passo-2": {
+        "title": "Schritt 2",
+        "description": "Schaltet Schritt 2 frei"
+      },
+      "passo-3": {
+        "title": "Schritt 3",
+        "description": "Schaltet Schritt 3 frei"
+      },
+      "passo-4": {
+        "title": "Schritt 4",
+        "description": "Schaltet Schritt 4 frei"
+      },
+      "maratona": {
+        "title": "Marathon",
+        "description": "Schaltet Marathon frei"
+      },
+      "monte-everest": {
+        "title": "Mount Everest",
+        "description": "Schaltet Mount Everest frei"
+      },
+      "profundezas": {
+        "title": "Tiefen",
+        "description": "Schaltet Tiefen frei"
+      },
+      "agua": {
+        "title": "Wasser",
+        "description": "Schaltet Wasser frei"
+      },
+      "terra": {
+        "title": "Erde",
+        "description": "Schaltet Erde frei"
+      },
+      "ar": {
+        "title": "Luft",
+        "description": "Schaltet Luft frei"
+      },
+      "fogo": {
+        "title": "Feuer",
+        "description": "Schaltet Feuer frei"
+      },
+      "eter": {
+        "title": "Äther",
+        "description": "Schaltet Äther frei"
+      }
     }
   },
   "quests_components": {

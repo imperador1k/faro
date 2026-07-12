@@ -1694,6 +1694,360 @@
       "lessons_5": "Legendary: 5 Lessons",
       "xp_20": "Warm Up: 20 XP",
       "lessons_4": "Consistency: 4 lessons"
+    },
+    "items": {
+      "mente-curiosa": {
+        "title": "Curious Mind",
+        "description": "Unlocks Curious Mind"
+      },
+      "estudante-dedicado": {
+        "title": "Dedicated Student",
+        "description": "Unlocks Dedicated Student"
+      },
+      "aspirante": {
+        "title": "Aspirant",
+        "description": "Unlocks Aspirant"
+      },
+      "aprendiz": {
+        "title": "Apprentice",
+        "description": "Unlocks Apprentice"
+      },
+      "erudito": {
+        "title": "Scholar",
+        "description": "Unlocks Scholar"
+      },
+      "mestre": {
+        "title": "Master",
+        "description": "Unlocks Master"
+      },
+      "grao-mestre": {
+        "title": "Grand Master",
+        "description": "Unlocks Grand Master"
+      },
+      "sabio": {
+        "title": "Sage",
+        "description": "Unlocks Sage"
+      },
+      "iluminado": {
+        "title": "Enlightened",
+        "description": "Unlocks Enlightened"
+      },
+      "lendario": {
+        "title": "Legendary",
+        "description": "Unlocks Legendary"
+      },
+      "mitico": {
+        "title": "Mythical",
+        "description": "Unlocks Mythical"
+      },
+      "divino": {
+        "title": "Divine",
+        "description": "Unlocks Divine"
+      },
+      "omnisciente": {
+        "title": "Omniscient",
+        "description": "Unlocks Omniscient"
+      },
+      "o-criador": {
+        "title": "The Creator",
+        "description": "Unlocks The Creator"
+      },
+      "aquecimento": {
+        "title": "Warm-up",
+        "description": "Unlocks Warm-up"
+      },
+      "faisca": {
+        "title": "Spark",
+        "description": "Unlocks Spark"
+      },
+      "chama": {
+        "title": "Flame",
+        "description": "Unlocks Flame"
+      },
+      "incendio": {
+        "title": "Blaze",
+        "description": "Unlocks Blaze"
+      },
+      "inferno": {
+        "title": "Inferno",
+        "description": "Unlocks Inferno"
+      },
+      "centenario": {
+        "title": "Centennial",
+        "description": "Unlocks Centennial"
+      },
+      "obsessivo": {
+        "title": "Obsessive",
+        "description": "Unlocks Obsessive"
+      },
+      "meio-ano": {
+        "title": "Half Year",
+        "description": "Unlocks Half Year"
+      },
+      "imparavel": {
+        "title": "Unstoppable",
+        "description": "Unlocks Unstoppable"
+      },
+      "volta-ao-sol": {
+        "title": "Trip Around The Sun",
+        "description": "Unlocks Trip Around The Sun"
+      },
+      "marciano": {
+        "title": "Martian",
+        "description": "Unlocks Martian"
+      },
+      "milenio": {
+        "title": "Millennium",
+        "description": "Unlocks Millennium"
+      },
+      "eterno": {
+        "title": "Eternal",
+        "description": "Unlocks Eternal"
+      },
+      "alfabetizado": {
+        "title": "Literate",
+        "description": "Unlocks Literate"
+      },
+      "tagarela": {
+        "title": "Chatty",
+        "description": "Unlocks Chatty"
+      },
+      "poliglota-jr": {
+        "title": "Polyglot Jr",
+        "description": "Unlocks Polyglot Jr"
+      },
+      "tradutor": {
+        "title": "Translator",
+        "description": "Unlocks Translator"
+      },
+      "poeta": {
+        "title": "Poet",
+        "description": "Unlocks Poet"
+      },
+      "novelista": {
+        "title": "Novelist",
+        "description": "Unlocks Novelist"
+      },
+      "enciclopedia": {
+        "title": "Encyclopedia",
+        "description": "Unlocks Encyclopedia"
+      },
+      "bibliotecario": {
+        "title": "Librarian",
+        "description": "Unlocks Librarian"
+      },
+      "oraculo": {
+        "title": "Oracle",
+        "description": "Unlocks Oracle"
+      },
+      "profeta": {
+        "title": "Prophet",
+        "description": "Unlocks Prophet"
+      },
+      "preparado": {
+        "title": "Prepared",
+        "description": "Unlocks Prepared"
+      },
+      "tanque": {
+        "title": "Tank",
+        "description": "Unlocks Tank"
+      },
+      "intocavel": {
+        "title": "Untouchable",
+        "description": "Unlocks Untouchable"
+      },
+      "energizado": {
+        "title": "Energized",
+        "description": "Unlocks Energized"
+      },
+      "sobrecarga": {
+        "title": "Overload",
+        "description": "Unlocks Overload"
+      },
+      "alta-tensao": {
+        "title": "High Voltage",
+        "description": "Unlocks High Voltage"
+      },
+      "fresquinho": {
+        "title": "Fresh",
+        "description": "Unlocks Fresh"
+      },
+      "congelado": {
+        "title": "Frozen",
+        "description": "Unlocks Frozen"
+      },
+      "era-do-gelo": {
+        "title": "Ice Age",
+        "description": "Unlocks Ice Age"
+      },
+      "vivo": {
+        "title": "Alive",
+        "description": "Unlocks Alive"
+      },
+      "saudavel": {
+        "title": "Healthy",
+        "description": "Unlocks Healthy"
+      },
+      "perfeito": {
+        "title": "Perfect",
+        "description": "Unlocks Perfect"
+      },
+      "nivel-1": {
+        "title": "Level 1",
+        "description": "Unlocks Level 1"
+      },
+      "nivel-5": {
+        "title": "Level 5",
+        "description": "Unlocks Level 5"
+      },
+      "nivel-10": {
+        "title": "Level 10",
+        "description": "Unlocks Level 10"
+      },
+      "nivel-20": {
+        "title": "Level 20",
+        "description": "Unlocks Level 20"
+      },
+      "nivel-30": {
+        "title": "Level 30",
+        "description": "Unlocks Level 30"
+      },
+      "nivel-40": {
+        "title": "Level 40",
+        "description": "Unlocks Level 40"
+      },
+      "nivel-50": {
+        "title": "Level 50",
+        "description": "Unlocks Level 50"
+      },
+      "nivel-60": {
+        "title": "Level 60",
+        "description": "Unlocks Level 60"
+      },
+      "nivel-70": {
+        "title": "Level 70",
+        "description": "Unlocks Level 70"
+      },
+      "nivel-80": {
+        "title": "Level 80",
+        "description": "Unlocks Level 80"
+      },
+      "nivel-90": {
+        "title": "Level 90",
+        "description": "Unlocks Level 90"
+      },
+      "nivel-100": {
+        "title": "Level 100",
+        "description": "Unlocks Level 100"
+      },
+      "via-lactea": {
+        "title": "Milky Way",
+        "description": "Unlocks Milky Way"
+      },
+      "buraco-negro": {
+        "title": "Black Hole",
+        "description": "Unlocks Black Hole"
+      },
+      "multiverso": {
+        "title": "Multiverse",
+        "description": "Unlocks Multiverse"
+      },
+      "numero-da-besta": {
+        "title": "Number Of The Beast",
+        "description": "Unlocks Number Of The Beast"
+      },
+      "sorte-grande": {
+        "title": "Big Luck",
+        "description": "Unlocks Big Luck"
+      },
+      "ano-novo": {
+        "title": "New Year",
+        "description": "Unlocks New Year"
+      },
+      "futurista": {
+        "title": "Futurist",
+        "description": "Unlocks Futurist"
+      },
+      "over-9000": {
+        "title": "Over 9000",
+        "description": "Unlocks Over 9000"
+      },
+      "fim-de-semana": {
+        "title": "Weekend",
+        "description": "Unlocks Weekend"
+      },
+      "mao-cheia": {
+        "title": "Handful",
+        "description": "Unlocks Handful"
+      },
+      "duas-maos": {
+        "title": "Two Hands",
+        "description": "Unlocks Two Hands"
+      },
+      "tres-semanas": {
+        "title": "Three Weeks",
+        "description": "Unlocks Three Weeks"
+      },
+      "quaresma": {
+        "title": "Lent",
+        "description": "Unlocks Lent"
+      },
+      "rico": {
+        "title": "Rich",
+        "description": "Unlocks Rich"
+      },
+      "milionario": {
+        "title": "Millionaire",
+        "description": "Unlocks Millionaire"
+      },
+      "passo-1": {
+        "title": "Step 1",
+        "description": "Unlocks Step 1"
+      },
+      "passo-2": {
+        "title": "Step 2",
+        "description": "Unlocks Step 2"
+      },
+      "passo-3": {
+        "title": "Step 3",
+        "description": "Unlocks Step 3"
+      },
+      "passo-4": {
+        "title": "Step 4",
+        "description": "Unlocks Step 4"
+      },
+      "maratona": {
+        "title": "Marathon",
+        "description": "Unlocks Marathon"
+      },
+      "monte-everest": {
+        "title": "Mount Everest",
+        "description": "Unlocks Mount Everest"
+      },
+      "profundezas": {
+        "title": "Depths",
+        "description": "Unlocks Depths"
+      },
+      "agua": {
+        "title": "Water",
+        "description": "Unlocks Water"
+      },
+      "terra": {
+        "title": "Earth",
+        "description": "Unlocks Earth"
+      },
+      "ar": {
+        "title": "Air",
+        "description": "Unlocks Air"
+      },
+      "fogo": {
+        "title": "Fire",
+        "description": "Unlocks Fire"
+      },
+      "eter": {
+        "title": "Aether",
+        "description": "Unlocks Aether"
+      }
     }
   },
   "quests_components": {
@@ -2337,6 +2691,15 @@
     "no_results": "No words found for \"{query}\".",
     "dojo_button": "START DOJO",
     "dojo_subtitle": "Quick Mission (+20 XP)"
+  },
+  "profile_setup": {
+    "title": "Set up your profile",
+    "description": "Choose a name so your friends can find you.",
+    "name_label": "Name",
+    "name_placeholder": "Enter your name...",
+    "photo_optional": "Photo (optional)",
+    "continue": "LET'S GO!",
+    "error_fallback": "Something went wrong. Try again."
   },
   "pwa": {
     "title": "Get the Faro App",

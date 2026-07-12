@@ -1700,6 +1700,360 @@
       "lessons_5": "Lendário: 5 Lições",
       "xp_20": "Aquecimento: 20 XP",
       "lessons_4": "Consistência: 4 lições"
+    },
+    "items": {
+      "mente-curiosa": {
+        "title": "Mente Curiosa",
+        "description": "Desbloqueia Mente Curiosa"
+      },
+      "estudante-dedicado": {
+        "title": "Estudante Dedicado",
+        "description": "Desbloqueia Estudante Dedicado"
+      },
+      "aspirante": {
+        "title": "Aspirante",
+        "description": "Desbloqueia Aspirante"
+      },
+      "aprendiz": {
+        "title": "Aprendiz",
+        "description": "Desbloqueia Aprendiz"
+      },
+      "erudito": {
+        "title": "Erudito",
+        "description": "Desbloqueia Erudito"
+      },
+      "mestre": {
+        "title": "Mestre",
+        "description": "Desbloqueia Mestre"
+      },
+      "grao-mestre": {
+        "title": "Grao Mestre",
+        "description": "Desbloqueia Grao Mestre"
+      },
+      "sabio": {
+        "title": "Sabio",
+        "description": "Desbloqueia Sabio"
+      },
+      "iluminado": {
+        "title": "Iluminado",
+        "description": "Desbloqueia Iluminado"
+      },
+      "lendario": {
+        "title": "Lendario",
+        "description": "Desbloqueia Lendario"
+      },
+      "mitico": {
+        "title": "Mitico",
+        "description": "Desbloqueia Mitico"
+      },
+      "divino": {
+        "title": "Divino",
+        "description": "Desbloqueia Divino"
+      },
+      "omnisciente": {
+        "title": "Omnisciente",
+        "description": "Desbloqueia Omnisciente"
+      },
+      "o-criador": {
+        "title": "O Criador",
+        "description": "Desbloqueia O Criador"
+      },
+      "aquecimento": {
+        "title": "Aquecimento",
+        "description": "Desbloqueia Aquecimento"
+      },
+      "faisca": {
+        "title": "Faisca",
+        "description": "Desbloqueia Faisca"
+      },
+      "chama": {
+        "title": "Chama",
+        "description": "Desbloqueia Chama"
+      },
+      "incendio": {
+        "title": "Incendio",
+        "description": "Desbloqueia Incendio"
+      },
+      "inferno": {
+        "title": "Inferno",
+        "description": "Desbloqueia Inferno"
+      },
+      "centenario": {
+        "title": "Centenario",
+        "description": "Desbloqueia Centenario"
+      },
+      "obsessivo": {
+        "title": "Obsessivo",
+        "description": "Desbloqueia Obsessivo"
+      },
+      "meio-ano": {
+        "title": "Meio Ano",
+        "description": "Desbloqueia Meio Ano"
+      },
+      "imparavel": {
+        "title": "Imparavel",
+        "description": "Desbloqueia Imparavel"
+      },
+      "volta-ao-sol": {
+        "title": "Volta Ao Sol",
+        "description": "Desbloqueia Volta Ao Sol"
+      },
+      "marciano": {
+        "title": "Marciano",
+        "description": "Desbloqueia Marciano"
+      },
+      "milenio": {
+        "title": "Milenio",
+        "description": "Desbloqueia Milenio"
+      },
+      "eterno": {
+        "title": "Eterno",
+        "description": "Desbloqueia Eterno"
+      },
+      "alfabetizado": {
+        "title": "Alfabetizado",
+        "description": "Desbloqueia Alfabetizado"
+      },
+      "tagarela": {
+        "title": "Tagarela",
+        "description": "Desbloqueia Tagarela"
+      },
+      "poliglota-jr": {
+        "title": "Poliglota Jr",
+        "description": "Desbloqueia Poliglota Jr"
+      },
+      "tradutor": {
+        "title": "Tradutor",
+        "description": "Desbloqueia Tradutor"
+      },
+      "poeta": {
+        "title": "Poeta",
+        "description": "Desbloqueia Poeta"
+      },
+      "novelista": {
+        "title": "Novelista",
+        "description": "Desbloqueia Novelista"
+      },
+      "enciclopedia": {
+        "title": "Enciclopedia",
+        "description": "Desbloqueia Enciclopedia"
+      },
+      "bibliotecario": {
+        "title": "Bibliotecario",
+        "description": "Desbloqueia Bibliotecario"
+      },
+      "oraculo": {
+        "title": "Oraculo",
+        "description": "Desbloqueia Oraculo"
+      },
+      "profeta": {
+        "title": "Profeta",
+        "description": "Desbloqueia Profeta"
+      },
+      "preparado": {
+        "title": "Preparado",
+        "description": "Desbloqueia Preparado"
+      },
+      "tanque": {
+        "title": "Tanque",
+        "description": "Desbloqueia Tanque"
+      },
+      "intocavel": {
+        "title": "Intocavel",
+        "description": "Desbloqueia Intocavel"
+      },
+      "energizado": {
+        "title": "Energizado",
+        "description": "Desbloqueia Energizado"
+      },
+      "sobrecarga": {
+        "title": "Sobrecarga",
+        "description": "Desbloqueia Sobrecarga"
+      },
+      "alta-tensao": {
+        "title": "Alta Tensao",
+        "description": "Desbloqueia Alta Tensao"
+      },
+      "fresquinho": {
+        "title": "Fresquinho",
+        "description": "Desbloqueia Fresquinho"
+      },
+      "congelado": {
+        "title": "Congelado",
+        "description": "Desbloqueia Congelado"
+      },
+      "era-do-gelo": {
+        "title": "Era Do Gelo",
+        "description": "Desbloqueia Era Do Gelo"
+      },
+      "vivo": {
+        "title": "Vivo",
+        "description": "Desbloqueia Vivo"
+      },
+      "saudavel": {
+        "title": "Saudavel",
+        "description": "Desbloqueia Saudavel"
+      },
+      "perfeito": {
+        "title": "Perfeito",
+        "description": "Desbloqueia Perfeito"
+      },
+      "nivel-1": {
+        "title": "Nivel 1",
+        "description": "Desbloqueia Nivel 1"
+      },
+      "nivel-5": {
+        "title": "Nivel 5",
+        "description": "Desbloqueia Nivel 5"
+      },
+      "nivel-10": {
+        "title": "Nivel 10",
+        "description": "Desbloqueia Nivel 10"
+      },
+      "nivel-20": {
+        "title": "Nivel 20",
+        "description": "Desbloqueia Nivel 20"
+      },
+      "nivel-30": {
+        "title": "Nivel 30",
+        "description": "Desbloqueia Nivel 30"
+      },
+      "nivel-40": {
+        "title": "Nivel 40",
+        "description": "Desbloqueia Nivel 40"
+      },
+      "nivel-50": {
+        "title": "Nivel 50",
+        "description": "Desbloqueia Nivel 50"
+      },
+      "nivel-60": {
+        "title": "Nivel 60",
+        "description": "Desbloqueia Nivel 60"
+      },
+      "nivel-70": {
+        "title": "Nivel 70",
+        "description": "Desbloqueia Nivel 70"
+      },
+      "nivel-80": {
+        "title": "Nivel 80",
+        "description": "Desbloqueia Nivel 80"
+      },
+      "nivel-90": {
+        "title": "Nivel 90",
+        "description": "Desbloqueia Nivel 90"
+      },
+      "nivel-100": {
+        "title": "Nivel 100",
+        "description": "Desbloqueia Nivel 100"
+      },
+      "via-lactea": {
+        "title": "Via Lactea",
+        "description": "Desbloqueia Via Lactea"
+      },
+      "buraco-negro": {
+        "title": "Buraco Negro",
+        "description": "Desbloqueia Buraco Negro"
+      },
+      "multiverso": {
+        "title": "Multiverso",
+        "description": "Desbloqueia Multiverso"
+      },
+      "numero-da-besta": {
+        "title": "Numero Da Besta",
+        "description": "Desbloqueia Numero Da Besta"
+      },
+      "sorte-grande": {
+        "title": "Sorte Grande",
+        "description": "Desbloqueia Sorte Grande"
+      },
+      "ano-novo": {
+        "title": "Ano Novo",
+        "description": "Desbloqueia Ano Novo"
+      },
+      "futurista": {
+        "title": "Futurista",
+        "description": "Desbloqueia Futurista"
+      },
+      "over-9000": {
+        "title": "Over 9000",
+        "description": "Desbloqueia Over 9000"
+      },
+      "fim-de-semana": {
+        "title": "Fim De Semana",
+        "description": "Desbloqueia Fim De Semana"
+      },
+      "mao-cheia": {
+        "title": "Mao Cheia",
+        "description": "Desbloqueia Mao Cheia"
+      },
+      "duas-maos": {
+        "title": "Duas Maos",
+        "description": "Desbloqueia Duas Maos"
+      },
+      "tres-semanas": {
+        "title": "Tres Semanas",
+        "description": "Desbloqueia Tres Semanas"
+      },
+      "quaresma": {
+        "title": "Quaresma",
+        "description": "Desbloqueia Quaresma"
+      },
+      "rico": {
+        "title": "Rico",
+        "description": "Desbloqueia Rico"
+      },
+      "milionario": {
+        "title": "Milionario",
+        "description": "Desbloqueia Milionario"
+      },
+      "passo-1": {
+        "title": "Passo 1",
+        "description": "Desbloqueia Passo 1"
+      },
+      "passo-2": {
+        "title": "Passo 2",
+        "description": "Desbloqueia Passo 2"
+      },
+      "passo-3": {
+        "title": "Passo 3",
+        "description": "Desbloqueia Passo 3"
+      },
+      "passo-4": {
+        "title": "Passo 4",
+        "description": "Desbloqueia Passo 4"
+      },
+      "maratona": {
+        "title": "Maratona",
+        "description": "Desbloqueia Maratona"
+      },
+      "monte-everest": {
+        "title": "Monte Everest",
+        "description": "Desbloqueia Monte Everest"
+      },
+      "profundezas": {
+        "title": "Profundezas",
+        "description": "Desbloqueia Profundezas"
+      },
+      "agua": {
+        "title": "Agua",
+        "description": "Desbloqueia Agua"
+      },
+      "terra": {
+        "title": "Terra",
+        "description": "Desbloqueia Terra"
+      },
+      "ar": {
+        "title": "Ar",
+        "description": "Desbloqueia Ar"
+      },
+      "fogo": {
+        "title": "Fogo",
+        "description": "Desbloqueia Fogo"
+      },
+      "eter": {
+        "title": "Eter",
+        "description": "Desbloqueia Eter"
+      }
     }
   },
   "quests_components": {
@@ -2343,6 +2697,15 @@
     "no_results": "Nenhuma palavra encontrada para \"{query}\".",
     "dojo_button": "INICIAR DOJO",
     "dojo_subtitle": "Missão Rápida (+20 XP)"
+  },
+  "profile_setup": {
+    "title": "Configura o teu perfil",
+    "description": "Escolhe um nome para os teus amigos te encontrarem.",
+    "name_label": "Nome",
+    "name_placeholder": "Insere o teu nome...",
+    "photo_optional": "Foto (opcional)",
+    "continue": "VAMOS LÁ!",
+    "error_fallback": "Algo correu mal. Tenta novamente."
   },
   "pwa": {
     "title": "Instala a Faro no teu dispositivo",

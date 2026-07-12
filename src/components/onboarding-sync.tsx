@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { onSelectCourse } from "@/actions/user-progress";
 import { useRouter } from "next/navigation";
+import { ProfileSetupModal } from "@/components/shared/profile-setup-modal";
 
 interface OnboardingSyncProps {
   isFullScreen?: boolean;
@@ -21,19 +22,29 @@ export const OnboardingSync = ({ isFullScreen }: OnboardingSyncProps) => {
     reset,
   } = useOnboardingStore();
   const [isSyncing, setIsSyncing] = useState(false);
+  const [syncDone, setSyncDone] = useState(false);
+  const [showProfileSetup, setShowProfileSetup] = useState(false);
   const router = useRouter();
+
+  const needsProfileSetup = useCallback(() => {
+    if (!user) return false;
+    return !user.firstName && !user.username;
+  }, [user]);
+
+  const handleProfileComplete = () => {
+    setShowProfileSetup(false);
+    sessionStorage.setItem("onboarding_synced", user!.id);
+    router.refresh();
+  };
 
   useEffect(() => {
     const syncData = async () => {
-      // 1. Safety locks
       if (isSyncing || !isUserLoaded || !user) return;
       
-      // Prevent multiple syncs in the same window session
       if (sessionStorage.getItem("onboarding_synced") === user.id) {
         return;
       }
 
-      // 2. Identify data to sync
       let dataToSync = null;
 
       if (selectedCourse && isOnboardingComplete) {
@@ -56,7 +67,6 @@ export const OnboardingSync = ({ isFullScreen }: OnboardingSyncProps) => {
         }
       }
 
-      // 3. Perform Sync
       if (dataToSync) {
         setIsSyncing(true);
         try {
@@ -69,21 +79,23 @@ export const OnboardingSync = ({ isFullScreen }: OnboardingSyncProps) => {
             dataToSync.cefrLevel
           );
           
-          // Mark as synced in this session
-          sessionStorage.setItem("onboarding_synced", user.id);
-          
-          // Cleanup
+          setSyncDone(true);
+
           reset();
           localStorage.removeItem("onboarding-storage");
           
-          // Aggressive cookie clearing
           const cookieOptions = "path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
           document.cookie = `onboarding_data=; ${cookieOptions}`;
           document.cookie = `onboarding_completed=; ${cookieOptions}`;
-          
-          if (process.env.NODE_ENV !== "production") console.log("[Sync] Sucesso. A refrescar página...");
-          
-          router.refresh();
+
+          if (needsProfileSetup()) {
+            setShowProfileSetup(true);
+            setIsSyncing(false);
+          } else {
+            sessionStorage.setItem("onboarding_synced", user.id);
+            if (process.env.NODE_ENV !== "production") console.log("[Sync] Sucesso. A refrescar página...");
+            router.refresh();
+          }
         } catch (error) {
           console.error("[Sync] Erro crítico:", error);
           setIsSyncing(false); 
@@ -92,7 +104,11 @@ export const OnboardingSync = ({ isFullScreen }: OnboardingSyncProps) => {
     };
 
     syncData();
-  }, [isUserLoaded, user, selectedCourse, isOnboardingComplete, motivation, experienceLevel, placementResults, isSyncing, router, reset]);
+  }, [isUserLoaded, user, selectedCourse, isOnboardingComplete, motivation, experienceLevel, placementResults, isSyncing, router, reset, needsProfileSetup]);
+
+  if (showProfileSetup) {
+    return <ProfileSetupModal onComplete={handleProfileComplete} />;
+  }
 
   return null;
 };

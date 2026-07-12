@@ -1738,6 +1738,360 @@
       "lessons_5": "Lendário: 5 Lições",
       "xp_20": "Aquecimento: 20 XP",
       "lessons_4": "Consistência: 4 lições"
+    },
+    "items": {
+      "mente-curiosa": {
+        "title": "जिज्ञासु मन",
+        "description": "जिज्ञासु मन अनलॉक करता है"
+      },
+      "estudante-dedicado": {
+        "title": "समर्पित छात्र",
+        "description": "समर्पित छात्र अनलॉक करता है"
+      },
+      "aspirante": {
+        "title": "आकांक्षी",
+        "description": "आकांक्षी अनलॉक करता है"
+      },
+      "aprendiz": {
+        "title": "शिक्षु",
+        "description": "शिक्षु अनलॉक करता है"
+      },
+      "erudito": {
+        "title": "विद्वान",
+        "description": "विद्वान अनलॉक करता है"
+      },
+      "mestre": {
+        "title": "मास्टर",
+        "description": "मास्टर अनलॉक करता है"
+      },
+      "grao-mestre": {
+        "title": "ग्रैंड मास्टर",
+        "description": "ग्रैंड मास्टर अनलॉक करता है"
+      },
+      "sabio": {
+        "title": "ऋषि",
+        "description": "ऋषि अनलॉक करता है"
+      },
+      "iluminado": {
+        "title": "प्रबुद्ध",
+        "description": "प्रबुद्ध अनलॉक करता है"
+      },
+      "lendario": {
+        "title": "पौराणिक",
+        "description": "पौराणिक अनलॉक करता है"
+      },
+      "mitico": {
+        "title": "मिथकीय",
+        "description": "मिथकीय अनलॉक करता है"
+      },
+      "divino": {
+        "title": "दिव्य",
+        "description": "दिव्य अनलॉक करता है"
+      },
+      "omnisciente": {
+        "title": "सर्वज्ञ",
+        "description": "सर्वज्ञ अनलॉक करता है"
+      },
+      "o-criador": {
+        "title": "निर्माता",
+        "description": "निर्माता अनलॉक करता है"
+      },
+      "aquecimento": {
+        "title": "वार्म-अप",
+        "description": "वार्म-अप अनलॉक करता है"
+      },
+      "faisca": {
+        "title": "चिनगारी",
+        "description": "चिनगारी अनलॉक करता है"
+      },
+      "chama": {
+        "title": "लपट",
+        "description": "लपट अनलॉक करता है"
+      },
+      "incendio": {
+        "title": "आग",
+        "description": "आग अनलॉक करता है"
+      },
+      "inferno": {
+        "title": "नरक",
+        "description": "नरक अनलॉक करता है"
+      },
+      "centenario": {
+        "title": "शताब्दी",
+        "description": "शताब्दी अनलॉक करता है"
+      },
+      "obsessivo": {
+        "title": "जुनूनी",
+        "description": "जुनूनी अनलॉक करता है"
+      },
+      "meio-ano": {
+        "title": "आधा साल",
+        "description": "आधा साल अनलॉक करता है"
+      },
+      "imparavel": {
+        "title": "अदम्य",
+        "description": "अदम्य अनलॉक करता है"
+      },
+      "volta-ao-sol": {
+        "title": "सूर्य की परिक्रमा",
+        "description": "सूर्य की परिक्रमा अनलॉक करता है"
+      },
+      "marciano": {
+        "title": "मंगल ग्रह का",
+        "description": "मंगल ग्रह का अनलॉक करता है"
+      },
+      "milenio": {
+        "title": "सहस्राब्दी",
+        "description": "सहस्राब्दी अनलॉक करता है"
+      },
+      "eterno": {
+        "title": "अनंत",
+        "description": "अनंत अनलॉक करता है"
+      },
+      "alfabetizado": {
+        "title": "साक्षर",
+        "description": "साक्षर अनलॉक करता है"
+      },
+      "tagarela": {
+        "title": "बातूनी",
+        "description": "बातूनी अनलॉक करता है"
+      },
+      "poliglota-jr": {
+        "title": "जूनियर बहुभाषी",
+        "description": "जूनियर बहुभाषी अनलॉक करता है"
+      },
+      "tradutor": {
+        "title": "अनुवादक",
+        "description": "अनुवादक अनलॉक करता है"
+      },
+      "poeta": {
+        "title": "कवि",
+        "description": "कवि अनलॉक करता है"
+      },
+      "novelista": {
+        "title": "उपन्यासकार",
+        "description": "उपन्यासकार अनलॉक करता है"
+      },
+      "enciclopedia": {
+        "title": "विश्वकोश",
+        "description": "विश्वकोश अनलॉक करता है"
+      },
+      "bibliotecario": {
+        "title": "पुस्तकालय अध्यक्ष",
+        "description": "पुस्तकालय अध्यक्ष अनलॉक करता है"
+      },
+      "oraculo": {
+        "title": "भविष्यवक्ता",
+        "description": "भविष्यवक्ता अनलॉक करता है"
+      },
+      "profeta": {
+        "title": "पैगंबर",
+        "description": "पैगंबर अनलॉक करता है"
+      },
+      "preparado": {
+        "title": "तैयार",
+        "description": "तैयार अनलॉक करता है"
+      },
+      "tanque": {
+        "title": "टैंक",
+        "description": "टैंक अनलॉक करता है"
+      },
+      "intocavel": {
+        "title": "अछूत",
+        "description": "अछूत अनलॉक करता है"
+      },
+      "energizado": {
+        "title": "ऊर्जावान",
+        "description": "ऊर्जावान अनलॉक करता है"
+      },
+      "sobrecarga": {
+        "title": "अतिभार",
+        "description": "अतिभार अनलॉक करता है"
+      },
+      "alta-tensao": {
+        "title": "उच्च वोल्टेज",
+        "description": "उच्च वोल्टेज अनलॉक करता है"
+      },
+      "fresquinho": {
+        "title": "ताज़ा",
+        "description": "ताज़ा अनलॉक करता है"
+      },
+      "congelado": {
+        "title": "जमा हुआ",
+        "description": "जमा हुआ अनलॉक करता है"
+      },
+      "era-do-gelo": {
+        "title": "हिमयुग",
+        "description": "हिमयुग अनलॉक करता है"
+      },
+      "vivo": {
+        "title": "जीवित",
+        "description": "जीवित अनलॉक करता है"
+      },
+      "saudavel": {
+        "title": "स्वस्थ",
+        "description": "स्वस्थ अनलॉक करता है"
+      },
+      "perfeito": {
+        "title": "उत्तम",
+        "description": "उत्तम अनलॉक करता है"
+      },
+      "nivel-1": {
+        "title": "स्तर 1",
+        "description": "स्तर 1 अनलॉक करता है"
+      },
+      "nivel-5": {
+        "title": "स्तर 5",
+        "description": "स्तर 5 अनलॉक करता है"
+      },
+      "nivel-10": {
+        "title": "स्तर 10",
+        "description": "स्तर 10 अनलॉक करता है"
+      },
+      "nivel-20": {
+        "title": "स्तर 20",
+        "description": "स्तर 20 अनलॉक करता है"
+      },
+      "nivel-30": {
+        "title": "स्तर 30",
+        "description": "स्तर 30 अनलॉक करता है"
+      },
+      "nivel-40": {
+        "title": "स्तर 40",
+        "description": "स्तर 40 अनलॉक करता है"
+      },
+      "nivel-50": {
+        "title": "स्तर 50",
+        "description": "स्तर 50 अनलॉक करता है"
+      },
+      "nivel-60": {
+        "title": "स्तर 60",
+        "description": "स्तर 60 अनलॉक करता है"
+      },
+      "nivel-70": {
+        "title": "स्तर 70",
+        "description": "स्तर 70 अनलॉक करता है"
+      },
+      "nivel-80": {
+        "title": "स्तर 80",
+        "description": "स्तर 80 अनलॉक करता है"
+      },
+      "nivel-90": {
+        "title": "स्तर 90",
+        "description": "स्तर 90 अनलॉक करता है"
+      },
+      "nivel-100": {
+        "title": "स्तर 100",
+        "description": "स्तर 100 अनलॉक करता है"
+      },
+      "via-lactea": {
+        "title": "दुग्ध मेखला",
+        "description": "दुग्ध मेखला अनलॉक करता है"
+      },
+      "buraco-negro": {
+        "title": "ब्लैक होल",
+        "description": "ब्लैक होल अनलॉक करता है"
+      },
+      "multiverso": {
+        "title": "बहु-ब्रह्मांड",
+        "description": "बहु-ब्रह्मांड अनलॉक करता है"
+      },
+      "numero-da-besta": {
+        "title": "जानवर का नंबर",
+        "description": "जानवर का नंबर अनलॉक करता है"
+      },
+      "sorte-grande": {
+        "title": "महाभाग्य",
+        "description": "महाभाग्य अनलॉक करता है"
+      },
+      "ano-novo": {
+        "title": "नया साल",
+        "description": "नया साल अनलॉक करता है"
+      },
+      "futurista": {
+        "title": "भविष्यवादी",
+        "description": "भविष्यवादी अनलॉक करता है"
+      },
+      "over-9000": {
+        "title": "9000 से अधिक",
+        "description": "9000 से अधिक अनलॉक करता है"
+      },
+      "fim-de-semana": {
+        "title": "सप्ताहांत",
+        "description": "सप्ताहांत अनलॉक करता है"
+      },
+      "mao-cheia": {
+        "title": "पूरी मुट्ठी",
+        "description": "पूरी मुट्ठी अनलॉक करता है"
+      },
+      "duas-maos": {
+        "title": "दो हाथ",
+        "description": "दो हाथ अनलॉक करता है"
+      },
+      "tres-semanas": {
+        "title": "तीन सप्ताह",
+        "description": "तीन सप्ताह अनलॉक करता है"
+      },
+      "quaresma": {
+        "title": "चालीस दिन का उपवास",
+        "description": "चालीस दिन का उपवास अनलॉक करता है"
+      },
+      "rico": {
+        "title": "धनी",
+        "description": "धनी अनलॉक करता है"
+      },
+      "milionario": {
+        "title": "लखपति",
+        "description": "लखपति अनलॉक करता है"
+      },
+      "passo-1": {
+        "title": "कदम 1",
+        "description": "कदम 1 अनलॉक करता है"
+      },
+      "passo-2": {
+        "title": "कदम 2",
+        "description": "कदम 2 अनलॉक करता है"
+      },
+      "passo-3": {
+        "title": "कदम 3",
+        "description": "कदम 3 अनलॉक करता है"
+      },
+      "passo-4": {
+        "title": "कदम 4",
+        "description": "कदम 4 अनलॉक करता है"
+      },
+      "maratona": {
+        "title": "मैराथन",
+        "description": "मैराथन अनलॉक करता है"
+      },
+      "monte-everest": {
+        "title": "माउंट एवरेस्ट",
+        "description": "माउंट एवरेस्ट अनलॉक करता है"
+      },
+      "profundezas": {
+        "title": "गहराई",
+        "description": "गहराई अनलॉक करता है"
+      },
+      "agua": {
+        "title": "पानी",
+        "description": "पानी अनलॉक करता है"
+      },
+      "terra": {
+        "title": "पृथ्वी",
+        "description": "पृथ्वी अनलॉक करता है"
+      },
+      "ar": {
+        "title": "हवा",
+        "description": "हवा अनलॉक करता है"
+      },
+      "fogo": {
+        "title": "आग",
+        "description": "आग अनलॉक करता है"
+      },
+      "eter": {
+        "title": "ईथर",
+        "description": "ईथर अनलॉक करता है"
+      }
     }
   },
   "quests_components": {

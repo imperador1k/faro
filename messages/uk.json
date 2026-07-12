@@ -1700,6 +1700,360 @@
       "lessons_5": "Lendário: 5 Lições",
       "xp_20": "Aquecimento: 20 XP",
       "lessons_4": "Consistência: 4 lições"
+    },
+    "items": {
+      "mente-curiosa": {
+        "title": "Допитливий Розум",
+        "description": "Розблокувати Допитливий Розум"
+      },
+      "estudante-dedicado": {
+        "title": "Відданий Студент",
+        "description": "Розблокувати Відданий Студент"
+      },
+      "aspirante": {
+        "title": "Претендент",
+        "description": "Розблокувати Претендент"
+      },
+      "aprendiz": {
+        "title": "Учень",
+        "description": "Розблокувати Учень"
+      },
+      "erudito": {
+        "title": "Ерудит",
+        "description": "Розблокувати Ерудит"
+      },
+      "mestre": {
+        "title": "Майстер",
+        "description": "Розблокувати Майстер"
+      },
+      "grao-mestre": {
+        "title": "Гросмейстер",
+        "description": "Розблокувати Гросмейстер"
+      },
+      "sabio": {
+        "title": "Мудрець",
+        "description": "Розблокувати Мудрець"
+      },
+      "iluminado": {
+        "title": "Просвітлений",
+        "description": "Розблокувати Просвітлений"
+      },
+      "lendario": {
+        "title": "Легендарний",
+        "description": "Розблокувати Легендарний"
+      },
+      "mitico": {
+        "title": "Міфічний",
+        "description": "Розблокувати Міфічний"
+      },
+      "divino": {
+        "title": "Божественний",
+        "description": "Розблокувати Божественний"
+      },
+      "omnisciente": {
+        "title": "Всезнаючий",
+        "description": "Розблокувати Всезнаючий"
+      },
+      "o-criador": {
+        "title": "Творець",
+        "description": "Розблокувати Творець"
+      },
+      "aquecimento": {
+        "title": "Розминка",
+        "description": "Розблокувати Розминка"
+      },
+      "faisca": {
+        "title": "Іскра",
+        "description": "Розблокувати Іскра"
+      },
+      "chama": {
+        "title": "Полум'я",
+        "description": "Розблокувати Полум'я"
+      },
+      "incendio": {
+        "title": "Пожежа",
+        "description": "Розблокувати Пожежа"
+      },
+      "inferno": {
+        "title": "Пекло",
+        "description": "Розблокувати Пекло"
+      },
+      "centenario": {
+        "title": "Сотня",
+        "description": "Розблокувати Сотня"
+      },
+      "obsessivo": {
+        "title": "Нав'язливий",
+        "description": "Розблокувати Нав'язливий"
+      },
+      "meio-ano": {
+        "title": "Півроку",
+        "description": "Розблокувати Півроку"
+      },
+      "imparavel": {
+        "title": "Нездоланний",
+        "description": "Розблокувати Нездоланний"
+      },
+      "volta-ao-sol": {
+        "title": "Навколо Сонця",
+        "description": "Розблокувати Навколо Сонця"
+      },
+      "marciano": {
+        "title": "Марсіанин",
+        "description": "Розблокувати Марсіанин"
+      },
+      "milenio": {
+        "title": "Тисячоліття",
+        "description": "Розблокувати Тисячоліття"
+      },
+      "eterno": {
+        "title": "Вічний",
+        "description": "Розблокувати Вічний"
+      },
+      "alfabetizado": {
+        "title": "Грамотний",
+        "description": "Розблокувати Грамотний"
+      },
+      "tagarela": {
+        "title": "Балакун",
+        "description": "Розблокувати Балакун"
+      },
+      "poliglota-jr": {
+        "title": "Молодший Поліглот",
+        "description": "Розблокувати Молодший Поліглот"
+      },
+      "tradutor": {
+        "title": "Перекладач",
+        "description": "Розблокувати Перекладач"
+      },
+      "poeta": {
+        "title": "Поет",
+        "description": "Розблокувати Поет"
+      },
+      "novelista": {
+        "title": "Новеліст",
+        "description": "Розблокувати Новеліст"
+      },
+      "enciclopedia": {
+        "title": "Енциклопедія",
+        "description": "Розблокувати Енциклопедія"
+      },
+      "bibliotecario": {
+        "title": "Бібліотекар",
+        "description": "Розблокувати Бібліотекар"
+      },
+      "oraculo": {
+        "title": "Оракул",
+        "description": "Розблокувати Оракул"
+      },
+      "profeta": {
+        "title": "Пророк",
+        "description": "Розблокувати Пророк"
+      },
+      "preparado": {
+        "title": "Підготовлений",
+        "description": "Розблокувати Підготовлений"
+      },
+      "tanque": {
+        "title": "Танк",
+        "description": "Розблокувати Танк"
+      },
+      "intocavel": {
+        "title": "Невразливий",
+        "description": "Розблокувати Невразливий"
+      },
+      "energizado": {
+        "title": "Заряджений",
+        "description": "Розблокувати Заряджений"
+      },
+      "sobrecarga": {
+        "title": "Перевантаження",
+        "description": "Розблокувати Перевантаження"
+      },
+      "alta-tensao": {
+        "title": "Висока Напруга",
+        "description": "Розблокувати Висока Напруга"
+      },
+      "fresquinho": {
+        "title": "Свіжий",
+        "description": "Розблокувати Свіжий"
+      },
+      "congelado": {
+        "title": "Заморожений",
+        "description": "Розблокувати Заморожений"
+      },
+      "era-do-gelo": {
+        "title": "Льодовиковий Період",
+        "description": "Розблокувати Льодовиковий Період"
+      },
+      "vivo": {
+        "title": "Живий",
+        "description": "Розблокувати Живий"
+      },
+      "saudavel": {
+        "title": "Здоровий",
+        "description": "Розблокувати Здоровий"
+      },
+      "perfeito": {
+        "title": "Ідеальний",
+        "description": "Розблокувати Ідеальний"
+      },
+      "nivel-1": {
+        "title": "Рівень 1",
+        "description": "Розблокувати Рівень 1"
+      },
+      "nivel-5": {
+        "title": "Рівень 5",
+        "description": "Розблокувати Рівень 5"
+      },
+      "nivel-10": {
+        "title": "Рівень 10",
+        "description": "Розблокувати Рівень 10"
+      },
+      "nivel-20": {
+        "title": "Рівень 20",
+        "description": "Розблокувати Рівень 20"
+      },
+      "nivel-30": {
+        "title": "Рівень 30",
+        "description": "Розблокувати Рівень 30"
+      },
+      "nivel-40": {
+        "title": "Рівень 40",
+        "description": "Розблокувати Рівень 40"
+      },
+      "nivel-50": {
+        "title": "Рівень 50",
+        "description": "Розблокувати Рівень 50"
+      },
+      "nivel-60": {
+        "title": "Рівень 60",
+        "description": "Розблокувати Рівень 60"
+      },
+      "nivel-70": {
+        "title": "Рівень 70",
+        "description": "Розблокувати Рівень 70"
+      },
+      "nivel-80": {
+        "title": "Рівень 80",
+        "description": "Розблокувати Рівень 80"
+      },
+      "nivel-90": {
+        "title": "Рівень 90",
+        "description": "Розблокувати Рівень 90"
+      },
+      "nivel-100": {
+        "title": "Рівень 100",
+        "description": "Розблокувати Рівень 100"
+      },
+      "via-lactea": {
+        "title": "Чумацький Шлях",
+        "description": "Розблокувати Чумацький Шлях"
+      },
+      "buraco-negro": {
+        "title": "Чорна Діра",
+        "description": "Розблокувати Чорна Діра"
+      },
+      "multiverso": {
+        "title": "Мультивсесвіт",
+        "description": "Розблокувати Мультивсесвіт"
+      },
+      "numero-da-besta": {
+        "title": "Число Звіра",
+        "description": "Розблокувати Число Звіра"
+      },
+      "sorte-grande": {
+        "title": "Великий Виграш",
+        "description": "Розблокувати Великий Виграш"
+      },
+      "ano-novo": {
+        "title": "Новий Рік",
+        "description": "Розблокувати Новий Рік"
+      },
+      "futurista": {
+        "title": "Футурист",
+        "description": "Розблокувати Футурист"
+      },
+      "over-9000": {
+        "title": "Понад 9000",
+        "description": "Розблокувати Понад 9000"
+      },
+      "fim-de-semana": {
+        "title": "Вихідні",
+        "description": "Розблокувати Вихідні"
+      },
+      "mao-cheia": {
+        "title": "Повна Рука",
+        "description": "Розблокувати Повна Рука"
+      },
+      "duas-maos": {
+        "title": "Дві Руки",
+        "description": "Розблокувати Дві Руки"
+      },
+      "tres-semanas": {
+        "title": "Три Тижні",
+        "description": "Розблокувати Три Тижні"
+      },
+      "quaresma": {
+        "title": "Піст",
+        "description": "Розблокувати Піст"
+      },
+      "rico": {
+        "title": "Багатий",
+        "description": "Розблокувати Багатий"
+      },
+      "milionario": {
+        "title": "Мільйонер",
+        "description": "Розблокувати Мільйонер"
+      },
+      "passo-1": {
+        "title": "Крок 1",
+        "description": "Розблокувати Крок 1"
+      },
+      "passo-2": {
+        "title": "Крок 2",
+        "description": "Розблокувати Крок 2"
+      },
+      "passo-3": {
+        "title": "Крок 3",
+        "description": "Розблокувати Крок 3"
+      },
+      "passo-4": {
+        "title": "Крок 4",
+        "description": "Розблокувати Крок 4"
+      },
+      "maratona": {
+        "title": "Марафон",
+        "description": "Розблокувати Марафон"
+      },
+      "monte-everest": {
+        "title": "Гора Еверест",
+        "description": "Розблокувати Гора Еверест"
+      },
+      "profundezas": {
+        "title": "Глибини",
+        "description": "Розблокувати Глибини"
+      },
+      "agua": {
+        "title": "Вода",
+        "description": "Розблокувати Вода"
+      },
+      "terra": {
+        "title": "Земля",
+        "description": "Розблокувати Земля"
+      },
+      "ar": {
+        "title": "Повітря",
+        "description": "Розблокувати Повітря"
+      },
+      "fogo": {
+        "title": "Вогонь",
+        "description": "Розблокувати Вогонь"
+      },
+      "eter": {
+        "title": "Ефір",
+        "description": "Розблокувати Ефір"
+      }
     }
   },
   "quests_components": {

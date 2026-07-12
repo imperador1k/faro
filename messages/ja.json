@@ -1700,6 +1700,360 @@
       "lessons_5": "Lendário: 5 Lições",
       "xp_20": "Aquecimento: 20 XP",
       "lessons_4": "Consistência: 4 lições"
+    },
+    "items": {
+      "mente-curiosa": {
+        "title": "好奇心旺盛な心",
+        "description": "好奇心旺盛な心をアンロック"
+      },
+      "estudante-dedicado": {
+        "title": "熱心な学生",
+        "description": "熱心な学生をアンロック"
+      },
+      "aspirante": {
+        "title": "志願者",
+        "description": "志願者をアンロック"
+      },
+      "aprendiz": {
+        "title": "見習い",
+        "description": "見習いをアンロック"
+      },
+      "erudito": {
+        "title": "博学者",
+        "description": "博学者をアンロック"
+      },
+      "mestre": {
+        "title": "マスター",
+        "description": "マスターをアンロック"
+      },
+      "grao-mestre": {
+        "title": "グランドマスター",
+        "description": "グランドマスターをアンロック"
+      },
+      "sabio": {
+        "title": "賢者",
+        "description": "賢者をアンロック"
+      },
+      "iluminado": {
+        "title": "覚醒者",
+        "description": "覚醒者をアンロック"
+      },
+      "lendario": {
+        "title": "伝説的",
+        "description": "伝説的をアンロック"
+      },
+      "mitico": {
+        "title": "神話的",
+        "description": "神話的をアンロック"
+      },
+      "divino": {
+        "title": "神聖な",
+        "description": "神聖なをアンロック"
+      },
+      "omnisciente": {
+        "title": "全知者",
+        "description": "全知者をアンロック"
+      },
+      "o-criador": {
+        "title": "創造主",
+        "description": "創造主をアンロック"
+      },
+      "aquecimento": {
+        "title": "ウォーミングアップ",
+        "description": "ウォーミングアップをアンロック"
+      },
+      "faisca": {
+        "title": "スパーク",
+        "description": "スパークをアンロック"
+      },
+      "chama": {
+        "title": "炎",
+        "description": "炎をアンロック"
+      },
+      "incendio": {
+        "title": "大火",
+        "description": "大火をアンロック"
+      },
+      "inferno": {
+        "title": "地獄",
+        "description": "地獄をアンロック"
+      },
+      "centenario": {
+        "title": "百年",
+        "description": "百年をアンロック"
+      },
+      "obsessivo": {
+        "title": "執着者",
+        "description": "執着者をアンロック"
+      },
+      "meio-ano": {
+        "title": "半年",
+        "description": "半年をアンロック"
+      },
+      "imparavel": {
+        "title": "無敵",
+        "description": "無敵をアンロック"
+      },
+      "volta-ao-sol": {
+        "title": "太陽周回",
+        "description": "太陽周回をアンロック"
+      },
+      "marciano": {
+        "title": "火星人",
+        "description": "火星人をアンロック"
+      },
+      "milenio": {
+        "title": "ミレニアム",
+        "description": "ミレニアムをアンロック"
+      },
+      "eterno": {
+        "title": "永遠",
+        "description": "永遠をアンロック"
+      },
+      "alfabetizado": {
+        "title": "識字者",
+        "description": "識字者をアンロック"
+      },
+      "tagarela": {
+        "title": "おしゃべり",
+        "description": "おしゃべりをアンロック"
+      },
+      "poliglota-jr": {
+        "title": "ポリグロット Jr.",
+        "description": "ポリグロット Jr.をアンロック"
+      },
+      "tradutor": {
+        "title": "翻訳者",
+        "description": "翻訳者をアンロック"
+      },
+      "poeta": {
+        "title": "詩人",
+        "description": "詩人をアンロック"
+      },
+      "novelista": {
+        "title": "小説家",
+        "description": "小説家をアンロック"
+      },
+      "enciclopedia": {
+        "title": "百科事典",
+        "description": "百科事典をアンロック"
+      },
+      "bibliotecario": {
+        "title": "司書",
+        "description": "司書をアンロック"
+      },
+      "oraculo": {
+        "title": "オラクル",
+        "description": "オラクルをアンロック"
+      },
+      "profeta": {
+        "title": "預言者",
+        "description": "預言者をアンロック"
+      },
+      "preparado": {
+        "title": "準備万端",
+        "description": "準備万端をアンロック"
+      },
+      "tanque": {
+        "title": "タンク",
+        "description": "タンクをアンロック"
+      },
+      "intocavel": {
+        "title": "アンタッチャブル",
+        "description": "アンタッチャブルをアンロック"
+      },
+      "energizado": {
+        "title": "エネルギー充填",
+        "description": "エネルギー充填をアンロック"
+      },
+      "sobrecarga": {
+        "title": "オーバーロード",
+        "description": "オーバーロードをアンロック"
+      },
+      "alta-tensao": {
+        "title": "高電圧",
+        "description": "高電圧をアンロック"
+      },
+      "fresquinho": {
+        "title": "フレッシュ",
+        "description": "フレッシュをアンロック"
+      },
+      "congelado": {
+        "title": "フリーズ",
+        "description": "フリーズをアンロック"
+      },
+      "era-do-gelo": {
+        "title": "氷河期",
+        "description": "氷河期をアンロック"
+      },
+      "vivo": {
+        "title": "生存者",
+        "description": "生存者をアンロック"
+      },
+      "saudavel": {
+        "title": "健康",
+        "description": "健康をアンロック"
+      },
+      "perfeito": {
+        "title": "完璧",
+        "description": "完璧をアンロック"
+      },
+      "nivel-1": {
+        "title": "レベル1",
+        "description": "レベル1をアンロック"
+      },
+      "nivel-5": {
+        "title": "レベル5",
+        "description": "レベル5をアンロック"
+      },
+      "nivel-10": {
+        "title": "レベル10",
+        "description": "レベル10をアンロック"
+      },
+      "nivel-20": {
+        "title": "レベル20",
+        "description": "レベル20をアンロック"
+      },
+      "nivel-30": {
+        "title": "レベル30",
+        "description": "レベル30をアンロック"
+      },
+      "nivel-40": {
+        "title": "レベル40",
+        "description": "レベル40をアンロック"
+      },
+      "nivel-50": {
+        "title": "レベル50",
+        "description": "レベル50をアンロック"
+      },
+      "nivel-60": {
+        "title": "レベル60",
+        "description": "レベル60をアンロック"
+      },
+      "nivel-70": {
+        "title": "レベル70",
+        "description": "レベル70をアンロック"
+      },
+      "nivel-80": {
+        "title": "レベル80",
+        "description": "レベル80をアンロック"
+      },
+      "nivel-90": {
+        "title": "レベル90",
+        "description": "レベル90をアンロック"
+      },
+      "nivel-100": {
+        "title": "レベル100",
+        "description": "レベル100をアンロック"
+      },
+      "via-lactea": {
+        "title": "銀河系",
+        "description": "銀河系をアンロック"
+      },
+      "buraco-negro": {
+        "title": "ブラックホール",
+        "description": "ブラックホールをアンロック"
+      },
+      "multiverso": {
+        "title": "マルチバース",
+        "description": "マルチバースをアンロック"
+      },
+      "numero-da-besta": {
+        "title": "獣の数字",
+        "description": "獣の数字をアンロック"
+      },
+      "sorte-grande": {
+        "title": "大当たり",
+        "description": "大当たりをアンロック"
+      },
+      "ano-novo": {
+        "title": "新年",
+        "description": "新年をアンロック"
+      },
+      "futurista": {
+        "title": "未来主義者",
+        "description": "未来主義者をアンロック"
+      },
+      "over-9000": {
+        "title": "オーバー9000",
+        "description": "オーバー9000をアンロック"
+      },
+      "fim-de-semana": {
+        "title": "週末",
+        "description": "週末をアンロック"
+      },
+      "mao-cheia": {
+        "title": "満杯",
+        "description": "満杯をアンロック"
+      },
+      "duas-maos": {
+        "title": "両手",
+        "description": "両手をアンロック"
+      },
+      "tres-semanas": {
+        "title": "三週間",
+        "description": "三週間をアンロック"
+      },
+      "quaresma": {
+        "title": "四旬節",
+        "description": "四旬節をアンロック"
+      },
+      "rico": {
+        "title": "金持ち",
+        "description": "金持ちをアンロック"
+      },
+      "milionario": {
+        "title": "億万長者",
+        "description": "億万長者をアンロック"
+      },
+      "passo-1": {
+        "title": "ステップ1",
+        "description": "ステップ1をアンロック"
+      },
+      "passo-2": {
+        "title": "ステップ2",
+        "description": "ステップ2をアンロック"
+      },
+      "passo-3": {
+        "title": "ステップ3",
+        "description": "ステップ3をアンロック"
+      },
+      "passo-4": {
+        "title": "ステップ4",
+        "description": "ステップ4をアンロック"
+      },
+      "maratona": {
+        "title": "マラソン",
+        "description": "マラソンをアンロック"
+      },
+      "monte-everest": {
+        "title": "エベレスト山",
+        "description": "エベレスト山をアンロック"
+      },
+      "profundezas": {
+        "title": "深淵",
+        "description": "深淵をアンロック"
+      },
+      "agua": {
+        "title": "水",
+        "description": "水をアンロック"
+      },
+      "terra": {
+        "title": "大地",
+        "description": "大地をアンロック"
+      },
+      "ar": {
+        "title": "空気",
+        "description": "空気をアンロック"
+      },
+      "fogo": {
+        "title": "火",
+        "description": "火をアンロック"
+      },
+      "eter": {
+        "title": "エーテル",
+        "description": "エーテルをアンロック"
+      }
     }
   },
   "quests_components": {

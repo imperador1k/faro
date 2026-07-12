@@ -1700,6 +1700,360 @@
       "lessons_5": "Lendário: 5 Lições",
       "xp_20": "Aquecimento: 20 XP",
       "lessons_4": "Consistência: 4 lições"
+    },
+    "items": {
+      "mente-curiosa": {
+        "title": "Esprit Curieux",
+        "description": "Débloque Esprit Curieux"
+      },
+      "estudante-dedicado": {
+        "title": "Étudiant Dévoué",
+        "description": "Débloque Étudiant Dévoué"
+      },
+      "aspirante": {
+        "title": "Aspirant",
+        "description": "Débloque Aspirant"
+      },
+      "aprendiz": {
+        "title": "Apprenti",
+        "description": "Débloque Apprenti"
+      },
+      "erudito": {
+        "title": "Érudit",
+        "description": "Débloque Érudit"
+      },
+      "mestre": {
+        "title": "Maître",
+        "description": "Débloque Maître"
+      },
+      "grao-mestre": {
+        "title": "Grand Maître",
+        "description": "Débloque Grand Maître"
+      },
+      "sabio": {
+        "title": "Sage",
+        "description": "Débloque Sage"
+      },
+      "iluminado": {
+        "title": "Éclairé",
+        "description": "Débloque Éclairé"
+      },
+      "lendario": {
+        "title": "Légendaire",
+        "description": "Débloque Légendaire"
+      },
+      "mitico": {
+        "title": "Mythique",
+        "description": "Débloque Mythique"
+      },
+      "divino": {
+        "title": "Divin",
+        "description": "Débloque Divin"
+      },
+      "omnisciente": {
+        "title": "Omniscient",
+        "description": "Débloque Omniscient"
+      },
+      "o-criador": {
+        "title": "Le Créateur",
+        "description": "Débloque Le Créateur"
+      },
+      "aquecimento": {
+        "title": "Échauffement",
+        "description": "Débloque Échauffement"
+      },
+      "faisca": {
+        "title": "Étincelle",
+        "description": "Débloque Étincelle"
+      },
+      "chama": {
+        "title": "Flamme",
+        "description": "Débloque Flamme"
+      },
+      "incendio": {
+        "title": "Incendie",
+        "description": "Débloque Incendie"
+      },
+      "inferno": {
+        "title": "Enfer",
+        "description": "Débloque Enfer"
+      },
+      "centenario": {
+        "title": "Centenaire",
+        "description": "Débloque Centenaire"
+      },
+      "obsessivo": {
+        "title": "Obsessif",
+        "description": "Débloque Obsessif"
+      },
+      "meio-ano": {
+        "title": "Six Mois",
+        "description": "Débloque Six Mois"
+      },
+      "imparavel": {
+        "title": "Inarrêtable",
+        "description": "Débloque Inarrêtable"
+      },
+      "volta-ao-sol": {
+        "title": "Révolution Solaire",
+        "description": "Débloque Révolution Solaire"
+      },
+      "marciano": {
+        "title": "Martien",
+        "description": "Débloque Martien"
+      },
+      "milenio": {
+        "title": "Millénaire",
+        "description": "Débloque Millénaire"
+      },
+      "eterno": {
+        "title": "Éternel",
+        "description": "Débloque Éternel"
+      },
+      "alfabetizado": {
+        "title": "Alphabétisé",
+        "description": "Débloque Alphabétisé"
+      },
+      "tagarela": {
+        "title": "Bavard",
+        "description": "Débloque Bavard"
+      },
+      "poliglota-jr": {
+        "title": "Polyglotte Jr",
+        "description": "Débloque Polyglotte Jr"
+      },
+      "tradutor": {
+        "title": "Traducteur",
+        "description": "Débloque Traducteur"
+      },
+      "poeta": {
+        "title": "Poète",
+        "description": "Débloque Poète"
+      },
+      "novelista": {
+        "title": "Romancier",
+        "description": "Débloque Romancier"
+      },
+      "enciclopedia": {
+        "title": "Encyclopédie",
+        "description": "Débloque Encyclopédie"
+      },
+      "bibliotecario": {
+        "title": "Bibliothécaire",
+        "description": "Débloque Bibliothécaire"
+      },
+      "oraculo": {
+        "title": "Oracle",
+        "description": "Débloque Oracle"
+      },
+      "profeta": {
+        "title": "Prophète",
+        "description": "Débloque Prophète"
+      },
+      "preparado": {
+        "title": "Préparé",
+        "description": "Débloque Préparé"
+      },
+      "tanque": {
+        "title": "Tank",
+        "description": "Débloque Tank"
+      },
+      "intocavel": {
+        "title": "Intouchable",
+        "description": "Débloque Intouchable"
+      },
+      "energizado": {
+        "title": "Énergisé",
+        "description": "Débloque Énergisé"
+      },
+      "sobrecarga": {
+        "title": "Surcharge",
+        "description": "Débloque Surcharge"
+      },
+      "alta-tensao": {
+        "title": "Haute Tension",
+        "description": "Débloque Haute Tension"
+      },
+      "fresquinho": {
+        "title": "Frais",
+        "description": "Débloque Frais"
+      },
+      "congelado": {
+        "title": "Congelé",
+        "description": "Débloque Congelé"
+      },
+      "era-do-gelo": {
+        "title": "Ère Glaciaire",
+        "description": "Débloque Ère Glaciaire"
+      },
+      "vivo": {
+        "title": "Vivant",
+        "description": "Débloque Vivant"
+      },
+      "saudavel": {
+        "title": "Sain",
+        "description": "Débloque Sain"
+      },
+      "perfeito": {
+        "title": "Parfait",
+        "description": "Débloque Parfait"
+      },
+      "nivel-1": {
+        "title": "Niveau 1",
+        "description": "Débloque Niveau 1"
+      },
+      "nivel-5": {
+        "title": "Niveau 5",
+        "description": "Débloque Niveau 5"
+      },
+      "nivel-10": {
+        "title": "Niveau 10",
+        "description": "Débloque Niveau 10"
+      },
+      "nivel-20": {
+        "title": "Niveau 20",
+        "description": "Débloque Niveau 20"
+      },
+      "nivel-30": {
+        "title": "Niveau 30",
+        "description": "Débloque Niveau 30"
+      },
+      "nivel-40": {
+        "title": "Niveau 40",
+        "description": "Débloque Niveau 40"
+      },
+      "nivel-50": {
+        "title": "Niveau 50",
+        "description": "Débloque Niveau 50"
+      },
+      "nivel-60": {
+        "title": "Niveau 60",
+        "description": "Débloque Niveau 60"
+      },
+      "nivel-70": {
+        "title": "Niveau 70",
+        "description": "Débloque Niveau 70"
+      },
+      "nivel-80": {
+        "title": "Niveau 80",
+        "description": "Débloque Niveau 80"
+      },
+      "nivel-90": {
+        "title": "Niveau 90",
+        "description": "Débloque Niveau 90"
+      },
+      "nivel-100": {
+        "title": "Niveau 100",
+        "description": "Débloque Niveau 100"
+      },
+      "via-lactea": {
+        "title": "Voie Lactée",
+        "description": "Débloque Voie Lactée"
+      },
+      "buraco-negro": {
+        "title": "Trou Noir",
+        "description": "Débloque Trou Noir"
+      },
+      "multiverso": {
+        "title": "Multivers",
+        "description": "Débloque Multivers"
+      },
+      "numero-da-besta": {
+        "title": "Numéro de la Bête",
+        "description": "Débloque Numéro de la Bête"
+      },
+      "sorte-grande": {
+        "title": "Gros Lot",
+        "description": "Débloque Gros Lot"
+      },
+      "ano-novo": {
+        "title": "Nouvel An",
+        "description": "Débloque Nouvel An"
+      },
+      "futurista": {
+        "title": "Futuriste",
+        "description": "Débloque Futuriste"
+      },
+      "over-9000": {
+        "title": "Over 9000",
+        "description": "Débloque Over 9000"
+      },
+      "fim-de-semana": {
+        "title": "Week-end",
+        "description": "Débloque Week-end"
+      },
+      "mao-cheia": {
+        "title": "Pleine Main",
+        "description": "Débloque Pleine Main"
+      },
+      "duas-maos": {
+        "title": "Deux Mains",
+        "description": "Débloque Deux Mains"
+      },
+      "tres-semanas": {
+        "title": "Trois Semaines",
+        "description": "Débloque Trois Semaines"
+      },
+      "quaresma": {
+        "title": "Carême",
+        "description": "Débloque Carême"
+      },
+      "rico": {
+        "title": "Riche",
+        "description": "Débloque Riche"
+      },
+      "milionario": {
+        "title": "Millionnaire",
+        "description": "Débloque Millionnaire"
+      },
+      "passo-1": {
+        "title": "Étape 1",
+        "description": "Débloque Étape 1"
+      },
+      "passo-2": {
+        "title": "Étape 2",
+        "description": "Débloque Étape 2"
+      },
+      "passo-3": {
+        "title": "Étape 3",
+        "description": "Débloque Étape 3"
+      },
+      "passo-4": {
+        "title": "Étape 4",
+        "description": "Débloque Étape 4"
+      },
+      "maratona": {
+        "title": "Marathon",
+        "description": "Débloque Marathon"
+      },
+      "monte-everest": {
+        "title": "Mont Everest",
+        "description": "Débloque Mont Everest"
+      },
+      "profundezas": {
+        "title": "Profondeurs",
+        "description": "Débloque Profondeurs"
+      },
+      "agua": {
+        "title": "Eau",
+        "description": "Débloque Eau"
+      },
+      "terra": {
+        "title": "Terre",
+        "description": "Débloque Terre"
+      },
+      "ar": {
+        "title": "Air",
+        "description": "Débloque Air"
+      },
+      "fogo": {
+        "title": "Feu",
+        "description": "Débloque Feu"
+      },
+      "eter": {
+        "title": "Éther",
+        "description": "Débloque Éther"
+      }
     }
   },
   "quests_components": {

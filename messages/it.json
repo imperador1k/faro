@@ -1700,6 +1700,360 @@
       "lessons_5": "Lendário: 5 Lições",
       "xp_20": "Aquecimento: 20 XP",
       "lessons_4": "Consistência: 4 lições"
+    },
+    "items": {
+      "mente-curiosa": {
+        "title": "Mente Curiosa",
+        "description": "Sblocca Mente Curiosa"
+      },
+      "estudante-dedicado": {
+        "title": "Studente Dedicato",
+        "description": "Sblocca Studente Dedicato"
+      },
+      "aspirante": {
+        "title": "Aspirante",
+        "description": "Sblocca Aspirante"
+      },
+      "aprendiz": {
+        "title": "Apprendista",
+        "description": "Sblocca Apprendista"
+      },
+      "erudito": {
+        "title": "Erudito",
+        "description": "Sblocca Erudito"
+      },
+      "mestre": {
+        "title": "Maestro",
+        "description": "Sblocca Maestro"
+      },
+      "grao-mestre": {
+        "title": "Gran Maestro",
+        "description": "Sblocca Gran Maestro"
+      },
+      "sabio": {
+        "title": "Saggio",
+        "description": "Sblocca Saggio"
+      },
+      "iluminado": {
+        "title": "Illuminato",
+        "description": "Sblocca Illuminato"
+      },
+      "lendario": {
+        "title": "Leggendario",
+        "description": "Sblocca Leggendario"
+      },
+      "mitico": {
+        "title": "Mitico",
+        "description": "Sblocca Mitico"
+      },
+      "divino": {
+        "title": "Divino",
+        "description": "Sblocca Divino"
+      },
+      "omnisciente": {
+        "title": "Onnisciente",
+        "description": "Sblocca Onnisciente"
+      },
+      "o-criador": {
+        "title": "Il Creatore",
+        "description": "Sblocca Il Creatore"
+      },
+      "aquecimento": {
+        "title": "Riscaldamento",
+        "description": "Sblocca Riscaldamento"
+      },
+      "faisca": {
+        "title": "Scintilla",
+        "description": "Sblocca Scintilla"
+      },
+      "chama": {
+        "title": "Fiamma",
+        "description": "Sblocca Fiamma"
+      },
+      "incendio": {
+        "title": "Incendio",
+        "description": "Sblocca Incendio"
+      },
+      "inferno": {
+        "title": "Inferno",
+        "description": "Sblocca Inferno"
+      },
+      "centenario": {
+        "title": "Centenario",
+        "description": "Sblocca Centenario"
+      },
+      "obsessivo": {
+        "title": "Ossessivo",
+        "description": "Sblocca Ossessivo"
+      },
+      "meio-ano": {
+        "title": "Mezzo Anno",
+        "description": "Sblocca Mezzo Anno"
+      },
+      "imparavel": {
+        "title": "Inarrestabile",
+        "description": "Sblocca Inarrestabile"
+      },
+      "volta-ao-sol": {
+        "title": "Giro Intorno al Sole",
+        "description": "Sblocca Giro Intorno al Sole"
+      },
+      "marciano": {
+        "title": "Marziano",
+        "description": "Sblocca Marziano"
+      },
+      "milenio": {
+        "title": "Millennio",
+        "description": "Sblocca Millennio"
+      },
+      "eterno": {
+        "title": "Eterno",
+        "description": "Sblocca Eterno"
+      },
+      "alfabetizado": {
+        "title": "Alfabetizzato",
+        "description": "Sblocca Alfabetizzato"
+      },
+      "tagarela": {
+        "title": "Loquace",
+        "description": "Sblocca Loquace"
+      },
+      "poliglota-jr": {
+        "title": "Poliglotta Jr",
+        "description": "Sblocca Poliglotta Jr"
+      },
+      "tradutor": {
+        "title": "Traduttore",
+        "description": "Sblocca Traduttore"
+      },
+      "poeta": {
+        "title": "Poeta",
+        "description": "Sblocca Poeta"
+      },
+      "novelista": {
+        "title": "Romanziere",
+        "description": "Sblocca Romanziere"
+      },
+      "enciclopedia": {
+        "title": "Enciclopedia",
+        "description": "Sblocca Enciclopedia"
+      },
+      "bibliotecario": {
+        "title": "Bibliotecario",
+        "description": "Sblocca Bibliotecario"
+      },
+      "oraculo": {
+        "title": "Oracolo",
+        "description": "Sblocca Oracolo"
+      },
+      "profeta": {
+        "title": "Profeta",
+        "description": "Sblocca Profeta"
+      },
+      "preparado": {
+        "title": "Preparato",
+        "description": "Sblocca Preparato"
+      },
+      "tanque": {
+        "title": "Carro Armato",
+        "description": "Sblocca Carro Armato"
+      },
+      "intocavel": {
+        "title": "Intoccabile",
+        "description": "Sblocca Intoccabile"
+      },
+      "energizado": {
+        "title": "Energizzato",
+        "description": "Sblocca Energizzato"
+      },
+      "sobrecarga": {
+        "title": "Sovraccarico",
+        "description": "Sblocca Sovraccarico"
+      },
+      "alta-tensao": {
+        "title": "Alta Tensione",
+        "description": "Sblocca Alta Tensione"
+      },
+      "fresquinho": {
+        "title": "Fresco",
+        "description": "Sblocca Fresco"
+      },
+      "congelado": {
+        "title": "Congelato",
+        "description": "Sblocca Congelato"
+      },
+      "era-do-gelo": {
+        "title": "Era Glaciale",
+        "description": "Sblocca Era Glaciale"
+      },
+      "vivo": {
+        "title": "Vivo",
+        "description": "Sblocca Vivo"
+      },
+      "saudavel": {
+        "title": "Sano",
+        "description": "Sblocca Sano"
+      },
+      "perfeito": {
+        "title": "Perfetto",
+        "description": "Sblocca Perfetto"
+      },
+      "nivel-1": {
+        "title": "Livello 1",
+        "description": "Sblocca Livello 1"
+      },
+      "nivel-5": {
+        "title": "Livello 5",
+        "description": "Sblocca Livello 5"
+      },
+      "nivel-10": {
+        "title": "Livello 10",
+        "description": "Sblocca Livello 10"
+      },
+      "nivel-20": {
+        "title": "Livello 20",
+        "description": "Sblocca Livello 20"
+      },
+      "nivel-30": {
+        "title": "Livello 30",
+        "description": "Sblocca Livello 30"
+      },
+      "nivel-40": {
+        "title": "Livello 40",
+        "description": "Sblocca Livello 40"
+      },
+      "nivel-50": {
+        "title": "Livello 50",
+        "description": "Sblocca Livello 50"
+      },
+      "nivel-60": {
+        "title": "Livello 60",
+        "description": "Sblocca Livello 60"
+      },
+      "nivel-70": {
+        "title": "Livello 70",
+        "description": "Sblocca Livello 70"
+      },
+      "nivel-80": {
+        "title": "Livello 80",
+        "description": "Sblocca Livello 80"
+      },
+      "nivel-90": {
+        "title": "Livello 90",
+        "description": "Sblocca Livello 90"
+      },
+      "nivel-100": {
+        "title": "Livello 100",
+        "description": "Sblocca Livello 100"
+      },
+      "via-lactea": {
+        "title": "Via Lattea",
+        "description": "Sblocca Via Lattea"
+      },
+      "buraco-negro": {
+        "title": "Buco Nero",
+        "description": "Sblocca Buco Nero"
+      },
+      "multiverso": {
+        "title": "Multiverso",
+        "description": "Sblocca Multiverso"
+      },
+      "numero-da-besta": {
+        "title": "Numero della Bestia",
+        "description": "Sblocca Numero della Bestia"
+      },
+      "sorte-grande": {
+        "title": "Grande Fortuna",
+        "description": "Sblocca Grande Fortuna"
+      },
+      "ano-novo": {
+        "title": "Anno Nuovo",
+        "description": "Sblocca Anno Nuovo"
+      },
+      "futurista": {
+        "title": "Futurista",
+        "description": "Sblocca Futurista"
+      },
+      "over-9000": {
+        "title": "Over 9000",
+        "description": "Sblocca Over 9000"
+      },
+      "fim-de-semana": {
+        "title": "Fine Settimana",
+        "description": "Sblocca Fine Settimana"
+      },
+      "mao-cheia": {
+        "title": "Mano Piena",
+        "description": "Sblocca Mano Piena"
+      },
+      "duas-maos": {
+        "title": "Due Mani",
+        "description": "Sblocca Due Mani"
+      },
+      "tres-semanas": {
+        "title": "Tre Settimane",
+        "description": "Sblocca Tre Settimane"
+      },
+      "quaresma": {
+        "title": "Quaresima",
+        "description": "Sblocca Quaresima"
+      },
+      "rico": {
+        "title": "Ricco",
+        "description": "Sblocca Ricco"
+      },
+      "milionario": {
+        "title": "Milionario",
+        "description": "Sblocca Milionario"
+      },
+      "passo-1": {
+        "title": "Passo 1",
+        "description": "Sblocca Passo 1"
+      },
+      "passo-2": {
+        "title": "Passo 2",
+        "description": "Sblocca Passo 2"
+      },
+      "passo-3": {
+        "title": "Passo 3",
+        "description": "Sblocca Passo 3"
+      },
+      "passo-4": {
+        "title": "Passo 4",
+        "description": "Sblocca Passo 4"
+      },
+      "maratona": {
+        "title": "Maratona",
+        "description": "Sblocca Maratona"
+      },
+      "monte-everest": {
+        "title": "Monte Everest",
+        "description": "Sblocca Monte Everest"
+      },
+      "profundezas": {
+        "title": "Profondità",
+        "description": "Sblocca Profondità"
+      },
+      "agua": {
+        "title": "Acqua",
+        "description": "Sblocca Acqua"
+      },
+      "terra": {
+        "title": "Terra",
+        "description": "Sblocca Terra"
+      },
+      "ar": {
+        "title": "Aria",
+        "description": "Sblocca Aria"
+      },
+      "fogo": {
+        "title": "Fuoco",
+        "description": "Sblocca Fuoco"
+      },
+      "eter": {
+        "title": "Etere",
+        "description": "Sblocca Etere"
+      }
     }
   },
   "quests_components": {

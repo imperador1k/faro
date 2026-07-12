@@ -1700,6 +1700,360 @@
       "lessons_5": "Lendário: 5 Lições",
       "xp_20": "Aquecimento: 20 XP",
       "lessons_4": "Consistência: 4 lições"
+    },
+    "items": {
+      "mente-curiosa": {
+        "title": "Mente Curiosa",
+        "description": "Desbloquea Mente Curiosa"
+      },
+      "estudante-dedicado": {
+        "title": "Estudiante Dedicado",
+        "description": "Desbloquea Estudiante Dedicado"
+      },
+      "aspirante": {
+        "title": "Aspirante",
+        "description": "Desbloquea Aspirante"
+      },
+      "aprendiz": {
+        "title": "Aprendiz",
+        "description": "Desbloquea Aprendiz"
+      },
+      "erudito": {
+        "title": "Erudito",
+        "description": "Desbloquea Erudito"
+      },
+      "mestre": {
+        "title": "Maestro",
+        "description": "Desbloquea Maestro"
+      },
+      "grao-mestre": {
+        "title": "Gran Maestro",
+        "description": "Desbloquea Gran Maestro"
+      },
+      "sabio": {
+        "title": "Sabio",
+        "description": "Desbloquea Sabio"
+      },
+      "iluminado": {
+        "title": "Iluminado",
+        "description": "Desbloquea Iluminado"
+      },
+      "lendario": {
+        "title": "Legendario",
+        "description": "Desbloquea Legendario"
+      },
+      "mitico": {
+        "title": "Mítico",
+        "description": "Desbloquea Mítico"
+      },
+      "divino": {
+        "title": "Divino",
+        "description": "Desbloquea Divino"
+      },
+      "omnisciente": {
+        "title": "Omnisciente",
+        "description": "Desbloquea Omnisciente"
+      },
+      "o-criador": {
+        "title": "El Creador",
+        "description": "Desbloquea El Creador"
+      },
+      "aquecimento": {
+        "title": "Calentamiento",
+        "description": "Desbloquea Calentamiento"
+      },
+      "faisca": {
+        "title": "Chispa",
+        "description": "Desbloquea Chispa"
+      },
+      "chama": {
+        "title": "Llama",
+        "description": "Desbloquea Llama"
+      },
+      "incendio": {
+        "title": "Incendio",
+        "description": "Desbloquea Incendio"
+      },
+      "inferno": {
+        "title": "Infierno",
+        "description": "Desbloquea Infierno"
+      },
+      "centenario": {
+        "title": "Centenario",
+        "description": "Desbloquea Centenario"
+      },
+      "obsessivo": {
+        "title": "Obsesivo",
+        "description": "Desbloquea Obsesivo"
+      },
+      "meio-ano": {
+        "title": "Medio Año",
+        "description": "Desbloquea Medio Año"
+      },
+      "imparavel": {
+        "title": "Imparable",
+        "description": "Desbloquea Imparable"
+      },
+      "volta-ao-sol": {
+        "title": "Vuelta Al Sol",
+        "description": "Desbloquea Vuelta Al Sol"
+      },
+      "marciano": {
+        "title": "Marciano",
+        "description": "Desbloquea Marciano"
+      },
+      "milenio": {
+        "title": "Milenio",
+        "description": "Desbloquea Milenio"
+      },
+      "eterno": {
+        "title": "Eterno",
+        "description": "Desbloquea Eterno"
+      },
+      "alfabetizado": {
+        "title": "Alfabetizado",
+        "description": "Desbloquea Alfabetizado"
+      },
+      "tagarela": {
+        "title": "Charlatán",
+        "description": "Desbloquea Charlatán"
+      },
+      "poliglota-jr": {
+        "title": "Políglota Jr",
+        "description": "Desbloquea Políglota Jr"
+      },
+      "tradutor": {
+        "title": "Traductor",
+        "description": "Desbloquea Traductor"
+      },
+      "poeta": {
+        "title": "Poeta",
+        "description": "Desbloquea Poeta"
+      },
+      "novelista": {
+        "title": "Novelista",
+        "description": "Desbloquea Novelista"
+      },
+      "enciclopedia": {
+        "title": "Enciclopedia",
+        "description": "Desbloquea Enciclopedia"
+      },
+      "bibliotecario": {
+        "title": "Bibliotecario",
+        "description": "Desbloquea Bibliotecario"
+      },
+      "oraculo": {
+        "title": "Oráculo",
+        "description": "Desbloquea Oráculo"
+      },
+      "profeta": {
+        "title": "Profeta",
+        "description": "Desbloquea Profeta"
+      },
+      "preparado": {
+        "title": "Preparado",
+        "description": "Desbloquea Preparado"
+      },
+      "tanque": {
+        "title": "Tanque",
+        "description": "Desbloquea Tanque"
+      },
+      "intocavel": {
+        "title": "Intocable",
+        "description": "Desbloquea Intocable"
+      },
+      "energizado": {
+        "title": "Energizado",
+        "description": "Desbloquea Energizado"
+      },
+      "sobrecarga": {
+        "title": "Sobrecarga",
+        "description": "Desbloquea Sobrecarga"
+      },
+      "alta-tensao": {
+        "title": "Alta Tensión",
+        "description": "Desbloquea Alta Tensión"
+      },
+      "fresquinho": {
+        "title": "Fresquito",
+        "description": "Desbloquea Fresquito"
+      },
+      "congelado": {
+        "title": "Congelado",
+        "description": "Desbloquea Congelado"
+      },
+      "era-do-gelo": {
+        "title": "Era De Hielo",
+        "description": "Desbloquea Era De Hielo"
+      },
+      "vivo": {
+        "title": "Vivo",
+        "description": "Desbloquea Vivo"
+      },
+      "saudavel": {
+        "title": "Saludable",
+        "description": "Desbloquea Saludable"
+      },
+      "perfeito": {
+        "title": "Perfecto",
+        "description": "Desbloquea Perfecto"
+      },
+      "nivel-1": {
+        "title": "Nivel 1",
+        "description": "Desbloquea Nivel 1"
+      },
+      "nivel-5": {
+        "title": "Nivel 5",
+        "description": "Desbloquea Nivel 5"
+      },
+      "nivel-10": {
+        "title": "Nivel 10",
+        "description": "Desbloquea Nivel 10"
+      },
+      "nivel-20": {
+        "title": "Nivel 20",
+        "description": "Desbloquea Nivel 20"
+      },
+      "nivel-30": {
+        "title": "Nivel 30",
+        "description": "Desbloquea Nivel 30"
+      },
+      "nivel-40": {
+        "title": "Nivel 40",
+        "description": "Desbloquea Nivel 40"
+      },
+      "nivel-50": {
+        "title": "Nivel 50",
+        "description": "Desbloquea Nivel 50"
+      },
+      "nivel-60": {
+        "title": "Nivel 60",
+        "description": "Desbloquea Nivel 60"
+      },
+      "nivel-70": {
+        "title": "Nivel 70",
+        "description": "Desbloquea Nivel 70"
+      },
+      "nivel-80": {
+        "title": "Nivel 80",
+        "description": "Desbloquea Nivel 80"
+      },
+      "nivel-90": {
+        "title": "Nivel 90",
+        "description": "Desbloquea Nivel 90"
+      },
+      "nivel-100": {
+        "title": "Nivel 100",
+        "description": "Desbloquea Nivel 100"
+      },
+      "via-lactea": {
+        "title": "Vía Láctea",
+        "description": "Desbloquea Vía Láctea"
+      },
+      "buraco-negro": {
+        "title": "Agujero Negro",
+        "description": "Desbloquea Agujero Negro"
+      },
+      "multiverso": {
+        "title": "Multiverso",
+        "description": "Desbloquea Multiverso"
+      },
+      "numero-da-besta": {
+        "title": "Número De La Bestia",
+        "description": "Desbloquea Número De La Bestia"
+      },
+      "sorte-grande": {
+        "title": "Gran Suerte",
+        "description": "Desbloquea Gran Suerte"
+      },
+      "ano-novo": {
+        "title": "Año Nuevo",
+        "description": "Desbloquea Año Nuevo"
+      },
+      "futurista": {
+        "title": "Futurista",
+        "description": "Desbloquea Futurista"
+      },
+      "over-9000": {
+        "title": "Over 9000",
+        "description": "Desbloquea Over 9000"
+      },
+      "fim-de-semana": {
+        "title": "Fin De Semana",
+        "description": "Desbloquea Fin De Semana"
+      },
+      "mao-cheia": {
+        "title": "Mano Llena",
+        "description": "Desbloquea Mano Llena"
+      },
+      "duas-maos": {
+        "title": "Dos Manos",
+        "description": "Desbloquea Dos Manos"
+      },
+      "tres-semanas": {
+        "title": "Tres Semanas",
+        "description": "Desbloquea Tres Semanas"
+      },
+      "quaresma": {
+        "title": "Cuaresma",
+        "description": "Desbloquea Cuaresma"
+      },
+      "rico": {
+        "title": "Rico",
+        "description": "Desbloquea Rico"
+      },
+      "milionario": {
+        "title": "Millonario",
+        "description": "Desbloquea Millonario"
+      },
+      "passo-1": {
+        "title": "Paso 1",
+        "description": "Desbloquea Paso 1"
+      },
+      "passo-2": {
+        "title": "Paso 2",
+        "description": "Desbloquea Paso 2"
+      },
+      "passo-3": {
+        "title": "Paso 3",
+        "description": "Desbloquea Paso 3"
+      },
+      "passo-4": {
+        "title": "Paso 4",
+        "description": "Desbloquea Paso 4"
+      },
+      "maratona": {
+        "title": "Maratón",
+        "description": "Desbloquea Maratón"
+      },
+      "monte-everest": {
+        "title": "Monte Everest",
+        "description": "Desbloquea Monte Everest"
+      },
+      "profundezas": {
+        "title": "Profundidades",
+        "description": "Desbloquea Profundidades"
+      },
+      "agua": {
+        "title": "Agua",
+        "description": "Desbloquea Agua"
+      },
+      "terra": {
+        "title": "Tierra",
+        "description": "Desbloquea Tierra"
+      },
+      "ar": {
+        "title": "Aire",
+        "description": "Desbloquea Aire"
+      },
+      "fogo": {
+        "title": "Fuego",
+        "description": "Desbloquea Fuego"
+      },
+      "eter": {
+        "title": "Éter",
+        "description": "Desbloquea Éter"
+      }
     }
   },
   "quests_components": {

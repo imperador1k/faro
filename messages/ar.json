@@ -1700,6 +1700,360 @@
       "lessons_5": "Lendário: 5 Lições",
       "xp_20": "Aquecimento: 20 XP",
       "lessons_4": "Consistência: 4 lições"
+    },
+    "items": {
+      "mente-curiosa": {
+        "title": "عقل فضولي",
+        "description": "يفتح عقل فضولي"
+      },
+      "estudante-dedicado": {
+        "title": "طالب متفاني",
+        "description": "يفتح طالب متفاني"
+      },
+      "aspirante": {
+        "title": "طموح",
+        "description": "يفتح طموح"
+      },
+      "aprendiz": {
+        "title": "متدرب",
+        "description": "يفتح متدرب"
+      },
+      "erudito": {
+        "title": "عالم",
+        "description": "يفتح عالم"
+      },
+      "mestre": {
+        "title": "معلم",
+        "description": "يفتح معلم"
+      },
+      "grao-mestre": {
+        "title": "معلم كبير",
+        "description": "يفتح معلم كبير"
+      },
+      "sabio": {
+        "title": "حكيم",
+        "description": "يفتح حكيم"
+      },
+      "iluminado": {
+        "title": "مستنير",
+        "description": "يفتح مستنير"
+      },
+      "lendario": {
+        "title": "أسطوري",
+        "description": "يفتح أسطوري"
+      },
+      "mitico": {
+        "title": "خرافي",
+        "description": "يفتح خرافي"
+      },
+      "divino": {
+        "title": "إلهي",
+        "description": "يفتح إلهي"
+      },
+      "omnisciente": {
+        "title": "كلي العلم",
+        "description": "يفتح كلي العلم"
+      },
+      "o-criador": {
+        "title": "المبدع",
+        "description": "يفتح المبدع"
+      },
+      "aquecimento": {
+        "title": "إحماء",
+        "description": "يفتح إحماء"
+      },
+      "faisca": {
+        "title": "شرارة",
+        "description": "يفتح شرارة"
+      },
+      "chama": {
+        "title": "لهب",
+        "description": "يفتح لهب"
+      },
+      "incendio": {
+        "title": "حريق",
+        "description": "يفتح حريق"
+      },
+      "inferno": {
+        "title": "جحيم",
+        "description": "يفتح جحيم"
+      },
+      "centenario": {
+        "title": "مئوي",
+        "description": "يفتح مئوي"
+      },
+      "obsessivo": {
+        "title": "مهووس",
+        "description": "يفتح مهووس"
+      },
+      "meio-ano": {
+        "title": "نصف عام",
+        "description": "يفتح نصف عام"
+      },
+      "imparavel": {
+        "title": "لا يمكن إيقافه",
+        "description": "يفتح لا يمكن إيقافه"
+      },
+      "volta-ao-sol": {
+        "title": "دورة حول الشمس",
+        "description": "يفتح دورة حول الشمس"
+      },
+      "marciano": {
+        "title": "مريخي",
+        "description": "يفتح مريخي"
+      },
+      "milenio": {
+        "title": "ألفية",
+        "description": "يفتح ألفية"
+      },
+      "eterno": {
+        "title": "أبدي",
+        "description": "يفتح أبدي"
+      },
+      "alfabetizado": {
+        "title": "متعلم",
+        "description": "يفتح متعلم"
+      },
+      "tagarela": {
+        "title": "ثرثار",
+        "description": "يفتح ثرثار"
+      },
+      "poliglota-jr": {
+        "title": "متعدد اللغات مبتدئ",
+        "description": "يفتح متعدد اللغات مبتدئ"
+      },
+      "tradutor": {
+        "title": "مترجم",
+        "description": "يفتح مترجم"
+      },
+      "poeta": {
+        "title": "شاعر",
+        "description": "يفتح شاعر"
+      },
+      "novelista": {
+        "title": "روائي",
+        "description": "يفتح روائي"
+      },
+      "enciclopedia": {
+        "title": "موسوعة",
+        "description": "يفتح موسوعة"
+      },
+      "bibliotecario": {
+        "title": "أمين مكتبة",
+        "description": "يفتح أمين مكتبة"
+      },
+      "oraculo": {
+        "title": "عراف",
+        "description": "يفتح عراف"
+      },
+      "profeta": {
+        "title": "نبي",
+        "description": "يفتح نبي"
+      },
+      "preparado": {
+        "title": "جاهز",
+        "description": "يفتح جاهز"
+      },
+      "tanque": {
+        "title": "دبابة",
+        "description": "يفتح دبابة"
+      },
+      "intocavel": {
+        "title": "لا يمس",
+        "description": "يفتح لا يمس"
+      },
+      "energizado": {
+        "title": "منشط",
+        "description": "يفتح منشط"
+      },
+      "sobrecarga": {
+        "title": "حمل زائد",
+        "description": "يفتح حمل زائد"
+      },
+      "alta-tensao": {
+        "title": "توتر عالٍ",
+        "description": "يفتح توتر عالٍ"
+      },
+      "fresquinho": {
+        "title": "منعش",
+        "description": "يفتح منعش"
+      },
+      "congelado": {
+        "title": "متجمد",
+        "description": "يفتح متجمد"
+      },
+      "era-do-gelo": {
+        "title": "العصر الجليدي",
+        "description": "يفتح العصر الجليدي"
+      },
+      "vivo": {
+        "title": "حي",
+        "description": "يفتح حي"
+      },
+      "saudavel": {
+        "title": "صحي",
+        "description": "يفتح صحي"
+      },
+      "perfeito": {
+        "title": "مثالي",
+        "description": "يفتح مثالي"
+      },
+      "nivel-1": {
+        "title": "المستوى 1",
+        "description": "يفتح المستوى 1"
+      },
+      "nivel-5": {
+        "title": "المستوى 5",
+        "description": "يفتح المستوى 5"
+      },
+      "nivel-10": {
+        "title": "المستوى 10",
+        "description": "يفتح المستوى 10"
+      },
+      "nivel-20": {
+        "title": "المستوى 20",
+        "description": "يفتح المستوى 20"
+      },
+      "nivel-30": {
+        "title": "المستوى 30",
+        "description": "يفتح المستوى 30"
+      },
+      "nivel-40": {
+        "title": "المستوى 40",
+        "description": "يفتح المستوى 40"
+      },
+      "nivel-50": {
+        "title": "المستوى 50",
+        "description": "يفتح المستوى 50"
+      },
+      "nivel-60": {
+        "title": "المستوى 60",
+        "description": "يفتح المستوى 60"
+      },
+      "nivel-70": {
+        "title": "المستوى 70",
+        "description": "يفتح المستوى 70"
+      },
+      "nivel-80": {
+        "title": "المستوى 80",
+        "description": "يفتح المستوى 80"
+      },
+      "nivel-90": {
+        "title": "المستوى 90",
+        "description": "يفتح المستوى 90"
+      },
+      "nivel-100": {
+        "title": "المستوى 100",
+        "description": "يفتح المستوى 100"
+      },
+      "via-lactea": {
+        "title": "درب التبانة",
+        "description": "يفتح درب التبانة"
+      },
+      "buraco-negro": {
+        "title": "ثقب أسود",
+        "description": "يفتح ثقب أسود"
+      },
+      "multiverso": {
+        "title": "أكوان متعددة",
+        "description": "يفتح أكوان متعددة"
+      },
+      "numero-da-besta": {
+        "title": "رقم الوحش",
+        "description": "يفتح رقم الوحش"
+      },
+      "sorte-grande": {
+        "title": "حظ عظيم",
+        "description": "يفتح حظ عظيم"
+      },
+      "ano-novo": {
+        "title": "سنة جديدة",
+        "description": "يفتح سنة جديدة"
+      },
+      "futurista": {
+        "title": "مستقبلي",
+        "description": "يفتح مستقبلي"
+      },
+      "over-9000": {
+        "title": "أكثر من 9000",
+        "description": "يفتح أكثر من 9000"
+      },
+      "fim-de-semana": {
+        "title": "نهاية الأسبوع",
+        "description": "يفتح نهاية الأسبوع"
+      },
+      "mao-cheia": {
+        "title": "يد ممتلئة",
+        "description": "يفتح يد ممتلئة"
+      },
+      "duas-maos": {
+        "title": "يدان",
+        "description": "يفتح يدان"
+      },
+      "tres-semanas": {
+        "title": "ثلاثة أسابيع",
+        "description": "يفتح ثلاثة أسابيع"
+      },
+      "quaresma": {
+        "title": "صوم كبير",
+        "description": "يفتح صوم كبير"
+      },
+      "rico": {
+        "title": "غني",
+        "description": "يفتح غني"
+      },
+      "milionario": {
+        "title": "مليونير",
+        "description": "يفتح مليونير"
+      },
+      "passo-1": {
+        "title": "الخطوة 1",
+        "description": "يفتح الخطوة 1"
+      },
+      "passo-2": {
+        "title": "الخطوة 2",
+        "description": "يفتح الخطوة 2"
+      },
+      "passo-3": {
+        "title": "الخطوة 3",
+        "description": "يفتح الخطوة 3"
+      },
+      "passo-4": {
+        "title": "الخطوة 4",
+        "description": "يفتح الخطوة 4"
+      },
+      "maratona": {
+        "title": "ماراثون",
+        "description": "يفتح ماراثون"
+      },
+      "monte-everest": {
+        "title": "جبل إيفرست",
+        "description": "يفتح جبل إيفرست"
+      },
+      "profundezas": {
+        "title": "أعماق",
+        "description": "يفتح أعماق"
+      },
+      "agua": {
+        "title": "ماء",
+        "description": "يفتح ماء"
+      },
+      "terra": {
+        "title": "أرض",
+        "description": "يفتح أرض"
+      },
+      "ar": {
+        "title": "هواء",
+        "description": "يفتح هواء"
+      },
+      "fogo": {
+        "title": "نار",
+        "description": "يفتح نار"
+      },
+      "eter": {
+        "title": "أثير",
+        "description": "يفتح أثير"
+      }
     }
   },
   "quests_components": {
