@@ -5,14 +5,20 @@ import OneSignal from "react-onesignal";
 import { useAuth } from "@clerk/nextjs";
 import { Capacitor } from "@capacitor/core";
 import { useTranslations } from "next-intl";
+import { usePreferencesStore } from "@/store/use-preferences-store";
 
 export const OneSignalProvider = () => {
   const t = useTranslations("shared");
   const { userId } = useAuth();
   const isInitialized = useRef(false);
+  const hasSeenWalkthrough = usePreferencesStore(
+    (state) => state.hasSeenWalkthrough,
+  );
   const ONESIGNAL_APP_ID = "23b0fe4f-661c-4726-91ad-92f20d9c6ac0";
 
   useEffect(() => {
+    if (!hasSeenWalkthrough) return;
+
     const initOneSignal = async () => {
       if (isInitialized.current) return;
       isInitialized.current = true;
@@ -57,7 +63,7 @@ export const OneSignalProvider = () => {
     ) {
       initOneSignal();
     }
-  }, [t]);
+  }, [t, hasSeenWalkthrough]);
 
   useEffect(() => {
     const loginOneSignal = async () => {

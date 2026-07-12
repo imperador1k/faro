@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useOnboardingStore } from "@/store/use-onboarding-store";
+import { usePreferencesStore } from "@/store/use-preferences-store";
 import { onSelectCourse } from "@/actions/user-progress";
 import { useRouter } from "next/navigation";
 import { ProfileSetupModal } from "@/components/shared/profile-setup-modal";
@@ -80,6 +81,9 @@ export const OnboardingSync = ({ isFullScreen }: OnboardingSyncProps) => {
           );
           
           setSyncDone(true);
+
+          // Reset tutorial/notification flags so they fire for this new account
+          usePreferencesStore.getState().setPreference("hasSeenWalkthrough", false);
 
           reset();
           localStorage.removeItem("onboarding-storage");
