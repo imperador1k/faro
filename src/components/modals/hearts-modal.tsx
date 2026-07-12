@@ -46,12 +46,14 @@ export const HeartsModal = () => {
       <div className="fixed left-1/2 top-1/2 z-above-modal w-[92%] max-w-sm -translate-x-1/2 -translate-y-1/2 animate-in zoom-in-95 duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]">
         <div className="relative bg-white dark:bg-slate-900 border-2 border-[#e5e7eb] border-b-8 rounded-3xl shadow-2xl overflow-hidden flex flex-col pt-12 pb-8 px-6 text-center">
           {/* Close button */}
-          <button
+          <Button
             onClick={closeModal}
-            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-xl bg-stone-50 dark:bg-slate-950 text-stone-400 dark:text-slate-500 dark:text-slate-400 transition-all hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 active:scale-90"
+            variant="ghost"
+            size="icon"
+            className="absolute right-4 top-4 h-8 w-8 rounded-xl"
           >
             <X className="h-5 w-5" />
-          </button>
+          </Button>
 
           {/* Visual Warning */}
           <div className="flex flex-col items-center mb-6">
@@ -88,12 +90,13 @@ export const HeartsModal = () => {
               {t("shop_button")}
             </Button>
 
-            <button
+            <Button
               onClick={closeModal}
-              className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-sm py-4 hover:text-stone-600 dark:text-slate-300 active:scale-95 transition-all mt-2"
+              variant="ghost"
+              className="mt-2 py-4"
             >
               {t("later_button")}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

@@ -534,12 +534,13 @@ export const LessonClient = ({
                 </Button>
               </motion.div>
 
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => router.push("/learn")}
-                className="mt-4 text-slate-500 dark:text-slate-400 font-bold hover:text-white transition-colors uppercase tracking-widest text-sm"
+                className="mt-4 uppercase tracking-widest text-sm font-bold"
               >
                 {t("back_to_map")}
-              </button>
+              </Button>
             </div>
           </motion.div>
         </motion.div>
@@ -645,12 +646,13 @@ export const LessonClient = ({
                   {t("continue_learning")}
                 </Button>
 
-                <button
-                  className="w-full h-14 text-sm font-bold text-slate-400 hover:text-rose-500 transition-colors uppercase tracking-widest"
+                <Button
+                  variant="ghost"
+                  className="w-full h-14 text-sm font-bold text-slate-400 hover:text-rose-500 uppercase tracking-widest"
                   onClick={confirmExit}
                 >
                   {t("quit_button")}
-                </button>
+                </Button>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -762,7 +764,8 @@ export const LessonClient = ({
 
             {currentChallenge.type === "DICTATION" ? (
               <div className="w-full max-w-[600px] flex flex-col items-center gap-6">
-                <button
+                <Button
+                  variant="secondary"
                   onClick={() =>
                     playAudio(
                       currentChallenge.question,
@@ -771,13 +774,13 @@ export const LessonClient = ({
                     )
                   }
                   className={cn(
-                    "w-32 h-32 rounded-full border-4 border-b-[8px] flex items-center justify-center transition-all duration-200 outline-none cursor-pointer",
+                    "w-32 h-32 rounded-full border-4 border-b-[8px] flex items-center justify-center",
                     "bg-sky-50 border-sky-300 text-sky-500 hover:bg-sky-100 active:translate-y-2 active:border-b-0",
                     isPlaying && "animate-pulse bg-sky-100 border-sky-400",
                   )}
                 >
                   <Ear className="h-14 w-14" />
-                </button>
+                </Button>
                 <p className="text-slate-400 text-sm font-medium">
                   {t("listen_and_write")}
                 </p>

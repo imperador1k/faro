@@ -85,7 +85,7 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
         </motion.div>
 
         <div className="space-y-2">
-          <h1 className="text-3xl font-black md:text-4xl tracking-tight text-[#042c60]">
+          <h1 className="text-3xl font-black md:text-4xl tracking-tight text-[#042c60] dark:text-white">
             {t.rich("how_much_do_you_know", {
               course_title: courseTitle,
               spanTag: (chunks) => (
@@ -101,7 +101,7 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
               ),
             })}
           </h1>
-          <p className="text-gray-500 font-bold text-lg md:text-xl">
+          <p className="text-gray-500 dark:text-gray-300 font-bold text-lg md:text-xl">
             {t("marco_personal_plan")}
           </p>
         </div>
@@ -123,8 +123,8 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
             className={`flex flex-col p-6 rounded-3xl border-2 border-b-8 transition-all text-left relative overflow-hidden group
               ${
                 experienceLevel === level.id
-                  ? "border-[#1cb0f6] bg-[#ddf4ff] shadow-[0_4px_0_#1cb0f6]"
-                  : "border-gray-200 bg-white dark:bg-slate-900 hover:border-gray-300 hover:bg-gray-50 active:border-b-2 active:translate-y-1 shadow-[0_4px_0_#e5e5e5]"
+                  ? "border-[#1cb0f6] bg-[#ddf4ff] dark:bg-[#1cb0f6]/20 shadow-[0_4px_0_#1cb0f6]"
+                  : "border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-gray-300 dark:hover:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800/50 active:border-b-2 active:translate-y-1 shadow-[0_4px_0_#e5e5e5] dark:shadow-[0_4px_0_#1e293b]"
               }`}
           >
             {/* Background Accent */}
@@ -134,12 +134,12 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
 
             <div className="flex items-center gap-4 mb-4 relative z-10">
               <div
-                className={`w-16 h-16 flex items-center justify-center flex-shrink-0 rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-gray-100`}
+                className={`w-16 h-16 flex items-center justify-center flex-shrink-0 rounded-2xl bg-white dark:bg-slate-950 shadow-sm border border-gray-100 dark:border-slate-800`}
               >
                 <level.icon className={`w-8 h-8 ${level.accent}`} strokeWidth={2.5} />
               </div>
               <div className="flex-1">
-                <h3 className="font-black text-xl text-[#042c60] leading-none mb-1">
+                <h3 className="font-black text-xl text-[#042c60] dark:text-white leading-none mb-1">
                   {t(level.titleKey)}
                 </h3>
                 <div
@@ -153,7 +153,7 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
               </div>
             </div>
 
-            <p className="text-gray-500 font-bold text-sm leading-snug relative z-10">
+            <p className="text-gray-500 dark:text-gray-300 font-bold text-sm leading-snug relative z-10">
               {t(level.descriptionKey)}
             </p>
 
@@ -170,7 +170,7 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
         ))}
       </motion.div>
 
-      <p className="text-gray-400 font-bold text-sm italic">
+      <p className="text-gray-400 dark:text-slate-400 font-bold text-sm italic">
         {t("level_change_note")}
       </p>
     </div>

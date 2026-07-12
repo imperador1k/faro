@@ -91,13 +91,13 @@ export function PracticeSetup({ type, onStart }: Props) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] py-10 px-4 md:px-6 animate-in fade-in zoom-in-95 duration-500 w-full mb-20 relative">
-      <button
+      <Button variant="ghost"
         onClick={() => router.push("/practice")}
         className="absolute top-4 left-4 md:top-8 md:left-8 px-4 py-2 bg-white dark:bg-slate-900 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-4 text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-xs md:text-sm hover:bg-stone-50 dark:bg-slate-950 hover:text-stone-600 dark:text-slate-300 active:border-b-0 active:translate-y-1 active:mb-1 transition-all flex items-center gap-2 shadow-sm z-50"
       >
         <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
         <span className="hidden sm:inline">{t("back")}</span>
-      </button>
+      </Button>
 
       <div className="text-center mb-10 md:mb-16">
         <div className="inline-flex items-center justify-center w-24 h-24 bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-stone-200 dark:border-slate-800 border-b-8 shadow-sm mb-6">
@@ -162,7 +162,7 @@ export function PracticeSetup({ type, onStart }: Props) {
                   recommendedLevel?.level === l && !isEvaluated;
 
                 return (
-                  <button
+                  <Button variant="ghost"
                     key={l}
                     onClick={() => setLevel(l)}
                     className={cn(
@@ -185,7 +185,7 @@ export function PracticeSetup({ type, onStart }: Props) {
                         {isEvaluated ? t("your_level") : t("suggestion")}
                       </span>
                     )}
-                  </button>
+                  </Button>
                 );
               })}
             </div>
@@ -199,7 +199,7 @@ export function PracticeSetup({ type, onStart }: Props) {
               {t("focus_mode")}
             </label>
             <div className="grid grid-cols-2 lg:grid-cols-1 gap-4 md:gap-5 flex-1">
-              <button
+              <Button variant="ghost"
                 onClick={() => setMode("random")}
                 className={cn(
                   "p-4 md:p-5 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 md:gap-3 transition-all text-center h-full min-h-[100px]",
@@ -212,8 +212,8 @@ export function PracticeSetup({ type, onStart }: Props) {
                 <span className="text-sm font-black uppercase tracking-wider">
                   {t("random")}
                 </span>
-              </button>
-              <button
+              </Button>
+              <Button variant="ghost"
                 onClick={() => setMode("focus")}
                 className={cn(
                   "p-4 md:p-5 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 md:gap-3 transition-all text-center h-full min-h-[100px]",
@@ -226,18 +226,18 @@ export function PracticeSetup({ type, onStart }: Props) {
                 <span className="text-sm font-black uppercase tracking-wider">
                   {t("unit_focus")}
                 </span>
-              </button>
+              </Button>
             </div>
           </div>
 
           <div className="flex flex-col gap-4 mt-auto pt-2">
-            <button
+            <Button variant="default"
               onClick={() => onStart({ language, level, mode })}
               className="w-full h-20 md:h-24 rounded-2xl bg-[#58cc02] text-white border-2 border-transparent border-b-8 border-b-[#46a302] flex items-center justify-center gap-3 text-xl md:text-2xl font-black uppercase tracking-widest transition-all active:border-b-0 active:mt-2 active:mb-[-8px] hover:bg-[#61da02]"
             >
               <Sparkles className="h-6 w-6 md:h-8 md:w-8 fill-white" />{" "}
               {t("start_session")}
-            </button>
+            </Button>
             <p className="text-center text-xs font-bold uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2 mb-2">
               <Zap className="h-4 w-4 fill-amber-400 text-amber-400" /> 1
               {t("ai_credit")}

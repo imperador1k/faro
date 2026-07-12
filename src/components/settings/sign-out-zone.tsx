@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { LogOut } from "lucide-react";
 import { SignOutButton, useClerk } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 
 export const SignOutZone = ({ trigger }: { trigger?: React.ReactNode }) => {
   const t = useTranslations("settings.sign_out");
@@ -51,16 +52,20 @@ export const SignOutZone = ({ trigger }: { trigger?: React.ReactNode }) => {
 
         <div className="flex flex-col gap-3">
           <SignOutButton>
-            <button className="w-full bg-rose-500 text-white font-black uppercase tracking-wider py-4 rounded-2xl border-2 border-rose-600 border-b-4 hover:bg-rose-400 active:translate-y-1 active:border-b-0 transition-all">
+            <Button
+              variant="destructive"
+              className="w-full font-black uppercase tracking-wider py-4 rounded-2xl"
+            >
               {t("confirm")}
-            </button>
+            </Button>
           </SignOutButton>
-          <button
+          <Button
             onClick={handleClose}
-            className="w-full bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider py-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 border-b-4 hover:bg-slate-50 dark:bg-slate-950 hover:text-slate-600 active:translate-y-1 active:border-b-0 transition-all"
+            variant="ghost"
+            className="w-full font-bold uppercase tracking-wider py-4 rounded-2xl"
           >
             {t("cancel")}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -76,12 +81,13 @@ export const SignOutZone = ({ trigger }: { trigger?: React.ReactNode }) => {
           {trigger}
         </div>
       ) : (
-        <button
+        <Button
           onClick={() => setIsModalOpen(true)}
-          className="w-full md:w-auto mx-auto block bg-rose-500 hover:bg-rose-400 text-white border-2 border-b-4 border-rose-600 rounded-2xl px-8 py-4 font-black uppercase tracking-wider active:translate-y-[2px] active:border-b-2 transition-all text-center"
+          variant="destructive"
+          className="w-full md:w-auto mx-auto block rounded-2xl px-8 py-4 font-black uppercase tracking-wider text-center"
         >
           {t("trigger_label")}
-        </button>
+        </Button>
       )}
 
       {isModalOpen && mounted && createPortal(modalContent, document.body)}

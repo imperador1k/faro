@@ -16,6 +16,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { HappyStarLottie, CatLottie } from "@/components/ui/lottie-animation";
 import {
   toggleLike,
@@ -244,24 +245,26 @@ export default function FeedClient({
       <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-[280px] text-center font-medium leading-relaxed z-10">
         {t("end_of_feed_description")}
       </p>
-      <button
+      <Button
+        variant="secondary"
         onClick={() => {
           setIsLoadingOld(true);
           window.location.href = "/feed?includeRead=true";
         }}
         disabled={isLoadingOld}
-        className="z-10 bg-[#1CB0F6] hover:bg-[#1899D6] active:bg-[#1582B7] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-wider transition-all border-b-4 border-[#0092d6] active:border-b-0 active:translate-y-[4px]"
+        className="z-10 px-8 py-4 rounded-2xl"
       >
         {isLoadingOld
           ? t("loading_old_posts_button")
           : t("review_old_posts_button")}
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="ghost"
         onClick={() => router.push("/learn")}
-        className="z-10 mt-6 text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider text-sm hover:text-slate-600 dark:hover:text-white transition-colors"
+        className="z-10 mt-6 text-sm"
       >
         {t("back_to_lessons_button")}
-      </button>
+      </Button>
     </div>
   );
 
@@ -310,28 +313,31 @@ export default function FeedClient({
       </AnimatePresence>
 
       <div className="absolute top-0 w-full md:max-w-[450px] z-50 px-4 pt-8 pb-4 flex items-center justify-between pointer-events-none">
-        <button
+        <Button
+          variant="ghost"
           onClick={() => router.push("/learn")}
-          className="p-3 bg-black/5 dark:bg-white/10 backdrop-blur-md rounded-2xl pointer-events-auto hover:bg-black/10 dark:hover:bg-white/20 transition-all active:scale-95 border-b-4 border-black/10 dark:border-white/10"
+          className="p-3 rounded-2xl pointer-events-auto bg-black/5 dark:bg-white/10 backdrop-blur-md hover:bg-black/10 dark:hover:bg-white/20 border-b-4 border-black/10 dark:border-white/10"
         >
           <ChevronLeft className="w-6 h-6 text-slate-700 dark:text-white" />
-        </button>
+        </Button>
         <div className="flex items-center font-black text-xl tracking-widest drop-shadow-md text-slate-800 dark:text-white">
           FEED
         </div>
         <div className="flex items-center gap-2 pointer-events-auto">
-          <button
+          <Button
+            variant="ghost"
             onClick={() => router.push("/feed/create")}
-            className="p-3 bg-sky-500/20 backdrop-blur-md rounded-2xl hover:bg-sky-500/30 transition-all active:scale-95 border-b-4 border-sky-500/20"
+            className="p-3 rounded-2xl bg-sky-500/20 backdrop-blur-md hover:bg-sky-500/30 border-b-4 border-sky-500/20"
           >
             <Plus className="w-6 h-6 text-sky-600 dark:text-sky-400 stroke-[3]" />
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="ghost"
             onClick={() => router.push("/feed/saved")}
-            className="p-3 bg-amber-500/20 backdrop-blur-md rounded-2xl hover:bg-amber-500/30 transition-all active:scale-95 border-b-4 border-amber-500/20"
+            className="p-3 rounded-2xl bg-amber-500/20 backdrop-blur-md hover:bg-amber-500/30 border-b-4 border-amber-500/20"
           >
             <Bookmark className="w-6 h-6 text-amber-500 dark:text-amber-400 fill-amber-500/20 dark:fill-amber-400/20" />
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -460,7 +466,8 @@ export default function FeedClient({
                         </div>
                       </div>
 
-                      <button
+                      <Button
+                        variant="ghost"
                         onClick={() => handleLike(post.id)}
                         className="flex flex-col items-center gap-1 group"
                       >
@@ -475,9 +482,10 @@ export default function FeedClient({
                         <span className="text-xs font-bold text-slate-600 dark:text-white drop-shadow-md">
                           {formatNumber(likeCount)}
                         </span>
-                      </button>
+                      </Button>
 
-                      <button
+                      <Button
+                        variant="ghost"
                         onClick={() => handleSave(post.id)}
                         className="flex flex-col items-center gap-1 group"
                       >
@@ -492,9 +500,10 @@ export default function FeedClient({
                         <span className="text-xs font-bold text-slate-600 dark:text-white drop-shadow-md">
                           {t("save_button")}
                         </span>
-                      </button>
+                      </Button>
 
-                      <button
+                      <Button
+                        variant="ghost"
                         onClick={() => openShareModal(post.id)}
                         className="flex flex-col items-center gap-1 group"
                       >
@@ -502,7 +511,7 @@ export default function FeedClient({
                         <span className="text-xs font-bold text-slate-600 dark:text-white drop-shadow-md">
                           {formatNumber(shareCount)}
                         </span>
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -535,12 +544,13 @@ export default function FeedClient({
                 <h3 className="text-xl font-black text-slate-900 dark:text-white">
                   {t("share_modal_title")}
                 </h3>
-                <button
+                <Button
+                  variant="ghost"
                   onClick={() => setIsShareModalOpen(false)}
-                  className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors active:scale-90 border-b-4 border-slate-300 dark:border-slate-950"
+                  className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border-b-4 border-slate-300 dark:border-slate-950"
                 >
                   <X className="w-5 h-5 text-slate-500 dark:text-slate-300" />
-                </button>
+                </Button>
               </div>
 
               <div className="flex-1 overflow-y-auto pr-2 space-y-4 custom-scrollbar">
@@ -576,10 +586,11 @@ export default function FeedClient({
                           {friend.userName}
                         </span>
                       </div>
-                      <button
+                      <Button
+                        variant="secondary"
                         onClick={() => handleShare(friend.userId)}
                         disabled={sharingTo === friend.userId}
-                        className="bg-sky-500 hover:bg-sky-400 text-white font-black py-2 px-5 rounded-2xl flex items-center gap-2 disabled:opacity-50 transition-all active:scale-95 border-b-4 border-sky-600 active:border-b-0 active:translate-y-1"
+                        className="py-2 px-5 rounded-2xl flex items-center gap-2"
                       >
                         {sharingTo === friend.userId ? (
                           <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -588,7 +599,7 @@ export default function FeedClient({
                             {t("send_button")} <Send className="w-4 h-4" />
                           </>
                         )}
-                      </button>
+                      </Button>
                     </div>
                   ))
                 )}

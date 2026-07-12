@@ -7,6 +7,7 @@ import { claimDailyChestReward } from "@/actions/user-progress";
 import { toast } from "sonner";
 import { useUISounds } from "@/hooks/use-ui-sounds";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 import { haptics } from "@/lib/haptics";
 
 type Props = {
@@ -105,13 +106,14 @@ export const ChestClient = ({ completedQuestsCount, chestClaimed }: Props) => {
               {t("completed_all_quests")}
             </p>
           </div>
-          <button
+          <Button
+            variant="super"
             onClick={handleClaimReward}
             disabled={isClaiming}
             className="w-full sm:w-auto px-8 py-3 bg-[#FFC800] dark:bg-amber-500 border-2 border-amber-500 dark:border-amber-700 border-b-4 active:border-b-0 active:translate-y-[4px] hover:bg-[#fca311] dark:hover:bg-amber-400 font-black text-white uppercase tracking-wider rounded-2xl transition-all text-lg"
           >
             {isClaiming ? t("opening") : t("open_chest")}
-          </button>
+          </Button>
         </div>
       </div>
     );

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { saveUnitAction } from "@/actions/admin-units";
 import { Save, Loader2, RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 interface UnitFormProps {
   initialData?: {
@@ -120,16 +121,18 @@ export function UnitForm({ initialData, courses }: UnitFormProps) {
       </div>
 
       <div className="mt-10 flex border-t-2 border-stone-100 pt-6 gap-4 justify-end">
-        <button
+        <Button
           type="button"
+          variant="ghost"
           onClick={() => router.back()}
           disabled={isPending}
-          className="px-6 py-4 rounded-2xl font-black tracking-widest uppercase text-stone-500 dark:text-slate-400 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors"
+          className="px-6 py-4 rounded-2xl font-black tracking-widest uppercase text-stone-500 dark:text-slate-400 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800"
         >
           Cancelar
-        </button>
-        <button
+        </Button>
+        <Button
           type="submit"
+          variant="default"
           disabled={isPending}
           className="bg-[#58CC02] text-white px-8 py-4 rounded-2xl border-2 border-transparent border-b-[6px] border-b-[#46a302] hover:bg-[#68e003] hover:-translate-y-1 hover:border-b-[8px] active:translate-y-2 active:border-b-0 font-black tracking-widest uppercase transition-all flex items-center gap-3 disabled:opacity-50 shadow-sm"
         >
@@ -139,7 +142,7 @@ export function UnitForm({ initialData, courses }: UnitFormProps) {
             <Save className="w-5 h-5" />
           )}
           Guardar
-        </button>
+        </Button>
       </div>
     </form>
   );

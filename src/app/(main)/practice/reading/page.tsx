@@ -321,21 +321,21 @@ export default function ReadingPracticePage() {
               ))}
               <div className="pt-4 sticky bottom-4 z-20 pb-4 w-full">
                 {!showMcqResults ? (
-                  <button
+                  <Button variant="secondary"
                     onClick={handleSubmitMcq}
                     disabled={mcqAnswers.includes(-1)}
                     className="w-full h-16 md:h-20 bg-sky-400 text-white text-xl font-black rounded-[2rem] border-2 border-transparent border-b-8 border-b-sky-500 hover:bg-sky-500 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm disabled:opacity-50 disabled:grayscale"
                   >
                     {t("submit_answers")}
-                  </button>
+                  </Button>
                 ) : (
-                  <button
+                  <Button variant="default"
                     onClick={handleProceedToEssay}
                     className="w-full h-16 md:h-20 bg-emerald-500 text-white text-xl font-black rounded-[2rem] border-2 border-transparent border-b-8 border-b-emerald-600 hover:bg-emerald-400 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
                   >
                     {t("proceed_to_essay")}{" "}
                     <Send className="w-6 h-6" strokeWidth={3} />
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>
@@ -389,7 +389,7 @@ export default function ReadingPracticePage() {
                           </div>
                         )}
                       </div>
-                      <button
+                      <Button variant="default"
                         disabled={isAnalyzing || !userEssay.trim()}
                         onClick={handleSubmitEssay}
                         className="w-full h-20 md:h-24 bg-[#58cc02] text-white text-xl md:text-2xl font-black rounded-[2rem] border-2 border-transparent border-b-8 border-b-[#46a302] hover:bg-[#61da02] active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm disabled:opacity-50 mt-4"
@@ -404,7 +404,7 @@ export default function ReadingPracticePage() {
                             <FileText className="w-7 h-7" strokeWidth={3} />
                           </>
                         )}
-                      </button>
+                      </Button>
                     </>
                   ) : (
                     <div className="flex flex-col gap-6">
@@ -508,13 +508,13 @@ export default function ReadingPracticePage() {
                                 </ul>
                               </div>
                             </div>
-                            <button
+                            <Button variant="secondary"
                               onClick={() => handleGenerateExam()}
                               className="w-full mt-8 h-16 md:h-20 bg-sky-400 text-white text-xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-sky-500 hover:bg-sky-500 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
                             >
                               {t("new_exam")}{" "}
                               <RefreshCw className="w-6 h-6" strokeWidth={3} />
-                            </button>
+                            </Button>
                           </div>
                         </div>
                       )}

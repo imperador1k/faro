@@ -4,6 +4,7 @@ import { useState } from "react";
 import { updatePostStatus } from "@/actions/admin-feed";
 import { Check, X, ImageIcon } from "lucide-react";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 type PendingPost = {
   id: string;
@@ -104,23 +105,25 @@ export const AdminFeedClient = ({
             </p>
 
             <div className="flex items-center gap-x-3 mt-auto pt-4 border-t-2 border-stone-100 dark:border-slate-800">
-              <button
+              <Button
+                variant="default"
                 onClick={() => handleAction(post.id, "APPROVED")}
                 disabled={isProcessing === post.id}
                 className="flex-1 flex items-center justify-center gap-x-2 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-black uppercase tracking-wider text-sm py-3 rounded-xl transition-all border-b-4 border-green-700 active:border-b-0 active:translate-y-[4px] disabled:opacity-50"
               >
                 <Check className="w-5 h-5" />
                 {isProcessing === post.id ? "..." : "Aprovar"}
-              </button>
+              </Button>
 
-              <button
+              <Button
+                variant="destructive"
                 onClick={() => handleAction(post.id, "REJECTED")}
                 disabled={isProcessing === post.id}
                 className="flex items-center justify-center gap-x-2 bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 text-stone-500 dark:text-slate-400 font-black uppercase tracking-wider text-sm py-3 px-6 rounded-xl transition-colors disabled:opacity-50"
               >
                 <X className="w-5 h-5" />
                 Rejeitar
-              </button>
+              </Button>
             </div>
           </div>
         </div>

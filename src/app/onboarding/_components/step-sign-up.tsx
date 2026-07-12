@@ -47,11 +47,11 @@ export const StepSignUp = () => {
         </motion.div>
 
         <div className="space-y-2">
-          <h2 className="text-3xl md:text-4xl font-black text-[#042c60] leading-tight">
+          <h2 className="text-3xl md:text-4xl font-black text-[#042c60] dark:text-white leading-tight">
             {t("ready_to_save")}
             <span className="text-sky-500">{t("progress")}</span>!
           </h2>
-          <p className="text-lg font-bold text-gray-500 max-w-md mx-auto">
+          <p className="text-lg font-bold text-gray-500 dark:text-gray-300 max-w-md mx-auto">
             {t("create_profile_desc")}
           </p>
         </div>
@@ -135,7 +135,7 @@ export const StepSignUp = () => {
           </span>
         </div>
 
-        <p className="text-xs font-bold text-gray-400 max-w-xs leading-relaxed">
+        <p className="text-xs font-bold text-gray-400 dark:text-slate-400 max-w-xs leading-relaxed">
           {t("click_continue_desc")}
         </p>
       </motion.div>

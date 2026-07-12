@@ -17,6 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { TedyLottie } from "@/components/ui/lottie-animation";
+import { Button } from "@/components/ui/button";
 
 type Notification = {
   id: number;
@@ -83,38 +84,44 @@ export const NotificationInbox = ({
           
           <div className="flex items-center gap-1 sm:gap-2">
             {hasUnread && (
-              <button
+              <Button
                 disabled={isPending}
                 onClick={handleMarkAllRead}
                 title={t("mark_read")}
-                className="p-2 text-stone-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 hover:bg-stone-100 dark:hover:bg-slate-800 rounded-full transition-colors disabled:opacity-50"
+                variant="ghost"
+                size="icon"
+                className="text-stone-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 hover:bg-stone-100 dark:hover:bg-slate-800 rounded-full"
               >
                 {isPending ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
                 ) : (
                   <CheckCheck className="h-5 w-5" />
                 )}
-              </button>
+              </Button>
             )}
 
             {hasAny && (
-              <button
+              <Button
                 disabled={isPending}
                 onClick={handleClearAll}
                 title={t("clear_tab")}
-                className="p-2 text-stone-500 hover:text-rose-500 dark:text-slate-400 dark:hover:text-rose-400 hover:bg-stone-100 dark:hover:bg-slate-800 rounded-full transition-colors disabled:opacity-50"
+                variant="ghost"
+                size="icon"
+                className="text-stone-500 hover:text-rose-500 dark:text-slate-400 dark:hover:text-rose-400 hover:bg-stone-100 dark:hover:bg-slate-800 rounded-full"
               >
                 <Trash className="h-5 w-5" />
-              </button>
+              </Button>
             )}
 
             <NotificationSettingsModal initialEnabled={initialEnabled}>
-              <button
+              <Button
                 title={t("settings")}
-                className="p-2 text-stone-500 hover:text-stone-900 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-stone-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                variant="ghost"
+                size="icon"
+                className="text-stone-500 hover:text-stone-900 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-stone-100 dark:hover:bg-slate-800 rounded-full"
               >
                 <Settings className="h-5 w-5" />
-              </button>
+              </Button>
             </NotificationSettingsModal>
           </div>
         </div>
@@ -166,10 +173,11 @@ const Tab = ({
   onClick: () => void;
 }) => {
   return (
-    <button
+    <Button
       onClick={onClick}
+      variant="ghost"
       className={cn(
-        "flex-1 py-3 text-sm font-semibold tracking-wide transition-colors relative",
+        "flex-1 py-3 text-sm font-semibold tracking-wide rounded-none h-auto",
         active
           ? "text-stone-900 dark:text-slate-100"
           : "text-stone-500 dark:text-slate-500 hover:text-stone-700 dark:hover:text-slate-300"
@@ -179,7 +187,7 @@ const Tab = ({
       {active && (
         <div className="absolute bottom-0 left-0 w-full h-[2px] bg-stone-900 dark:bg-slate-100" />
       )}
-    </button>
+    </Button>
   );
 };
 

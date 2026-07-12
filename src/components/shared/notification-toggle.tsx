@@ -7,6 +7,7 @@ import { updateNotificationPreference } from "@/actions/user-progress";
 import { useCustomToast } from "@/components/ui/custom-toast";
 import { cn } from "@/lib/utils";
 import { Bell, BellOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   initialEnabled: boolean;
@@ -64,14 +65,15 @@ export const NotificationToggle = ({ initialEnabled }: Props) => {
       </div>
 
       {/* Dojo Custom Switch Pill */}
-      <button
+      <Button
+        variant="ghost"
         onClick={toggle}
         disabled={isPending}
         className={cn(
-          "relative inline-flex h-9 w-16 shrink-0 cursor-pointer items-center rounded-full transition-all duration-300 focus:outline-none disabled:opacity-50",
+          "relative inline-flex h-9 w-16 shrink-0 items-center rounded-full focus:outline-none disabled:opacity-50",
           enabled
-            ? "bg-[#58cc02] border-2 border-[#46a302] border-b-4 translate-y-[-2px] active:translate-y-0 active:border-b-2"
-            : "bg-stone-200 dark:bg-slate-700 border-2 border-stone-300 dark:border-slate-700 border-b-4 translate-y-[-2px] active:translate-y-0 active:border-b-2",
+            ? "bg-[#58cc02] border-2 border-[#46a302] border-b-4"
+            : "bg-stone-200 dark:bg-slate-700 border-2 border-stone-300 dark:border-slate-700 border-b-4",
         )}
         role="switch"
         aria-checked={enabled}
@@ -83,7 +85,7 @@ export const NotificationToggle = ({ initialEnabled }: Props) => {
             enabled ? "translate-x-7" : "translate-x-1",
           )}
         />
-      </button>
+      </Button>
     </div>
   );
 };

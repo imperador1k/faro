@@ -5,6 +5,7 @@ import { HelpCircle, Crown, Target } from "lucide-react";
 import { QuestsInfoModal } from "@/components/modals/quests-info-modal";
 import { useTranslations } from "next-intl";
 import { usePreferencesStore } from "@/store/use-preferences-store";
+import { Button } from "@/components/ui/button";
 
 export const QuestsHeader = () => {
   const t = useTranslations("quests_components");
@@ -39,12 +40,14 @@ export const QuestsHeader = () => {
         <Crown className="absolute bottom-8 right-12 w-20 h-20 text-white/20 rotate-12 animate-pulse delay-300" />
 
         {/* Help Button */}
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setIsModalOpen(true)}
           className="absolute top-6 right-6 h-12 w-12 bg-white/20 hover:bg-white/30 text-white rounded-2xl flex items-center justify-center transition-all active:scale-95 z-20 border-2 border-white/20 backdrop-blur-sm shadow-sm"
         >
           <HelpCircle className="w-6 h-6" />
-        </button>
+        </Button>
 
         <div className="w-20 h-20 bg-white/20 backdrop-blur-md text-white rounded-[2rem] flex items-center justify-center mb-6 rotate-[-5deg] border-4 border-white/30 shadow-lg relative z-10 animate-bounce">
           <Crown className="w-10 h-10 fill-white/50" />

@@ -348,7 +348,7 @@ export default function WritingPracticePage() {
 
           <div className="mt-8 lg:mt-0 flex flex-col gap-4 w-full">
             {!feedback ? (
-              <button
+              <Button variant="default"
                 onClick={handleSubmit}
                 disabled={!userResponse.trim() || isAnalyzing}
                 className="w-full h-20 md:h-24 bg-[#58cc02] text-white text-xl md:text-2xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-[#46a302] hover:bg-[#61da02] active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-50 disabled:pointer-events-none shadow-sm"
@@ -362,15 +362,15 @@ export default function WritingPracticePage() {
                 ) : (
                   <>{t("send_button")}</>
                 )}
-              </button>
+              </Button>
             ) : (
-              <button
+              <Button variant="secondary"
                 onClick={() => handleGeneratePrompt()}
                 className="w-full h-20 md:h-24 bg-sky-400 text-white text-xl md:text-2xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-sky-500 hover:bg-sky-500 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
               >
                 {t("new_challenge")}
                 <RefreshCw className="w-7 h-7" strokeWidth={3} />
-              </button>
+              </Button>
             )}
 
             <p className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2">

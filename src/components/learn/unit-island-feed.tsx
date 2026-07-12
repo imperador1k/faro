@@ -10,6 +10,7 @@ import { issueCertificate } from "@/actions/certificates";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useLessonModalStore } from "@/store/use-lesson-modal-store";
+import { Button } from "@/components/ui/button";
 import { useHeartsModalStore } from "@/store/use-hearts-modal-store";
 import { type LessonInfo } from "@/store/use-lesson-modal-store";
 import { CourseCompletedModal } from "@/components/modals/course-completed-modal";
@@ -208,7 +209,8 @@ export const UnitIslandFeed = ({
               {/* Claim Certificate Button */}
               {(isCourseCompleted || process.env.NODE_ENV === "development") && (
                 <div className="mt-8 z-30">
-                  <button
+                  <Button
+                    variant="super"
                     onClick={handleClaimCertificate}
                     disabled={isPending}
                     className="bg-amber-400 hover:bg-amber-500 text-amber-900 border-2 border-amber-200 border-b-8 hover:border-b-4 active:border-b-0 active:translate-y-2 hover:translate-y-1 transition-all px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-lg sm:text-xl shadow-xl flex items-center gap-3 disabled:opacity-50"
@@ -222,12 +224,13 @@ export const UnitIslandFeed = ({
                       <Award className="w-6 h-6" strokeWidth={3} />
                     )}
                     {t("claim_certificate")}
-                  </button>
+                  </Button>
                 </div>
               )}
 
               {/* Back to Start Button */}
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => {
                   const firstUnit = document.getElementById(
                     `unit-${processedUnits[0]?.id}`,
@@ -247,7 +250,7 @@ export const UnitIslandFeed = ({
                   className="w-10 h-10 text-stone-300 group-hover/btn:text-sky-500 group-hover/btn:-translate-y-2 transition-all duration-300"
                   strokeWidth={2}
                 />
-              </button>
+              </Button>
             </motion.div>
           )}
         </motion.div>

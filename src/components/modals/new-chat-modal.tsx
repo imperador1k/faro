@@ -16,6 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   isOpen: boolean;
@@ -92,12 +93,13 @@ export const NewChatModal = ({ isOpen, onClose }: Props) => {
       <DialogContent className="z-modal max-w-md p-0 overflow-hidden border-none bg-transparent shadow-none [&>button]:hidden">
         <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col p-6 md:p-8">
           {/* Custom Close Button */}
-          <button
+          <Button
+            variant="ghost"
             onClick={onClose}
-            className="absolute right-6 top-6 h-10 w-10 flex items-center justify-center rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-1 active:border-b-0 transition-all z-50 group"
+            className="absolute right-6 top-6 h-10 w-10 rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 z-50 group"
           >
-            <X className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-stone-600 dark:text-slate-300 transition-colors" />
-          </button>
+            <X className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-stone-600 dark:text-slate-300" />
+          </Button>
 
           {/* Header */}
           <div className="flex items-center gap-3 mb-8">

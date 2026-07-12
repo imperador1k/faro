@@ -4,9 +4,9 @@ import { useTranslations } from "next-intl";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
 import { DrunkenOwlLottie } from "@/components/ui/lottie-animation";
 import { X, Star, Zap, Clock, BookOpen, Sparkles, Trophy } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type LessonInfo = {
   id: number;
@@ -62,12 +62,14 @@ export const LessonStartModal = ({ lesson, isOpen, onClose }: Props) => {
             <div className="absolute inset-0 bg-white/10 opacity-50 bg-[radial-gradient(circle_at_20%_35%,rgba(255,255,255,0.3)_0%,transparent_50%)]" />
 
             {/* Close button */}
-            <button
+            <Button
               onClick={onClose}
-              className="absolute right-4 top-4 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/10 text-white transition-all hover:bg-black/20 active:scale-95"
+              variant="ghost"
+              size="icon"
+              className="absolute right-4 top-4 z-20 h-8 w-8 rounded-full bg-black/10 text-white hover:bg-black/20"
             >
               <X className="h-4 w-4" />
-            </button>
+            </Button>
           </div>
 
           {/* ── Owl Lottie — floating ── */}
@@ -147,29 +149,27 @@ export const LessonStartModal = ({ lesson, isOpen, onClose }: Props) => {
 
             {/* ── Action Buttons ── */}
             <div className="mt-auto flex flex-col gap-3">
-              <button
+              <Button
                 onClick={handleStart}
                 disabled={isLoading}
-                className={cn(
-                  "w-full bg-[#58CC02] text-white rounded-2xl py-4 text-xl font-black uppercase tracking-wider border-b-8 border-[#46a302] hover:bg-[#4eb801] active:translate-y-2 active:border-b-0 transition-all flex items-center justify-center gap-3",
-                  isLoading &&
-                    "opacity-70 cursor-not-allowed pointer-events-none",
-                )}
+                variant="default"
+                className="w-full rounded-2xl py-4 text-xl"
               >
                 {isLoading ? (
                   <div className="h-6 w-6 animate-spin rounded-full border-4 border-white/30 border-t-white" />
                 ) : (
                   <>{t("start")}</>
                 )}
-              </button>
+              </Button>
 
-              <button
+              <Button
                 onClick={onClose}
                 disabled={isLoading}
-                className="text-stone-400 dark:text-slate-400 font-bold text-center mt-3 hover:text-stone-600 dark:hover:text-slate-300 transition-colors cursor-pointer w-full uppercase py-2 active:scale-95 disabled:opacity-50 tracking-wide text-sm"
+                variant="ghost"
+                className="w-full mt-3 py-2"
               >
                 {t("later")}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

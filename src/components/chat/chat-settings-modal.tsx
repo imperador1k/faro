@@ -50,6 +50,7 @@ import localforage from "localforage";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type ChatSettingsModalProps = {
   isOpen: boolean;
@@ -420,18 +421,20 @@ export const ChatSettingsModal = ({
                 })}
               </p>
               <div className="flex w-full gap-3">
-                <button
+                <Button
                   onClick={() => setConfirmState(null)}
                   disabled={isPending}
-                  className="flex-1 py-3 rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-bold hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition active:scale-95 disabled:opacity-50"
+                  variant="ghost"
+                  className="flex-1 py-3 rounded-2xl font-bold active:scale-95"
                 >
                   Cancelar
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={executeConfirmAction}
                   disabled={isPending}
+                  variant="destructive"
                   className={cn(
-                    "flex-1 py-3 rounded-2xl text-white font-bold transition active:scale-95 flex justify-center items-center disabled:opacity-50 border-b-4 active:border-b-0 active:translate-y-1",
+                    "flex-1 py-3 rounded-2xl font-bold active:scale-95 flex justify-center items-center",
                     confirmState.type === "promote"
                       ? "bg-amber-500 hover:bg-amber-400 border-amber-600"
                       : "bg-rose-500 hover:bg-rose-400 border-rose-600",
@@ -442,7 +445,7 @@ export const ChatSettingsModal = ({
                   ) : (
                     "Confirmar"
                   )}
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -452,14 +455,16 @@ export const ChatSettingsModal = ({
           <>
             <div className="flex items-center justify-between p-5 bg-white dark:bg-slate-900 border-b border-stone-200 dark:border-slate-800 shrink-0 z-10 sticky top-0 shadow-sm">
               <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setViewMode("settings")}
-                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 text-stone-500 dark:text-slate-400 transition-colors active:scale-95"
+                <Button
+                  onClick={onClose}
+                  variant="ghost"
+                  size="icon"
+                  className="p-2 -ml-2 rounded-2xl"
                 >
-                  <ArrowLeft className="h-6 w-6" />
-                </button>
+                  <X className="h-6 w-6" />
+                </Button>
                 <span className="font-black text-stone-800 dark:text-slate-100 text-lg tracking-tight">
-                  Média, Links e Docs
+                  Info da Conversa
                 </span>
               </div>
             </div>
@@ -496,12 +501,14 @@ export const ChatSettingsModal = ({
             {/* Header - Edit Group */}
             <div className="flex items-center justify-between p-5 bg-white dark:bg-slate-900 border-b border-stone-200 dark:border-slate-800 shrink-0 z-10 sticky top-0 shadow-sm">
               <div className="flex items-center gap-3">
-                <button
+                <Button
                   onClick={() => setViewMode("settings")}
-                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 text-stone-500 dark:text-slate-400 transition-colors active:scale-95"
+                  variant="ghost"
+                  size="icon"
+                  className="p-2 -ml-2 rounded-2xl"
                 >
                   <ArrowLeft className="h-6 w-6" />
-                </button>
+                </Button>
                 <span className="font-black text-stone-800 dark:text-slate-100 text-lg tracking-tight">
                   Editar Grupo
                 </span>
@@ -536,21 +543,24 @@ export const ChatSettingsModal = ({
                 />
 
                 <div className="flex items-center gap-3">
-                  <button
+                  <Button
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex-1 py-3 px-4 bg-white dark:bg-slate-900 hover:bg-stone-50 dark:bg-slate-950 text-stone-700 dark:text-slate-200 font-bold rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-[4px] active:border-b-2 active:translate-y-[2px] transition-all flex items-center justify-center gap-2"
+                    variant="outline"
+                    className="flex-1 py-3 px-4 font-bold rounded-2xl border-b-[4px] flex items-center justify-center gap-2"
                   >
                     <ImageIcon className="h-5 w-5 text-[#1CB0F6]" />
                     Escolher da Galeria
-                  </button>
+                  </Button>
                   {editGroupImageUrl && (
-                    <button
+                    <Button
                       onClick={() => setEditGroupImageUrl("")}
-                      className="p-3 bg-rose-50 text-rose-500 rounded-2xl hover:bg-rose-100 transition-colors"
+                      variant="ghost"
+                      size="icon"
+                      className="p-3 bg-rose-50 text-rose-500 rounded-2xl hover:bg-rose-100"
                       title="Remover Foto"
                     >
                       <Trash2 className="h-5 w-5" />
-                    </button>
+                    </Button>
                   )}
                 </div>
               </div>
@@ -572,10 +582,11 @@ export const ChatSettingsModal = ({
                 </div>
               )}
 
-              <button
+              <Button
                 onClick={handleSaveGroupInfo}
                 disabled={isPending || !editGroupName.trim()}
-                className="w-full py-4 mt-6 bg-[#1CB0F6] hover:bg-[#1899D6] active:bg-[#1CB0F6] text-white font-black rounded-2xl border-b-4 border-[#1899D6] active:border-b-0 active:translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase tracking-widest"
+                variant="secondary"
+                className="w-full py-4 mt-6 font-black rounded-2xl flex items-center justify-center gap-2 uppercase tracking-widest"
               >
                 {isPending ? (
                   <Loader2 className="h-6 w-6 animate-spin" />
@@ -585,19 +596,21 @@ export const ChatSettingsModal = ({
                     Guardar
                   </>
                 )}
-              </button>
+              </Button>
             </div>
           </>
         ) : viewMode === "add-member" ? (
           <>
             <div className="flex items-center justify-between p-5 bg-white dark:bg-slate-900 border-b border-stone-200 dark:border-slate-800 shrink-0 z-10 sticky top-0 shadow-sm">
               <div className="flex items-center gap-3">
-                <button
+                <Button
                   onClick={() => setViewMode("settings")}
-                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 text-stone-500 dark:text-slate-400 transition-colors active:scale-95"
+                  variant="ghost"
+                  size="icon"
+                  className="p-2 -ml-2 rounded-2xl"
                 >
                   <ArrowLeft className="h-6 w-6" />
-                </button>
+                </Button>
                 <span className="font-black text-stone-800 dark:text-slate-100 text-lg tracking-tight">
                   Adicionar Membros
                 </span>
@@ -672,17 +685,18 @@ export const ChatSettingsModal = ({
             </div>
 
             <div className="p-5 bg-white dark:bg-slate-900 border-t border-stone-200 dark:border-slate-800 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] sticky bottom-0 z-10">
-              <button
+              <Button
                 onClick={handleAddMembers}
                 disabled={selectedFriends.length === 0 || isSubmittingMembers}
-                className="w-full flex items-center justify-center py-4 bg-[#58CC02] hover:bg-[#46a302] text-white font-black tracking-widest text-sm uppercase rounded-2xl shadow-sm border-b-4 border-[#46a302] active:border-b-0 active:translate-y-1 transition-all disabled:bg-stone-200 dark:bg-slate-700 disabled:border-stone-300 dark:border-slate-700 disabled:text-stone-400 dark:text-slate-500 dark:text-slate-400"
+                variant="default"
+                className="w-full py-4 font-black tracking-widest text-sm uppercase rounded-2xl"
               >
                 {isSubmittingMembers ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                   `Adicionar ${selectedFriends.length > 0 ? `(${selectedFriends.length})` : ""}`
                 )}
-              </button>
+              </Button>
             </div>
           </>
         ) : (
@@ -690,12 +704,14 @@ export const ChatSettingsModal = ({
             {/* Header - Fixed */}
             <div className="flex items-center justify-between p-5 bg-white dark:bg-slate-900 border-b border-stone-200 dark:border-slate-800 shrink-0 z-10 sticky top-0 shadow-sm">
               <div className="flex items-center gap-3">
-                <button
-                  onClick={onClose}
-                  className="p-2 -ml-2 rounded-2xl hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 text-stone-500 dark:text-slate-400 transition-colors active:scale-95"
+                <Button
+                  onClick={() => setViewMode("settings")}
+                  variant="ghost"
+                  size="icon"
+                  className="p-2 -ml-2 rounded-2xl"
                 >
-                  <X className="h-6 w-6" />
-                </button>
+                  <ArrowLeft className="h-6 w-6" />
+                </Button>
                 <span className="font-black text-stone-800 dark:text-slate-100 text-lg tracking-tight">
                   Info da Conversa
                 </span>
@@ -773,53 +789,55 @@ export const ChatSettingsModal = ({
                 </span>
 
                 {isAdmin && (
-                  <button
+                  <Button
                     onClick={() => {
                       setEditGroupName(groupName || "");
                       setEditGroupImageUrl(groupImageUrl || "");
                       setViewMode("edit-group");
                     }}
-                    className="mt-5 flex items-center justify-center gap-2 w-full py-3 bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 active:bg-stone-300 dark:bg-slate-600 rounded-xl text-stone-700 dark:text-slate-200 font-bold transition-colors"
+                    variant="ghost"
+                    className="mt-5 w-full py-3 rounded-xl font-bold"
                   >
                     <Pencil className="h-4 w-4" />
                     Editar Perfil do Grupo
-                  </button>
+                  </Button>
                 )}
 
                 {/* Quick Actions (Audio / Video / Search) */}
                 <div className="flex items-center gap-4 mt-6 w-full justify-center">
-                  <button className="flex flex-col items-center gap-2 group">
+                  <Button variant="ghost" className="flex flex-col items-center gap-2 h-auto p-0 group">
                     <div className="h-12 w-12 rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 flex items-center justify-center group-hover:bg-[#1CB0F6] group-hover:text-white transition-all active:scale-95">
                       <Phone className="h-5 w-5" />
                     </div>
                     <span className="text-[10px] font-bold text-stone-500 dark:text-slate-400 group-hover:text-stone-700 dark:text-slate-200">
                       Áudio
                     </span>
-                  </button>
-                  <button className="flex flex-col items-center gap-2 group">
+                  </Button>
+                  <Button variant="ghost" className="flex flex-col items-center gap-2 h-auto p-0 group">
                     <div className="h-12 w-12 rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 flex items-center justify-center group-hover:bg-[#1CB0F6] group-hover:text-white transition-all active:scale-95">
                       <Video className="h-5 w-5" />
                     </div>
                     <span className="text-[10px] font-bold text-stone-500 dark:text-slate-400 group-hover:text-stone-700 dark:text-slate-200">
                       Vídeo
                     </span>
-                  </button>
-                  <button className="flex flex-col items-center gap-2 group">
+                  </Button>
+                  <Button variant="ghost" className="flex flex-col items-center gap-2 h-auto p-0 group">
                     <div className="h-12 w-12 rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 flex items-center justify-center group-hover:bg-[#1CB0F6] group-hover:text-white transition-all active:scale-95">
                       <Search className="h-5 w-5" />
                     </div>
                     <span className="text-[10px] font-bold text-stone-500 dark:text-slate-400 group-hover:text-stone-700 dark:text-slate-200">
                       Pesquisar
                     </span>
-                  </button>
+                  </Button>
                 </div>
               </div>
 
               {/* Options Card */}
               <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-stone-100 dark:border-slate-800 overflow-hidden flex flex-col">
-                <button
+                <Button
                   onClick={() => setIsMuted(!isMuted)}
-                  className="flex items-center justify-between p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors border-b border-stone-100 dark:border-slate-800 active:bg-stone-100 dark:active:bg-slate-700"
+                  variant="ghost"
+                  className="flex items-center justify-between p-5 w-full rounded-none h-auto border-b border-stone-100 dark:border-slate-800"
                 >
                   <div className="flex items-center gap-4">
                     <div className="p-2.5 bg-indigo-50 text-indigo-500 rounded-xl">
@@ -849,14 +867,15 @@ export const ChatSettingsModal = ({
                       )}
                     />
                   </div>
-                </button>
+                </Button>
               </div>
 
               {/* Media Section */}
               <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-stone-100 dark:border-slate-800 overflow-hidden flex flex-col">
-                <button
+                <Button
                   onClick={() => setViewMode("media")}
-                  className="flex items-center justify-between p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors active:bg-stone-100 dark:active:bg-slate-700"
+                  variant="ghost"
+                  className="flex items-center justify-between p-5 w-full rounded-none h-auto"
                 >
                   <div className="flex items-center gap-4">
                     <div className="p-2.5 bg-blue-50 text-blue-500 rounded-xl">
@@ -872,7 +891,7 @@ export const ChatSettingsModal = ({
                     </div>
                   </div>
                   <ChevronRight className="h-5 w-5 text-stone-300" />
-                </button>
+                </Button>
 
                 {mediaMessages.length > 0 && (
                   <div className="px-5 pb-5 grid grid-cols-4 gap-2 pointer-events-none">
@@ -911,12 +930,14 @@ export const ChatSettingsModal = ({
                       </div>
                     </div>
                     {isAdmin && (
-                      <button
+                      <Button
                         onClick={() => setViewMode("add-member")}
-                        className="bg-green-100 text-green-600 hover:bg-green-200 p-2 rounded-xl transition-colors active:scale-95"
+                        variant="ghost"
+                        size="icon"
+                        className="bg-green-100 text-green-600 hover:bg-green-200 rounded-xl"
                       >
                         <UserPlus className="h-5 w-5" />
-                      </button>
+                      </Button>
                     )}
                   </div>
                   <div className="flex flex-col gap-1">
@@ -966,7 +987,7 @@ export const ChatSettingsModal = ({
                           {isAdmin &&
                             p.userId !== currentUserId &&
                             p.role !== "admin" && (
-                              <button
+                              <Button
                                 onClick={(e) => {
                                   e.preventDefault();
                                   setManagingUserId(
@@ -975,22 +996,24 @@ export const ChatSettingsModal = ({
                                       : p.userId,
                                   );
                                 }}
+                                variant="ghost"
+                                size="icon"
                                 className={cn(
-                                  "p-2 rounded-xl transition-colors active:scale-95",
+                                  "p-2 rounded-xl",
                                   managingUserId === p.userId
                                     ? "bg-stone-200 dark:bg-slate-700 text-stone-700 dark:text-slate-200"
                                     : "text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800",
                                 )}
                               >
                                 <MoreVertical className="h-5 w-5" />
-                              </button>
+                              </Button>
                             )}
                         </div>
 
                         {/* Expandable Manage Action Menu */}
                         {managingUserId === p.userId && (
                           <div className="flex flex-col gap-1 px-3 pb-3 pt-1 border-t border-stone-100 mt-1 animate-in slide-in-from-top-2 fade-in duration-200">
-                            <button
+                            <Button
                               disabled={isPending}
                               onClick={(e) =>
                                 handlePromoteToAdmin(
@@ -999,12 +1022,13 @@ export const ChatSettingsModal = ({
                                   p.userName || "o membro",
                                 )
                               }
-                              className="flex items-center gap-3 w-full p-3 rounded-xl bg-amber-50 text-amber-600 hover:bg-amber-100 font-bold text-sm transition-colors disabled:opacity-50"
+                              variant="ghost"
+                              className="flex items-center gap-3 w-full p-3 rounded-xl bg-amber-50 text-amber-600 hover:bg-amber-100 font-bold text-sm"
                             >
                               <Star className="h-4 w-4" />
                               Promover a Administrador
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                               disabled={isPending}
                               onClick={(e) =>
                                 handleKick(
@@ -1013,11 +1037,12 @@ export const ChatSettingsModal = ({
                                   p.userName || "o membro",
                                 )
                               }
-                              className="flex items-center gap-3 w-full p-3 rounded-xl bg-rose-50 text-rose-500 hover:bg-rose-100 font-bold text-sm transition-colors disabled:opacity-50"
+                              variant="ghost"
+                              className="flex items-center gap-3 w-full p-3 rounded-xl bg-rose-50 text-rose-500 hover:bg-rose-100 font-bold text-sm"
                             >
                               <LogOut className="h-4 w-4" />
                               Expulsar do Grupo
-                            </button>
+                            </Button>
                           </div>
                         )}
                       </div>
@@ -1044,10 +1069,11 @@ export const ChatSettingsModal = ({
 
               {/* Danger Zone Actions */}
               <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-stone-100 dark:border-slate-800 overflow-hidden flex flex-col">
-                <button
+                <Button
                   disabled={isPending}
                   onClick={handleClearHistory}
-                  className="flex items-center gap-4 p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors border-b border-stone-100 dark:border-slate-800 text-rose-500 font-bold active:bg-stone-100 dark:active:bg-slate-700 disabled:opacity-50"
+                  variant="ghost"
+                  className="flex items-center gap-4 p-5 w-full rounded-none h-auto border-b border-stone-100 dark:border-slate-800 text-rose-500 font-bold"
                 >
                   {isPending ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -1055,30 +1081,31 @@ export const ChatSettingsModal = ({
                     <Trash2 className="h-5 w-5" />
                   )}
                   {isPending ? "A limpar..." : "Limpar Histórico"}
-                </button>
+                </Button>
 
                 {!isGroup && (
                   <>
-                    <button className="flex items-center gap-4 p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors border-b border-stone-100 dark:border-slate-800 text-rose-500 font-bold active:bg-stone-100 dark:active:bg-slate-700">
+                    <Button variant="ghost" className="flex items-center gap-4 p-5 w-full rounded-none h-auto border-b border-stone-100 dark:border-slate-800 text-rose-500 font-bold">
                       <Ban className="h-5 w-5" />
                       Bloquear Contacto
-                    </button>
-                    <button className="flex items-center gap-4 p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors text-rose-500 font-bold active:bg-stone-100 dark:active:bg-slate-700">
+                    </Button>
+                    <Button variant="ghost" className="flex items-center gap-4 p-5 w-full rounded-none h-auto text-rose-500 font-bold">
                       <Flag className="h-5 w-5" />
                       Denunciar
-                    </button>
+                    </Button>
                   </>
                 )}
 
                 {isGroup && (
-                  <button
+                  <Button
                     disabled={isPending}
                     onClick={handleLeaveGroup}
-                    className="flex items-center gap-4 p-5 hover:bg-stone-50 dark:hover:bg-slate-800 transition-colors text-rose-500 font-bold active:bg-stone-100 dark:active:bg-slate-700 disabled:opacity-50"
+                    variant="ghost"
+                    className="flex items-center gap-4 p-5 w-full rounded-none h-auto text-rose-500 font-bold"
                   >
                     <LogOut className="h-5 w-5" />
                     Sair do Grupo
-                  </button>
+                  </Button>
                 )}
               </div>
 

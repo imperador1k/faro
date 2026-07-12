@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useTransition } from "react";
 import { X, Heart, Sparkles, BadgeCheck, Crown, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useProModalStore } from "@/store/use-pro-modal-store";
 import { cn } from "@/lib/utils";
@@ -90,13 +91,15 @@ export const ProModal = () => {
               <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-amber-300 blur-3xl opacity-40" />
 
               {/* Close button */}
-              <button
+              <Button
                 onClick={closeModal}
-                className="absolute right-4 top-4 z-20 flex h-8 w-8 items-center justify-center rounded-xl bg-white/30 text-amber-700 backdrop-blur-sm transition-all hover:bg-white/50 active:scale-90"
+                variant="ghost"
+                size="icon"
+                className="absolute right-4 top-4 z-20 h-8 w-8 rounded-xl bg-white/30 text-amber-700 backdrop-blur-sm hover:bg-white/50"
                 aria-label={t("close_button")}
               >
                 <X className="h-5 w-5" />
-              </button>
+              </Button>
 
               {/* Mascot with Crown */}
               <div className="relative mx-auto mb-4 h-24 w-24">
@@ -162,10 +165,11 @@ export const ProModal = () => {
 
           {/* ===== Sticky Footer Action Area ===== */}
           <div className="border-t border-stone-100 bg-white dark:bg-slate-900 px-6 pb-6 pt-4">
-            <button
+            <Button
               onClick={onClickSubscribe}
               disabled={isPending}
-              className="group relative flex w-full items-center justify-center gap-3 rounded-2xl border-2 border-amber-200 border-b-8 bg-white dark:bg-slate-900 py-4 text-lg md:text-xl font-black uppercase tracking-widest text-amber-600 shadow-sm transition-all hover:scale-[1.02] hover:shadow-md active:translate-y-1 active:border-b-2 active:shadow-none disabled:pointer-events-none disabled:opacity-70"
+              variant="super"
+              className="group relative w-full rounded-2xl py-4 text-lg md:text-xl"
             >
               {isPending ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -173,15 +177,16 @@ export const ProModal = () => {
                 <Crown className="h-6 w-6 fill-amber-400 text-amber-500 transition-transform group-hover:rotate-12" />
               )}
               {isPending ? t("button_loading") : t("button_subscribe")}
-            </button>
+            </Button>
 
             {/* Dismiss */}
-            <button
+            <Button
               onClick={closeModal}
-              className="mt-3 w-full py-2 text-center text-xs font-bold uppercase tracking-widest text-stone-400 dark:text-slate-500 dark:text-slate-400 transition-all hover:text-stone-600 dark:text-slate-300 active:scale-95"
+              variant="ghost"
+              className="w-full mt-3 py-2 text-xs"
             >
               {t("maybe_later")}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

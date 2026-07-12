@@ -8,6 +8,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Eye, EyeOff, X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 // Animation configuration for staggered children entry
 const containerVariants: Variants = {
@@ -303,11 +304,12 @@ export default function CustomSignIn() {
               {/* Form Content */}
               <motion.div variants={itemVariants} className="space-y-4">
                 {/* Google Button - Gamified 3D */}
-                <button
+                <Button
                   type="button"
                   onClick={handleGoogleSignIn}
                   disabled={isLoading}
-                  className="relative w-full h-14 bg-white dark:bg-slate-700 border-2 border-slate-200 dark:border-slate-600 border-b-[6px] active:border-b-2 active:translate-y-[4px] rounded-2xl flex items-center justify-center gap-3 font-bold text-slate-700 dark:text-white text-base transition-all hover:bg-slate-50 dark:hover:bg-slate-600 disabled:opacity-60"
+                  variant="outline"
+                  className="w-full h-14 rounded-2xl gap-3"
                 >
                   {isLoading ? (
                     <div className="w-6 h-6 border-4 border-sky-400/30 border-t-sky-400 rounded-full animate-spin" />
@@ -336,7 +338,7 @@ export default function CustomSignIn() {
                       </span>
                     </>
                   )}
-                </button>
+                </Button>
 
                 <div className="flex items-center gap-4 my-2">
                   <div className="flex-1 h-[2px] bg-slate-100 dark:bg-slate-700 rounded-full"></div>
@@ -370,17 +372,18 @@ export default function CustomSignIn() {
                         required
                         className="w-full h-14 px-5 bg-slate-100 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 focus:bg-white dark:focus:bg-slate-800 focus:border-[#1cb0f6] rounded-2xl font-bold text-slate-700 dark:text-white text-base outline-none transition-all placeholder:text-slate-400 placeholder:font-bold pr-14"
                       />
-                      <button
+                      <Button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors p-1"
+                        variant="ghost"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1"
                       >
                         {showPassword ? (
                           <EyeOff size={22} />
                         ) : (
                           <Eye size={22} />
                         )}
-                      </button>
+                      </Button>
                     </div>
                     <div className="flex justify-end pt-1">
                       <Link
@@ -410,14 +413,16 @@ export default function CustomSignIn() {
                   </AnimatePresence>
 
                   {/* Primary Submit Button - Gamified Green */}
-                  <motion.button
-                    variants={itemVariants}
-                    type="submit"
-                    disabled={isLoading || !email || !password}
-                    className="relative w-full h-14 bg-[#58cc02] border-2 border-[#58cc02] border-b-[6px] active:border-b-2 active:translate-y-[4px] rounded-2xl flex items-center justify-center text-white font-black text-base uppercase tracking-widest transition-all hover:bg-[#46a302] hover:border-[#46a302] disabled:opacity-50 mt-4"
-                  >
-                    {isLoading ? t("signing_in_button") : t("sign_in_button")}
-                  </motion.button>
+                  <motion.div variants={itemVariants}>
+                    <Button
+                      type="submit"
+                      disabled={isLoading || !email || !password}
+                      variant="default"
+                      className="w-full h-14 rounded-2xl mt-4"
+                    >
+                      {isLoading ? t("signing_in_button") : t("sign_in_button")}
+                    </Button>
+                  </motion.div>
                 </form>
 
                 <motion.div
@@ -511,35 +516,38 @@ export default function CustomSignIn() {
                 </AnimatePresence>
 
                 <motion.div variants={itemVariants} className="space-y-3 pt-2">
-                  <button
+                  <Button
                     type="submit"
                     disabled={isLoading || code.length < 6}
-                    className={`relative w-full h-14 border-2 border-b-[6px] active:border-b-2 active:translate-y-[4px] rounded-2xl flex items-center justify-center font-black text-white uppercase tracking-widest transition-all disabled:opacity-50 ${isEmailMfa ? "bg-amber-500 border-amber-600 hover:bg-amber-400" : "bg-[#1cb0f6] border-[#1899d6] hover:bg-[#4dd0e1]"}`}
+                    variant={isEmailMfa ? "super" : "secondary"}
+                    className="w-full h-14 rounded-2xl"
                   >
                     {isLoading ? (
                       <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
                       t("verify_button")
                     )}
-                  </button>
+                  </Button>
 
                   {isEmailMfa && (
-                    <button
+                    <Button
                       type="button"
                       onClick={handleResendCode}
-                      className="w-full py-3 text-[#1cb0f6] font-black uppercase tracking-widest hover:text-sky-400 transition-colors text-sm"
+                      variant="ghost"
+                      className="w-full text-[#1cb0f6] hover:text-sky-400"
                     >
                       {t("resend_code_prompt")}
-                    </button>
+                    </Button>
                   )}
 
-                  <button
+                  <Button
                     type="button"
                     onClick={() => setStep("login")}
-                    className="w-full py-3 text-slate-400 font-black uppercase tracking-widest hover:text-slate-600 transition-colors text-sm"
+                    variant="ghost"
+                    className="w-full text-slate-400 hover:text-slate-600"
                   >
                     {t("forgot_pwd_back")}
-                  </button>
+                  </Button>
                 </motion.div>
               </form>
             </motion.div>

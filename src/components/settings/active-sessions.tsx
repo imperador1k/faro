@@ -14,6 +14,7 @@ import {
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { SessionWithActivitiesResource } from "@clerk/types";
 
 import { revokeDeviceSession } from "@/actions/user-actions";
@@ -142,10 +143,11 @@ export const ActiveSessions = () => {
               </div>
 
               {!isCurrent && (
-                <button
+                <Button
                   onClick={() => handleRevoke(session.id)}
                   disabled={revokingId === session.id}
-                  className="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-400 text-white font-black uppercase text-xs tracking-wider px-4 py-3 rounded-xl border-2 border-b-4 border-rose-600 active:translate-y-[2px] active:border-b-2 transition-all disabled:opacity-50"
+                  variant="destructive"
+                  className="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 font-black uppercase text-xs tracking-wider px-4 py-3 rounded-xl"
                 >
                   {revokingId === session.id ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -155,7 +157,7 @@ export const ActiveSessions = () => {
                       {t("disconnect")}
                     </>
                   )}
-                </button>
+                </Button>
               )}
 
               {isCurrent && (

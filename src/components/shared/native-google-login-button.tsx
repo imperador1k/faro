@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { Capacitor } from "@capacitor/core";
 import { Browser } from "@capacitor/browser";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 const GoogleIcon = () => (
   <svg
@@ -80,10 +81,11 @@ export default function NativeGoogleLoginButton({
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <button
+      <Button
+        variant="outline"
         onClick={handleLogin}
         disabled={loading}
-        className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-slate-200 dark:border-slate-800 rounded-xl font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:bg-slate-950 transition-all active:scale-[0.98] disabled:opacity-70"
+        className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl font-bold"
       >
         {loading ? (
           <Loader2 className="h-5 w-5 animate-spin" />
@@ -97,7 +99,7 @@ export default function NativeGoogleLoginButton({
               ? t("continue_with_google")
               : t("create_account_with_google")}
         </span>
-      </button>
+      </Button>
 
       {isNative && (
         <p className="text-center text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-widest">

@@ -7,6 +7,7 @@ import { Link2, Trash2, Plus, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { OAuthStrategy } from "@clerk/types";
+import { Button } from "@/components/ui/button";
 
 const GoogleIcon = () => (
   <svg
@@ -125,12 +126,14 @@ export const ConnectedAccounts = () => {
                   </span>
                 </div>
               </div>
-              <button
+              <Button
                 onClick={() => handleUnlink(account.id)}
                 disabled={
                   isUnlinking === account.id || connectedAccounts.length === 1
                 }
-                className="flex items-center justify-center p-3 rounded-xl bg-white dark:bg-slate-900 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 hover:text-rose-500 active:translate-y-1 active:border-b-2 transition-all disabled:opacity-50 group"
+                variant="ghost"
+                size="icon"
+                className="rounded-xl bg-white dark:bg-slate-900 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 hover:text-rose-500 group"
                 title={
                   connectedAccounts.length === 1
                     ? t("tooltips.cannot_remove")
@@ -142,16 +145,17 @@ export const ConnectedAccounts = () => {
                 ) : (
                   <Trash2 className="w-5 h-5 group-hover:text-rose-500 transition-colors" />
                 )}
-              </button>
+              </Button>
             </div>
           );
         })}
 
         {!hasGoogle && (
-          <button
+          <Button
             onClick={() => handleLink("oauth_google")}
             disabled={isLinking === "oauth_google"}
-            className="flex items-center justify-between p-4 rounded-2xl border-2 border-dashed border-stone-300 dark:border-slate-700 bg-stone-50 dark:bg-slate-950 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 active:bg-stone-200 dark:bg-slate-700 transition-all cursor-pointer group"
+            variant="outline"
+            className="flex items-center justify-between p-4 rounded-2xl border-dashed w-full group"
           >
             <div className="flex items-center gap-4">
               <div className="h-10 w-10 relative bg-white dark:bg-slate-900 rounded-xl border-2 border-stone-200 dark:border-slate-800 flex items-center justify-center p-2">
@@ -166,7 +170,7 @@ export const ConnectedAccounts = () => {
             ) : (
               <Plus className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-[#1CB0F6]" />
             )}
-          </button>
+          </Button>
         )}
       </div>
     </div>

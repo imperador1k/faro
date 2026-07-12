@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useUISounds } from "@/hooks/use-ui-sounds";
 import { addArcadePoints } from "@/actions/user-progress";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 type GameStatus = "playing" | "correct" | "wrong";
 
@@ -172,12 +173,13 @@ export default function VocabularySprint() {
     <div className="max-w-3xl mx-auto py-10 px-4 flex flex-col min-h-[80vh]">
       {/* Header: Score */}
       <div className="flex items-center justify-between mb-12">
-        <button
+        <Button
+          variant="ghost"
           onClick={() => router.push("/arcade")}
           className="text-stone-400 dark:text-slate-400 hover:text-stone-600 dark:hover:text-slate-300 font-bold uppercase text-sm tracking-wider"
         >
           &larr; {t("exit")}
-        </button>
+        </Button>
         <div className="flex items-center gap-2 bg-amber-100 text-amber-500 px-4 py-2 rounded-2xl border-2 border-amber-200 border-b-4">
           <Zap className="h-5 w-5 fill-amber-500" />
           <span className="font-black text-xl">{score}</span>
@@ -235,7 +237,8 @@ export default function VocabularySprint() {
 
       {/* Bottom Action Area */}
       <div className="w-full mt-auto">
-        <button
+        <Button
+          variant="default"
           onClick={checkAnswer}
           disabled={
             status !== "playing" ||
@@ -255,7 +258,7 @@ export default function VocabularySprint() {
             : status === "correct"
               ? t("excellent")
               : t("incorrect")}
-        </button>
+        </Button>
       </div>
     </div>
   );

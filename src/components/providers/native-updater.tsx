@@ -9,6 +9,7 @@ import {
   type DownloadEvent,
 } from "@tauri-apps/plugin-updater";
 import { relaunch } from "@tauri-apps/plugin-process";
+import { Button } from "@/components/ui/button";
 
 export function NativeUpdater() {
   const t = useTranslations("providers");
@@ -257,22 +258,23 @@ export function NativeUpdater() {
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {status === "available" && (
             <>
-              <button style={buttonStyle(false)} onClick={handleUpdate}>
+              <Button variant="default" style={buttonStyle(false)} onClick={handleUpdate}>
                 {t("update_now")}
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="ghost"
                 style={buttonStyle(false, true)}
                 onClick={() => setStatus("idle")}
               >
                 {t("remind_later")}
-              </button>
+              </Button>
             </>
           )}
 
           {status === "ready" && (
-            <button style={buttonStyle(false)} onClick={() => relaunch()}>
+            <Button variant="default" style={buttonStyle(false)} onClick={() => relaunch()}>
               {t("restart_to_apply")}
-            </button>
+            </Button>
           )}
 
           {status === "error" && (

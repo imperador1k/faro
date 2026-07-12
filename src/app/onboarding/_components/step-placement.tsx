@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { Check, X, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 interface StepPlacementProps {
   courseTitle: string;
@@ -77,10 +78,10 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
           <Loader2 size={64} className="text-[#58cc02]" />
         </motion.div>
         <div className="text-center">
-          <h2 className="text-2xl font-black text-[#042c60]">
+          <h2 className="text-2xl font-black text-[#042c60] dark:text-white">
             {t("placement_test_title")}
           </h2>
-          <p className="text-gray-500 font-bold">
+          <p className="text-gray-500 dark:text-gray-300 font-bold">
             {t("placement_test_subtitle")}
           </p>
         </div>
@@ -97,7 +98,7 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
   return (
     <div className="flex flex-col w-full max-w-xl mx-auto space-y-8">
       <div className="w-full space-y-2">
-        <div className="flex justify-between items-center text-sm font-black text-gray-400 uppercase tracking-widest">
+        <div className="flex justify-between items-center text-sm font-black text-gray-400 dark:text-slate-400 uppercase tracking-widest">
           <span>{t("placement_test_heading")}</span>
           <span>
             {t("current_question_count", {
@@ -117,54 +118,51 @@ export const StepPlacement = ({ courseTitle }: StepPlacementProps) => {
       </div>
 
       <div className="space-y-6">
-        <h2 className="text-2xl font-black text-[#042c60] leading-tight">
+        <h2 className="text-2xl font-black text-[#042c60] dark:text-white leading-tight">
           {currentQuestion.question}
         </h2>
 
         <div className="grid gap-3">
           {currentQuestion.options.map((option, index) => (
-            <button
+            <Button
               key={index}
+              variant="outline"
               disabled={isCorrect !== null}
               onClick={() => setSelectedOption(index)}
-              className={`p-4 rounded-2xl border-2 border-b-4 font-bold text-lg transition-all text-left
-                ${
-                  selectedOption === index
-                    ? "border-[#1cb0f6] bg-[#ddf4ff] text-[#1cb0f6]"
-                    : "border-gray-200 hover:bg-gray-50 text-gray-700"
-                }
-                ${
-                  isCorrect !== null && index === currentQuestion.correctIndex
-                    ? "border-[#58cc02] bg-[#d7ffb8] text-[#58cc02]"
-                    : ""
-                }
-                ${
-                  isCorrect === false && index === selectedOption
-                    ? "border-[#ff4b4b] bg-[#ffdbdb] text-[#ff4b4b]"
-                    : ""
-                }
-              `}
+              className={`p-4 rounded-2xl border-2 border-b-4 font-bold text-lg text-left w-full justify-start ${
+                selectedOption === index
+                  ? "border-[#1cb0f6] bg-[#ddf4ff] text-[#1cb0f6]"
+                  : "border-gray-200 hover:bg-gray-50 text-gray-700"
+              } ${
+                isCorrect !== null && index === currentQuestion.correctIndex
+                  ? "border-[#58cc02] bg-[#d7ffb8] text-[#58cc02]"
+                  : ""
+              } ${
+                isCorrect === false && index === selectedOption
+                  ? "border-[#ff4b4b] bg-[#ffdbdb] text-[#ff4b4b]"
+                  : ""
+              }`}
             >
               {option}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
 
       <div className="pt-4">
-        <button
+        <Button
           onClick={handleCheck}
           disabled={selectedOption === null || isCorrect !== null}
-          className={`w-full py-4 rounded-2xl font-black text-lg uppercase tracking-widest transition-all
-            ${
-              selectedOption !== null && isCorrect === null
-                ? "bg-[#58cc02] text-white border-b-4 border-[#46a302] active:border-b-0 active:translate-y-1"
-                : "bg-gray-200 text-gray-400 cursor-not-allowed"
-            }
-          `}
+          variant={selectedOption !== null && isCorrect === null ? "default" : "locked"}
+          size="lg"
+          className={`w-full py-4 rounded-2xl text-lg ${
+            selectedOption === null || isCorrect !== null
+              ? "bg-gray-200 text-gray-400 border-none shadow-none opacity-100"
+              : ""
+          }`}
         >
           {t("check_button")}
-        </button>
+        </Button>
       </div>
 
       <AnimatePresence>

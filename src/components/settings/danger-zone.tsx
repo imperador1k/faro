@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const DangerZone = () => {
   const t = useTranslations("settings");
@@ -77,23 +78,25 @@ export const DangerZone = () => {
         </div>
 
         <div className="flex flex-col gap-3">
-          <button
+          <Button
             onClick={handleDelete}
             disabled={!isConfirmed}
-            className={`w-full font-black uppercase tracking-wider py-4 rounded-2xl border-b-4 transition-all ${
-              isConfirmed
-                ? "bg-red-500 text-white border-red-700 hover:bg-red-400 active:translate-y-[2px] active:border-b-2 shadow-lg shadow-red-200 dark:shadow-none"
-                : "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700 cursor-not-allowed opacity-70"
+            variant="destructive"
+            className={`w-full font-black uppercase tracking-wider py-4 rounded-2xl ${
+              !isConfirmed
+                ? "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700 opacity-70"
+                : ""
             }`}
           >
             {t("confirm_button")}
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleClose}
-            className="w-full bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider py-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 border-b-4 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-600 active:translate-y-1 active:border-b-0 transition-all"
+            variant="ghost"
+            className="w-full font-bold uppercase tracking-wider py-4 rounded-2xl"
           >
             {t("cancel_button")}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -108,12 +111,13 @@ export const DangerZone = () => {
         {t("description")}
       </p>
 
-      <button
+      <Button
         onClick={() => setIsDeleteModalOpen(true)}
-        className="bg-red-500 hover:bg-red-400 text-white border-2 border-b-4 border-red-600 font-black uppercase tracking-wider rounded-2xl px-8 py-4 active:translate-y-[2px] active:border-b-2 transition-all w-full md:w-auto text-center block"
+        variant="destructive"
+        className="font-black uppercase tracking-wider rounded-2xl px-8 py-4 w-full md:w-auto"
       >
         {t("delete_action")}
-      </button>
+      </Button>
 
       {isDeleteModalOpen &&
         mounted &&

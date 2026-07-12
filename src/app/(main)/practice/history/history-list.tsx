@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 import {
   MessageSquare,
   Mic,
@@ -57,7 +58,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
     <div className="space-y-8 pb-10">
       {/* ── Juicy Filters ── */}
       <div className="flex flex-wrap items-center gap-3 pb-4">
-        <button
+        <Button variant="ghost"
           onClick={() => setFilter("all")}
           className={cn(
             "px-5 py-3 rounded-2xl font-black uppercase tracking-widest text-[11px] sm:text-xs transition-all border-2 border-b-4",
@@ -67,8 +68,8 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
           )}
         >
           {t("filter_all")}
-        </button>
-        <button
+        </Button>
+        <Button variant="ghost"
           onClick={() => setFilter("writing")}
           className={cn(
             "flex items-center gap-2 px-5 py-3 rounded-2xl font-black uppercase tracking-widest text-[11px] sm:text-xs transition-all border-2 border-b-4",
@@ -79,8 +80,8 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
         >
           <MessageSquare className="h-4 w-4" strokeWidth={2.5} />
           {t("filter_writing")}
-        </button>
-        <button
+        </Button>
+        <Button variant="ghost"
           onClick={() => setFilter("speaking")}
           className={cn(
             "flex items-center gap-2 px-5 py-3 rounded-2xl font-black uppercase tracking-widest text-[11px] sm:text-xs transition-all border-2 border-b-4",
@@ -91,8 +92,8 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
         >
           <Mic className="h-4 w-4" strokeWidth={2.5} />
           {t("filter_speaking")}
-        </button>
-        <button
+        </Button>
+        <Button variant="ghost"
           onClick={() => setFilter("reading")}
           className={cn(
             "flex items-center gap-2 px-5 py-3 rounded-2xl font-black uppercase tracking-widest text-[11px] sm:text-xs transition-all border-2 border-b-4",
@@ -103,8 +104,8 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
         >
           <BookOpen className="h-4 w-4" strokeWidth={2.5} />
           {t("filter_reading")}
-        </button>
-        <button
+        </Button>
+        <Button variant="ghost"
           onClick={() => setFilter("listening")}
           className={cn(
             "flex items-center gap-2 px-5 py-3 rounded-2xl font-black uppercase tracking-widest text-[11px] sm:text-xs transition-all border-2 border-b-4",
@@ -115,7 +116,7 @@ export const HistoryList = ({ history }: { history: Session[] }) => {
         >
           <Headphones className="h-4 w-4" strokeWidth={2.5} />
           {t("filter_listening")}
-        </button>
+        </Button>
       </div>
 
       {/* ── List ── */}

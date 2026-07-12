@@ -516,9 +516,9 @@ export default function SpeakingPracticePage() {
                 download={`speaking-practice-${Date.now()}.webm`}
                 className="w-full"
               >
-                <button className="w-full py-3 bg-stone-100 dark:bg-slate-800 font-bold text-stone-500 dark:text-slate-400 rounded-xl border-2 border-stone-200 dark:border-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 flex items-center justify-center gap-2">
-                  <Download className="w-4 h-4" /> {t("download_audio")}
-                </button>
+                <Button variant="outline" className="w-full py-3 bg-stone-100 dark:bg-slate-800 font-bold text-stone-500 dark:text-slate-400 rounded-xl border-2 border-stone-200 dark:border-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 flex items-center justify-center gap-2">
+                    <Download className="w-4 h-4" /> {t("download_audio")}
+                  </Button>
               </a>
             </div>
           )}
@@ -526,29 +526,29 @@ export default function SpeakingPracticePage() {
             {!feedback ? (
               <>
                 {status === "idle" && !transcript ? (
-                  <button
+                  <Button variant="destructive"
                     onClick={handleStart}
                     disabled={isGeneratingPrompt || isAnalyzing}
                     className="w-full h-20 md:h-24 bg-rose-500 text-white text-xl md:text-2xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-rose-600 hover:bg-rose-400 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm disabled:opacity-50"
                   >
                     {t("record")} <Mic className="w-6 h-6" strokeWidth={3} />
-                  </button>
+                  </Button>
                 ) : status === "recording" ? (
-                  <button
+                  <Button variant="destructive"
                     onClick={handlePause}
                     className="w-full h-16 md:h-20 bg-amber-500 text-white text-lg md:text-xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-amber-600 hover:bg-amber-400 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
                   >
                     {t("pause")} <Pause className="w-6 h-6" strokeWidth={3} />
-                  </button>
+                  </Button>
                 ) : (
                   <div className="flex flex-col gap-3">
-                    <button
+                    <Button variant="ghost"
                       onClick={handleResume}
                       className="w-full py-4 bg-rose-50 text-rose-500 text-sm md:text-base font-black rounded-[1.5rem] border-2 border-transparent border-b-4 border-b-rose-200 hover:bg-rose-100 active:border-b-0 active:translate-y-1 transition-all uppercase tracking-widest flex items-center justify-center gap-2"
                     >
                       {t("continue_speaking")}
-                    </button>
-                    <button
+                    </Button>
+                    <Button variant="default"
                       onClick={handleSubmit}
                       disabled={isAnalyzing || !transcript.trim()}
                       className="w-full h-20 md:h-24 bg-[#58cc02] text-white text-xl md:text-2xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-[#46a302] hover:bg-[#61da02] active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm disabled:opacity-50"
@@ -558,18 +558,18 @@ export default function SpeakingPracticePage() {
                       ) : (
                         t("evaluate")
                       )}
-                    </button>
+                    </Button>
                   </div>
                 )}
               </>
             ) : (
-              <button
+              <Button variant="secondary"
                 onClick={() => handleGeneratePrompt()}
                 className="w-full h-20 md:h-24 bg-sky-400 text-white text-xl md:text-2xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-sky-500 hover:bg-sky-500 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
               >
                 {t("new_challenge")}{" "}
                 <RefreshCw className="w-7 h-7" strokeWidth={3} />
-              </button>
+              </Button>
             )}
             <p className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2 mt-2">
               {t("ai_listens_pronunciation")}

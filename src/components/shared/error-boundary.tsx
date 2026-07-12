@@ -4,6 +4,7 @@ import { Component, type ReactNode, type ErrorInfo } from "react";
 import * as Sentry from "@sentry/nextjs";
 import { StarAngryLottie } from "@/components/ui/lottie-animation";
 import { RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type ErrorFallbackProps = {
   error: Error;
@@ -21,13 +22,14 @@ export const ErrorFallback = ({ reset }: ErrorFallbackProps) => (
     <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 max-w-sm leading-relaxed">
       Ocorreu um erro inesperado. Podes tentar novamente ou voltar atrás.
     </p>
-    <button
+    <Button
+      variant="default"
       onClick={reset}
       className="mt-6 py-3 px-6 text-base font-bold bg-sky-500 hover:bg-sky-400 text-white rounded-2xl border-b-4 border-sky-600 active:border-b-0 active:translate-y-1 transition-all flex items-center gap-2"
     >
       <RefreshCw className="h-4 w-4" />
       Tentar novamente
-    </button>
+    </Button>
   </div>
 );
 

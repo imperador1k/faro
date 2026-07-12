@@ -3,6 +3,7 @@
 import { StarAngryLottie } from "@/components/ui/lottie-animation";
 import { RefreshCw } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 export default function GlobalError({
   error,
@@ -31,13 +32,14 @@ export default function GlobalError({
         </p>
       )}
 
-      <button
+      <Button
+        variant="default"
         onClick={reset}
         className="mt-8 py-4 px-8 text-lg font-bold bg-sky-500 hover:bg-sky-400 text-white rounded-2xl border-b-4 border-sky-600 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2"
       >
         <RefreshCw className="h-5 w-5" />
         {t("try_again")}
-      </button>
+      </Button>
     </div>
   );
 }

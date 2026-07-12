@@ -5,7 +5,7 @@ import { ChevronLeft, Trash2, BookmarkCheck, ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-
+import { Button } from "@/components/ui/button";
 import { toggleSave } from "@/actions/feed";
 
 export default function SavedPostsClient({
@@ -46,12 +46,13 @@ export default function SavedPostsClient({
       <div className="max-w-2xl mx-auto p-4 md:p-8 relative z-10 pb-24">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <button
+          <Button
+            variant="ghost"
             onClick={() => router.back()}
-            className="p-3 bg-slate-800 rounded-2xl hover:bg-slate-700 transition-all active:scale-95 border-b-4 border-slate-900 active:border-b-0 active:translate-y-1"
+            className="p-3 rounded-2xl bg-slate-800 hover:bg-slate-700 border-b-4 border-slate-900"
           >
             <ChevronLeft className="w-6 h-6 text-slate-300" />
-          </button>
+          </Button>
           <div>
             <h1 className="text-3xl font-black flex items-center gap-2">
               <BookmarkCheck className="w-8 h-8 text-amber-500" />
@@ -71,12 +72,13 @@ export default function SavedPostsClient({
             <p className="text-slate-500 dark:text-slate-500 mb-6 max-w-sm mx-auto">
               {t("empty_vault_description")}
             </p>
-            <button
+            <Button
+              variant="secondary"
               onClick={() => router.push("/feed")}
-              className="bg-sky-500 hover:bg-sky-400 text-white font-black py-3 px-8 rounded-2xl transition-all active:scale-95 border-b-4 border-sky-600 active:border-b-0 active:translate-y-1"
+              className="py-3 px-8 rounded-2xl"
             >
               {t("explore_feed_button")}
-            </button>
+            </Button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -114,13 +116,14 @@ export default function SavedPostsClient({
                       </h2>
                     </div>
 
-                    <button
+                    <Button
+                      variant="ghost"
                       onClick={() => handleRemove(post.id)}
-                      className="p-3 bg-white/50 dark:bg-white/10 backdrop-blur-md rounded-2xl hover:bg-rose-500 hover:text-white text-slate-500 dark:text-white/50 transition-all border-b-4 border-black/10 dark:border-black/20 hover:border-rose-700 active:scale-95 active:border-b-0 active:translate-y-1 shrink-0"
+                      className="p-3 rounded-2xl bg-white/50 dark:bg-white/10 backdrop-blur-md hover:bg-rose-500 hover:text-white text-slate-500 dark:text-white/50 border-b-4 border-black/10 dark:border-black/20 hover:border-rose-700 shrink-0"
                       title={t("remove_from_vault_button_title")}
                     >
                       <Trash2 className="w-5 h-5" />
-                    </button>
+                    </Button>
                   </div>
 
                   <p className="text-slate-700 dark:text-slate-100/90 font-medium leading-relaxed relative z-10 text-[15px]">
@@ -139,10 +142,10 @@ export default function SavedPostsClient({
                       <span>{authorName}</span>
                     </div>
 
-                    <button className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-800 dark:text-white/70 dark:hover:text-white transition-colors">
+                    <Button variant="ghost" className="flex items-center gap-2 text-sm">
                       {t("read_original_button")}{" "}
                       <ExternalLink className="w-4 h-4" />
-                    </button>
+                    </Button>
                   </div>
                 </motion.div>
               );

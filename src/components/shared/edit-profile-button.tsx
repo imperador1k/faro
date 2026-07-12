@@ -8,6 +8,7 @@ import Image from "next/image";
 import { User, X, Camera, Loader2, Save } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -81,24 +82,27 @@ export const EditProfileButton = () => {
 
   return (
     <>
-      <button
+      <Button
         onClick={handleOpen}
-        className="bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-bold px-5 py-3 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 active:translate-y-1 active:border-b-0 transition-all uppercase tracking-wide"
+        variant="ghost"
+        className="bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-bold px-5 py-3 rounded-xl border-2 border-stone-200 dark:border-slate-800 uppercase tracking-wide"
       >
         {t("edit_profile")}
-      </button>
+      </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="z-modal max-w-md p-0 overflow-hidden border-none bg-transparent shadow-none [&>button]:hidden">
           <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col p-6 md:p-8">
             {/* Custom Close Button */}
-            <button
+            <Button
               onClick={() => setIsOpen(false)}
-              className="absolute right-6 top-6 h-10 w-10 flex items-center justify-center rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-1 active:border-b-0 transition-all z-50 group disabled:opacity-50"
+              variant="ghost"
+              size="icon"
+              className="absolute right-6 top-6 h-10 w-10 rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 z-50 disabled:opacity-50"
               disabled={isSaving}
             >
-              <X className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400 group-hover:text-stone-600 dark:text-slate-300 transition-colors" />
-            </button>
+              <X className="w-5 h-5 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
+            </Button>
 
             {/* Header */}
             <div className="flex items-center gap-3 mb-8">
@@ -189,10 +193,11 @@ export const EditProfileButton = () => {
 
               {/* Action */}
               <div className="pt-4">
-                <button
+                <Button
                   onClick={handleSave}
                   disabled={isSaving || !firstName.trim()}
-                  className="w-full flex items-center justify-center gap-2 bg-[#1CB0F6] text-white font-black uppercase tracking-wider py-4 rounded-2xl border-2 border-[#1899D6] border-b-6 hover:bg-[#1CB0F6]/90 active:translate-y-1 active:border-b-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                  variant="secondary"
+                  className="w-full py-4 font-black uppercase tracking-wider rounded-2xl"
                 >
                   {isSaving ? (
                     <Loader2 className="w-6 h-6 animate-spin" />
@@ -202,7 +207,7 @@ export const EditProfileButton = () => {
                       {t("save_changes")}
                     </>
                   )}
-                </button>
+                </Button>
               </div>
             </div>
           </div>

@@ -19,6 +19,7 @@ import {
 import { toast } from "sonner";
 import { useUISounds } from "@/hooks/use-ui-sounds";
 import { HappyStarLottie } from "@/components/ui/lottie-animation";
+import { Button } from "@/components/ui/button";
 
 interface WordEntry {
   id: number;
@@ -337,7 +338,8 @@ export const VocabularySprint = ({
                 })}
               </div>
               <div className="flex items-center gap-3 mt-6 w-full opacity-60 hover:opacity-100 transition-opacity">
-                <button
+                <Button
+                  variant="ghost"
                   onClick={() => {
                     setIsRevealed(true);
                     setFeedback("wrong");
@@ -345,8 +347,9 @@ export const VocabularySprint = ({
                   className="flex-[2] flex items-center justify-center gap-2 font-bold px-4 py-3 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 text-stone-500 dark:text-slate-400 transition-all border-b-4 border-stone-200 dark:border-slate-800 active:translate-y-1 active:border-b-0"
                 >
                   <Eye className="h-4 w-4" /> <span>{t("i_dont_know")}</span>
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="ghost"
                   onClick={handleGetHint}
                   disabled={isLoadingHint || !!hint}
                   className={cn(
@@ -363,7 +366,7 @@ export const VocabularySprint = ({
                       <Wand2 className="h-4 w-4" /> <span>{t("hint")}</span>
                     </>
                   )}
-                </button>
+                </Button>
               </div>
             </div>
           ) : (
@@ -411,7 +414,8 @@ export const VocabularySprint = ({
                   </p>
                 </div>
               )}
-              <button
+              <Button
+                variant="default"
                 onClick={() => {
                   if (slideDirection) return;
                   animateAndNext("left");
@@ -428,7 +432,7 @@ export const VocabularySprint = ({
                 className="w-full mt-6 flex flex-col items-center justify-center gap-1 font-black text-xl px-8 py-5 rounded-[24px] bg-[#1CB0F6] text-white border-2 border-transparent border-b-[6px] border-b-[#0092d6] shadow-sm hover:translate-y-[2px] hover:border-b-[4px] active:translate-y-[6px] active:border-b-0 transition-all duration-150 disabled:opacity-70 disabled:pointer-events-none"
               >
                 {t("continue")}
-              </button>
+              </Button>
             </div>
           )}
         </div>

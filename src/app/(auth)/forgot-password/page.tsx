@@ -8,6 +8,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ArrowLeft, Mail, Key, ShieldCheck, Eye, EyeOff } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 export default function ForgotPasswordPage() {
   const { isLoaded, signIn, setActive } = useSignIn();
@@ -176,19 +177,20 @@ export default function ForgotPasswordPage() {
         </motion.div>
 
         {/* Back Button */}
-        <button
+        <Button
           onClick={() => {
             if (step === 1) router.back();
             else setStep(step - 1);
             setError("");
           }}
-          className="absolute top-6 left-6 p-3 text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 rounded-2xl transition-colors group z-20"
+          variant="ghost"
+          className="absolute top-6 left-6 p-3 text-slate-400 hover:text-slate-600 dark:bg-slate-800 rounded-2xl z-20 group"
         >
           <ArrowLeft
             size={24}
             className="group-hover:-translate-x-1 transition-transform"
           />
-        </button>
+        </Button>
 
         <div className="w-full relative z-10 pt-4">
           <AnimatePresence mode="wait">
@@ -242,16 +244,17 @@ export default function ForgotPasswordPage() {
                   </AnimatePresence>
 
                   <motion.div variants={itemVariants}>
-                    <button
+                    <Button
                       disabled={isLoading || !email}
-                      className="w-full h-16 bg-[#1cb0f6] border-b-[6px] border-[#1899d6] rounded-2xl flex items-center justify-center font-extrabold text-white uppercase tracking-widest shadow-sm hover:bg-[#1899d6] active:border-b-0 active:translate-y-[6px] transition-all disabled:opacity-50 text-lg"
+                      variant="secondary"
+                      className="w-full h-16 rounded-2xl text-lg"
                     >
                       {isLoading ? (
                         <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
                       ) : (
                         t("send_code_button")
                       )}
-                    </button>
+                    </Button>
                   </motion.div>
                 </form>
               </motion.div>
@@ -315,7 +318,7 @@ export default function ForgotPasswordPage() {
                   </AnimatePresence>
 
                   <motion.div variants={itemVariants}>
-                    <button
+                    <Button
                       onClick={() => {
                         if (code.length === 6) {
                           setStep(3);
@@ -323,23 +326,25 @@ export default function ForgotPasswordPage() {
                         }
                       }}
                       disabled={isLoading || code.length !== 6}
-                      className="w-full h-16 bg-amber-500 border-b-[6px] border-amber-600 rounded-2xl flex items-center justify-center font-extrabold text-white uppercase tracking-widest shadow-sm hover:bg-amber-600 active:border-b-0 active:translate-y-[6px] transition-all disabled:opacity-50 text-lg"
+                      variant="super"
+                      className="w-full h-16 rounded-2xl text-lg"
                     >
                       {isLoading
                         ? t("verifying_button")
                         : t("verify_code_button")}
-                    </button>
+                    </Button>
                   </motion.div>
 
                   <motion.div variants={itemVariants}>
                     <p className="text-center text-sm font-bold text-slate-400 pt-2">
                       {t("resend_code_prompt")}{" "}
-                      <button
+                      <Button
                         onClick={handleRequestCode}
-                        className="text-[#1cb0f6] hover:underline"
+                        variant="link"
+                        className="text-[#1cb0f6]"
                       >
                         {t("resend_code")}
-                      </button>
+                      </Button>
                     </p>
                   </motion.div>
                 </div>
@@ -392,17 +397,18 @@ export default function ForgotPasswordPage() {
                         autoFocus
                         className="w-full h-16 px-6 bg-slate-100 dark:bg-slate-800 border-2 border-transparent rounded-2xl font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:border-[#58cc02] focus:bg-white focus:dark:bg-slate-900 transition-all text-lg pr-14"
                       />
-                      <button
+                      <Button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                        variant="ghost"
+                        className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                       >
                         {showPassword ? (
                           <EyeOff size={24} />
                         ) : (
                           <Eye size={24} />
                         )}
-                      </button>
+                      </Button>
                     </div>
 
                     <input
@@ -429,18 +435,19 @@ export default function ForgotPasswordPage() {
                   </AnimatePresence>
 
                   <motion.div variants={itemVariants}>
-                    <button
+                    <Button
                       disabled={
                         isLoading || password.length < 8 || !confirmPassword
                       }
-                      className="w-full h-16 bg-[#58cc02] border-b-[6px] border-[#46a302] rounded-2xl flex items-center justify-center font-extrabold text-white uppercase tracking-widest shadow-sm hover:bg-[#4eb302] active:border-b-0 active:translate-y-[6px] transition-all disabled:opacity-50 text-lg"
+                      variant="default"
+                      className="w-full h-16 rounded-2xl text-lg"
                     >
                       {isLoading ? (
                         <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
                       ) : (
                         t("reset_password_button")
                       )}
-                    </button>
+                    </Button>
                   </motion.div>
                 </form>
               </motion.div>

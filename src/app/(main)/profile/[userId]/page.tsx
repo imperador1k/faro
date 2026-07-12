@@ -8,6 +8,7 @@ import {
 } from "@/db/queries";
 import { getUserCertificates } from "@/actions/certificates";
 import { getAchievements, Achievement } from "@/constants/achievements";
+import { Button } from "@/components/ui/button";
 import { Flame, Target, Heart, Zap, MessageSquareText } from "lucide-react";
 import { FollowButton } from "@/components/shared/follow-button";
 import { ProfileHero } from "@/components/shared/profile-hero";
@@ -103,10 +104,10 @@ export default async function PublicProfilePage({ params }: Props) {
                   href={`/messages?userId=${params.userId}`}
                   className="w-full block h-full"
                 >
-                  <button className="w-full h-full flex items-center justify-center gap-2 rounded-[1.2rem] sm:rounded-[1.5rem] px-4 sm:px-6 bg-stone-100 dark:bg-slate-800 text-[#1CB0F6] font-black uppercase tracking-widest text-[12px] sm:text-sm border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:border-stone-300 dark:border-slate-700 active:translate-y-1 active:border-b-0 transition-all shadow-sm">
+                  <Button variant="outline" className="w-full h-full flex items-center justify-center gap-2 rounded-[1.2rem] sm:rounded-[1.5rem] px-4 sm:px-6 text-[#1CB0F6] text-[12px] sm:text-sm shadow-sm">
                     <MessageSquareText className="h-5 w-5 sm:h-6 sm:w-6" />
                     <span>{t("message_button")}</span>
-                  </button>
+                  </Button>
                 </Link>
               </div>
             </>

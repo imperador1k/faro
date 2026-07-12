@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 import { StepWelcome } from "./step-welcome";
 import { StepGetReady } from "./step-get-ready";
@@ -124,14 +125,16 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
   };
 
   return (
-    <div className="flex flex-col h-[100dvh] w-full bg-white dark:bg-slate-900 text-[#042c60]">
-      <header className="flex items-center px-4 pt-4 pb-2 lg:max-w-5xl lg:mx-auto w-full gap-4">
-        <button
+    <div className="flex flex-col h-[100dvh] w-full bg-white dark:bg-slate-950 text-[#042c60] dark:text-slate-200 overflow-hidden">
+      <header className="flex items-center px-4 pt-4 lg:max-w-5xl lg:mx-auto w-full gap-4 shrink-0">
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={handleBack}
-          className="text-gray-400 hover:text-gray-600 transition-colors"
+          className="text-gray-400 hover:text-gray-600 dark:hover:text-slate-200"
         >
           <ArrowLeft size={28} strokeWidth={2.5} />
-        </button>
+        </Button>
         <div className="flex-1 h-4 bg-gray-200 rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-[#58cc02]"
@@ -141,7 +144,7 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto overflow-x-hidden relative lg:max-w-5xl lg:mx-auto w-full px-4 pt-4">
+      <main className="flex-1 overflow-y-auto overflow-x-hidden relative lg:max-w-5xl lg:mx-auto w-full px-4 flex flex-col">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -149,7 +152,7 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="min-h-full w-full flex flex-col items-center justify-center relative overflow-x-hidden pt-6 pb-28 sm:pb-32"
+            className="w-full flex flex-col items-center justify-center relative overflow-x-hidden py-4 my-auto shrink-0"
           >
             {step === 1 && <StepWelcome />}
             {step === 2 && <StepGetReady />}
@@ -163,20 +166,18 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
         </AnimatePresence>
       </main>
 
-      <footer className="fixed bottom-0 left-0 right-0 p-4 bg-white dark:bg-slate-900 border-t-2 border-gray-100 lg:max-w-5xl lg:mx-auto z-50">
-        <button
+      <footer className="w-full p-4 bg-white dark:bg-slate-950 border-t-2 border-gray-100 dark:border-slate-800 lg:max-w-5xl lg:mx-auto shrink-0">
+        <Button
           onClick={handleContinue}
           disabled={!canContinue}
-          className={`w-full py-4 rounded-2xl font-bold text-lg tracking-wide uppercase transition-all
-            ${
-              canContinue
-                ? "bg-[#58cc02] text-white border-b-4 border-[#46a302] hover:bg-[#46a302] hover:border-[#388202] active:border-b-0 active:translate-y-1"
-                : "bg-[#e5e5e5] text-[#afafaf] cursor-not-allowed"
-            }
-          `}
+          variant={canContinue ? "default" : "locked"}
+          size="lg"
+          className={`w-full py-4 rounded-2xl text-lg ${
+            !canContinue ? "bg-[#e5e5e5] text-[#afafaf] border-none shadow-none opacity-100" : ""
+          }`}
         >
           {t("continue_button")}
-        </button>
+        </Button>
       </footer>
     </div>
   );

@@ -14,6 +14,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   isPro: boolean;
@@ -75,20 +76,21 @@ export const SubscriptionCard = ({ isPro }: Props) => {
             </ul>
           </div>
 
-          <button
+          <Button
             onClick={onClick}
             disabled={isPending}
+            variant="super"
             className={cn(
-              "group relative flex shrink-0 items-center justify-center gap-2 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-6 bg-stone-100 dark:bg-slate-800 px-6 py-4 font-black uppercase tracking-widest text-stone-600 dark:text-slate-300 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:shadow-md active:translate-y-1 active:border-b-2 active:shadow-none disabled:pointer-events-none disabled:opacity-70",
+              "group shrink-0 rounded-2xl px-6 py-4 font-black uppercase tracking-widest",
             )}
           >
             {isPending ? (
               <Loader2 className="h-5 w-5 animate-spin" />
             ) : (
-              <Settings className="h-5 w-5 text-stone-500 dark:text-slate-400 transition-transform group-hover:rotate-45" />
+              <Settings className="h-5 w-5 transition-transform group-hover:rotate-45" />
             )}
             {isPending ? t("loading") : t("manage_subscription")}
-          </button>
+          </Button>
         </div>
       ) : (
         // FREE CARD
@@ -116,18 +118,19 @@ export const SubscriptionCard = ({ isPro }: Props) => {
             </ul>
           </div>
 
-          <button
+          <Button
             onClick={onClick}
             disabled={isPending}
-            className="group relative flex shrink-0 items-center justify-center gap-2 rounded-2xl border-2 border-amber-200 border-b-6 bg-amber-50 px-6 py-4 font-black uppercase tracking-widest text-amber-600 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-amber-100 hover:border-amber-300 hover:shadow-md active:translate-y-1 active:border-b-2 active:shadow-none disabled:pointer-events-none disabled:opacity-70"
+            variant="super"
+            className="group shrink-0 rounded-2xl px-6 py-4 font-black uppercase tracking-widest"
           >
             {isPending ? (
               <Loader2 className="h-5 w-5 animate-spin" />
             ) : (
-              <Crown className="h-5 w-5 fill-amber-400 text-amber-500 transition-transform group-hover:scale-110" />
+              <Crown className="h-5 w-5 transition-transform group-hover:scale-110" />
             )}
             {isPending ? t("loading") : t("upgrade")}
-          </button>
+          </Button>
         </div>
       )}
     </div>

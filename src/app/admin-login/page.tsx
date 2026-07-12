@@ -4,18 +4,20 @@ import { useFormState, useFormStatus } from "react-dom";
 import { authenticateVault } from "./actions";
 import { ShieldAlert } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button
+    <Button
       type="submit"
+      variant="default"
       disabled={pending}
       className="w-full mt-4 bg-sky-500 border-b-4 border-sky-600 hover:bg-sky-400 active:translate-y-[2px] active:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed text-white font-black text-xl rounded-2xl py-4 uppercase tracking-wider transition-all"
     >
       {pending ? "A VERIFICAR..." : "DESBLOQUEAR COFRE"}
-    </button>
+    </Button>
   );
 }
 

@@ -61,7 +61,7 @@ export const StepGetReady = () => {
             transition={{ delay: 0.4 }}
             className="space-y-4"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#042c60] leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#042c60] dark:text-white leading-tight">
               {t("get_ready_title_part1")} <br />
               <motion.span
                 animate={{ scale: [1, 1.05, 1] }}
@@ -80,7 +80,7 @@ export const StepGetReady = () => {
               transition={{ delay: 0.8 }}
               className="bg-white/80 backdrop-blur-sm border-2 border-sky-100 rounded-[2rem] p-6 md:p-8 shadow-sm relative"
             >
-              <p className="text-lg sm:text-xl font-bold text-gray-500 leading-relaxed italic">
+              <p className="text-lg sm:text-xl font-bold text-gray-500 dark:text-gray-300 leading-relaxed italic">
                 {t("get_ready_quote")}
               </p>
               {/* Decorative accent */}

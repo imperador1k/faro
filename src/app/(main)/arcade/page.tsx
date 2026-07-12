@@ -12,6 +12,7 @@ import {
   Dices,
 } from "lucide-react";
 import { ArcadeInfoModal } from "@/components/modals/arcade-info-modal";
+import { Button } from "@/components/ui/button";
 import { usePreferencesStore } from "@/store/use-preferences-store";
 
 export default function ArcadeHub() {
@@ -44,12 +45,14 @@ export default function ArcadeHub() {
         <div className="absolute inset-0 bg-[url('/img/pattern.svg')] opacity-10 mix-blend-overlay"></div>
 
         {/* Help Button */}
-        <button
+        <Button
           onClick={() => setIsModalOpen(true)}
-          className="absolute top-6 right-6 h-12 w-12 bg-white/20 hover:bg-white/30 text-white rounded-2xl flex items-center justify-center transition-all active:scale-95 z-10 border-2 border-white/20 backdrop-blur-sm"
+          variant="ghost"
+          size="icon"
+          className="absolute top-6 right-6 h-12 w-12 bg-white/20 hover:bg-white/30 text-white rounded-2xl z-10 border-2 border-white/20 backdrop-blur-sm"
         >
           <HelpCircle className="w-6 h-6" />
-        </button>
+        </Button>
 
         <div className="w-20 h-20 bg-white/20 backdrop-blur-md text-white rounded-[2rem] flex items-center justify-center mb-6 rotate-[-5deg] border-4 border-white/30 shadow-lg relative z-10 animate-bounce">
           <Gamepad2 className="w-10 h-10" />
@@ -92,9 +95,9 @@ export default function ArcadeHub() {
           </p>
 
           <Link href="/arcade/sprint" className="w-full mt-auto relative z-10">
-            <button className="w-full py-5 bg-purple-500 hover:bg-purple-600 text-white font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 border-purple-700 active:border-b-0 active:translate-y-[8px] transition-all shadow-sm flex items-center justify-center gap-2">
+            <Button variant="secondary" className="w-full py-5 font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 active:border-b-0 active:translate-y-[8px] shadow-sm flex items-center justify-center gap-2">
               {t("play_now")}
-            </button>
+            </Button>
           </Link>
         </div>
 
@@ -115,9 +118,9 @@ export default function ArcadeHub() {
           </p>
 
           <Link href="/arcade/swipe" className="w-full mt-auto relative z-10">
-            <button className="w-full py-5 bg-rose-500 hover:bg-rose-600 text-white font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 border-rose-700 active:border-b-0 active:translate-y-[8px] transition-all shadow-sm flex items-center justify-center gap-2">
+            <Button variant="destructive" className="w-full py-5 font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 active:border-b-0 active:translate-y-[8px] shadow-sm flex items-center justify-center gap-2">
               {t("play_now")}
-            </button>
+            </Button>
           </Link>
         </div>
 
@@ -150,10 +153,10 @@ export default function ArcadeHub() {
             href="/arcade/meteoros"
             className="w-full mt-auto relative z-10"
           >
-            <button className="w-full py-5 bg-amber-500 hover:bg-amber-600 text-white font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 border-amber-700 active:border-b-0 active:translate-y-[8px] transition-all shadow-sm flex items-center justify-center gap-2 relative overflow-hidden">
+            <Button variant="super" className="w-full py-5 font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 active:border-b-0 active:translate-y-[8px] shadow-sm flex items-center justify-center gap-2 relative overflow-hidden">
               <span className="absolute inset-0 bg-white/20 w-12 h-full skew-x-12 -ml-20 group-hover:animate-[shimmer_1.5s_infinite]" />
               {t("play_now")}
-            </button>
+            </Button>
           </Link>
         </div>
 
@@ -181,9 +184,9 @@ export default function ArcadeHub() {
           </p>
 
           <Link href="/arcade/casino" className="w-full mt-auto relative z-10">
-            <button className="w-full py-5 bg-pink-500 hover:bg-pink-600 text-white font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 border-pink-700 active:border-b-0 active:translate-y-[8px] transition-all shadow-sm flex items-center justify-center gap-2">
+            <Button variant="locked" className="w-full py-5 font-black text-lg uppercase tracking-widest rounded-[1.5rem] border-b-8 active:border-b-0 active:translate-y-[8px] shadow-sm flex items-center justify-center gap-2">
               {t("enter_casino")}
-            </button>
+            </Button>
           </Link>
         </div>
       </div>

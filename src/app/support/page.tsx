@@ -36,6 +36,7 @@ import { getDocsArticles, DocArticle } from "@/constants/docs";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 const initialState = {
   errors: {},
@@ -47,8 +48,9 @@ function SubmitButton({ t }: { t: any }) {
   const { pending } = useFormStatus();
 
   return (
-    <button
+    <Button
       type="submit"
+      variant="default"
       disabled={pending}
       className={cn(
         "w-full py-5 rounded-2xl font-black text-xl tracking-widest text-white transition-all flex items-center justify-center outline-none uppercase shadow-sm mt-4",
@@ -65,7 +67,7 @@ function SubmitButton({ t }: { t: any }) {
       ) : (
         t("send_message")
       )}
-    </button>
+    </Button>
   );
 }
 
@@ -316,13 +318,14 @@ export default function SupportPage() {
               {t("direct_email_desc")}
             </p>
 
-            <button
+            <Button
+              variant="outline"
               onClick={copyContactEmail}
               className="w-full bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 text-stone-600 dark:text-slate-300 font-bold border-2 border-stone-200 dark:border-slate-800 border-b-4 active:border-b-2 active:translate-y-[2px] rounded-xl py-3 px-4 flex items-center justify-center gap-2 transition-all outline-none"
             >
               <Copy className="w-4 h-4" />
               {t("copy_email")}
-            </button>
+            </Button>
           </div>
 
           {/* 3. Wall of Love / Reviews - Ultra Majestic Bento Box */}

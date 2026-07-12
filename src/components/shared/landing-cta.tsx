@@ -23,7 +23,7 @@ export const LandingCTA = ({ userId }: LandingCTAProps) => {
         <Link href="/learn" className="w-full">
           <Button
             size="lg"
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-bold uppercase tracking-wide border-b-4 border-green-700 h-12 rounded-xl"
+            className="relative w-full h-14 bg-[#58cc02] border-2 border-[#58cc02] border-b-[6px] border-b-[#46a302] active:border-b-2 active:translate-y-[4px] rounded-2xl flex items-center justify-center text-white font-black text-base uppercase tracking-widest transition-all hover:bg-[#46a302] hover:border-[#46a302]"
             onClick={playClick}
           >
             {t("continue_course")}
@@ -34,7 +34,7 @@ export const LandingCTA = ({ userId }: LandingCTAProps) => {
           <Link href="/onboarding" className="w-full">
             <Button
               size="lg"
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold uppercase tracking-wide border-b-4 border-green-700 h-12 rounded-xl"
+              className="relative w-full h-14 bg-[#58cc02] border-2 border-[#58cc02] border-b-[6px] border-b-[#46a302] active:border-b-2 active:translate-y-[4px] rounded-2xl flex items-center justify-center text-white font-black text-base uppercase tracking-widest transition-all hover:bg-[#46a302] hover:border-[#46a302]"
               onClick={playClick}
             >
               {t("start_now")}
@@ -44,7 +44,7 @@ export const LandingCTA = ({ userId }: LandingCTAProps) => {
             <Button
               variant="ghost"
               size="lg"
-              className="w-full bg-white dark:bg-slate-900 text-blue-500 hover:bg-slate-50 dark:bg-slate-950 font-bold uppercase tracking-wide border-2 border-slate-200 dark:border-slate-800 border-b-4 h-12 rounded-xl active:border-b-2 hover:text-blue-600"
+              className="relative w-full h-14 bg-white dark:bg-slate-900 text-[#1cb0f6] hover:text-[#1899d6] font-black uppercase tracking-widest border-2 border-slate-200 dark:border-slate-800 border-b-[6px] active:border-b-2 active:translate-y-[4px] rounded-2xl transition-all hover:bg-slate-50 dark:hover:bg-slate-950 flex items-center justify-center text-base"
               onClick={playClick}
             >
               {t("already_have_an_account")}

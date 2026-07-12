@@ -1,70 +1,293 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Offline | Faro</title>
+  <link rel="icon" type="image/png" href="faro_icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  
+  <script>
+    // Theme logic - runs immediately to prevent FOUC
+    let storedTheme = 'system';
+    try {
+      storedTheme = localStorage.getItem("theme") || 'system';
+      if (storedTheme === "dark") {
+        document.documentElement.classList.add("dark-theme");
+      } else if (storedTheme === "light") {
+        document.documentElement.classList.add("light-theme");
+      }
+    } catch (e) {}
+
+    // Language logic - runs immediately
+    function getLocale() {
+      try {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.startsWith('NEXT_LOCALE=')) {
+            return cookie.substring('NEXT_LOCALE='.length);
+          }
+        }
+      } catch (e) {}
+      const fallback = (navigator.language || navigator.userLanguage).split('-')[0];
+      return fallback;
+    }
+    let currentLang = getLocale();
+  </script>
+
   <style>
     :root {
-      --bg: #ffffff;
-      --text: #374151;
+      --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      --text-main: #1f2937;
       --text-muted: #6b7280;
       --btn-bg: #58cc02;
       --btn-border: #46a302;
+      --btn-hover: #46a302;
+      --card-bg: rgba(255, 255, 255, 0.8);
+      --card-shadow: 0 20px 40px -10px rgba(0,0,0,0.05);
     }
+
+    /* Dark Mode specific variables */
+    .dark-theme {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --card-bg: rgba(30, 41, 59, 0.6);
+      --card-shadow: 0 20px 40px -10px rgba(0,0,0,0.4);
+    }
+    
+    /* System Dark Mode Fallback (if no class is set) */
     @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f172a;
-        --text: #f8fafc;
+      html:not(.light-theme) {
+        --bg-gradient: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+        --text-main: #f8fafc;
         --text-muted: #94a3b8;
+        --card-bg: rgba(30, 41, 59, 0.6);
+        --card-shadow: 0 20px 40px -10px rgba(0,0,0,0.4);
       }
     }
-    * {
+
+    html, body {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      background: var(--bg-gradient);
     }
+
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
     body {
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+      color: var(--text-main);
+      text-align: center;
+    }
+
+    .bg-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Header Controls */
+    .header {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    .logo img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    select {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 2px solid rgba(0,0,0,0.1);
+      border-radius: 0.75rem;
+      padding: 0.4rem 0.5rem;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+      backdrop-filter: blur(8px);
+    }
+
+    #theme-toggle {
+      background: var(--card-bg);
+      border: 2px solid rgba(0,0,0,0.1);
+      border-radius: 50%;
+      width: 38px; height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s;
+    }
+
+    #theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .dark-theme select, .dark-theme #theme-toggle {
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    /* Animated background elements */
+    .bg-shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      animation: float 20s infinite ease-in-out;
+    }
+    
+    .shape-1 {
+      top: -10%; left: -10%;
+      width: 400px; height: 400px;
+      background: #38bdf8;
+      animation-delay: 0s;
+    }
+    
+    .shape-2 {
+      bottom: -10%; right: -10%;
+      width: 500px; height: 500px;
+      background: #4ade80;
+      animation-delay: -5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -50px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+
+    .page-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      text-align: center;
+      min-height: 100%;
+      min-height: 100dvh;
       padding: 1.5rem;
     }
+
     .container {
-      max-width: 400px;
+      max-width: 420px;
+      width: 100%;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      padding: 3rem 2rem;
+      box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
     }
-    img {
-      width: 160px;
-      height: auto;
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 2rem 1.5rem;
+        gap: 1rem;
+        border-radius: 1.5rem;
+      }
+      h1 {
+        font-size: 1.75rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+      .img-wrapper {
+        width: 140px;
+        height: 140px;
+      }
+    }
+
+    @keyframes popIn {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .img-wrapper {
+      position: relative;
+      width: 180px;
+      height: 180px;
       margin-bottom: 1rem;
+      animation: bounceFloat 4s infinite ease-in-out;
     }
+
+    @keyframes bounceFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
     h1 {
-      font-size: 1.75rem;
-      margin: 0;
-      font-weight: 800;
+      font-size: 2rem;
+      font-weight: 900;
       letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 0;
     }
+
     p {
       color: var(--text-muted);
       line-height: 1.6;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
+      font-weight: 700;
       margin: 0;
     }
+
     .btn {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      padding: 1rem;
-      border-radius: 1rem;
-      font-weight: 800;
+      padding: 1.2rem;
+      border-radius: 1.2rem;
+      font-weight: 900;
       font-size: 1.125rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -72,24 +295,182 @@
       color: #ffffff;
       background-color: var(--btn-bg);
       border: none;
-      border-bottom: 4px solid var(--btn-border);
+      border-bottom: 5px solid var(--btn-border);
       cursor: pointer;
-      transition: all 0.1s ease-in-out;
+      transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(88, 204, 2, 0.2);
     }
+
+    .btn:hover {
+      background-color: var(--btn-hover);
+      transform: translateY(1px);
+      border-bottom-width: 4px;
+      margin-bottom: 1px;
+    }
+
     .btn:active {
-      transform: translateY(4px);
+      transform: translateY(5px);
       border-bottom-width: 0px;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img src="/duo_crying.png" alt="Mascote Triste" />
-    <h1>Parece que estás offline!</h1>
-    <p>Sem ligação à internet no momento. As funcionalidades offline estão disponíveis mas algumas ações precisam de rede.</p>
-    <button class="btn" onclick="window.location.reload()">Tentar Novamente</button>
+  
+  <div class="bg-layer">
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
   </div>
+
+  <header class="header">
+    <div class="logo">
+      <img src="./faro_icon.png" alt="Faro Logo" />
+      <span>Faro</span>
+    </div>
+    <div class="controls">
+      <select id="lang-select" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="pt">PT</option>
+        <option value="es">ES</option>
+        <option value="fr">FR</option>
+        <option value="de">DE</option>
+        <option value="it">IT</option>
+        <option value="ja">JA</option>
+        <option value="ar">AR</option>
+        <option value="uk">UK</option>
+        <option value="hi">HI</option>
+      </select>
+      <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">🌙</button>
+    </div>
+  </header>
+
+  <div class="page-wrapper">
+    <div class="container">
+      <div class="img-wrapper">
+        <lottie-player src="./star_angry.json" background="transparent" speed="1" style="width: 100%; height: 100%;" loop autoplay></lottie-player>
+      </div>
+      <h1 id="title">You seem to be offline!</h1>
+      <p id="desc">No internet connection right now. Some features may be unavailable.</p>
+      <button class="btn" onclick="window.location.reload()" id="btn-text">Try Again</button>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        title: "You seem to be offline!",
+        desc: "No internet connection right now. Some features may be unavailable.",
+        btn: "Try Again"
+      },
+      pt: {
+        title: "Parece que estás offline!",
+        desc: "Sem ligação à internet no momento. Algumas funcionalidades podem não estar disponíveis.",
+        btn: "Tentar Novamente"
+      },
+      es: {
+        title: "¡Parece que estás offline!",
+        desc: "Sin conexión a internet en este momento. Algunas funciones pueden no estar disponibles.",
+        btn: "Intentar de Nuevo"
+      },
+      fr: {
+        title: "Vous semblez hors ligne !",
+        desc: "Pas de connexion internet pour le moment. Certaines fonctionnalités peuvent être indisponibles.",
+        btn: "Réessayer"
+      },
+      de: {
+        title: "Du scheinst offline zu sein!",
+        desc: "Derzeit keine Internetverbindung. Einige Funktionen sind möglicherweise nicht verfügbar.",
+        btn: "Erneut versuchen"
+      },
+      it: {
+        title: "Sembri essere offline!",
+        desc: "Nessuna connessione internet al momento. Alcune funzionalità potrebbero non essere disponibili.",
+        btn: "Riprova"
+      },
+      ja: {
+        title: "オフラインのようです！",
+        desc: "現在インターネット接続がありません。一部の機能が利用できない場合があります。",
+        btn: "再試行"
+      },
+      ar: {
+        title: "يبدو أنك غير متصل!",
+        desc: "لا يوجد اتصال بالإنترنت في الوقت الحالي. بعض الميزات قد لا تكون متاحة.",
+        btn: "حاول مرة أخرى"
+      },
+      uk: {
+        title: "Здається, ви офлайн!",
+        desc: "Наразі немає підключення до Інтернету. Деякі функції можуть бути недоступні.",
+        btn: "Спробувати ще раз"
+      },
+      hi: {
+        title: "आप ऑफ़लाइन लग रहे हैं!",
+        desc: "अभी कोई इंटरनेट कनेक्शन नहीं है। कुछ सुविधाएं अनुपलब्ध हो सकती हैं।",
+        btn: "पुनः प्रयास करें"
+      }
+    };
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      
+      // Update direction for Arabic
+      if (currentLang === 'ar') {
+        document.body.style.direction = 'rtl';
+      } else {
+        document.body.style.direction = 'ltr';
+      }
+
+      const t = translations[currentLang] || translations['en'];
+      document.documentElement.lang = currentLang;
+      document.getElementById('title').textContent = t.title;
+      document.getElementById('desc').textContent = t.desc;
+      document.getElementById('btn-text').textContent = t.btn;
+      
+      // Sync select dropdown
+      const select = document.getElementById('lang-select');
+      if (select) select.value = translations[currentLang] ? currentLang : 'en';
+    }
+
+    function changeLanguage(newLang) {
+      applyLanguage(newLang);
+    }
+
+    function updateThemeIcon() {
+      const isDark = document.documentElement.classList.contains('dark-theme') || 
+                    (!document.documentElement.classList.contains('light-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.contains('dark-theme') || 
+                    (!document.documentElement.classList.contains('light-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      if (isDark) {
+        document.documentElement.classList.remove('dark-theme');
+        document.documentElement.classList.add('light-theme');
+        try { localStorage.setItem('theme', 'light'); } catch(e) {}
+      } else {
+        document.documentElement.classList.remove('light-theme');
+        document.documentElement.classList.add('dark-theme');
+        try { localStorage.setItem('theme', 'dark'); } catch(e) {}
+      }
+      updateThemeIcon();
+    }
+
+    // Initialize UI
+    applyLanguage(currentLang);
+    updateThemeIcon();
+
+    // Listen for system theme changes if set to system
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateThemeIcon);
+
+    // Automatically reload the page when internet connection is restored
+    window.addEventListener('online', () => {
+      // Small delay to ensure the network is actually ready before reloading
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    });
+  </script>
 </body>
 </html>

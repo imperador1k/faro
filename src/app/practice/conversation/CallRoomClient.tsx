@@ -5,6 +5,7 @@ import { Mic, PhoneOff, Loader2, Square, MessageCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 type CallRoomClientProps = {
   activeLanguage: string;
@@ -126,10 +127,11 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
           </div>
 
           <div className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 shadow-sm flex flex-col gap-4">
-            <button
+            <Button
+              variant="ghost"
               onClick={toggleRecording}
               className={cn(
-                "w-full flex items-center justify-center gap-3 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-black uppercase tracking-wider transition-all duration-150 active:border-b-0 active:translate-y-[4px] select-none text-white",
+                "w-full flex items-center justify-center gap-3 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-black uppercase tracking-wider select-none text-white",
                 isRecording
                   ? "bg-rose-500 border-b-4 border-rose-600 animate-pulse hover:bg-rose-400"
                   : "bg-[#58CC02] border-b-4 border-[#58A700] hover:bg-[#46A302]",
@@ -146,15 +148,16 @@ export function CallRoomClient({ activeLanguage }: CallRoomClientProps) {
                   {t("tap_to_speak_button")}
                 </>
               )}
-            </button>
+            </Button>
 
-            <button
+            <Button
+              variant="destructive"
               onClick={() => router.back()}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-md font-bold uppercase tracking-wider text-rose-500 bg-transparent border-2 border-stone-200 dark:border-slate-800 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-[2px] transition-all"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-md font-bold uppercase tracking-wider"
             >
               <PhoneOff className="w-5 h-5" />
               {t("end_session_button")}
-            </button>
+            </Button>
           </div>
         </div>
       </main>

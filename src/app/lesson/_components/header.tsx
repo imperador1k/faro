@@ -11,6 +11,7 @@ import {
   Flame,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const ProgressBar = ({ value, streakCount = 0 }: { value: number; streakCount?: number }) => {
   const isStreak = streakCount >= 2;
@@ -84,18 +85,22 @@ export const LessonHeader = ({
   const t = useTranslations("lesson");
   return (
     <header className="mx-auto flex w-full max-w-[1140px] shrink-0 items-center justify-between gap-x-4 px-6 pt-6 lg:pt-12">
-      <button
+      <Button
+        variant="ghost"
+        size="icon"
         onClick={onExit}
-        className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200"
+        className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
       >
         <X className="h-6 w-6" />
-      </button>
+      </Button>
       <div className="flex-1 flex items-center pt-2 pb-2">
         <ProgressBar value={progress} streakCount={consecutiveCorrectCount} />
       </div>
 
       <div className="flex items-center gap-4">
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={onToggleMute}
           className={cn(
             "rounded-xl p-2 transition-all active:scale-90",
@@ -110,7 +115,7 @@ export const LessonHeader = ({
           ) : (
             <Volume2 className="h-5 w-5" />
           )}
-        </button>
+        </Button>
 
         {xpBoostLessons > 0 && (
           <div className="flex items-center gap-2 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-xl px-4 py-2 font-bold text-purple-600">

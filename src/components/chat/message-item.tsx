@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
 import { CheckCheck, Reply, FileText, BadgeCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLongPress } from "@/hooks/use-long-press";
@@ -233,31 +234,34 @@ export const MessageItem = memo(
                 )}
               >
                 {QUICK_EMOJIS.map((emoji) => (
-                  <button
+                  <Button
                     key={emoji}
+                    variant="ghost"
+                    size="icon"
                     onClick={(e) => {
                       e.stopPropagation();
                       onReaction(msg.id, emoji);
                     }}
-                    className="h-10 w-10 flex items-center justify-center text-xl hover:bg-stone-50 dark:hover:bg-slate-700 hover:scale-125 transition-all rounded-xl active:scale-95"
+                    className="h-10 w-10 text-xl rounded-xl"
                   >
                     {emoji}
-                  </button>
+                  </Button>
                 ))}
                 <div className="w-[2px] h-6 bg-stone-100 dark:bg-slate-800 self-center mx-1 rounded-full" />
-                <button
+                <Button
+                  variant="ghost"
                   onClick={(e) => {
                     e.stopPropagation();
                     setReplyingTo(msg);
                     setActiveMenuId(null);
                   }}
-                  className="px-4 flex items-center gap-2 hover:bg-stone-50 dark:hover:bg-slate-700 transition-all rounded-xl active:scale-95"
+                  className="px-4 rounded-xl"
                 >
-                  <Reply className="w-4 h-4 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
-                  <span className="text-xs font-black text-stone-600 dark:text-slate-300 uppercase tracking-widest">
+                  <Reply className="w-4 h-4" />
+                  <span className="text-xs font-black uppercase tracking-widest">
                     {t("reply")}
                   </span>
-                </button>
+                </Button>
               </motion.div>
             )}
           </AnimatePresence>

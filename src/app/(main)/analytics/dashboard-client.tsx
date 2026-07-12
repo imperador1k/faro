@@ -4,6 +4,7 @@ import { Zap, Target, Crown, Flame, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useTranslations, useFormatter } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 type WeeklyData = {
   date: string;
@@ -57,7 +58,8 @@ export const DashboardClient = ({ data }: Props) => {
     <div className="flex flex-col gap-6 w-full">
       {/* Tabs Switcher */}
       <div className="flex w-full sm:w-fit gap-2 bg-stone-100 dark:bg-slate-800 p-2 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-4 mb-2 mx-auto sm:mx-0">
-        <button
+        <Button
+          variant={activeTab === "overview" ? "default" : "ghost"}
           onClick={() => setActiveTab("overview")}
           className={cn(
             "transition-all flex-1 sm:flex-none text-center",
@@ -67,8 +69,9 @@ export const DashboardClient = ({ data }: Props) => {
           )}
         >
           {t("overview_tab")}
-        </button>
-        <button
+        </Button>
+        <Button
+          variant={activeTab === "heatmap" ? "default" : "ghost"}
           onClick={() => setActiveTab("heatmap")}
           className={cn(
             "transition-all flex-1 sm:flex-none text-center",
@@ -78,7 +81,7 @@ export const DashboardClient = ({ data }: Props) => {
           )}
         >
           {t("consistency_tab")}
-        </button>
+        </Button>
       </div>
 
       {activeTab === "overview" && (

@@ -44,7 +44,7 @@ export const StepCourse = ({ courses }: StepCourseProps) => {
         </motion.div>
       </div>
 
-      <h1 className="text-2xl sm:text-3xl font-black text-[#042c60] mb-6 px-2">
+      <h1 className="text-2xl sm:text-3xl font-black text-[#042c60] dark:text-white mb-6 px-2">
         {t.rich("choose_your_path", {
           path_span: (chunks) => (
             <span className="text-[#58cc02]">{chunks}</span>

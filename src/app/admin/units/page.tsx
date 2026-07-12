@@ -1,6 +1,7 @@
 import { db } from "@/db/drizzle";
 import { Layers } from "lucide-react";
 import { DeleteUnitButton } from "@/components/admin/delete-unit-button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -41,9 +42,9 @@ export default async function AdminUnitsPage() {
               disabled
             />
           </div>
-          <button className="hidden sm:flex items-center justify-center px-4 py-3 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-black text-sm tracking-widest uppercase rounded-2xl border-2 border-transparent border-b-[4px] border-b-stone-200 dark:border-b-slate-800 hover:translate-y-[2px] hover:border-b-[2px] active:translate-y-[4px] active:border-b-0 transition-all cursor-pointer">
+          <Button variant="outline" className="hidden sm:flex items-center justify-center px-4 py-3 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-black text-sm tracking-widest uppercase rounded-2xl border-2 border-transparent border-b-[4px] border-b-stone-200 dark:border-b-slate-800 hover:translate-y-[2px] hover:border-b-[2px] active:translate-y-[4px] active:border-b-0 transition-all cursor-pointer">
             Exportar
-          </button>
+          </Button>
           <Link
             href="/admin/units/new"
             className="flex items-center justify-center px-6 py-3 bg-[#58CC02] text-white font-black text-sm tracking-widest uppercase rounded-2xl border-2 border-transparent border-b-[6px] border-b-[#46a302] hover:translate-y-[2px] hover:border-b-[4px] active:translate-y-[6px] active:border-b-0 transition-all cursor-pointer shadow-sm"
@@ -161,15 +162,15 @@ export default async function AdminUnitsPage() {
           Página 1 de 1
         </span>
         <div className="flex items-center gap-2">
-          <button className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-900 text-stone-400 dark:text-slate-500 dark:text-slate-400 font-black rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-[4px] hover:-translate-y-1 hover:border-b-[6px] active:translate-y-1 active:border-b-[2px] transition-all cursor-not-allowed opacity-50">
+          <Button variant="outline" size="icon" disabled className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-900 text-stone-400 dark:text-slate-500 dark:text-slate-400 font-black rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-[4px] hover:-translate-y-1 hover:border-b-[6px] active:translate-y-1 active:border-b-[2px] transition-all cursor-not-allowed opacity-50">
             {"<"}
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center bg-[#1CB0F6] text-white font-black rounded-xl border-2 border-transparent border-b-[4px] border-b-[#0092d6] shadow-sm">
+          </Button>
+          <Button variant="secondary" size="icon" className="w-10 h-10 flex items-center justify-center bg-[#1CB0F6] text-white font-black rounded-xl border-2 border-transparent border-b-[4px] border-b-[#0092d6] shadow-sm">
             1
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-900 text-stone-400 dark:text-slate-500 dark:text-slate-400 font-black rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-[4px] hover:-translate-y-1 hover:border-b-[6px] active:translate-y-1 active:border-b-[2px] transition-all cursor-not-allowed opacity-50">
+          </Button>
+          <Button variant="outline" size="icon" disabled className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-900 text-stone-400 dark:text-slate-500 dark:text-slate-400 font-black rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-[4px] hover:-translate-y-1 hover:border-b-[6px] active:translate-y-1 active:border-b-[2px] transition-all cursor-not-allowed opacity-50">
             {">"}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

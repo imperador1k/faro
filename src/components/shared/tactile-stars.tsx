@@ -5,6 +5,7 @@ import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUISounds } from "@/hooks/use-ui-sounds";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   value: number;
@@ -71,15 +72,16 @@ export const TactileStars = ({
         const isBouncing = index === bouncingStar;
 
         return (
-          <button
+          <Button
             key={index}
+            variant="ghost"
             type="button"
             onClick={() => handleClick(index)}
             onMouseEnter={() => handleHover(index)}
-            onPointerDown={() => handleClick(index)} // Fast mobile response
+            onPointerDown={() => handleClick(index)}
             disabled={readonly}
             className={cn(
-              "relative outline-none transition-all duration-200 tap-highlight-transparent cursor-pointer",
+              "relative transition-all duration-200",
               readonly && "cursor-default",
               isActive ? "scale-110" : "scale-100 opacity-60 hover:opacity-100",
               isBouncing && "animate-bounce",
@@ -101,7 +103,7 @@ export const TactileStars = ({
             {isActive && !readonly && (
               <div className="absolute inset-0 bg-[#FFC800] rounded-full blur-xl opacity-20 -z-10 mix-blend-multiply" />
             )}
-          </button>
+          </Button>
         );
       })}
     </div>

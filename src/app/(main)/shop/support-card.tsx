@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
+import { Button } from "@/components/ui/button";
 import { useUISounds } from "@/hooks/use-ui-sounds";
 import { useTranslations } from "next-intl";
 
@@ -46,12 +47,13 @@ export const SupportCard = () => {
               </span>
             </div>
           </div>
-          <button
+          <Button
+            variant="ghost"
             onClick={() => setIsOpen(false)}
-            className="w-8 h-8 bg-stone-200 dark:bg-slate-700 hover:bg-stone-300 dark:bg-slate-600 rounded-full flex items-center justify-center text-stone-500 dark:text-slate-400 transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full bg-stone-200 dark:bg-slate-700 hover:bg-stone-300 dark:bg-slate-600 text-stone-500 dark:text-slate-400"
           >
             <X className="w-5 h-5 stroke-[3px]" />
-          </button>
+          </Button>
         </div>
         {/* Iframe content */}
         <div className="w-full h-full bg-stone-50 dark:bg-slate-950 flex-1 relative overflow-hidden rounded-b-3xl flex justify-center items-center">
@@ -83,12 +85,13 @@ export const SupportCard = () => {
           {t("support_description")}
         </p>
 
-        <button
+        <Button
+          variant="super"
           onClick={onSupportClick}
-          className="block w-full bg-[#FFDD00] text-yellow-900 border-2 border-yellow-400 border-b-8 active:translate-y-2 active:border-b-0 hover:bg-[#FFEA00] rounded-2xl py-4 font-black text-lg transition-all text-center uppercase cursor-pointer"
+          className="w-full rounded-2xl py-4 text-lg uppercase text-center"
         >
           {t("support_developer_btn")}
-        </button>
+        </Button>
       </div>
 
       {mounted && createPortal(modalContent, document.body)}

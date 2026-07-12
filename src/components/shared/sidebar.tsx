@@ -32,6 +32,7 @@ import {
   Compass,
 } from "lucide-react";
 import { useUISounds } from "@/hooks/use-ui-sounds";
+import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
 
 type SidebarItemProps = {
@@ -153,16 +154,18 @@ export const Sidebar = ({
       )}
     >
       {/* Collapse Toggle Button */}
-      <button
+      <Button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-3.5 top-12 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 rounded-full p-1 shadow-sm hover:scale-110 active:scale-95 active:border-b-2 active:translate-y-[2px] transition-all z-30"
+        variant="ghost"
+        size="icon"
+        className="absolute -right-3.5 top-12 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-full p-1 shadow-sm hover:scale-110 active:scale-95 z-30"
       >
         {isCollapsed ? (
           <ChevronRight className="w-4 h-4 text-stone-500 dark:text-slate-400 stroke-[3]" />
         ) : (
           <ChevronLeft className="w-4 h-4 text-stone-500 dark:text-slate-400 stroke-[3]" />
         )}
-      </button>
+      </Button>
 
       <div
         className={cn(

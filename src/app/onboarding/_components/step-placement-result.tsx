@@ -37,7 +37,7 @@ export const StepPlacementResult = () => {
         className="space-y-2 sm:space-y-3"
       >
         <div className="space-y-0.5">
-          <h2 className="text-2xl sm:text-3xl font-black text-[#042c60] leading-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#042c60] dark:text-white leading-tight">
             {t("amazing_title")}
           </h2>
           <p className="text-lg sm:text-xl font-black text-[#58cc02]">
@@ -55,7 +55,7 @@ export const StepPlacementResult = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-transparent to-yellow-50/50 opacity-0 group-hover:opacity-100 transition-opacity" />
 
           <div className="space-y-4">
-            <p className="text-base sm:text-lg font-bold text-gray-600 relative z-10">
+            <p className="text-base sm:text-lg font-bold text-gray-600 dark:text-gray-300 relative z-10">
               {t("placement_explanation", {
                 score: placementResults?.score ?? 0,
               })}
@@ -65,11 +65,11 @@ export const StepPlacementResult = () => {
               {result.label}
             </div>
 
-            <p className="text-gray-500 font-bold text-sm">
+            <p className="text-gray-500 dark:text-gray-300 font-bold text-sm">
               {t.rich("starting_section", {
                 section: result.section,
                 span: (chunks) => (
-                  <span className="text-[#042c60]">{chunks}</span>
+                  <span className="text-[#042c60] dark:text-white">{chunks}</span>
                 ),
               })}
             </p>
@@ -85,7 +85,7 @@ export const StepPlacementResult = () => {
           </div>
         </div>
 
-        <p className="text-sm sm:text-base font-bold text-gray-400 animate-pulse pt-2">
+        <p className="text-sm sm:text-base font-bold text-gray-400 dark:text-slate-400 animate-pulse pt-2">
           {t("ready_for_next")}
         </p>
       </motion.div>

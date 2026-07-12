@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Trash, Loader2 } from "lucide-react";
 import { deleteUnit } from "@/actions/admin";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   unitId: number;
@@ -36,10 +37,12 @@ Esta ação apagará todas as lições e desafios associados.`,
   };
 
   return (
-    <button
+    <Button
+      variant="destructive"
+      size="icon"
       onClick={handleDelete}
       disabled={loading}
-      className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
       title="Eliminar unidade"
     >
       {loading ? (
@@ -47,6 +50,6 @@ Esta ação apagará todas as lições e desafios associados.`,
       ) : (
         <Trash className="w-5 h-5" />
       )}
-    </button>
+    </Button>
   );
 };

@@ -18,6 +18,7 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   isOpen: boolean;
@@ -114,12 +115,13 @@ export const PracticeInfoModal = ({ isOpen, onOpenChange }: Props) => {
             </div>
 
             <div className="w-full mt-2">
-              <button
+              <Button
                 onClick={() => onOpenChange(false)}
-                className="w-full py-4 bg-[#1CB0F6] hover:bg-[#1899D6] text-white font-black text-[15px] uppercase tracking-widest rounded-2xl border-b-4 border-[#1899D6] active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center"
+                variant="default"
+                className="w-full py-4 text-[15px] rounded-2xl"
               >
                 {t("lets_practice")}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

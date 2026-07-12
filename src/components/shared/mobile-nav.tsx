@@ -27,6 +27,7 @@ import {
   LifeBuoy,
 } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import { useUISounds } from "@/hooks/use-ui-sounds";
 import { useUser } from "@clerk/nextjs";
 
@@ -375,14 +376,15 @@ const MobileNavContent = ({
           />
 
           <div className="relative z-[80] flex items-center justify-center -mt-8">
-            <button
+            <Button
               id="tour-more-mobile"
+              variant={isOpen ? "ghost" : "default"}
               onClick={toggleMenu}
               className={cn(
-                "w-16 h-16 rounded-full flex items-center justify-center text-white transition-all duration-300 outline-none",
+                "w-16 h-16 rounded-full flex items-center justify-center text-white outline-none",
                 isOpen
                   ? "bg-stone-800 dark:bg-slate-700 border-2 border-stone-900 dark:border-slate-600 rotate-90 scale-105"
-                  : "bg-[#58CC02] border-2 border-[#46a302] border-b-8 active:translate-y-2 active:border-b-0 hover:bg-[#58CC02]",
+                  : "bg-[#58CC02] border-2 border-[#46a302] border-b-8 hover:bg-[#58CC02]",
               )}
             >
               {isOpen ? (
@@ -390,7 +392,7 @@ const MobileNavContent = ({
               ) : (
                 <Menu className="h-7 w-7 stroke-[3px]" />
               )}
-            </button>
+            </Button>
           </div>
 
           <MobileItem

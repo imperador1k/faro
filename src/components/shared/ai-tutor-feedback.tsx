@@ -7,6 +7,7 @@ import { getErrorExplanation } from "@/actions/ai-tutor";
 import { Loader2, Sparkles, Bot } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { InteractiveText } from "@/components/ui/interactive-text";
+import { Button } from "@/components/ui/button";
 
 type AITutorFeedbackProps = {
   question: string;
@@ -48,7 +49,8 @@ export const AITutorFeedback = ({
 
   if (status === "idle") {
     return (
-      <button
+      <Button
+        variant="ghost"
         onClick={handleExplain}
         className={cn(
           "flex items-center gap-2 bg-purple-100 text-purple-600 hover:bg-purple-200 border-2 border-purple-200 border-b-[4px] rounded-xl px-4 py-3 font-extrabold transition-all active:translate-y-[2px] active:border-b-2",
@@ -57,7 +59,7 @@ export const AITutorFeedback = ({
       >
         <Bot className="h-5 w-5" />
         {t("explain_button")}
-      </button>
+      </Button>
     );
   }
 

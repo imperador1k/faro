@@ -318,14 +318,14 @@ export default function ListeningPracticePage() {
 
               <div className="flex justify-center gap-4 w-full mt-4">
                 {isPlaying ? (
-                  <button
+                  <Button variant="default"
                     onClick={pauseAudio}
                     className="w-full md:w-auto px-12 h-16 md:h-20 bg-amber-500 text-white text-lg md:text-xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-amber-600 hover:bg-amber-400 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
                   >
                     <Pause className="w-6 h-6 fill-current" /> {t("pause")}
-                  </button>
+                  </Button>
                 ) : (
-                  <button
+                  <Button variant="default"
                     onClick={playAudio}
                     className={cn(
                       "w-full md:w-auto px-12 h-16 md:h-20 text-white text-lg md:text-xl font-black rounded-3xl border-2 border-transparent border-b-8 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm",
@@ -336,17 +336,17 @@ export default function ListeningPracticePage() {
                   >
                     <Play className="w-6 h-6 fill-current" />{" "}
                     {isPaused ? "{t('resume')}" : "{t('listen')}"}
-                  </button>
+                  </Button>
                 )}
 
                 {(isPlaying || isPaused) && (
-                  <button
+                  <Button variant="ghost"
                     onClick={stopAudio}
                     className="h-16 w-16 md:h-20 md:w-20 rounded-3xl bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-800 border-b-8 border-b-stone-300 dark:border-b-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all active:border-b-0 active:mt-2 active:mb-[-8px] flex items-center justify-center shrink-0"
                     title="Parar Áudio"
                   >
                     <Square className="h-6 w-6 fill-current" />
-                  </button>
+                  </Button>
                 )}
               </div>
 
@@ -379,7 +379,7 @@ export default function ListeningPracticePage() {
 
               {/* Input Mode Toggle */}
               <div className="flex p-1 bg-stone-200/50 rounded-2xl border-2 border-stone-200 dark:border-slate-800">
-                <button
+                <Button variant="ghost"
                   onClick={() => setInputMode("text")}
                   className={cn(
                     "px-4 py-2 h-10 rounded-xl text-sm font-black uppercase tracking-widest transition-all flex items-center gap-2",
@@ -389,8 +389,8 @@ export default function ListeningPracticePage() {
                   )}
                 >
                   <Keyboard className="h-4 w-4" /> {t("text")}
-                </button>
-                <button
+                </Button>
+                <Button variant="ghost"
                   onClick={() => setInputMode("voice")}
                   className={cn(
                     "px-4 py-2 h-10 rounded-xl text-sm font-black uppercase tracking-widest transition-all flex items-center gap-2",
@@ -400,7 +400,7 @@ export default function ListeningPracticePage() {
                   )}
                 >
                   <Mic className="h-4 w-4" /> {t("voice")}
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -426,7 +426,7 @@ export default function ListeningPracticePage() {
 
                   {inputMode === "voice" ? (
                     <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center w-full mt-2">
-                      <button
+                      <Button variant="default"
                         onClick={() => {
                           if (isRecording && activeQuestionIndex === idx) {
                             (
@@ -453,7 +453,7 @@ export default function ListeningPracticePage() {
                         ) : (
                           <Mic className="h-7 w-7" />
                         )}
-                      </button>
+                      </Button>
                       <div className="flex-1 w-full min-h-[64px] p-4 bg-stone-50 dark:bg-slate-950 rounded-2xl border-2 border-stone-200 dark:border-slate-800 text-base md:text-lg font-medium text-stone-700 dark:text-slate-200 shadow-inner flex items-center">
                         {userAnswers[idx] ||
                           (isRecording && activeQuestionIndex === idx ? (
@@ -575,7 +575,7 @@ export default function ListeningPracticePage() {
                 </div>
                 {t("transcript")}
               </h3>
-              <button
+              <Button variant="outline"
                 onClick={() => setShowScript(!showScript)}
                 disabled={!scriptData}
                 className="px-3 py-1.5 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-bold text-xs rounded-lg border-2 border-stone-200 dark:border-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 active:scale-95 transition-all uppercase tracking-widest flex items-center gap-2 disabled:opacity-50"
@@ -587,7 +587,7 @@ export default function ListeningPracticePage() {
                 ) : (
                   "{t('show')}"
                 )}
-              </button>
+              </Button>
             </div>
 
             <div
@@ -619,7 +619,7 @@ export default function ListeningPracticePage() {
           {/* Submit Area */}
           <div className="mt-8 lg:mt-0 flex flex-col gap-4 w-full">
             {!feedback ? (
-              <button
+              <Button variant="default"
                 onClick={handleSubmit}
                 disabled={
                   userAnswers.every((a) => !a?.trim()) ||
@@ -635,15 +635,15 @@ export default function ListeningPracticePage() {
                 ) : (
                   "{t('evaluate')}"
                 )}
-              </button>
+              </Button>
             ) : (
-              <button
+              <Button variant="secondary"
                 onClick={() => handleGenerateScript()}
                 className="w-full h-20 md:h-24 bg-sky-400 text-white text-xl md:text-2xl font-black rounded-3xl border-2 border-transparent border-b-8 border-b-sky-500 hover:bg-sky-500 active:border-b-0 active:mt-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm"
               >
                 {t("new_audio")}
                 <RefreshCw className="w-7 h-7" strokeWidth={3} />
-              </button>
+              </Button>
             )}
 
             <p className="text-center font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2 mt-2">

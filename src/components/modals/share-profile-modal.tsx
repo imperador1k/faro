@@ -11,6 +11,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { useCustomToast } from "@/components/ui/custom-toast";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 
 export const ShareProfileModal = ({
@@ -59,8 +60,10 @@ export const ShareProfileModal = ({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-sm p-0 border-0 bg-transparent shadow-none [&>button]:hidden">
         <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col p-8 items-center text-center">
-          <DialogClose className="absolute right-6 top-6 h-10 w-10 flex items-center justify-center rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-600 dark:text-slate-300 transition-colors active:scale-95 z-50">
-            <X className="w-5 h-5" />
+          <DialogClose asChild>
+            <Button variant="ghost" className="absolute right-6 top-6 h-10 w-10 rounded-2xl bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-slate-700 hover:text-stone-600 dark:text-slate-300 z-50">
+              <X className="w-5 h-5" />
+            </Button>
           </DialogClose>
 
           <DialogTitle className="sr-only">
@@ -90,24 +93,26 @@ export const ShareProfileModal = ({
           </div>
 
           <div className="flex w-full gap-3">
-            <button
+            <Button
+              variant="ghost"
               onClick={handleCopy}
-              className="flex-1 flex flex-col items-center justify-center gap-1 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-bold border-b-4 border-stone-200 dark:border-slate-800 py-3 rounded-2xl hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-all active:translate-y-1 active:border-b-0"
+              className="flex-1 flex flex-col items-center justify-center gap-1 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-bold border-b-4 border-stone-200 dark:border-slate-800 py-3 rounded-2xl hover:bg-stone-200 dark:hover:bg-slate-700"
             >
               <Copy className="h-5 w-5" />
               <span className="text-[10px] uppercase tracking-widest">
                 {t("copy_button")}
               </span>
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="default"
               onClick={handleShare}
-              className="flex-[2] flex items-center justify-center gap-2 bg-[#1CB0F6] text-white font-bold border-b-4 border-[#1899D6] py-3 rounded-2xl hover:bg-[#1899D6] transition-all active:translate-y-1 active:border-b-0"
+              className="flex-[2] flex items-center justify-center gap-2 bg-[#1CB0F6] text-white font-bold border-b-4 border-[#1899D6] py-3 rounded-2xl hover:bg-[#1899D6]"
             >
               <Share2 className="h-5 w-5" />
               <span className="text-sm uppercase tracking-widest">
                 {t("share_button")}
               </span>
-            </button>
+            </Button>
           </div>
         </div>
       </DialogContent>

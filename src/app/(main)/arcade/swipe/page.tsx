@@ -11,6 +11,7 @@ import { Zap, X, Check, Flame, Trophy } from "lucide-react";
 import confetti from "canvas-confetti";
 import { useUISounds } from "@/hooks/use-ui-sounds";
 import { addArcadePoints } from "@/actions/user-progress";
+import { Button } from "@/components/ui/button";
 
 type CardData = {
   id: string;
@@ -173,12 +174,13 @@ export default function VocabularySwipe() {
             <span className="text-6xl font-black text-amber-500">{score}</span>
           </div>
 
-          <button
+          <Button
+            variant="super"
             onClick={() => router.push("/arcade")}
             className="w-full py-4 bg-amber-500 hover:bg-amber-600 text-white font-black text-xl uppercase tracking-widest rounded-2xl border-2 border-amber-600 border-b-8 active:border-b-2 active:translate-y-[6px] transition-all"
           >
             {t("back_to_arcade")}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -197,12 +199,13 @@ export default function VocabularySwipe() {
     >
       {/* Header: Timer & Combo */}
       <div className="flex items-center justify-between mb-8 px-2">
-        <button
+        <Button
+          variant="ghost"
           onClick={() => router.push("/arcade")}
           className="text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 font-bold uppercase text-sm tracking-wider"
         >
           &larr; {t("exit")}
-        </button>
+        </Button>
         <div className="flex gap-3">
           <div className="flex flex-col items-center bg-stone-100 dark:bg-slate-800 px-4 py-2 rounded-2xl border-2 border-stone-200 dark:border-slate-800">
             <span className="text-[10px] font-black text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase">
@@ -297,7 +300,8 @@ export default function VocabularySwipe() {
 
       {/* Manual Controls */}
       <div className="mt-8 flex items-center justify-center gap-6 pb-6 z-10 relative">
-        <button
+        <Button
+          variant="outline"
           onClick={() => triggerManualSwipe("left")}
           className="h-20 w-20 rounded-full bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 active:border-b-2 active:translate-y-[6px] hover:bg-rose-50 flex items-center justify-center transition-all group shadow-sm"
         >
@@ -305,9 +309,10 @@ export default function VocabularySwipe() {
             className="h-10 w-10 text-rose-500 group-hover:scale-110 transition-transform"
             strokeWidth={3}
           />
-        </button>
+        </Button>
 
-        <button
+        <Button
+          variant="outline"
           onClick={() => triggerManualSwipe("right")}
           className="h-20 w-20 rounded-full bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 active:border-b-2 active:translate-y-[6px] hover:bg-emerald-50 flex items-center justify-center transition-all group shadow-sm"
         >
@@ -315,7 +320,7 @@ export default function VocabularySwipe() {
             className="h-10 w-10 text-emerald-500 group-hover:scale-110 transition-transform"
             strokeWidth={3}
           />
-        </button>
+        </Button>
       </div>
 
       {/* Instruction Footer */}

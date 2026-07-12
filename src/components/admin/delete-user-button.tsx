@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import { Trash2, Loader2 } from "lucide-react";
 import { deleteUserAction } from "@/actions/admin-users";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 interface DeleteUserButtonProps {
   userId: string;
@@ -42,10 +43,12 @@ Queres mesmo prosseguir?`,
   };
 
   return (
-    <button
+    <Button
+      variant="destructive"
+      size="icon"
       onClick={handleDelete}
       disabled={isPending}
-      className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors flex items-center justify-center disabled:opacity-50"
+      className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg flex items-center justify-center disabled:opacity-50"
       title="Eliminar utilizador"
     >
       {isPending ? (
@@ -53,6 +56,6 @@ Queres mesmo prosseguir?`,
       ) : (
         <Trash2 className="w-5 h-5" />
       )}
-    </button>
+    </Button>
   );
 }

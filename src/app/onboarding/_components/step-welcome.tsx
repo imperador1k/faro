@@ -62,7 +62,7 @@ export const StepWelcome = () => {
             className="relative"
           >
             {/* Speech Bubble */}
-            <div className="bg-white dark:bg-slate-900 border-4 border-[#e5e5e5] rounded-[2.5rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 shadow-[0_10px_0_#e5e5e5] relative">
+            <div className="bg-white dark:bg-slate-900 border-4 border-[#e5e5e5] dark:border-slate-800 rounded-[2.5rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 shadow-[0_10px_0_#e5e5e5] dark:shadow-[0_10px_0_#1e293b] relative">
               <div className="flex flex-col gap-1">
                 <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
                   <Sparkles className="text-yellow-400 w-5 h-5" />
@@ -70,7 +70,7 @@ export const StepWelcome = () => {
                     {t("new_friend_badge")}
                   </span>
                 </div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#042c60] leading-none">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#042c60] dark:text-white leading-none">
                   {t.rich("marco_intro_welcome", {
                     brTag: () => <br />,
                     spanTag: (chunks) => (
@@ -83,7 +83,7 @@ export const StepWelcome = () => {
               </div>
 
               {/* Bubble Tail (Responsive) */}
-              <div className="absolute -top-3 md:top-1/2 left-1/2 md:left-[-12px] -translate-x-1/2 md:translate-x-0 md:-translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white dark:bg-slate-900 border-l-4 border-t-4 md:border-t-0 md:border-b-4 border-[#e5e5e5] rotate-45 md:-rotate-45" />
+              <div className="absolute -top-3 md:top-1/2 left-1/2 md:left-[-12px] -translate-x-1/2 md:translate-x-0 md:-translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white dark:bg-slate-900 border-l-4 border-t-4 md:border-t-0 md:border-b-4 border-[#e5e5e5] dark:border-slate-800 rotate-45 md:-rotate-45" />
             </div>
           </motion.div>
 

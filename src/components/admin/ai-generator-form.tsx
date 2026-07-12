@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { generateCourseContent } from "@/actions/ai-generator";
 import { AI_TOPICS, CEFR_LEVELS } from "@/lib/ai-topics";
 import { Sparkles, Loader2, AlertTriangle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 type Props = {
@@ -167,15 +168,17 @@ export const AIGeneratorForm = ({ courseId, targetLang }: Props) => {
 
       {/* Footer */}
       <div className="px-8 py-5 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-        <button
+        <Button
           type="button"
+          variant="ghost"
           onClick={() => router.back()}
-          className="px-5 py-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 font-bold text-sm transition-colors"
+          className="px-5 py-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 font-bold text-sm"
         >
           Cancelar
-        </button>
-        <button
+        </Button>
+        <Button
           type="submit"
+          variant="secondary"
           disabled={loading}
           className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-md shadow-violet-500/20 transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
@@ -189,7 +192,7 @@ export const AIGeneratorForm = ({ courseId, targetLang }: Props) => {
               Gerar Conteúdo com IA
             </>
           )}
-        </button>
+        </Button>
       </div>
     </form>
   );

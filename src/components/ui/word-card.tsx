@@ -14,6 +14,7 @@ import {
   EyeOff,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface WordCardProps {
   word: string;
@@ -91,10 +92,11 @@ export const WordCard = ({
           </div>
 
           <div className="flex items-center gap-2 relative z-10">
-            <button
+            <Button
+              variant="ghost"
               onClick={() => setIsRevealed(!isRevealed)}
               className={cn(
-                "h-10 px-3 flex items-center justify-center rounded-xl border-2 border-transparent border-b-[4px] hover:-translate-y-1 active:border-b-[2px] active:translate-y-1 transition-all",
+                "h-10 px-3 rounded-xl",
                 isRevealed
                   ? "bg-indigo-100 text-indigo-500 border-b-indigo-200 hover:border-b-indigo-300 hover:bg-indigo-200"
                   : "bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-b-stone-200 dark:border-b-slate-800 hover:border-b-sky-200 hover:bg-sky-50 hover:text-sky-500",
@@ -106,13 +108,19 @@ export const WordCard = ({
               ) : (
                 <Eye className="w-4 h-4" />
               )}
-            </button>
-            <button className="w-10 h-10 flex items-center justify-center bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-sky-500 rounded-xl border-2 border-transparent border-b-[4px] border-b-stone-200 dark:border-b-slate-800 hover:border-b-sky-200 hover:bg-sky-50 hover:-translate-y-1 active:border-b-[2px] active:translate-y-1 transition-all">
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-10 h-10 rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-sky-500 border-b-stone-200 dark:border-b-slate-800 hover:border-b-sky-200 hover:bg-sky-50"
+            >
               <Edit2 className="w-4 h-4" />
-            </button>
-            <button className="w-10 h-10 flex items-center justify-center bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-rose-500 rounded-xl border-2 border-transparent border-b-[4px] border-b-stone-200 dark:border-b-slate-800 hover:border-b-rose-200 hover:bg-rose-50 hover:-translate-y-1 active:border-b-[2px] active:translate-y-1 transition-all">
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-10 h-10 rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-rose-500 border-b-stone-200 dark:border-b-slate-800 hover:border-b-rose-200 hover:bg-rose-50"
+            >
               <Trash2 className="w-4 h-4" />
-            </button>
+            </Button>
           </div>
         </div>
 

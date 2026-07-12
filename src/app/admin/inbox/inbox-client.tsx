@@ -13,6 +13,7 @@ import {
   type InboxItem,
 } from "@/actions/admin-inbox";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 const CANNED_RESPONSES = [
   {
@@ -224,20 +225,22 @@ export function InboxClient({ initialItems }: Props) {
 
           {/* Tabs */}
           <div className="flex px-4 pb-0 gap-2">
-            <button
+            <Button
               onClick={() => setViewMode("active")}
-              className={`flex-1 py-3 text-[11px] font-black uppercase tracking-widest transition-all rounded-t-xl border-t-2 border-x-2 
+              variant="ghost"
+              className={`flex-1 py-3 text-[11px] font-black uppercase tracking-widest rounded-t-xl border-t-2 border-x-2 h-auto 
                                 ${viewMode === "active" ? "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-sky-600" : "bg-transparent border-transparent text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300"}`}
             >
               Ativos
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setViewMode("archived")}
-              className={`flex-1 py-3 text-[11px] font-black uppercase tracking-widest transition-all rounded-t-xl border-t-2 border-x-2 
+              variant="ghost"
+              className={`flex-1 py-3 text-[11px] font-black uppercase tracking-widest rounded-t-xl border-t-2 border-x-2 h-auto 
                                 ${viewMode === "archived" ? "bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-800 text-amber-600" : "bg-transparent border-transparent text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300"}`}
             >
               Arquivo (7d)
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -428,19 +431,21 @@ export function InboxClient({ initialItems }: Props) {
                       Modo Admin ativado
                     </div>
                     <div className="flex items-center gap-3">
-                      <button
+                      <Button
                         onClick={handleIgnore}
                         disabled={isReplying}
-                        className="bg-white dark:bg-slate-900 text-stone-500 dark:text-slate-400 font-black uppercase tracking-wider py-3 px-6 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-1 active:border-b-2 transition-all disabled:opacity-50"
+                        variant="ghost"
+                        className="font-black uppercase tracking-wider py-3 px-6 rounded-2xl"
                       >
                         Ignorar / Arquivar
-                      </button>
+                      </Button>
 
                       {replyText.trim().length > 0 ? (
-                        <button
+                        <Button
                           onClick={handleSendReply}
                           disabled={isReplying}
-                          className="bg-[#1CB0F6] text-white border-2 border-[#1899D6] border-b-6 rounded-2xl px-6 py-3 font-black uppercase tracking-wider active:translate-y-1 active:border-b-2 hover:bg-[#1fbffc] flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all"
+                          variant="secondary"
+                          className="rounded-2xl px-6 py-3 font-black uppercase tracking-wider flex items-center gap-2"
                         >
                           {isReplying ? (
                             <Loader2 className="w-5 h-5 animate-spin" />
@@ -448,16 +453,17 @@ export function InboxClient({ initialItems }: Props) {
                             <Rocket strokeWidth={3} className="h-5 w-5" />
                           )}
                           Enviar Resposta
-                        </button>
+                        </Button>
                       ) : (
-                        <button
+                        <Button
                           onClick={handleResolve}
                           disabled={isReplying}
-                          className="bg-[#58CC02] text-white font-black uppercase tracking-widest py-3 px-6 rounded-2xl border-2 border-[#46a302] border-b-6 hover:bg-[#4eb801] active:translate-y-2 active:border-b-2 transition-all flex items-center gap-2 drop-shadow-sm disabled:opacity-50"
+                          variant="default"
+                          className="rounded-2xl px-6 py-3 font-black uppercase tracking-widest flex items-center gap-2"
                         >
                           <Check strokeWidth={4} className="h-5 w-5" />
                           Resolver S/ Resposta
-                        </button>
+                        </Button>
                       )}
                     </div>
                   </div>
@@ -473,10 +479,11 @@ export function InboxClient({ initialItems }: Props) {
                     </p>
                   </div>
 
-                  <button
+                  <Button
                     onClick={handleReopen}
                     disabled={isReplying}
-                    className="bg-white dark:bg-slate-900 text-stone-600 dark:text-slate-300 font-black uppercase tracking-widest py-3 px-8 rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-6 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-1 active:border-b-2 transition-all flex items-center gap-2 disabled:opacity-50"
+                    variant="outline"
+                    className="font-black uppercase tracking-widest py-3 px-8 rounded-2xl flex items-center gap-2"
                   >
                     {isReplying ? (
                       <Loader2 className="w-5 h-5 animate-spin" />
@@ -484,7 +491,7 @@ export function InboxClient({ initialItems }: Props) {
                       <Rocket strokeWidth={3} className="h-5 w-5 rotate-180" />
                     )}
                     Reabrir Item
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>

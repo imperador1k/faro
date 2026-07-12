@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { X, Send, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { askMarco } from "@/actions/marco-chat";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
@@ -278,9 +279,10 @@ export const FloatingMarco = () => {
           isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100",
         )}
       >
-        <button
+        <Button
+          variant="default"
           onClick={() => setIsOpen(true)}
-          className="pointer-events-auto w-16 h-16 bg-[#58CC02] rounded-full border-2 border-[#46A302] border-b-8 flex items-center justify-center text-white shadow-[0_10px_25px_rgba(88,204,2,0.4)] hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(88,204,2,0.5)] active:translate-y-2 active:border-b-0 active:shadow-none transition-all duration-200 group cursor-pointer relative"
+          className="pointer-events-auto w-16 h-16 rounded-full flex items-center justify-center shadow-[0_10px_25px_rgba(88,204,2,0.4)] hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(88,204,2,0.5)] transition-all duration-200 group cursor-pointer relative"
           aria-label={t("open_chat_aria")}
         >
           <svg
@@ -301,7 +303,7 @@ export const FloatingMarco = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF4B4B] opacity-75"></span>
             <span className="relative inline-flex rounded-full h-4 w-4 bg-[#FF4B4B] border-2 border-white shadow-sm"></span>
           </span>
-        </button>
+        </Button>
       </div>
       <div
         className={cn(
@@ -327,12 +329,13 @@ export const FloatingMarco = () => {
               MARCO <span className="text-xs opacity-80"></span>
             </div>
           </div>
-          <button
+          <Button
+            variant="ghost"
             onClick={() => setIsOpen(false)}
-            className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors active:scale-95 outline-none"
+            className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center"
           >
             <X className="w-6 h-6 text-white" />
-          </button>
+          </Button>
         </div>
         <div
           ref={scrollRef}
@@ -460,7 +463,8 @@ export const FloatingMarco = () => {
                         const content = children?.toString() || "";
                         if (!className && content.startsWith("/"))
                           return (
-                            <button
+                            <Button
+                              variant="ghost"
                               onClick={() => {
                                 const cmdObj = SLASH_COMMANDS.find(
                                   (c) => c.cmd === content,
@@ -478,10 +482,10 @@ export const FloatingMarco = () => {
                                   }
                                 }
                               }}
-                              className="bg-[#58CC02]/10 text-[#58CC02] font-extrabold px-1.5 py-0.5 mx-0.5 rounded-md border border-[#58CC02]/20 hover:bg-[#58CC02]/20 cursor-pointer transition-colors shadow-sm inline-flex items-center align-baseline"
+                              className="bg-[#58CC02]/10 text-[#58CC02] font-extrabold px-1.5 py-0.5 mx-0.5 rounded-md border border-[#58CC02]/20 hover:bg-[#58CC02]/20 shadow-sm inline-flex items-center align-baseline h-auto"
                             >
                               {content}
-                            </button>
+                            </Button>
                           );
                         return (
                           <code
@@ -528,21 +532,21 @@ export const FloatingMarco = () => {
           {debouncedInput === "/" && (
             <div className="absolute bottom-full left-4 mb-2 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-2xl shadow-xl overflow-hidden z-30 w-64 animate-in slide-in-from-bottom-2 fade-in">
               {SLASH_COMMANDS.map((cmd) => (
-                <button
-                  key={cmd.cmd}
+                <Button
+                  variant="ghost"
                   onClick={() => handleCommandClick(cmd)}
-                  className="flex items-center gap-3 p-3 hover:bg-stone-50 dark:hover:bg-slate-800 text-left w-full transition-colors border-b-2 border-stone-100 dark:border-slate-700 last:border-0 outline-none"
+                  className="flex items-center gap-3 p-3 justify-start w-full border-b-2 border-stone-100 dark:border-slate-700 last:border-0"
                 >
                   <span className="text-xl">{cmd.icon}</span>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col items-start">
                     <span className="font-extrabold text-stone-700 dark:text-slate-200">
                       {cmd.cmd}
                     </span>
-                    <span className="text-stone-400 dark:text-slate-500 dark:text-slate-400 font-bold text-xs">
+                    <span className="text-stone-400 dark:text-slate-500 font-bold text-xs">
                       {cmd.desc}
                     </span>
                   </div>
-                </button>
+                </Button>
               ))}
             </div>
           )}
@@ -558,22 +562,18 @@ export const FloatingMarco = () => {
                 className="marco-rich-input w-full min-h-[48px] max-h-[120px] overflow-y-auto bg-stone-100 dark:bg-slate-800 border-2 border-stone-200 dark:border-slate-700 border-b-4 rounded-2xl px-4 py-3 text-stone-700 dark:text-slate-200 font-bold focus:outline-none focus:border-[#58CC02] focus:ring-4 focus:ring-[#58CC02]/20 focus:bg-white dark:focus:bg-slate-900 transition-all pr-12 cursor-text"
               ></div>
             </div>
-            <button
+            <Button
+              variant={!isEmpty && !isLoading ? "default" : "locked"}
               onClick={() => handleSend()}
               disabled={isEmpty || isLoading}
-              className={cn(
-                "w-12 h-12 rounded-full flex items-center justify-center transition-all outline-none shrink-0",
-                !isEmpty && !isLoading
-                  ? "bg-[#58CC02] border-2 border-[#46A302] border-b-4 text-white active:translate-y-1 active:border-b-0 shadow-sm"
-                  : "bg-stone-200 dark:bg-slate-700 border-2 border-stone-300 dark:border-slate-700 border-b-4 text-stone-400 dark:text-slate-500 dark:text-slate-400 cursor-not-allowed",
-              )}
+              className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
             >
               {isLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
                 <Send className="w-5 h-5 ml-1" />
               )}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

@@ -70,11 +70,12 @@ export const LessonFooter = ({
       <div className="max-w-5xl mx-auto px-4 py-4 sm:py-6 w-full">
         {status === "none" && (
           <div className="flex items-center justify-between w-full">
-            <button
+            <Button
+              variant="ghost"
               onClick={onSkip}
               disabled={!canSkip}
               className={cn(
-                "hidden sm:block uppercase font-bold transition-colors tracking-widest text-sm px-5 py-3 rounded-xl leading-none",
+                "hidden sm:block uppercase font-bold tracking-widest text-sm px-5 py-3 rounded-xl leading-none",
                 !canSkip
                   ? "text-stone-300 cursor-not-allowed opacity-50 bg-stone-50 dark:bg-slate-950"
                   : "text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-stone-500 dark:text-slate-400",
@@ -89,19 +90,19 @@ export const LessonFooter = ({
                     </span>
                   )}
               </div>
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="default"
               onClick={onCheck}
               disabled={isDisabled || isPending}
               className={cn(
-                "uppercase font-extrabold text-base tracking-widest px-10 py-3 rounded-2xl w-full sm:w-auto transition-all",
-                isDisabled || isPending
-                  ? "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-none cursor-not-allowed"
-                  : "bg-[#58CC02] border-b-4 border-[#46a302] text-white active:translate-y-1 active:border-b-0 shadow-sm",
+                "uppercase font-extrabold text-base tracking-widest px-10 py-3 rounded-2xl w-full sm:w-auto",
+                (isDisabled || isPending) &&
+                  "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-400 border-none shadow-none opacity-100",
               )}
             >
               {t("check")}
-            </button>
+            </Button>
           </div>
         )}
 
@@ -120,7 +121,9 @@ export const LessonFooter = ({
                     <p className="text-sm text-green-700 max-w-[300px] truncate">
                       {currentChallenge.explanation}
                     </p>
-                    <button
+                    <Button
+                      variant="ghost"
+                      size="icon"
                       onClick={() =>
                         playMixedSpeech(
                           currentChallenge.explanation as string,
@@ -128,21 +131,22 @@ export const LessonFooter = ({
                           languageCode,
                         )
                       }
-                      className="shrink-0 rounded-full w-6 h-6 flex items-center justify-center bg-white dark:bg-slate-900 text-green-500 hover:bg-green-50 shadow-sm"
+                      className="shrink-0 rounded-full w-6 h-6 bg-white dark:bg-slate-900 text-green-500 hover:bg-green-50 shadow-sm"
                     >
                       <Volume2 className="h-3 w-3" />
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>
             </div>
-            <button
+            <Button
+              variant="default"
               onClick={onContinue}
               disabled={isPending}
-              className="bg-[#58CC02] border-b-4 border-[#46a302] text-white uppercase font-extrabold text-base tracking-widest px-10 py-3.5 rounded-2xl w-full sm:w-auto transition-all active:translate-y-1 active:border-b-0 shadow-sm shrink-0"
+              className="uppercase font-extrabold text-base tracking-widest px-10 py-3.5 rounded-2xl w-full sm:w-auto shrink-0"
             >
               {t("continue")}
-            </button>
+            </Button>
           </div>
         )}
 
@@ -187,13 +191,14 @@ export const LessonFooter = ({
                   }
                 />
               )}
-              <button
+              <Button
+                variant="destructive"
                 onClick={onContinue}
                 disabled={isPending}
-                className="w-full md:w-auto md:min-w-[150px] shrink-0 bg-[#ff4b4b] text-white border-b-4 border-[#ea2b2b] hover:bg-[#ff5f5f] active:border-b-0 active:translate-y-1 py-3 px-6 rounded-2xl font-bold uppercase tracking-widest transition-all shadow-sm"
+                className="w-full md:w-auto md:min-w-[150px] shrink-0 uppercase font-bold tracking-widest py-3 px-6 rounded-2xl"
               >
                 {hearts === 0 ? t("finish") : t("continue")}
-              </button>
+              </Button>
             </div>
           </div>
         )}

@@ -70,7 +70,7 @@ const MOTIVATIONS = [
     // description: "Um objetivo diferente", // Will be replaced by t()
     icon: <MoreHorizontal className="w-6 h-6 sm:w-8 sm:h-8" />,
     color: "bg-gray-100",
-    accent: "text-gray-600",
+    accent: "text-gray-600 dark:text-gray-300",
   },
 ] as const;
 
@@ -120,7 +120,7 @@ export const StepMotivation = () => {
       </div>
 
       <div className="text-center md:text-left w-full space-y-2 px-2">
-        <h1 className="text-3xl font-black text-[#042c60] tracking-tight">
+        <h1 className="text-3xl font-black text-[#042c60] dark:text-white tracking-tight">
           {t.rich("step_motivation_title", {
             span: (chunks) => (
               <span className="text-sky-500 underline decoration-sky-100">
@@ -129,7 +129,7 @@ export const StepMotivation = () => {
             ),
           })}
         </h1>
-        <p className="text-gray-500 font-bold text-lg">
+        <p className="text-gray-500 dark:text-gray-300 font-bold text-lg">
           {t("step_motivation_subtitle")}
         </p>
       </div>
@@ -167,11 +167,11 @@ export const StepMotivation = () => {
 
               <div className="flex flex-col flex-1">
                 <span
-                  className={`font-black text-lg sm:text-xl leading-none mb-1 ${isSelected ? "text-[#58cc02]" : "text-[#042c60]"}`}
+                  className={`font-black text-lg sm:text-xl leading-none mb-1 ${isSelected ? "text-[#58cc02]" : "text-[#042c60] dark:text-white"}`}
                 >
                   {t(`motivation_${itemObj.id}_title`)}
                 </span>
-                <span className="text-sm font-bold text-gray-400 line-clamp-1">
+                <span className="text-sm font-bold text-gray-400 dark:text-slate-400 line-clamp-1">
                   {t(`motivation_${itemObj.id}_description`)}
                 </span>
               </div>
@@ -190,7 +190,7 @@ export const StepMotivation = () => {
         })}
       </motion.div>
 
-      <p className="text-gray-400 font-bold text-sm italic pt-4">
+      <p className="text-gray-400 dark:text-slate-400 font-bold text-sm italic pt-4">
         {t("step_motivation_footer_note")}
       </p>
     </div>

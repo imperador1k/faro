@@ -6,6 +6,7 @@ import { useState, useEffect, useTransition } from "react";
 import Image from "next/image";
 import { onSearchUsers } from "@/actions/user-actions";
 import { Search, Loader2, Users, UserPlus, BadgeCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { CreateGroupModal } from "@/components/modals/create-group-modal";
 import { NewChatModal } from "@/components/modals/new-chat-modal";
 import { useGlobalPresence } from "@/components/providers/global-presence-provider";
@@ -317,19 +318,21 @@ export const ChatSidebar = ({ conversations }: Props) => {
         </h1>
 
         <div className="flex gap-3">
-          <button
+          <Button
             onClick={() => setIsNewChatModalOpen(true)}
-            className="flex-1 bg-[#58CC02] hover:bg-[#4eb801] active:translate-y-1 active:border-b-0 text-white font-black text-sm uppercase tracking-widest py-3 rounded-xl border-b-4 border-[#46a302] transition-all flex items-center justify-center gap-2 shadow-sm"
+            variant="default"
+            className="flex-1 font-black text-sm uppercase tracking-widest py-3 rounded-xl flex items-center justify-center gap-2"
           >
             <UserPlus className="w-4 h-4" />
             {t("new_message")}
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => setIsGroupModalOpen(true)}
-            className="bg-white dark:bg-slate-900 text-[#1CB0F6] border-2 border-blue-200 border-b-4 rounded-xl px-4 flex items-center justify-center hover:bg-blue-50 active:translate-y-1 active:border-b-0 transition-all shadow-sm"
+            variant="outline"
+            className="rounded-xl px-4 flex items-center justify-center"
           >
             <Users className="w-5 h-5" />
-          </button>
+          </Button>
         </div>
 
         <div className="relative">

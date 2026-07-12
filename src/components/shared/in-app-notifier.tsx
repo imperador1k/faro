@@ -7,6 +7,7 @@ import { usePreferencesStore } from "@/store/use-preferences-store";
 import { onGetLatestUnreadNotification, onMarkNotificationAsRead } from "@/actions/user-actions";
 import { Bell, X, MessageSquare, UserPlus, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 type NotificationType = {
   id: number;
@@ -131,12 +132,13 @@ export const InAppNotifier = () => {
               </p>
             </div>
 
-            <button 
+            <Button
+              variant="ghost"
               onClick={handleDismiss}
-              className="p-1.5 hover:bg-stone-100 dark:hover:bg-slate-800 rounded-full transition-colors shrink-0 text-stone-400 hover:text-stone-600 dark:hover:text-slate-200 ml-2"
+              className="p-1.5 rounded-full shrink-0 ml-2"
             >
               <X className="w-5 h-5" />
-            </button>
+            </Button>
           </div>
         </motion.div>
       )}

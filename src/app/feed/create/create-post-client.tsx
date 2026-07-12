@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { createUserPost } from "@/actions/create-post";
+import { Button } from "@/components/ui/button";
 import { Upload, X, Send, Image as ImageIcon, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
@@ -94,12 +95,13 @@ export const CreatePostClient = () => {
   return (
     <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-10 shadow-xl border-2 border-stone-200 dark:border-slate-800">
       <div className="mb-8 flex items-start gap-4">
-        <button
+        <Button
+          variant="ghost"
           onClick={() => router.back()}
-          className="p-3 bg-stone-100 dark:bg-slate-800 rounded-2xl hover:bg-stone-200 dark:hover:bg-slate-700 transition-all active:scale-95 shrink-0"
+          className="p-3 rounded-2xl bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 shrink-0"
         >
           <ChevronLeft className="w-6 h-6 text-slate-700 dark:text-slate-300" />
-        </button>
+        </Button>
         <div>
           <h1 className="text-3xl font-black text-slate-800 dark:text-white">
             {t("create_new_curiosity_title")}
@@ -139,33 +141,36 @@ export const CreatePostClient = () => {
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-x-4 backdrop-blur-sm">
-                <button
+                <Button
                   type="button"
+                  variant="outline"
                   onClick={() => fileInputRef.current?.click()}
-                  className="bg-white text-slate-900 px-4 py-2 rounded-xl font-bold text-sm hover:scale-105 transition-transform"
+                  className="bg-white text-slate-900 px-4 py-2 rounded-xl text-sm hover:scale-105"
                 >
                   {t("change_image_button")}
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
+                  variant="destructive"
                   onClick={() => setImageBase64(null)}
-                  className="bg-rose-500 text-white px-4 py-2 rounded-xl font-bold text-sm hover:scale-105 transition-transform"
+                  className="px-4 py-2 rounded-xl text-sm hover:scale-105"
                 >
                   {t("remove_image_button")}
-                </button>
+                </Button>
               </div>
             </div>
           ) : (
-            <button
+            <Button
               type="button"
+              variant="outline"
               onClick={() => fileInputRef.current?.click()}
-              className="w-full h-48 md:h-64 rounded-2xl border-4 border-dashed border-stone-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 transition-colors flex flex-col items-center justify-center gap-y-4 text-slate-400 hover:text-sky-500 bg-stone-50 dark:bg-slate-800/50"
+              className="w-full h-48 md:h-64 rounded-2xl border-4 border-dashed border-stone-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 flex flex-col items-center justify-center gap-y-4 text-slate-400 hover:text-sky-500 bg-stone-50 dark:bg-slate-800/50"
             >
               <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-full shadow-sm flex items-center justify-center">
                 <Upload className="w-8 h-8" />
               </div>
               <span className="font-bold">{t("upload_image_placeholder")}</span>
-            </button>
+            </Button>
           )}
         </div>
 
@@ -214,13 +219,14 @@ export const CreatePostClient = () => {
           </div>
         </div>
 
-        <button
+        <Button
           type="submit"
+          variant="default"
           disabled={isSubmitting}
-          className="w-full mt-4 bg-[#1CB0F6] hover:bg-[#1899D6] active:bg-[#1582B7] text-white px-8 py-5 rounded-2xl font-black uppercase tracking-wider transition-all border-b-4 border-[#0092d6] active:border-b-0 active:translate-y-[4px] disabled:opacity-50 flex items-center justify-center gap-x-2"
+          className="w-full mt-4 px-8 py-5 rounded-2xl flex items-center justify-center gap-x-2"
         >
           {isSubmitting ? t("submitting_button_text") : t("submit_button_text")}
-        </button>
+        </Button>
       </form>
     </div>
   );

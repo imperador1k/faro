@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   isOpen: boolean;
@@ -47,12 +48,13 @@ export const QrScannerModal = ({ isOpen, onClose, onScan }: Props) => {
         <div className="flex flex-col items-center">
           <QrScanner onScan={handleScanResult} />
 
-          <button
+          <Button
+            variant="ghost"
             onClick={onClose}
-            className="mt-8 bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-black px-8 py-3 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-4 active:translate-y-1 active:border-b-2 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 uppercase w-full max-w-sm transition-all"
+            className="mt-8 bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-black px-8 py-3 rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 uppercase w-full max-w-sm"
           >
             {t("cancel")}
-          </button>
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

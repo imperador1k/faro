@@ -279,15 +279,17 @@ const OverlayContent = ({
       <h4 className="text-2xl font-black text-slate-800 tracking-tight">
         {word}
       </h4>
-      <button
+      <Button
+        variant="ghost"
+        size="icon"
         onClick={(e) => {
           e.stopPropagation();
           onClose();
         }}
-        className="p-1.5 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors"
+        className="p-1.5 rounded-full"
       >
         <X className="h-4 w-4" />
-      </button>
+      </Button>
     </div>
 
     {isLoading ? (

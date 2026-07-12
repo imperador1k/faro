@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const CAROUSEL_ITEMS = [
   {
@@ -91,10 +92,11 @@ export function AnimatedCarousel() {
       {/* Progress Dots */}
       <div className="absolute bottom-12 flex gap-3 z-20">
         {CAROUSEL_ITEMS.map((item, idx) => (
-          <button
+          <Button
             key={item.id}
+            variant="ghost"
             onClick={() => setCurrentIndex(idx)}
-            className={`h-2 rounded-full transition-all duration-300 ${
+            className={`h-2 rounded-full p-0 transition-all duration-300 ${
               idx === currentIndex
                 ? "w-8 bg-white"
                 : "w-2 bg-white/30 hover:bg-white/50"

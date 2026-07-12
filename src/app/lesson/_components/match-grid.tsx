@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 type ChallengeOption = {
   id: number;
@@ -38,12 +39,13 @@ export const MatchGrid = ({
           const isWrongFlash = wrongMatchFlash.includes(opt.id);
 
           return (
-            <button
+            <Button
               key={opt.id}
+              variant="outline"
               onClick={() => onSelect(opt.id)}
               disabled={isMatched}
               className={cn(
-                "p-4 min-h-[70px] rounded-2xl border-2 border-b-[5px] text-lg font-bold text-center transition-all duration-200 outline-none cursor-pointer",
+                "p-4 min-h-[70px] rounded-2xl text-lg font-bold text-center",
                 !isSelected &&
                   !isMatched &&
                   !isWrongFlash &&
@@ -58,7 +60,7 @@ export const MatchGrid = ({
               )}
             >
               {opt.text}
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -73,12 +75,13 @@ export const MatchGrid = ({
           const isWrongFlash = wrongMatchFlash.includes(opt.id);
 
           return (
-            <button
+            <Button
               key={opt.id}
+              variant="outline"
               onClick={() => onSelect(opt.id)}
               disabled={isMatched}
               className={cn(
-                "p-4 min-h-[70px] rounded-2xl border-2 border-b-[5px] text-lg font-bold text-center transition-all duration-200 outline-none cursor-pointer",
+                "p-4 min-h-[70px] rounded-2xl text-lg font-bold text-center",
                 !isSelected &&
                   !isMatched &&
                   !isWrongFlash &&
@@ -93,7 +96,7 @@ export const MatchGrid = ({
               )}
             >
               {opt.text}
-            </button>
+            </Button>
           );
         })}
       </div>

@@ -7,6 +7,7 @@ import { generateSalt, encryptPrivateKeyWithPIN } from "@/lib/crypto";
 import localforage from "localforage";
 import { toast } from "sonner";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
 export function E2ESettings() {
@@ -92,24 +93,27 @@ export function E2ESettings() {
               </p>
             </div>
           </div>
-          <button
+          <Button
             onClick={() => setShowInfo(true)}
-            className="w-full sm:w-auto h-12 px-5 rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-black uppercase tracking-wider border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 active:border-b-0 active:translate-y-1 transition-all flex justify-center items-center gap-2 shrink-0"
+            variant="ghost"
+            className="w-full sm:w-auto h-12 px-5 rounded-xl font-black uppercase tracking-wider flex justify-center items-center gap-2 shrink-0"
           >
             <Info className="w-5 h-5" />
             {t("what_is_pin_button")}
-          </button>
+          </Button>
         </div>
 
         <Dialog open={showInfo} onOpenChange={setShowInfo}>
           <DialogContent className="z-modal max-w-md p-0 overflow-hidden border-none bg-transparent shadow-none [&>button]:hidden">
             <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2rem] shadow-2xl p-6 md:p-8 max-w-md w-full">
-              <button
+              <Button
                 onClick={() => setShowInfo(false)}
-                className="absolute right-4 top-4 h-10 w-10 flex items-center justify-center rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-50 dark:bg-slate-950 active:translate-y-1 active:border-b-0 transition-all text-stone-400 dark:text-slate-500 dark:text-slate-400"
+                variant="ghost"
+                size="icon"
+                className="absolute right-4 top-4 h-10 w-10 rounded-xl bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800"
               >
                 <X className="w-5 h-5" />
-              </button>
+              </Button>
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-3 bg-sky-50 border-2 border-sky-100 text-[#1CB0F6] rounded-2xl shrink-0">
                   <Info className="w-6 h-6" />
@@ -123,12 +127,13 @@ export function E2ESettings() {
                   b: (chunks) => <b>{chunks}</b>,
                 })}
               </p>
-              <button
+              <Button
                 onClick={() => setShowInfo(false)}
-                className="w-full h-12 px-6 rounded-xl bg-[#1CB0F6] text-white font-black uppercase tracking-wider border-2 border-[#1899D6] border-b-4 active:border-b-0 active:translate-y-1 transition-all"
+                variant="secondary"
+                className="w-full h-12 px-6 rounded-xl font-black uppercase tracking-wider"
               >
                 {t("understood_button")}
-              </button>
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -150,20 +155,22 @@ export function E2ESettings() {
                 disabled={loading}
               />
               <div className="flex gap-2 w-full sm:w-auto">
-                <button
+                <Button
                   onClick={handleChangePin}
                   disabled={loading || newPin.length < 4}
-                  className="w-full sm:w-auto h-12 px-6 rounded-xl bg-emerald-500 text-white font-black uppercase tracking-wider border-2 border-emerald-600 border-b-4 active:border-b-0 active:translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+                  variant="default"
+                  className="w-full sm:w-auto h-12 px-6 rounded-xl font-black uppercase tracking-wider shrink-0"
                 >
                   {loading ? t("saving_status") : t("confirm_button")}
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => setIsChanging(false)}
                   disabled={loading}
-                  className="w-full sm:w-auto h-12 px-6 rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-black uppercase tracking-wider border-2 border-stone-200 dark:border-slate-800 border-b-4 active:border-b-0 active:translate-y-1 transition-all shrink-0"
+                  variant="ghost"
+                  className="w-full sm:w-auto h-12 px-6 rounded-xl font-black uppercase tracking-wider shrink-0"
                 >
                   {t("cancel_button")}
-                </button>
+                </Button>
               </div>
             </div>
             <p className="text-xs font-bold text-stone-400 dark:text-slate-500 dark:text-slate-400">
@@ -172,13 +179,14 @@ export function E2ESettings() {
           </div>
         ) : (
           <div className="flex justify-start">
-            <button
+            <Button
               onClick={() => setIsChanging(true)}
-              className="w-full sm:w-auto h-12 px-6 rounded-xl bg-sky-500 text-white font-black uppercase tracking-wider border-2 border-sky-600 border-b-4 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center gap-2"
+              variant="secondary"
+              className="w-full sm:w-auto h-12 px-6 rounded-xl font-black uppercase tracking-wider flex items-center justify-center gap-2"
             >
               <Lock className="w-5 h-5" />
               {t("change_pin_button")}
-            </button>
+            </Button>
           </div>
         )}
       </div>

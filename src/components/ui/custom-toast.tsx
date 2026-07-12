@@ -11,6 +11,7 @@ import {
 } from "react";
 import { CheckCircle2, X, AlertCircle, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 type ToastVariant = "default" | "success" | "error";
 
@@ -114,12 +115,13 @@ export function CustomToastProvider({ children }: { children: ReactNode }) {
           <p className="flex-1 font-bold text-slate-700 dark:text-slate-200">
             {state.message}
           </p>
-          <button
+          <Button
+            variant="ghost"
             onClick={() => setState((prev) => ({ ...prev, isOpen: false }))}
-            className="p-1 -mr-2 text-slate-400 hover:text-rose-500 transition-colors"
+            className="p-1 -mr-2"
           >
             <X className="w-5 h-5" />
-          </button>
+          </Button>
         </div>
       </div>
     </ToastContext.Provider>

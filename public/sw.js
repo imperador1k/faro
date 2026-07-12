@@ -95,7 +95,11 @@ async function notifyClients(type, data) {
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE.STATIC).then((cache) => {
-      return cache.addAll(["/offline.html", "/duo_crying.png"]);
+      return cache.addAll([
+        "/offline.html",
+        "/star_angry.json",
+        "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"
+      ]);
     }).then(() => self.skipWaiting())
   );
 });

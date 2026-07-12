@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-
+import { Button } from "@/components/ui/button";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
@@ -334,12 +334,13 @@ export const FriendsClient = ({
               className="bg-white dark:bg-slate-900 rounded-3xl p-8 max-w-sm w-full flex flex-col items-center relative animate-in zoom-in-95 fade-in duration-300 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => setIsQrModalOpen(false)}
-                className="absolute top-4 right-4 p-2 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 rounded-full transition-colors"
+                className="absolute top-4 right-4 p-2 rounded-full bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-slate-700"
               >
                 <X className="w-6 h-6" />
-              </button>
+              </Button>
               <h2 className="text-2xl font-black text-stone-800 dark:text-slate-100 mb-6 mt-2 text-center">
                 {t("secret_id")}
               </h2>
@@ -354,12 +355,13 @@ export const FriendsClient = ({
               <p className="text-stone-500 dark:text-slate-400 font-bold text-center mt-6 leading-relaxed">
                 {t("show_code_desc")}
               </p>
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => setIsQrModalOpen(false)}
-                className="mt-6 w-full py-4 bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 font-black rounded-xl border-b-4 border-stone-200 dark:border-slate-800 active:translate-y-1 active:border-b-0 transition-all uppercase tracking-wide"
+                className="mt-6 w-full py-4 rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-600 dark:text-slate-300 border-b-4 border-stone-200 dark:border-slate-800 uppercase tracking-wide"
               >
                 {t("close")}
-              </button>
+              </Button>
             </div>
           </div>,
           document.body,
@@ -379,20 +381,21 @@ export const FriendsClient = ({
           { id: "friends", label: t("tabs.friends") },
           { id: "search", label: t("tabs.add") },
         ].map((tab) => (
-          <button
+          <Button
             key={tab.id}
+            variant="ghost"
             onClick={() =>
               setActiveTab(tab.id as "feed" | "friends" | "search")
             }
             className={cn(
-              "flex-1 text-center py-2 px-4 whitespace-nowrap transition-all rounded-xl",
+              "flex-1 py-2 px-4 whitespace-nowrap rounded-xl",
               activeTab === tab.id
                 ? "bg-white dark:bg-slate-900 shadow-[0_2px_10px_rgba(0,0,0,0.1)] font-black text-[#1CB0F6]"
-                : "font-bold text-stone-500 dark:text-slate-400 hover:text-stone-700 dark:text-slate-200 cursor-pointer",
+                : "font-bold text-stone-500 dark:text-slate-400 hover:text-stone-700 dark:text-slate-200",
             )}
           >
             {tab.label}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -448,14 +451,15 @@ export const FriendsClient = ({
                       </div>
                     </div>
                   </div>
-                  <button
+                  <Button
+                    variant={activity.hasHighFived ? "ghost" : "outline"}
                     onClick={() => handleHighFive(activity.id)}
                     disabled={isPending}
                     className={cn(
-                      "shrink-0 w-full sm:w-auto border-2 border-b-4 rounded-xl px-5 py-3 font-extrabold transition-all flex gap-2 items-center justify-center cursor-pointer",
+                      "shrink-0 w-full sm:w-auto px-5 py-3 rounded-xl flex gap-2 items-center justify-center",
                       activity.hasHighFived
-                        ? "bg-green-100 text-green-500 border-green-200 border-b-2 translate-y-0.5"
-                        : "bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-stone-200 dark:border-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-500 dark:text-slate-400 active:translate-y-1 active:border-b-2",
+                        ? "bg-green-100 text-green-500 border-green-200 translate-y-0.5"
+                        : "bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 border-stone-200 dark:border-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 hover:text-stone-500",
                     )}
                   >
                     {isPending ? (
@@ -466,7 +470,7 @@ export const FriendsClient = ({
                     {activity.hasHighFived
                       ? t("already_highfived")
                       : t("give_highfive")}
-                  </button>
+                  </Button>
                 </div>
               );
             })
@@ -528,25 +532,27 @@ export const FriendsClient = ({
                   maxLength={9}
                 />
                 <div className="flex gap-2">
-                  <button
+                  <Button
+                    variant="secondary"
                     onClick={handleFollowByCode}
                     disabled={isSubmittingCode}
-                    className="flex-1 bg-[#1CB0F6] text-white font-black text-lg px-4 sm:px-8 py-4 rounded-xl border-b-4 border-[#1899D6] active:translate-y-1 active:border-b-0 uppercase transition-all shadow-sm flex items-center justify-center gap-2"
+                    className="flex-1 text-lg px-4 sm:px-8 py-4 rounded-xl uppercase flex items-center justify-center gap-2"
                   >
                     {isSubmittingCode && (
                       <Loader2 className="w-5 h-5 animate-spin" />
                     )}
                     {t("add_button")}
-                  </button>
+                  </Button>
 
                   {/* Action button to open Scanner */}
-                  <button
+                  <Button
+                    variant="outline"
                     onClick={() => setIsScannerOpen(true)}
-                    className="bg-white dark:bg-slate-900 text-[#1CB0F6] shrink-0 font-black px-4 sm:px-6 py-4 rounded-xl border-2 border-blue-200 dark:border-sky-900 border-b-4 active:translate-y-1 active:border-b-2 hover:bg-blue-50 dark:hover:bg-sky-900 transition-all shadow-sm flex items-center justify-center"
+                    className="shrink-0 text-[#1CB0F6] px-4 sm:px-6 py-4 rounded-xl border-2 border-blue-200 dark:border-sky-900 flex items-center justify-center"
                     aria-label="Abrir câmara"
                   >
                     <Camera className="w-6 h-6" />
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -572,18 +578,20 @@ export const FriendsClient = ({
               </div>
 
               <div className="flex gap-3 w-full">
-                <button
+                <Button
+                  variant="outline"
                   onClick={handleCopy}
-                  className="flex-1 flex items-center justify-center gap-2 bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 font-extrabold uppercase rounded-xl border-2 border-stone-200 dark:border-slate-800 border-b-4 py-3 active:translate-y-1 active:border-b-2 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-600 dark:text-slate-300 transition-all text-sm"
+                  className="flex-1 justify-center gap-2 uppercase rounded-xl py-3 text-sm"
                 >
                   <Copy className="w-4 h-4" /> {t("copy")}
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="default"
                   onClick={handleShare}
-                  className="flex-1 flex items-center justify-center gap-2 bg-[#58CC02] text-white font-extrabold uppercase rounded-xl border-2 border-[#58AA02] border-b-4 py-3 active:translate-y-1 active:border-b-2 hover:bg-[#46A302] transition-all text-sm"
+                  className="flex-1 justify-center gap-2 uppercase rounded-xl py-3 text-sm"
                 >
                   <Share2 className="w-4 h-4" /> {t("share")}
-                </button>
+                </Button>
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Check, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { onSelectCourse } from "@/actions/user-progress";
 import { updateCourseDetails } from "@/actions/courses";
 import { toast } from "sonner";
@@ -203,8 +204,9 @@ export const CoursesList = ({ courses, activeCourseId }: Props) => {
                 const isActive = activeCourseId === course.id;
 
                 return (
-                  <button
+                  <Button
                     key={course.id}
+                    variant={isSelected || isActive ? "default" : "secondary"}
                     onClick={() => handleSelect(course.id)}
                     disabled={isPending}
                     className={cn(
@@ -273,7 +275,7 @@ export const CoursesList = ({ courses, activeCourseId }: Props) => {
                         {isSelected || isActive ? t("selected") : t("start")}
                       </div>
                     </div>
-                  </button>
+                  </Button>
                 );
               })}
             </div>

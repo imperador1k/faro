@@ -42,12 +42,13 @@ export const PurchaseSuccessModal = ({
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-amber-200/30 to-transparent -z-10" />
         <div className="absolute -top-20 -left-20 w-64 h-64 bg-amber-200 rounded-full blur-3xl opacity-40 animate-pulse" />
 
-        <button
+        <Button
+          variant="ghost"
           onClick={onClose}
-          className="absolute right-8 top-8 p-2 text-stone-300 hover:text-stone-500 dark:text-slate-400 hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 rounded-xl transition-all active:scale-95"
+          className="absolute right-8 top-8 p-2 rounded-xl"
         >
           <X className="h-6 w-6" />
-        </button>
+        </Button>
 
         {/* Massive Gamified Icon Container */}
         <div
@@ -74,12 +75,13 @@ export const PurchaseSuccessModal = ({
         </p>
 
         <div className="flex flex-col w-full mt-auto">
-          <button
+          <Button
+            variant="default"
             onClick={onClose}
-            className="w-full h-16 md:h-20 bg-[#58cc02] text-white text-xl font-black rounded-2xl border-2 border-transparent border-b-8 border-b-[#46a302] hover:bg-[#61da02] active:border-b-0 active:translate-y-2 active:mb-[-8px] transition-all uppercase tracking-[0.1em] flex items-center justify-center gap-3 shadow-md"
+            className="w-full h-16 md:h-20 text-xl rounded-2xl uppercase tracking-[0.1em] shadow-md"
           >
             <span>{t("continue")}</span>
-          </button>
+          </Button>
           <p className="mt-6 text-xs font-black text-amber-500 uppercase tracking-widest animate-pulse">
             {t("inventory_updated")}
           </p>

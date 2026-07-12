@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Heart, Star } from "lucide-react";
 import { useReviewModal } from "@/store/use-review-modal-store";
+import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
 export const ReviewButtons = () => {
@@ -23,9 +24,10 @@ export const ReviewButtons = () => {
         </span>
       </Link>
 
-      <button
+      <Button
         onClick={openReviewModal}
-        className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-6 rounded-2xl p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all cursor-pointer group text-left w-full"
+        variant="default"
+        className="bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-2xl p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-md group text-left w-full h-auto"
       >
         <div className="h-10 w-10 bg-yellow-100 rounded-xl flex items-center justify-center shrink-0 border-b-2 border-yellow-200 group-hover:bg-yellow-400 transition-colors">
           <Star className="h-5 w-5 text-yellow-600 group-hover:text-white transition-colors" />
@@ -38,7 +40,7 @@ export const ReviewButtons = () => {
             {t("help_us_grow")}
           </span>
         </div>
-      </button>
+      </Button>
     </>
   );
 };

@@ -16,6 +16,7 @@ import {
   type WritingTopic,
   type GradeResult,
 } from "@/actions/evaluation";
+import { Button } from "@/components/ui/button";
 import {
   Loader2,
   ArrowLeft,
@@ -562,12 +563,13 @@ export default function EvaluationPage() {
               </Link>
 
               {/* Info Button in Sticky Header */}
-              <button
+              <Button
+                variant="outline"
                 onClick={() => setIsInfoModalOpen(true)}
-                className="w-12 h-12 sm:w-14 sm:h-14 bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-200 dark:border-slate-800 border-b-[6px] text-slate-400 dark:text-slate-500 hover:text-[#1CB0F6] hover:bg-slate-50 dark:hover:bg-slate-800 active:translate-y-1 active:border-b-[2px] transition-all flex items-center justify-center shadow-lg group"
+                className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg group"
               >
                 <Info className="h-6 w-6 sm:h-7 sm:w-7 stroke-[2.5]" />
-              </button>
+              </Button>
             </div>
 
             {/* Massive 3D Progress Bar System */}
@@ -760,12 +762,13 @@ export default function EvaluationPage() {
                       </div>
                     </div>
                     {/* Settings gear */}
-                    <button
+                    <Button
+                      variant="outline"
                       onClick={() => setIsInfoModalOpen(true)}
-                      className="w-12 h-12 bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 border-2 border-slate-200 dark:border-slate-800 border-b-4 rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-600 transition-all hover:scale-110 active:scale-95 active:border-b-0 active:translate-y-1"
+                      className="w-12 h-12 bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-600 hover:scale-110"
                     >
                       <Info className="w-5 h-5" />
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </motion.div>
@@ -1134,7 +1137,7 @@ export default function EvaluationPage() {
               )}
 
               {/* ── PILLAR 3: Tactical CTA ── */}
-              <motion.button
+              <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.62 }}
@@ -1156,19 +1159,22 @@ export default function EvaluationPage() {
                       ? 1
                       : 0.97,
                 }}
-                onClick={handleStartTest}
-                disabled={
-                  isLoading ||
-                  !languageLoaded ||
-                  statusLoading ||
-                  (evalStatus ? !evalStatus.canTakeTest : false)
-                }
-                className={cn(
-                  "w-full py-6 text-2xl font-black uppercase tracking-widest text-white rounded-[1.75rem] border-b-[8px] active:border-b-0 active:translate-y-2 transition-all flex items-center justify-center gap-4 shadow-lg relative overflow-hidden",
-                  isLoading ||
+              >
+                <Button
+                  variant="default"
+                  onClick={handleStartTest}
+                  disabled={
+                    isLoading ||
                     !languageLoaded ||
                     statusLoading ||
-                    (evalStatus && !evalStatus.canTakeTest)
+                    (evalStatus ? !evalStatus.canTakeTest : false)
+                  }
+                  className={cn(
+                    "w-full py-6 text-2xl rounded-[1.75rem] flex items-center justify-center gap-4 shadow-lg relative overflow-hidden",
+                    isLoading ||
+                      !languageLoaded ||
+                      statusLoading ||
+                      (evalStatus && !evalStatus.canTakeTest)
                     ? "bg-slate-200 border-slate-300 text-slate-400 cursor-not-allowed dark:bg-slate-800 dark:border-slate-700 dark:text-slate-500"
                     : "bg-gradient-to-b from-[#58CC02] to-[#46a302] border-[#378200] cursor-pointer shadow-[0_8px_32px_rgba(88,204,2,0.4)]",
                 )}
@@ -1194,7 +1200,8 @@ export default function EvaluationPage() {
                     <ChevronRight className="h-7 w-7 stroke-[3]" />
                   </>
                 )}
-              </motion.button>
+              </Button>
+              </motion.div>
             </motion.div>
           )}
 
@@ -1283,12 +1290,13 @@ export default function EvaluationPage() {
                   }
 
                   return (
-                    <button
+                    <Button
+                      variant="outline"
                       key={idx}
                       onClick={() => handleGrammarSelect(idx)}
                       disabled={showFeedback}
                       className={cn(
-                        "relative w-full p-5 sm:p-7 rounded-[2rem] border-2 text-left font-bold transition-all flex items-center gap-6 group outline-none",
+                        "relative w-full p-5 sm:p-7 rounded-[2rem] text-left flex items-center gap-6 group",
                         optionStyle,
                       )}
                     >
@@ -1315,7 +1323,7 @@ export default function EvaluationPage() {
                       {showFeedback && isSelected && !isCorrectOption && (
                         <XCircle className="h-7 w-7 shrink-0 text-red-500 absolute right-4 drop-shadow-md" />
                       )}
-                    </button>
+                    </Button>
                   );
                 })}
               </div>
@@ -1390,12 +1398,13 @@ export default function EvaluationPage() {
                   }
 
                   return (
-                    <button
+                    <Button
+                      variant="outline"
                       key={idx}
                       onClick={() => handleReadingSelect(idx)}
                       disabled={readingShowFeedback}
                       className={cn(
-                        "relative w-full p-5 sm:p-7 rounded-[2rem] border-2 text-left font-bold transition-all flex items-center gap-6 group outline-none",
+                        "relative w-full p-5 sm:p-7 rounded-[2rem] text-left flex items-center gap-6 group",
                         optionStyle,
                       )}
                     >
@@ -1426,7 +1435,7 @@ export default function EvaluationPage() {
                         !isCorrectOption && (
                           <XCircle className="h-7 w-7 shrink-0 text-red-500 absolute right-4 drop-shadow-md" />
                         )}
-                    </button>
+                    </Button>
                   );
                 })}
               </div>
@@ -1470,10 +1479,11 @@ export default function EvaluationPage() {
                       {t("tap_to_listen_instruction")}
                     </p>
                   </div>
-                  <button
+                  <Button
+                    variant="ghost"
                     onClick={handlePlayTTS}
                     className={cn(
-                      "p-4 rounded-full transition-all",
+                      "p-4 rounded-full",
                       isSpeaking
                         ? "bg-white/30 hover:bg-white/40 scale-110"
                         : "bg-white/20 hover:bg-white/30 hover:scale-105",
@@ -1484,7 +1494,7 @@ export default function EvaluationPage() {
                     ) : (
                       <Volume2 className="h-8 w-8" />
                     )}
-                  </button>
+                  </Button>
                 </div>
                 {isSpeaking && (
                   <div className="flex gap-1 mt-4 justify-center">
@@ -1535,12 +1545,13 @@ export default function EvaluationPage() {
                   }
 
                   return (
-                    <button
+                    <Button
+                      variant="outline"
                       key={idx}
                       onClick={() => handleListeningSelect(idx)}
                       disabled={listeningShowFeedback}
                       className={cn(
-                        "relative w-full p-5 sm:p-7 rounded-[2rem] border-2 text-left font-bold transition-all flex items-center gap-6 group outline-none",
+                        "relative w-full p-5 sm:p-7 rounded-[2rem] text-left flex items-center gap-6 group",
                         optionStyle,
                       )}
                     >
@@ -1571,7 +1582,7 @@ export default function EvaluationPage() {
                         !isCorrectOption && (
                           <XCircle className="h-7 w-7 shrink-0 text-red-500 absolute right-4 drop-shadow-md" />
                         )}
-                    </button>
+                    </Button>
                   );
                 })}
               </div>
@@ -1633,10 +1644,11 @@ export default function EvaluationPage() {
                 </div>
               </div>
 
-              <button
+              <Button
+                variant="super"
                 onClick={handleSubmitWriting}
                 disabled={!writingText.trim() || isLoading}
-                className="w-full py-4 px-6 bg-gradient-to-r from-amber-400 to-orange-500 text-white font-extrabold text-lg rounded-2xl shadow-lg shadow-amber-200 hover:shadow-xl hover:scale-[1.02] transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed border-b-4 border-amber-600 active:border-b-2"
+                className="w-full py-4 px-6 text-lg rounded-2xl shadow-lg shadow-amber-200 hover:shadow-xl hover:scale-[1.02] disabled:opacity-50"
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -1649,7 +1661,7 @@ export default function EvaluationPage() {
                     <ArrowRight className="h-5 w-5" />
                   </span>
                 )}
-              </button>
+              </Button>
             </div>
           )}
 
@@ -1906,7 +1918,8 @@ export default function EvaluationPage() {
           phase === "listening") && (
           <div className="fixed bottom-0 left-0 right-0 p-5 sm:p-8 pt-6 bg-white dark:bg-slate-900 border-t-2 border-slate-200 dark:border-slate-800 z-40 shadow-[0_-20px_30px_rgba(0,0,0,0.03)]">
             <div className="max-w-2xl mx-auto flex justify-center">
-              <button
+              <Button
+                variant={selectedOption !== null ? "default" : "locked"}
                 onClick={() => {
                   if (phase === "grammar") handleGrammarVerify();
                   else if (phase === "reading") handleReadingVerify();
@@ -1914,14 +1927,12 @@ export default function EvaluationPage() {
                 }}
                 disabled={selectedOption === null}
                 className={cn(
-                  "w-full py-5 rounded-[1.5rem] font-black text-white text-xl tracking-wider uppercase transition-all duration-150",
-                  selectedOption !== null
-                    ? "bg-[#58CC02] hover:bg-[#46a302] border-b-[8px] border-[#46a302] active:translate-y-[8px] active:border-b-0 shadow-sm"
-                    : "bg-[#E5E5E5] text-[#AFAFAF] border-b-[8px] border-[#d4d4d4] pointer-events-none",
+                  "w-full py-5 rounded-[1.5rem] text-xl tracking-wider uppercase",
+                  selectedOption === null && "bg-[#E5E5E5] text-[#AFAFAF] border-b-[8px] border-[#d4d4d4] pointer-events-none",
                 )}
               >
                 {t("verify")}
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -2006,20 +2017,18 @@ export default function EvaluationPage() {
                       </p>
                     </div>
                   </div>
-                  <button
+                  <Button
+                    variant={feedbackIsCorrect ? "default" : "destructive"}
                     onClick={handleContinue}
                     className={cn(
-                      "w-full sm:w-auto px-8 py-4 sm:py-5 rounded-2xl font-black text-xl text-white outline-none active:translate-y-[6px] active:border-b-0 uppercase tracking-widest transition-all shrink-0",
-                      feedbackIsCorrect
-                        ? "bg-[#58CC02] border-b-[6px] border-[#46a302]"
-                        : "bg-[#EA2B2B] border-b-[6px] border-[#cb2222]",
+                      "w-full sm:w-auto px-8 py-4 sm:py-5 rounded-2xl text-xl text-white uppercase tracking-widest shrink-0",
                     )}
                   >
                     Continuar{" "}
                     <span className="hidden sm:inline text-xs ml-1 opacity-70">
                       ↵
                     </span>
-                  </button>
+                  </Button>
                 </div>
 
                 {!feedbackIsCorrect && evalQuestion && (
@@ -2069,12 +2078,13 @@ export default function EvaluationPage() {
                     </p>
                   </div>
                 </div>
-                <button
+                <Button
+                  variant="ghost"
                   onClick={() => setIsInfoModalOpen(false)}
-                  className="w-10 h-10 rounded-xl hover:bg-slate-200 flex items-center justify-center text-slate-400 transition-colors"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400"
                 >
                   <XCircle className="w-6 h-6" />
-                </button>
+                </Button>
               </div>
 
               {/* Scrollable Content */}
@@ -2165,12 +2175,13 @@ export default function EvaluationPage() {
 
               {/* Footer */}
               <div className="p-8 bg-slate-50 dark:bg-slate-950 border-t-2 border-slate-100 dark:border-slate-800">
-                <button
+                <Button
+                  variant="default"
                   onClick={() => setIsInfoModalOpen(false)}
-                  className="w-full py-4 bg-[#58CC02] border-b-[6px] border-[#46a302] rounded-2xl text-white font-black text-lg hover:brightness-110 active:translate-y-1 active:border-b-0 transition-all"
+                  className="w-full py-4 rounded-2xl text-lg"
                 >
                   {t("understood")}
-                </button>
+                </Button>
               </div>
             </motion.div>
           </div>

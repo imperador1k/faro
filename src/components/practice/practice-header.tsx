@@ -7,6 +7,7 @@ import { HelpCircle, Bot, History } from "lucide-react";
 import Link from "next/link";
 import { PracticeInfoModal } from "@/components/modals/practice-info-modal";
 import { usePreferencesStore } from "@/store/use-preferences-store";
+import { Button } from "@/components/ui/button";
 
 export const PracticeHeader = () => {
   const t = useTranslations("practice");
@@ -39,12 +40,14 @@ export const PracticeHeader = () => {
         <div className="absolute inset-0 bg-[url('/img/pattern.svg')] opacity-10 mix-blend-overlay"></div>
 
         {/* Help Button */}
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setIsModalOpen(true)}
           className="absolute top-6 right-6 h-12 w-12 bg-white/20 hover:bg-white/30 text-white rounded-2xl flex items-center justify-center transition-all active:scale-95 z-20 border-2 border-white/20 backdrop-blur-sm shadow-sm"
         >
           <HelpCircle className="w-6 h-6" />
-        </button>
+        </Button>
 
         {/* History Button (moved to top left) */}
         <Link

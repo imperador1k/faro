@@ -73,13 +73,14 @@ export const VocabularyDashboard = ({
           href="/practice/vocabulary"
           className="w-full md:w-auto h-full block"
         >
-          <button
+          <Button
+            variant="secondary"
             className="w-full h-full min-h-[56px] md:w-auto flex items-center justify-center gap-3 font-black text-lg px-8 py-4 rounded-[20px] bg-[#1CB0F6] text-white border-2 border-transparent border-b-[6px] border-b-[#0092d6] shadow-sm hover:border-b-[4px] hover:translate-y-[2px] active:translate-y-[6px] active:border-b-0 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={initialWords.length === 0}
           >
             <Joystick className="w-6 h-6 border-2 border-white/20 rounded-full p-0.5" />
             {t("train_button")}
-          </button>
+          </Button>
         </Link>
       </div>
 
@@ -123,7 +124,7 @@ export const VocabularyDashboard = ({
           {/* Final massive train button at the bottom of the map */}
           <div className="mx-auto mt-8 w-full max-w-sm flex items-center justify-center">
             <Link href="/practice/vocabulary" className="w-full">
-              <button className="w-full flex flex-col items-center justify-center gap-1 font-black text-xl px-8 py-6 rounded-[32px] bg-amber-400 text-amber-900 border-2 border-transparent border-b-[8px] border-b-amber-600 shadow-xl hover:translate-y-[2px] hover:border-b-[6px] active:translate-y-[8px] active:border-b-0 transition-all hover:scale-105 active:scale-95 group">
+              <Button variant="super" className="w-full flex flex-col items-center justify-center gap-1 font-black text-xl px-8 py-6 rounded-[32px] bg-amber-400 text-amber-900 border-2 border-transparent border-b-[8px] border-b-amber-600 shadow-xl hover:translate-y-[2px] hover:border-b-[6px] active:translate-y-[8px] active:border-b-0 transition-all hover:scale-105 active:scale-95 group">
                 <span className="flex items-center gap-2 drop-shadow-sm">
                   <Swords className="w-6 h-6 animate-pulse" />
                   {t("dojo_button")}
@@ -131,7 +132,7 @@ export const VocabularyDashboard = ({
                 <span className="text-[11px] font-black text-amber-900/50 uppercase tracking-widest mt-1 group-hover:opacity-100 opacity-60 transition-opacity">
                   {t("dojo_subtitle")}
                 </span>
-              </button>
+              </Button>
             </Link>
           </div>
         </div>

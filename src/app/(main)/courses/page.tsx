@@ -5,6 +5,7 @@ import { BookOpen, Flame, Target, Trophy, Sparkles } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
 
@@ -102,12 +103,13 @@ async function CoursesData() {
 
               {/* Right: Giant Continuar Button */}
               <div className="shrink-0 mt-4 md:mt-0 w-full md:w-auto relative z-20">
-                <button
+                <Button
+                  variant="default"
                   className="w-full md:w-auto px-8 lg:px-12 py-4 rounded-2xl bg-[#58cc02] text-white font-black text-xl lg:text-2xl tracking-widest uppercase border-2 border-transparent border-b-[8px] flex items-center justify-center shadow-sm pointer-events-none"
                   style={{ borderBottomColor: "#46a302" }}
                 >
                   {t("continue_learning")}
-                </button>
+                </Button>
               </div>
             </div>
           </Link>

@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 type ChallengeOptionProps = {
   id: number;
@@ -25,11 +26,12 @@ export const ChallengeOptionCard = ({
   const t = useTranslations("lesson");
 
   return (
-    <button
+    <Button
+      variant="outline"
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "flex w-full cursor-pointer items-center gap-5 rounded-2xl border-2 border-b-[5px] p-5 transition-all outline-none",
+        "flex w-full cursor-pointer items-center gap-5 rounded-2xl border-2 border-b-[5px] p-5",
         !selected &&
           status === "none" &&
           !disabled &&
@@ -75,6 +77,6 @@ export const ChallengeOptionCard = ({
       >
         {text}
       </span>
-    </button>
+    </Button>
   );
 };

@@ -7,6 +7,7 @@ import { getDocsArticles } from "@/constants/docs";
 import * as LucideIcons from "lucide-react";
 import DOMPurify from "dompurify";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 function DynamicIcon({
   name,
@@ -154,24 +155,26 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                 {t("feedback_question")}
               </h3>
               <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 w-full max-w-lg mx-auto">
-                <button
+                <Button
+                  variant="ghost"
                   onClick={() => handleFeedback(true)}
-                  className="flex-1 flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-stone-700 dark:text-slate-200 border-2 border-stone-200 dark:border-slate-800 border-b-[6px] rounded-2xl px-6 py-5 font-[1000] text-lg uppercase hover:bg-[#58CC02] hover:text-white hover:border-[#46a302] active:translate-y-2 active:border-b-0 transition-all shadow-sm outline-none group"
+                  className="flex-1 flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-stone-700 dark:text-slate-200 border-2 border-stone-200 dark:border-slate-800 border-b-[6px] rounded-2xl px-6 py-5 font-[1000] text-lg uppercase hover:bg-[#58CC02] hover:text-white hover:border-[#46a302] shadow-sm group"
                 >
                   <span className="text-2xl group-hover:scale-125 transition-transform">
                     👍
                   </span>{" "}
                   {t("yes_option")}
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="ghost"
                   onClick={() => handleFeedback(false)}
-                  className="flex-1 flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-stone-700 dark:text-slate-200 border-2 border-stone-200 dark:border-slate-800 border-b-[6px] rounded-2xl px-6 py-5 font-[1000] text-lg uppercase hover:bg-[#ea2b2b] hover:text-white hover:border-[#b21c1c] active:translate-y-2 active:border-b-0 transition-all shadow-sm outline-none group"
+                  className="flex-1 flex items-center justify-center gap-3 bg-white dark:bg-slate-900 text-stone-700 dark:text-slate-200 border-2 border-stone-200 dark:border-slate-800 border-b-[6px] rounded-2xl px-6 py-5 font-[1000] text-lg uppercase hover:bg-[#ea2b2b] hover:text-white hover:border-[#b21c1c] shadow-sm group"
                 >
                   <span className="text-2xl group-hover:scale-125 transition-transform">
                     👎
                   </span>{" "}
                   {t("no_option")}
-                </button>
+                </Button>
               </div>
             </div>
           ) : (

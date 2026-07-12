@@ -146,19 +146,21 @@ export const ShopItems = ({
                   })}
                 </p>
                 <div className="flex flex-col gap-4">
-                  <button
+                  <Button
+                    variant="default"
                     onClick={confirmPurchase}
                     disabled={isPending}
-                    className="w-full h-16 md:h-20 bg-[#58cc02] text-white text-xl font-black rounded-2xl border-2 border-transparent border-b-8 border-b-[#46a302] hover:bg-[#61da02] active:border-b-0 active:translate-y-2 active:mb-[-8px] transition-all uppercase tracking-widest flex items-center justify-center gap-3 shadow-sm disabled:opacity-50"
+                    className="w-full h-16 md:h-20 text-xl rounded-2xl flex items-center justify-center gap-3"
                   >
                     {isPending ? t("processing") : t("buy")}
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="ghost"
                     onClick={() => setConfirmModal(null)}
-                    className="w-full h-14 md:h-16 bg-white dark:bg-slate-900 text-stone-400 dark:text-slate-500 dark:text-slate-400 text-lg font-black rounded-2xl border-2 border-stone-200 dark:border-slate-800 border-b-6 hover:bg-stone-50 dark:bg-slate-950 hover:text-stone-600 dark:text-slate-300 active:border-b-0 active:translate-y-1 active:mb-[-4px] transition-all uppercase tracking-widest flex items-center justify-center shadow-sm"
+                    className="w-full h-14 md:h-16 text-lg rounded-2xl flex items-center justify-center"
                   >
                     {t("cancel")}
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -195,7 +197,8 @@ export const ShopItems = ({
                   </span>
                 </div>
               </div>
-              <button
+              <Button
+                variant={canBuyOneHeart ? "default" : "locked"}
                 disabled={!canBuyOneHeart || isPending}
                 onClick={() =>
                   initiatePurchase(
@@ -212,10 +215,8 @@ export const ShopItems = ({
                   )
                 }
                 className={cn(
-                  "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-base uppercase tracking-widest transition-all flex items-center justify-center gap-2",
-                  canBuyOneHeart
-                    ? "bg-[#58cc02] text-white border-2 border-transparent border-b-4 border-b-[#46a302] hover:bg-[#61da02] active:border-b-0 active:translate-y-1 active:mb-[-4px] shadow-sm"
-                    : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
+                  "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 rounded-xl text-base uppercase tracking-widest flex items-center justify-center gap-2",
+                  !canBuyOneHeart && "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
                 )}
               >
                 <span>{t("buy")}</span>
@@ -229,7 +230,7 @@ export const ShopItems = ({
                 >
                   ⚡ 20
                 </span>
-              </button>
+              </Button>
             </div>
           )}
           {!isPro && hearts === 0 && (
@@ -247,7 +248,8 @@ export const ShopItems = ({
                   </span>
                 </div>
               </div>
-              <button
+              <Button
+                variant={canRefill ? "default" : "locked"}
                 disabled={!canRefill || isPending}
                 onClick={() =>
                   initiatePurchase(
@@ -264,10 +266,10 @@ export const ShopItems = ({
                   )
                 }
                 className={cn(
-                  "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-base uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+                  "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 rounded-xl text-base uppercase tracking-widest flex items-center justify-center gap-2",
                   canRefill
-                    ? "bg-amber-500 text-white border-2 border-transparent border-b-4 border-b-amber-600 hover:bg-amber-400 active:border-b-0 active:translate-y-1 active:mb-[-4px] shadow-sm"
-                    : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
+                    ? "bg-amber-500 text-white border-2 border-transparent border-b-4 border-b-amber-600 hover:bg-amber-400 shadow-sm"
+                    : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
                 )}
               >
                 <span>{t("buy")}</span>
@@ -279,7 +281,7 @@ export const ShopItems = ({
                 >
                   ⚡ 100
                 </span>
-              </button>
+              </Button>
             </div>
           )}
           {!isPro && hearts === 5 && (
@@ -336,7 +338,8 @@ export const ShopItems = ({
                 </span>
               </div>
             </div>
-            <button
+            <Button
+              variant={canBuyXpBoost ? "default" : "locked"}
               disabled={!canBuyXpBoost || isPending}
               onClick={() =>
                 initiatePurchase(
@@ -353,10 +356,10 @@ export const ShopItems = ({
                 )
               }
               className={cn(
-                "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-base uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+                "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 rounded-xl text-base uppercase tracking-widest flex items-center justify-center gap-2",
                 canBuyXpBoost
-                  ? "bg-purple-500 text-white border-2 border-transparent border-b-4 border-b-purple-700 hover:bg-purple-400 active:border-b-0 active:translate-y-1 active:mb-[-4px] shadow-sm"
-                  : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
+                  ? "bg-purple-500 text-white border-2 border-transparent border-b-4 border-b-purple-700 hover:bg-purple-400 shadow-sm"
+                  : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
               )}
             >
               <span>{t("buy")}</span>
@@ -368,7 +371,7 @@ export const ShopItems = ({
               >
                 ⚡ 150
               </span>
-            </button>
+            </Button>
           </div>
           <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 dark:border-slate-800 last:border-b-0 group">
             <div className="flex items-center gap-6">
@@ -384,7 +387,8 @@ export const ShopItems = ({
                 </span>
               </div>
             </div>
-            <button
+            <Button
+              variant={canBuyHeartShield ? "default" : "locked"}
               disabled={!canBuyHeartShield || isPending}
               onClick={() =>
                 initiatePurchase(
@@ -401,10 +405,10 @@ export const ShopItems = ({
                 )
               }
               className={cn(
-                "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-base uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+                "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 rounded-xl text-base uppercase tracking-widest flex items-center justify-center gap-2",
                 canBuyHeartShield
-                  ? "bg-sky-500 text-white border-2 border-transparent border-b-4 border-b-sky-600 hover:bg-sky-400 active:border-b-0 active:translate-y-1 active:mb-[-4px] shadow-sm"
-                  : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
+                  ? "bg-sky-500 text-white border-2 border-transparent border-b-4 border-b-sky-600 hover:bg-sky-400 shadow-sm"
+                  : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
               )}
             >
               <span>{t("buy")}</span>
@@ -418,7 +422,7 @@ export const ShopItems = ({
               >
                 ⚡ 100
               </span>
-            </button>
+            </Button>
           </div>
           <div className="flex w-full flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b-2 border-stone-100 dark:border-slate-800 last:border-b-0 group">
             <div className="flex items-center gap-6">
@@ -434,7 +438,8 @@ export const ShopItems = ({
                 </span>
               </div>
             </div>
-            <button
+            <Button
+              variant={canBuyStreakFreeze ? "default" : "locked"}
               disabled={!canBuyStreakFreeze || isPending}
               onClick={() =>
                 initiatePurchase(
@@ -451,10 +456,10 @@ export const ShopItems = ({
                 )
               }
               className={cn(
-                "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 font-black rounded-xl text-base uppercase tracking-widest transition-all flex items-center justify-center gap-2",
+                "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 rounded-xl text-base uppercase tracking-widest flex items-center justify-center gap-2",
                 canBuyStreakFreeze
-                  ? "bg-cyan-500 text-white border-2 border-transparent border-b-4 border-b-cyan-600 hover:bg-cyan-400 active:border-b-0 active:translate-y-1 active:mb-[-4px] shadow-sm"
-                  : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
+                  ? "bg-cyan-500 text-white border-2 border-transparent border-b-4 border-b-cyan-600 hover:bg-cyan-400 shadow-sm"
+                  : "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
               )}
             >
               <span>{t("buy")}</span>
@@ -468,7 +473,7 @@ export const ShopItems = ({
               >
                 ⚡ 300
               </span>
-            </button>
+            </Button>
           </div>
         </div>
         <div className="pt-10">
@@ -508,16 +513,17 @@ export const ShopItems = ({
                 </span>
               </div>
             </div>
-            <button
+            <Button
+              variant="default"
               className={cn(
-                "relative z-10 w-full md:w-auto shrink-0 h-12 px-6 rounded-xl font-black uppercase tracking-widest border-2 border-transparent border-b-4 shadow-sm text-sm flex items-center justify-center transition-transform group-hover:scale-105",
+                "relative z-10 w-full md:w-auto shrink-0 h-12 px-6 rounded-xl uppercase tracking-widest text-sm flex items-center justify-center group-hover:scale-105",
                 isPro
                   ? "bg-rose-500 text-white border-b-rose-700 hover:bg-rose-400"
                   : "bg-amber-500 text-white border-b-amber-700 hover:bg-amber-400",
               )}
             >
               {isPro ? t("manage_plan") : t("learn_more")}
-            </button>
+            </Button>
           </div>
         </div>
         <div className="mt-12 rounded-[2.5rem] border-2 border-amber-300 border-b-[10px] bg-amber-100 p-10 text-center shadow-sm relative overflow-hidden transition-transform hover:scale-[1.01]">

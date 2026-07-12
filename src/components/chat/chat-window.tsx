@@ -437,12 +437,14 @@ export const ChatWindow = ({
                   >
                     <Download className="w-5 h-5 sm:w-6 sm:h-6" />
                   </a>
-                  <button
+                  <Button
                     onClick={() => setSelectedImage(null)}
-                    className="bg-slate-900/60 hover:bg-rose-500/90 backdrop-blur-xl text-white p-3.5 rounded-full transition-all border-2 border-white/20 shadow-2xl hover:scale-110 active:scale-95"
+                    variant="ghost"
+                    size="icon"
+                    className="bg-slate-900/60 hover:bg-rose-500/90 backdrop-blur-xl text-white border-2 border-white/20 shadow-2xl hover:scale-110 active:scale-95"
                   >
                     <X className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </button>
+                  </Button>
                 </div>
                 <div className="relative max-w-full min-h-[50vh] sm:min-h-[60vh] min-w-[50vw] sm:min-w-[60vw] rounded-[24px] sm:rounded-[32px] overflow-hidden border-4 border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.5)] bg-slate-900/50 backdrop-blur-sm">
                   <Image
@@ -666,12 +668,14 @@ export const ChatWindow = ({
                     </p>
                   </div>
                 </div>
-                <button
+                <Button
                   onClick={() => setReplyingTo(null)}
-                  className="h-10 w-10 bg-stone-100 dark:bg-slate-800 rounded-xl flex items-center justify-center hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-all shrink-0"
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 bg-stone-100 dark:bg-slate-800 rounded-xl hover:bg-stone-200 dark:hover:bg-slate-700 shrink-0"
                 >
                   <X className="h-4 w-4 text-stone-500 dark:text-slate-400" />
-                </button>
+                </Button>
               </div>
             </motion.div>
           )}
@@ -683,12 +687,14 @@ export const ChatWindow = ({
               <span className="font-black text-xs text-stone-400 dark:text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] pl-2">
                 {t("giphy_vault")}
               </span>
-              <button
+              <Button
                 onClick={() => setShowGifPicker(false)}
-                className="h-8 w-8 bg-stone-50 dark:bg-slate-950 rounded-full flex items-center justify-center hover:bg-stone-100 dark:hover:bg-slate-800 dark:bg-slate-800 transition-all"
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 bg-stone-50 dark:bg-slate-950 rounded-full hover:bg-stone-100 dark:hover:bg-slate-800"
               >
                 <X className="h-4 w-4 text-stone-400 dark:text-slate-500 dark:text-slate-400" />
-              </button>
+              </Button>
             </div>
             <div className="flex-1 min-h-0">
               <GifSelector onSelect={handleSendGif} />
@@ -711,13 +717,15 @@ export const ChatWindow = ({
             <div className="absolute -bottom-[16px] left-6 w-[20px] h-[20px] bg-[#ff9cfc] border-b-[4px] border-l-[4px] border-black -rotate-12 rounded-bl-sm z-[-1] pointer-events-none shadow-[-2px_2px_0_0_rgba(0,0,0,0.1)]"></div>
 
             <UploadButton onUploadComplete={handleUploadComplete} />
-            <button
+            <Button
               type="button"
               onClick={() => setShowGifPicker(!showGifPicker)}
-              className="bg-transparent rounded-none h-10 w-10 flex items-center justify-center transition-all shrink-0 text-black hover:bg-black/10"
+              variant="ghost"
+              size="icon"
+              className="bg-transparent rounded-none h-10 w-10 shrink-0 text-black hover:bg-black/10"
             >
               <ImageIcon className="h-6 w-6 stroke-[2.5]" />
-            </button>
+            </Button>
 
             <textarea
               ref={textareaRef}
@@ -737,10 +745,11 @@ export const ChatWindow = ({
             />
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={isSending}
-            className="h-12 px-4 md:h-14 md:px-8 rounded-none bg-[#58CC02] hover:bg-[#4eb801] active:translate-y-1 active:shadow-none text-black font-black text-sm uppercase tracking-widest border-[4px] border-black transition-all flex items-center justify-center gap-2 shadow-[4px_4px_0_0_#000] md:shadow-[6px_6px_0_0_#000] shrink-0 disabled:bg-stone-400 disabled:border-black disabled:text-stone-700 disabled:shadow-[4px_4px_0_0_#000]"
+            variant="locked"
+            className="h-12 px-4 md:h-14 md:px-8 rounded-none bg-[#58CC02] hover:bg-[#4eb801] active:translate-y-1 text-black font-black text-sm uppercase tracking-widest border-[4px] border-black transition-all flex items-center justify-center gap-2 shadow-[4px_4px_0_0_#000] md:shadow-[6px_6px_0_0_#000] shrink-0 disabled:bg-stone-400 disabled:border-black disabled:text-stone-700 disabled:shadow-[4px_4px_0_0_#000]"
           >
             {isSending ? (
               <Loader2 className="h-5 w-5 animate-spin" />
@@ -750,7 +759,7 @@ export const ChatWindow = ({
             <span className="hidden md:inline">
               {isSending ? t("sending") : t("send")}
             </span>
-          </button>
+          </Button>
         </form>
       </div>
     </div>

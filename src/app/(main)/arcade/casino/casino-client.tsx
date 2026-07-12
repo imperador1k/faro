@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { haptics } from "@/lib/haptics";
+import { Button } from "@/components/ui/button";
 
 type GameState = "LOBBY" | "DOUBLE_OR_NOTHING" | "WORD_SNIPER";
 
@@ -179,25 +180,27 @@ export default function CasinoClient() {
     <div className="flex-1 flex flex-col relative w-full max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <Link href="/arcade">
-          <button className="h-12 w-12 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+          <Button variant="ghost" size="icon" className="h-12 w-12 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center hover:bg-slate-300 dark:hover:bg-slate-700">
             <ChevronLeft className="w-6 h-6 text-slate-600 dark:text-slate-300" />
-          </button>
+          </Button>
         </Link>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 bg-yellow-400 text-yellow-950 font-black px-4 py-2 rounded-full border-2 border-yellow-600 shadow-[2px_2px_0_0_#ca8a04]">
             <Coins className="w-5 h-5 fill-yellow-600" />
             <span>{arcadeCoins} AC</span>
           </div>
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className="h-12 w-12 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors"
+            className="h-12 w-12 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center hover:bg-slate-300 dark:hover:bg-slate-700"
           >
             {soundEnabled ? (
               <Volume2 className="w-5 h-5 text-slate-600 dark:text-slate-300" />
             ) : (
               <VolumeX className="w-5 h-5 text-slate-600 dark:text-slate-300" />
             )}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -258,13 +261,14 @@ export default function CasinoClient() {
                         ? t("risk_medium")
                         : t("risk_hardcore")}
                   </div>
-                  <button
+                  <Button
+                    variant="super"
                     onClick={handleStartDoubleOrNothing}
                     disabled={arcadeCoins < donBuyIn}
                     className="w-full h-14 bg-cyan-400 hover:bg-cyan-300 text-cyan-950 font-black uppercase tracking-widest text-lg border-b-[6px] border-cyan-600 active:border-b-0 active:translate-y-[6px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {t("play")}
-                  </button>
+                  </Button>
                 </div>
               </div>
 
@@ -284,13 +288,14 @@ export default function CasinoClient() {
                   <div className="text-xs font-black text-pink-400 mb-2 uppercase tracking-widest">
                     {t("buy_in")}: {wsBuyIn} {t("coins")}
                   </div>
-                  <button
+                  <Button
+                    variant="super"
                     onClick={handleStartWordSniper}
                     disabled={arcadeCoins < wsBuyIn}
                     className="w-full h-14 bg-pink-500 hover:bg-pink-400 text-white font-black uppercase tracking-widest text-lg border-b-[6px] border-pink-700 active:border-b-0 active:translate-y-[6px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {t("play")}
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -350,12 +355,13 @@ export default function CasinoClient() {
             </div>
 
             {donWordIndex > 0 && (
-              <button
+              <Button
+                variant="super"
                 onClick={handleCashOut}
                 className="mt-12 h-14 px-8 bg-yellow-400 hover:bg-yellow-300 text-yellow-950 font-black uppercase tracking-widest text-lg border-[4px] border-yellow-600 active:border-b-[4px] active:translate-y-1 transition-all shadow-[4px_4px_0_0_#ca8a04]"
               >
                 {t("cash_out", { amount: donPot })}
-              </button>
+              </Button>
             )}
           </motion.div>
         )}

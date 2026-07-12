@@ -7,6 +7,7 @@ import { submitUGCPost } from "@/actions/creator";
 import { HappyStarLottie } from "@/components/ui/lottie-animation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 type CreatePostModalProps = {
   isOpen: boolean;
@@ -75,13 +76,14 @@ export function CreatePostModal({
             >
               {/* Header */}
               <div className="bg-sky-500 p-8 pt-10 text-white text-center relative overflow-hidden">
-                <button
+                <Button
+                  variant="ghost"
                   onClick={handleClose}
                   disabled={isPending}
-                  className="absolute right-4 top-4 p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors disabled:opacity-50 z-10"
+                  className="absolute right-4 top-4 p-2 bg-white/20 hover:bg-white/30 rounded-full z-10"
                 >
                   <X className="w-5 h-5" />
-                </button>
+                </Button>
 
                 {/* Lottie Mascot */}
                 <div className="relative z-10 flex justify-center -mb-2">
@@ -121,12 +123,13 @@ export function CreatePostModal({
                     )}
                     <p className="font-bold">{result.message}</p>
                     {(!result.success || result.status !== "APPROVED") && (
-                      <button
+                      <Button
+                        variant="ghost"
                         onClick={() => setResult(null)}
                         className="mt-2 text-sm font-bold underline"
                       >
                         {t("try_again")}
-                      </button>
+                      </Button>
                     )}
                   </div>
                 ) : (
@@ -146,10 +149,11 @@ export function CreatePostModal({
                       </div>
                     </div>
 
-                    <button
+                    <Button
                       type="submit"
+                      variant="default"
                       disabled={isPending || content.trim().length < 10}
-                      className="w-full bg-sky-500 hover:bg-sky-400 text-white rounded-2xl py-4 font-black flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50 disabled:active:scale-100 shadow-lg shadow-sky-500/30"
+                      className="w-full bg-sky-500 hover:bg-sky-400 text-white rounded-2xl py-4 font-black flex items-center justify-center gap-2 shadow-lg shadow-sky-500/30"
                     >
                       {isPending ? (
                         <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
@@ -158,7 +162,7 @@ export function CreatePostModal({
                           <Send className="w-5 h-5" /> {t("submit_moderation")}
                         </>
                       )}
-                    </button>
+                    </Button>
                   </form>
                 )}
               </div>

@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePreferencesStore } from "@/store/use-preferences-store";
+import { Button } from "@/components/ui/button";
 
 const STORAGE_KEY = "hasSeenLeagueModal";
 
@@ -105,13 +106,14 @@ export function LeagueInfoModal({ trigger }: Props) {
       {trigger}
     </span>
   ) : (
-    <button
+    <Button
+      variant="ghost"
       onClick={handleOpen}
       aria-label={t("trigger_aria")}
-      className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm border-2 border-white/30 border-b-4 border-b-black/10 text-white transition-all hover:bg-white/30 active:translate-y-0.5"
+      className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm border-2 border-white/30 border-b-4 border-b-black/10 text-white hover:bg-white/30"
     >
       <Info className="h-4 w-4" />
-    </button>
+    </Button>
   );
 
   // Render the portal only on the client, directly into document.body
@@ -144,13 +146,14 @@ export function LeagueInfoModal({ trigger }: Props) {
                   transition={{ type: "spring", stiffness: 320, damping: 28 }}
                 >
                   {/* Custom Close */}
-                  <button
+                  <Button
+                    variant="ghost"
                     onClick={handleClose}
-                    className="absolute right-5 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-stone-600 dark:text-slate-300 active:border-b-0 active:translate-y-0.5 transition-all focus:outline-none"
+                    className="absolute right-5 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 border-2 border-stone-200 dark:border-slate-800 border-b-4 hover:bg-stone-200 dark:hover:bg-slate-700 hover:text-stone-600 dark:text-slate-300"
                     aria-label={t("close")}
                   >
                     <X className="h-5 w-5 stroke-[2.5]" />
-                  </button>
+                  </Button>
 
                   <div className="p-7 md:p-9 flex flex-col gap-6">
                     {/* Header */}
@@ -238,12 +241,13 @@ export function LeagueInfoModal({ trigger }: Props) {
                     </div>
 
                     {/* CTA */}
-                    <button
+                    <Button
+                      variant="default"
                       onClick={handleClose}
-                      className="w-full py-4 rounded-2xl bg-emerald-500 border-2 border-emerald-400 border-b-6 border-b-emerald-700 text-white font-black text-sm uppercase tracking-widest hover:bg-emerald-600 active:translate-y-1 active:border-b-2 transition-all"
+                      className="w-full py-4 rounded-2xl bg-emerald-500 border-2 border-emerald-400 border-b-6 border-b-emerald-700 text-white font-black text-sm uppercase tracking-widest hover:bg-emerald-600"
                     >
                       {t("cta")}
-                    </button>
+                    </Button>
                   </div>
                 </motion.div>
               </motion.div>

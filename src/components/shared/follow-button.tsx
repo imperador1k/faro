@@ -29,31 +29,33 @@ export const FollowButton = ({ userId, isFollowing, className }: Props) => {
 
   if (isFollowing) {
     return (
-      <button
+      <Button
+        variant="destructive"
         className={cn(
-          "bg-rose-500 text-white border-rose-600 border-b-4 rounded-xl font-black uppercase tracking-widest text-[10px] sm:text-xs px-4 sm:px-6 py-2 sm:py-3 hover:bg-rose-400 hover:border-rose-500 active:translate-y-1 active:border-b-0 transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm",
+          "rounded-xl font-black uppercase tracking-widest text-[10px] sm:text-xs px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-center gap-2 whitespace-nowrap",
           className,
         )}
         onClick={onClick}
         disabled={pending}
       >
-        {pending && <Loader2 className="w-5 h-5 animate-spin text-white" />}
+        {pending && <Loader2 className="w-5 h-5 animate-spin" />}
         {t("unfollow")}
-      </button>
+      </Button>
     );
   }
 
   return (
-    <button
+    <Button
+      variant="secondary"
       className={cn(
-        "bg-[#1CB0F6] text-white border-[#1899D6] border-b-4 rounded-xl font-black uppercase tracking-widest text-[10px] sm:text-xs px-4 sm:px-6 py-2 sm:py-3 hover:bg-[#1899D6] hover:border-[#1380B4] active:translate-y-1 active:border-b-0 transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm",
+        "rounded-xl font-black uppercase tracking-widest text-[10px] sm:text-xs px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-center gap-2 whitespace-nowrap",
         className,
       )}
       onClick={onClick}
       disabled={pending}
     >
-      {pending && <Loader2 className="w-5 h-5 animate-spin mr-2 text-white" />}
+      {pending && <Loader2 className="w-5 h-5 animate-spin mr-2" />}
       {t("follow")}
-    </button>
+    </Button>
   );
 };

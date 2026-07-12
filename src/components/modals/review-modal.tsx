@@ -65,12 +65,14 @@ export const ReviewModal = () => {
 
         <div className="relative w-full bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-3xl p-6 sm:p-8 text-center flex flex-col items-center outline-none my-16">
           {/* Custom Close Button */}
-          <button
+          <Button
             onClick={handleClose}
-            className="absolute right-3 top-3 sm:right-4 sm:top-4 p-2 rounded-xl bg-stone-100 dark:bg-slate-800 text-stone-400 dark:text-slate-500 dark:text-slate-400 hover:text-stone-600 dark:text-slate-300 hover:bg-stone-200 dark:hover:bg-slate-700 dark:bg-slate-700 active:scale-95 transition-all z-50"
+            variant="ghost"
+            size="icon"
+            className="absolute right-3 top-3 sm:right-4 sm:top-4 p-2 rounded-xl z-50"
           >
             <X className="w-5 h-5 transition-transform hover:rotate-90 duration-300" />
-          </button>
+          </Button>
 
           {/* Mascot Head popping out the top */}
           <div className="absolute -top-14 sm:-top-16 left-1/2 -translate-x-1/2 w-24 h-24 sm:w-28 sm:h-28 mix-blend-normal drop-shadow-xl z-[40] transition-transform hover:scale-105 hover:-translate-y-1 cursor-pointer bg-white dark:bg-slate-900 rounded-full border-4 border-stone-200 dark:border-slate-800 border-b-0">
