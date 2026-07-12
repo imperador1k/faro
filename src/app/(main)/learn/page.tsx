@@ -144,7 +144,9 @@ async function LearnData() {
   }));
 
   const userCertificates = await getUserCertificates(userProgress.userId);
-  const hasClaimedCertificate = userCertificates.some(c => c.courseId === userProgress.activeCourseId);
+  const hasClaimedCertificate = userCertificates.some(
+    (c) => c.courseId === userProgress.activeCourseId,
+  );
 
   return (
     <>
@@ -169,7 +171,7 @@ async function LearnData() {
                 {t("select_course")}
               </p>
               <Link href="/courses">
-                <Button variant="primary">{t("view_courses")}</Button>
+                <Button variant="default">{t("view_courses")}</Button>
               </Link>
             </div>
           )}

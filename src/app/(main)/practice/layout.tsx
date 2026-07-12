@@ -36,7 +36,7 @@ export default async function PracticeLayout({
             </h2>
             <p className="text-lg font-medium text-stone-500 dark:text-slate-400 leading-relaxed max-w-md mx-auto">
               {t.rich("description", {
-                strong: (chunks) => (
+                strong: (chunks: React.ReactNode) => (
                   <span className="font-bold text-amber-500">{chunks}</span>
                 ),
               })}

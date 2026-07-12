@@ -31,11 +31,11 @@ export const ActiveSessions = () => {
     if (user) {
       user
         .getSessions()
-        .then((fetchedSessions) => {
+        .then((fetchedSessions: any[]) => {
           setSessions(fetchedSessions);
           setIsLoadingSessions(false);
         })
-        .catch((err) => {
+        .catch((err: unknown) => {
           console.error("Error fetching sessions:", err);
           setIsLoadingSessions(false);
         });
@@ -59,11 +59,15 @@ export const ActiveSessions = () => {
       await revokeDeviceSession(sessionId);
       setSessions((prev) => prev.filter((s) => s.id !== sessionId));
       toast.success(t("messages.success"));
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
+      const err = error as {
+        errors?: { longMessage?: string }[];
+        message?: string;
+      };
       const msg =
-        error?.errors?.[0]?.longMessage ||
-        error?.message ||
+        err?.errors?.[0]?.longMessage ||
+        err?.message ||
         "Erro ao revogar sessão.";
       toast.error(msg || t("messages.error"));
     } finally {

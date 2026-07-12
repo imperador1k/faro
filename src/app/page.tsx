@@ -90,7 +90,7 @@ export default async function Home() {
           */}
           <h1 className="animate-in slide-in-from-bottom-8 fade-in duration-700 delay-100 fill-mode-both text-4xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 lg:text-5xl lg:leading-[1.15]">
             {t.rich("hero_title", {
-              green: (chunks) => (
+              green: (chunks: React.ReactNode) => (
                 <span className="text-green-500 font-black">{chunks}</span>
               ),
             })}

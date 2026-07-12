@@ -16,6 +16,7 @@
     "error_already_signed_in": "Já tens uma sessão ativa. Redirecionando...",
     "new_code_sent": "Novo código enviado para o teu email! 📧",
     "loading": "A carregar...",
+    "loading_alt_text": "A carregar...",
     "sign_in_google": "Continuar com Google",
     "or_continue_with_email": "ou continua com email",
     "email_label": "O teu email",
@@ -1602,6 +1603,306 @@
     "back_button": "VOLTAR"
   },
   "profile": {
+    "items": {
+      "mente-curiosa": {
+        "title": "Mente Curiosa",
+        "description": "Ganhou os primeiros 100 XP."
+      },
+      "estudante-dedicado": {
+        "title": "Estudante Dedicado",
+        "description": "Acumulou 500 XP."
+      },
+      "aspirante": {
+        "title": "Aspirante",
+        "description": "Conquistou 1.000 XP."
+      },
+      "aprendiz": {
+        "title": "Aprendiz",
+        "description": "Chegou aos 2.500 XP."
+      },
+      "erudito": { "title": "Erudito", "description": "Alcançou 5.000 XP." },
+      "mestre": { "title": "Mestre", "description": "Conquistou 10.000 XP." },
+      "grao-mestre": {
+        "title": "Grão-Mestre",
+        "description": "Alcançou 25.000 XP."
+      },
+      "sabio": { "title": "Sábio", "description": "Conquistou 50.000 XP." },
+      "iluminado": {
+        "title": "Iluminado",
+        "description": "Atingiu 100.000 XP."
+      },
+      "lendario": {
+        "title": "Lendário",
+        "description": "Alcançou 250.000 XP."
+      },
+      "mitico": { "title": "Mítico", "description": "Conquistou 500.000 XP." },
+      "divino": {
+        "title": "Divino",
+        "description": "1 milhão de XP. Inacreditável."
+      },
+      "omnisciente": {
+        "title": "Omnisciente",
+        "description": "5 milhões de XP. És uma lenda."
+      },
+      "o-criador": {
+        "title": "O Criador",
+        "description": "10 milhões de XP. Transcendeste tudo."
+      },
+      "aquecimento": {
+        "title": "Aquecimento",
+        "description": "3 dias de ofensiva."
+      },
+      "faisca": { "title": "Faísca", "description": "7 dias de ofensiva." },
+      "chama": { "title": "Chama", "description": "14 dias de ofensiva." },
+      "incendio": {
+        "title": "Incêndio",
+        "description": "30 dias de ofensiva."
+      },
+      "inferno": { "title": "Inferno", "description": "60 dias de ofensiva." },
+      "centenario": {
+        "title": "Centenário",
+        "description": "100 dias de ofensiva."
+      },
+      "obsessivo": {
+        "title": "Obsessivo",
+        "description": "150 dias de ofensiva."
+      },
+      "meio-ano": {
+        "title": "Meio Ano",
+        "description": "183 dias de ofensiva."
+      },
+      "imparavel": {
+        "title": "Imparável",
+        "description": "250 dias de ofensiva."
+      },
+      "volta-ao-sol": {
+        "title": "Volta ao Sol",
+        "description": "365 dias de ofensiva."
+      },
+      "marciano": {
+        "title": "Marciano",
+        "description": "687 dias de ofensiva. Um ano em Marte!"
+      },
+      "milenio": {
+        "title": "Milénio",
+        "description": "1.000 dias de ofensiva."
+      },
+      "eterno": { "title": "Eterno", "description": "2.000 dias de ofensiva." },
+      "alfabetizado": {
+        "title": "Alfabetizado",
+        "description": "Ganhou os primeiros 50 XP."
+      },
+      "tagarela": { "title": "Tagarela", "description": "Acumulou 250 XP." },
+      "poliglota-jr": {
+        "title": "Políglota Jr.",
+        "description": "Chegou aos 750 XP."
+      },
+      "tradutor": { "title": "Tradutor", "description": "Alcançou 1.500 XP." },
+      "poeta": { "title": "Poeta", "description": "Conquistou 3.000 XP." },
+      "novelista": {
+        "title": "Novelista",
+        "description": "Chegou aos 7.500 XP."
+      },
+      "enciclopedia": {
+        "title": "Enciclopédia",
+        "description": "Conquistou 15.000 XP."
+      },
+      "bibliotecario": {
+        "title": "Bibliotecário",
+        "description": "Alcançou 35.000 XP."
+      },
+      "oraculo": { "title": "Oráculo", "description": "Chegou aos 75.000 XP." },
+      "profeta": {
+        "title": "Profeta",
+        "description": "Conquistou 150.000 XP."
+      },
+      "preparado": {
+        "title": "Preparado",
+        "description": "Comprou o primeiro Escudo."
+      },
+      "tanque": { "title": "Tanque", "description": "Tem 3 Escudos ativos." },
+      "intocavel": {
+        "title": "Intocável",
+        "description": "Tem 5 Escudos (máximo!)."
+      },
+      "energizado": {
+        "title": "Energizado",
+        "description": "Ativou o primeiro Boost de XP."
+      },
+      "sobrecarga": {
+        "title": "Sobrecarga",
+        "description": "Usou 5 Boosts de XP."
+      },
+      "alta-tensao": {
+        "title": "Alta Tensão",
+        "description": "Usou 10 Boosts de XP."
+      },
+      "fresquinho": {
+        "title": "Fresquinho",
+        "description": "Comprou o primeiro Freeze de Ofensiva."
+      },
+      "congelado": {
+        "title": "Congelado",
+        "description": "Tem 3 Freezes ativos."
+      },
+      "era-do-gelo": {
+        "title": "Era do Gelo",
+        "description": "Tem 5 Freezes ativos."
+      },
+      "vivo": { "title": "Vivo", "description": "Tem pelo menos 1 coração." },
+      "saudavel": {
+        "title": "Saudável",
+        "description": "Tem 3 ou mais corações."
+      },
+      "perfeito": {
+        "title": "Perfeito",
+        "description": "Tem todos os corações cheios."
+      },
+      "nivel-1": {
+        "title": "Nível 1",
+        "description": "Começaste a tua aventura!"
+      },
+      "nivel-5": { "title": "Nível 5", "description": "Já és um veterano." },
+      "nivel-10": {
+        "title": "Nível 10",
+        "description": "Dois dígitos. Impressionante!"
+      },
+      "nivel-20": {
+        "title": "Nível 20",
+        "description": "Estás a crescer rápido."
+      },
+      "nivel-30": {
+        "title": "Nível 30",
+        "description": "Metade do caminho para o topo."
+      },
+      "nivel-40": {
+        "title": "Nível 40",
+        "description": "Quase lá. Não pares!"
+      },
+      "nivel-50": {
+        "title": "Nível 50",
+        "description": "O meio-campo foi conquistado."
+      },
+      "nivel-60": { "title": "Nível 60", "description": "Entraste na elite." },
+      "nivel-70": {
+        "title": "Nível 70",
+        "description": "Apenas os melhores chegam aqui."
+      },
+      "nivel-80": {
+        "title": "Nível 80",
+        "description": "Lendário está perto."
+      },
+      "nivel-90": { "title": "Nível 90", "description": "Um passo do topo!" },
+      "nivel-100": {
+        "title": "Nível 100",
+        "description": "Máximo absoluto atingido!"
+      },
+      "via-lactea": {
+        "title": "Via Láctea",
+        "description": "2 milhões de XP. Estás no espaço!"
+      },
+      "buraco-negro": {
+        "title": "Buraco Negro",
+        "description": "3 milhões de XP. Nada escapa."
+      },
+      "multiverso": {
+        "title": "Multiverso",
+        "description": "4 milhões de XP. Existências paralelas."
+      },
+      "numero-da-besta": {
+        "title": "Número da Besta",
+        "description": "666 dias de ofensiva. Arrepiante."
+      },
+      "sorte-grande": {
+        "title": "Sorte Grande",
+        "description": "777 dias de ofensiva. Jackpot!"
+      },
+      "ano-novo": {
+        "title": "Ano Novo",
+        "description": "Praticou no dia 1 de Janeiro."
+      },
+      "futurista": {
+        "title": "Futurista",
+        "description": "Praticou no dia 1 de Janeiro de 2025."
+      },
+      "over-9000": {
+        "title": "Over 9000!",
+        "description": "Mais de 9.000 XP. IT'S OVER 9000!"
+      },
+      "fim-de-semana": {
+        "title": "Fim de Semana",
+        "description": "Praticou sábado e domingo."
+      },
+      "mao-cheia": {
+        "title": "Mão Cheia",
+        "description": "5 dias de ofensiva."
+      },
+      "duas-maos": {
+        "title": "Duas Mãos",
+        "description": "10 dias de ofensiva."
+      },
+      "tres-semanas": {
+        "title": "Três Semanas",
+        "description": "21 dias de ofensiva."
+      },
+      "quaresma": {
+        "title": "Quaresma",
+        "description": "40 dias de ofensiva."
+      },
+      "rico": { "title": "Rico", "description": "Acumulou 1.000 moedas." },
+      "milionario": {
+        "title": "Milionário",
+        "description": "Acumulou 10.000 moedas."
+      },
+      "passo-1": {
+        "title": "Primeiro Passo",
+        "description": "Completou a primeira lição."
+      },
+      "passo-2": {
+        "title": "Segundo Passo",
+        "description": "Completou 5 lições."
+      },
+      "passo-3": {
+        "title": "Terceiro Passo",
+        "description": "Completou 10 lições."
+      },
+      "passo-4": {
+        "title": "Quarto Passo",
+        "description": "Completou 25 lições."
+      },
+      "maratona": {
+        "title": "Maratona",
+        "description": "Completou 50 lições."
+      },
+      "monte-everest": {
+        "title": "Monte Everest",
+        "description": "Completou 100 lições."
+      },
+      "profundezas": {
+        "title": "As Profundezas",
+        "description": "Explorador nato do desconhecido."
+      },
+      "agua": {
+        "title": "Água",
+        "description": "Fluído e adaptável como o oceano."
+      },
+      "terra": {
+        "title": "Terra",
+        "description": "Firme, resiliente e constante."
+      },
+      "ar": {
+        "title": "Ar",
+        "description": "Livre, leve e sempre em movimento."
+      },
+      "fogo": {
+        "title": "Fogo",
+        "description": "Intenso, apaixonado e cheio de energia."
+      },
+      "eter": {
+        "title": "Éter",
+        "description": "Místico, transcendental e puro."
+      }
+    },
     "stats": {
       "streak": "Ofensiva",
       "xp": "XP Total",

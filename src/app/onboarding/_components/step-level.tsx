@@ -2,7 +2,14 @@
 
 import { useOnboardingStore } from "@/store/use-onboarding-store";
 import { motion } from "framer-motion";
-import { Check, Sparkles, BookOpen, Brain, GraduationCap, Trophy } from "lucide-react";
+import {
+  Check,
+  Sparkles,
+  BookOpen,
+  Brain,
+  GraduationCap,
+  Trophy,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const LEVELS = [
@@ -88,7 +95,7 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
           <h1 className="text-3xl font-black md:text-4xl tracking-tight text-[#042c60] dark:text-white">
             {t.rich("how_much_do_you_know", {
               course_title: courseTitle,
-              spanTag: (chunks) => (
+              spanTag: (chunks: React.ReactNode) => (
                 <span className="text-[#58cc02] relative inline-block">
                   {chunks}
                   <motion.span
@@ -136,7 +143,10 @@ export const StepLevel = ({ courseTitle }: StepLevelProps) => {
               <div
                 className={`w-16 h-16 flex items-center justify-center flex-shrink-0 rounded-2xl bg-white dark:bg-slate-950 shadow-sm border border-gray-100 dark:border-slate-800`}
               >
-                <level.icon className={`w-8 h-8 ${level.accent}`} strokeWidth={2.5} />
+                <level.icon
+                  className={`w-8 h-8 ${level.accent}`}
+                  strokeWidth={2.5}
+                />
               </div>
               <div className="flex-1">
                 <h3 className="font-black text-xl text-[#042c60] dark:text-white leading-none mb-1">

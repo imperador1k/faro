@@ -49,7 +49,7 @@ export const ConnectedAccounts = () => {
   }
 
   const connectedAccounts = user.externalAccounts;
-  const hasGoogle = connectedAccounts.some((acc) =>
+  const hasGoogle = connectedAccounts.some((acc: any) =>
     acc.provider.includes("google"),
   );
 
@@ -76,7 +76,7 @@ export const ConnectedAccounts = () => {
     setIsUnlinking(accountId);
     try {
       const accountToUnlink = user.externalAccounts.find(
-        (acc) => acc.id === accountId,
+        (acc: any) => acc.id === accountId,
       );
       if (accountToUnlink) {
         await accountToUnlink.destroy();
@@ -101,7 +101,7 @@ export const ConnectedAccounts = () => {
       </p>
 
       <div className="flex flex-col gap-3 mt-2">
-        {connectedAccounts.map((account) => {
+        {connectedAccounts.map((account: any) => {
           const providerName = account.provider.replace("oauth_", "");
           const formattedName =
             providerName.charAt(0).toUpperCase() + providerName.slice(1);

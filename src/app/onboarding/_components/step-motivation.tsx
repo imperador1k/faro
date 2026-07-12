@@ -122,7 +122,7 @@ export const StepMotivation = () => {
       <div className="text-center md:text-left w-full space-y-2 px-2">
         <h1 className="text-3xl font-black text-[#042c60] dark:text-white tracking-tight">
           {t.rich("step_motivation_title", {
-            span: (chunks) => (
+            span: (chunks: React.ReactNode) => (
               <span className="text-sky-500 underline decoration-sky-100">
                 {chunks}
               </span>

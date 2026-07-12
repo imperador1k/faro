@@ -9,6 +9,7 @@ interface PreferencesState {
   hasSeenArcadeModal: boolean;
   hasSeenLeagueModal: boolean;
   hasSeenIntroOverlay: boolean;
+  hasSetupProfile: boolean;
   isMuted: boolean;
   nativeLanguage: string | null;
   inAppNotificationsEnabled: boolean;
@@ -34,6 +35,7 @@ export const usePreferencesStore = create<PreferencesState>()(
       hasSeenArcadeModal: false,
       hasSeenLeagueModal: false,
       hasSeenIntroOverlay: false,
+      hasSetupProfile: false,
       isMuted: false,
       nativeLanguage: null,
       inAppNotificationsEnabled: true,

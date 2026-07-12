@@ -5,7 +5,7 @@ import { Zap, Heart, Trophy, ChevronRight, Infinity } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 
 export const DesktopSidebar = ({
   points,
@@ -30,7 +30,7 @@ export const DesktopSidebar = ({
   const dailyGoal = 200;
   const todayXp = points % dailyGoal;
 
-  const containerVariants: Variants = {
+  const containerVariants = {
     hidden: { opacity: 0, x: 20 },
     visible: {
       opacity: 1,

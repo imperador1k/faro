@@ -70,10 +70,15 @@ export const EditProfileButton = () => {
 
       toast.success(t("success_message"));
       setIsOpen(false);
-    } catch (error: any) {
-      console.error(error);
+    } catch (error: unknown) {
+      const err = error as {
+        errors?: { longMessage?: string; message?: string }[];
+        message?: string;
+      };
+      console.error(err);
       toast.error(t("error_title"), {
-        description: error.errors?.[0]?.message || t("error_description"),
+        description:
+          err?.errors?.[0]?.message || err?.message || t("error_description"),
       });
     } finally {
       setIsSaving(false);

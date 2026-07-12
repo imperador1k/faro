@@ -1,9 +1,9 @@
-import { GoogleGenerativeAI, GenerationConfig } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export async function generateTextWithFallback(
   prompt: string,
   systemInstruction?: string,
-  generationConfig?: GenerationConfig,
+  generationConfig?: Record<string, unknown>,
 ): Promise<string> {
   // 1. Find all environment variables that start with 'GEMINI_API_KEY_'
   let keys = Object.keys(process.env)

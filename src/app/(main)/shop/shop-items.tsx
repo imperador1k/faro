@@ -133,12 +133,12 @@ export const ShopItems = ({
                   {t.rich("spend_xp_confirm", {
                     cost: confirmModal.cost,
                     itemName: confirmModal.itemName,
-                    span: (chunks) => (
+                    span: (chunks: React.ReactNode) => (
                       <span className="font-black text-amber-500 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200 shadow-sm">
                         {chunks}
                       </span>
                     ),
-                    itemSpan: (chunks) => (
+                    itemSpan: (chunks: React.ReactNode) => (
                       <span className="font-black text-stone-700 dark:text-slate-200 block mt-2 text-2xl uppercase tracking-tight">
                         {chunks}
                       </span>
@@ -216,7 +216,8 @@ export const ShopItems = ({
                 }
                 className={cn(
                   "w-full md:w-auto shrink-0 h-14 min-w-[180px] px-6 rounded-xl text-base uppercase tracking-widest flex items-center justify-center gap-2",
-                  !canBuyOneHeart && "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
+                  !canBuyOneHeart &&
+                    "bg-stone-200 dark:bg-slate-700 text-stone-400 dark:text-slate-500 border-2 border-transparent border-b-4 border-b-stone-300 dark:border-b-slate-700 pointer-events-none",
                 )}
               >
                 <span>{t("buy")}</span>
@@ -533,7 +534,7 @@ export const ShopItems = ({
           </p>
           <p className="text-sm md:text-base text-amber-700/80 font-bold max-w-lg mx-auto leading-relaxed">
             {t.rich("xp_tip", {
-              span: (chunks) => (
+              span: (chunks: React.ReactNode) => (
                 <span className="text-purple-600 font-black">{chunks}</span>
               ),
             })}

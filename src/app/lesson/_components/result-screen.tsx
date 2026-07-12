@@ -107,7 +107,7 @@ export const ResultScreen = ({
 
         <div className="w-full mt-auto pb-10">
           <Button
-            variant="primary"
+            variant="default"
             size="lg"
             className="w-full h-12 text-lg uppercase tracking-wide"
             onClick={onContinue}

@@ -106,6 +106,32 @@ export function useGeminiLive() {
     );
   }, []);
 
+  const stopRecording = useCallback(() => {
+    setIsRecording(false);
+    setStatus("idle");
+
+    if (wsRef.current) {
+      wsRef.current.close();
+      wsRef.current = null;
+    }
+    if (processorRef.current) {
+      processorRef.current.disconnect();
+      processorRef.current = null;
+    }
+    if (audioInputRef.current) {
+      audioInputRef.current.disconnect();
+      audioInputRef.current = null;
+    }
+    if (audioContextRef.current) {
+      audioContextRef.current.close();
+      audioContextRef.current = null;
+    }
+    if (mediaStreamRef.current) {
+      mediaStreamRef.current.getTracks().forEach((t) => t.stop());
+      mediaStreamRef.current = null;
+    }
+  }, []);
+
   const startRecording = useCallback(async () => {
     try {
       setStatus("connecting");
@@ -224,33 +250,7 @@ export function useGeminiLive() {
       console.error("Failed to start Live API", err);
       setStatus("error");
     }
-  }, [playAudioChunk, sendSetup]);
-
-  const stopRecording = useCallback(() => {
-    setIsRecording(false);
-    setStatus("idle");
-
-    if (wsRef.current) {
-      wsRef.current.close();
-      wsRef.current = null;
-    }
-    if (processorRef.current) {
-      processorRef.current.disconnect();
-      processorRef.current = null;
-    }
-    if (audioInputRef.current) {
-      audioInputRef.current.disconnect();
-      audioInputRef.current = null;
-    }
-    if (audioContextRef.current) {
-      audioContextRef.current.close();
-      audioContextRef.current = null;
-    }
-    if (mediaStreamRef.current) {
-      mediaStreamRef.current.getTracks().forEach((t) => t.stop());
-      mediaStreamRef.current = null;
-    }
-  }, []);
+  }, [playAudioChunk, sendSetup, stopRecording]);
 
   const toggleRecording = useCallback(() => {
     if (isRecording) stopRecording();

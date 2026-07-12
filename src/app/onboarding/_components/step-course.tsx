@@ -46,7 +46,7 @@ export const StepCourse = ({ courses }: StepCourseProps) => {
 
       <h1 className="text-2xl sm:text-3xl font-black text-[#042c60] dark:text-white mb-6 px-2">
         {t.rich("choose_your_path", {
-          path_span: (chunks) => (
+          path_span: (chunks: React.ReactNode) => (
             <span className="text-[#58cc02]">{chunks}</span>
           ),
         })}

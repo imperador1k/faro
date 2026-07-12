@@ -232,7 +232,7 @@ export function LeagueInfoModal({ trigger }: Props) {
                         </p>
                         <p className="text-stone-600 dark:text-slate-300 font-bold text-sm mt-1 leading-relaxed">
                           {t.rich("pro_tip_body", {
-                            span: (chunks) => (
+                            span: (chunks: React.ReactNode) => (
                               <span className="text-amber-600">{chunks}</span>
                             ),
                           })}

@@ -263,7 +263,7 @@ export default function VocabularySwipe() {
                 exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
                 drag={isTop ? "x" : false}
                 dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(e, info) => {
+                onDragEnd={(e: unknown, info: { offset: { x: number } }) => {
                   if (info.offset.x > 100) handleSwipe("right");
                   else if (info.offset.x < -100) handleSwipe("left");
                 }}

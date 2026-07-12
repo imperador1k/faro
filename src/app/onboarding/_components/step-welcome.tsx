@@ -73,7 +73,7 @@ export const StepWelcome = () => {
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#042c60] dark:text-white leading-none">
                   {t.rich("marco_intro_welcome", {
                     brTag: () => <br />,
-                    spanTag: (chunks) => (
+                    spanTag: (chunks: React.ReactNode) => (
                       <span className="text-[#58cc02] inline-block mt-2">
                         {chunks}
                       </span>
@@ -95,7 +95,7 @@ export const StepWelcome = () => {
           >
             <p className="text-lg sm:text-xl md:text-2xl font-bold text-gray-500 leading-snug">
               {t.rich("marco_help_description", {
-                spanTag: (chunks) => (
+                spanTag: (chunks: React.ReactNode) => (
                   <span className="text-sky-500 font-black">{chunks}</span>
                 ),
               })}

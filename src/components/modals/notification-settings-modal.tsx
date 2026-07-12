@@ -48,7 +48,7 @@ export const NotificationSettingsModal = ({
             <div className="h-2 w-16 bg-emerald-400 rounded-full mx-auto my-6" />
             <DialogDescription className="text-center text-stone-500 dark:text-slate-400 font-bold text-lg md:text-xl leading-relaxed px-2">
               {t.rich("description", {
-                span: (chunks) => (
+                span: (chunks: React.ReactNode) => (
                   <span className="text-emerald-600">{chunks}</span>
                 ),
               })}

@@ -56,7 +56,8 @@ export function SurvivalLobbyClient({
           <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
             <div className="bg-slate-950 w-full max-w-2xl rounded-3xl p-8 shadow-[0_0_60px_-15px_rgba(225,29,72,0.3)] border border-rose-900/50 flex flex-col relative animate-in zoom-in-95 duration-300 overflow-hidden">
               <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-900 via-slate-900 to-black"></div>
-              <Button variant="ghost"
+              <Button
+                variant="ghost"
                 onClick={() => setShowInfo(false)}
                 className="absolute top-4 right-4 text-slate-500 hover:text-rose-500 transition-colors z-10"
               >
@@ -79,7 +80,7 @@ export function SurvivalLobbyClient({
                     <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0"></div>
                     <p>
                       {t.rich("imminent_threat", {
-                        strong: (chunks) => (
+                        strong: (chunks: React.ReactNode) => (
                           <strong className="text-white">{chunks}</strong>
                         ),
                       })}
@@ -89,7 +90,7 @@ export function SurvivalLobbyClient({
                     <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0"></div>
                     <p>
                       {t.rich("ai_chaos", {
-                        strong: (chunks) => (
+                        strong: (chunks: React.ReactNode) => (
                           <strong className="text-white">{chunks}</strong>
                         ),
                       })}
@@ -99,7 +100,7 @@ export function SurvivalLobbyClient({
                     <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0"></div>
                     <p>
                       {t.rich("final_judgment", {
-                        strong: (chunks) => (
+                        strong: (chunks: React.ReactNode) => (
                           <strong className="text-white">{chunks}</strong>
                         ),
                       })}
@@ -128,7 +129,8 @@ export function SurvivalLobbyClient({
           <h1 className="text-3xl lg:text-4xl font-extrabold text-slate-800 dark:text-slate-100">
             {t("survival_mode")}
           </h1>
-          <Button variant="ghost"
+          <Button
+            variant="ghost"
             onClick={() => setShowInfo(true)}
             className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-sky-500 hover:bg-sky-50 dark:hover:bg-sky-900/30 flex items-center justify-center transition-all"
             title={t("how_it_works")}
@@ -143,13 +145,15 @@ export function SurvivalLobbyClient({
 
       <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div className="flex bg-stone-100 dark:bg-slate-900 p-1.5 rounded-2xl border-2 border-stone-200 dark:border-slate-800 w-full md:w-auto">
-          <Button variant="ghost"
+          <Button
+            variant="ghost"
             onClick={() => setFilterStatus("ACTIVE")}
             className={`flex-1 md:w-32 py-2 px-4 rounded-xl font-bold text-sm transition-all ${filterStatus === "ACTIVE" ? "bg-white dark:bg-slate-800 text-sky-500 shadow-sm" : "text-stone-500 dark:text-slate-400 hover:text-stone-700"}`}
           >
             {t("to_do")}
           </Button>
-          <Button variant="ghost"
+          <Button
+            variant="ghost"
             onClick={() => setFilterStatus("COMPLETED")}
             className={`flex-1 md:w-32 py-2 px-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${filterStatus === "COMPLETED" ? "bg-white dark:bg-slate-800 text-green-500 shadow-sm" : "text-stone-500 dark:text-slate-400 hover:text-stone-700"}`}
           >
@@ -162,7 +166,8 @@ export function SurvivalLobbyClient({
 
         <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 custom-scrollbar">
           {["ALL", "A1", "A2", "B1", "B2", "C1", "C2"].map((level) => (
-            <Button variant="ghost"
+            <Button
+              variant="ghost"
               key={level}
               onClick={() => setFilterLevel(level)}
               className={`shrink-0 px-4 py-2 rounded-xl font-bold text-sm border-2 transition-all ${

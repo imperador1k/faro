@@ -1175,32 +1175,32 @@ export default function EvaluationPage() {
                       !languageLoaded ||
                       statusLoading ||
                       (evalStatus && !evalStatus.canTakeTest)
-                    ? "bg-slate-200 border-slate-300 text-slate-400 cursor-not-allowed dark:bg-slate-800 dark:border-slate-700 dark:text-slate-500"
-                    : "bg-gradient-to-b from-[#58CC02] to-[#46a302] border-[#378200] cursor-pointer shadow-[0_8px_32px_rgba(88,204,2,0.4)]",
-                )}
-              >
-                {/* Gloss overlay */}
-                {!(isLoading || !languageLoaded) && (
-                  <div className="pointer-events-none absolute top-0 left-0 right-0 h-1/2 bg-white/10 rounded-t-[1.75rem]" />
-                )}
-                {isLoading || statusLoading ? (
-                  <>
-                    <Loader2 className="h-7 w-7 animate-spin" />
-                    {t("preparing")}
-                  </>
-                ) : evalStatus && !evalStatus.canTakeTest ? (
-                  <>
-                    <Zap className="h-7 w-7 stroke-[3] fill-current opacity-50" />
-                    {t("unavailable")}
-                  </>
-                ) : (
-                  <>
-                    <Zap className="h-7 w-7 stroke-[3] fill-white/20" />
-                    {t("start_evaluation")}
-                    <ChevronRight className="h-7 w-7 stroke-[3]" />
-                  </>
-                )}
-              </Button>
+                      ? "bg-slate-200 border-slate-300 text-slate-400 cursor-not-allowed dark:bg-slate-800 dark:border-slate-700 dark:text-slate-500"
+                      : "bg-gradient-to-b from-[#58CC02] to-[#46a302] border-[#378200] cursor-pointer shadow-[0_8px_32px_rgba(88,204,2,0.4)]",
+                  )}
+                >
+                  {/* Gloss overlay */}
+                  {!(isLoading || !languageLoaded) && (
+                    <div className="pointer-events-none absolute top-0 left-0 right-0 h-1/2 bg-white/10 rounded-t-[1.75rem]" />
+                  )}
+                  {isLoading || statusLoading ? (
+                    <>
+                      <Loader2 className="h-7 w-7 animate-spin" />
+                      {t("preparing")}
+                    </>
+                  ) : evalStatus && !evalStatus.canTakeTest ? (
+                    <>
+                      <Zap className="h-7 w-7 stroke-[3] fill-current opacity-50" />
+                      {t("unavailable")}
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="h-7 w-7 stroke-[3] fill-white/20" />
+                      {t("start_evaluation")}
+                      <ChevronRight className="h-7 w-7 stroke-[3]" />
+                    </>
+                  )}
+                </Button>
               </motion.div>
             </motion.div>
           )}
@@ -1928,7 +1928,8 @@ export default function EvaluationPage() {
                 disabled={selectedOption === null}
                 className={cn(
                   "w-full py-5 rounded-[1.5rem] text-xl tracking-wider uppercase",
-                  selectedOption === null && "bg-[#E5E5E5] text-[#AFAFAF] border-b-[8px] border-[#d4d4d4] pointer-events-none",
+                  selectedOption === null &&
+                    "bg-[#E5E5E5] text-[#AFAFAF] border-b-[8px] border-[#d4d4d4] pointer-events-none",
                 )}
               >
                 {t("verify")}
@@ -2098,7 +2099,9 @@ export default function EvaluationPage() {
                     </h3>
                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                       {t.rich("intro_paragraph", {
-                        b: (chunks) => <strong>{chunks}</strong>,
+                        b: (chunks: React.ReactNode) => (
+                          <strong>{chunks}</strong>
+                        ),
                       })}
                     </p>
                   </section>
@@ -2165,7 +2168,9 @@ export default function EvaluationPage() {
                       </h3>
                       <p className="text-sm text-slate-300 leading-relaxed font-medium">
                         {t.rich("ai_section", {
-                          b: (chunks) => <strong>{chunks}</strong>,
+                          b: (chunks: React.ReactNode) => (
+                            <strong>{chunks}</strong>
+                          ),
                         })}
                       </p>
                     </div>

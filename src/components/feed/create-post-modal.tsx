@@ -48,6 +48,14 @@ export function CreatePostModal({
     });
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isPending) {
+      setResult(null);
+      setContent("");
+      onClose();
+    }
+  };
+
   const handleClose = () => {
     if (!isPending) {
       setResult(null);
@@ -71,7 +79,9 @@ export function CreatePostModal({
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: React.MouseEvent<HTMLDivElement>) =>
+                e.stopPropagation()
+              }
               className="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-md shadow-2xl overflow-hidden relative"
             >
               {/* Header */}

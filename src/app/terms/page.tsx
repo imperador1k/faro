@@ -57,17 +57,17 @@ export default function TermsPage() {
           <div className="space-y-4 text-lg text-stone-600 dark:text-slate-300 leading-relaxed font-medium">
             <p>
               {t.rich("section_2_p1", {
-                b: (chunks) => <strong>{chunks}</strong>,
+                b: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
               })}
             </p>
             <p>
               {t.rich("section_2_p2", {
-                b: (chunks) => <strong>{chunks}</strong>,
+                b: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
               })}
             </p>
             <p>
               {t.rich("section_2_p3", {
-                b: (chunks) => <strong>{chunks}</strong>,
+                b: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
               })}
             </p>
           </div>

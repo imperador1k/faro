@@ -533,6 +533,7 @@ export const FloatingMarco = () => {
             <div className="absolute bottom-full left-4 mb-2 bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 rounded-2xl shadow-xl overflow-hidden z-30 w-64 animate-in slide-in-from-bottom-2 fade-in">
               {SLASH_COMMANDS.map((cmd) => (
                 <Button
+                  key={cmd.cmd}
                   variant="ghost"
                   onClick={() => handleCommandClick(cmd)}
                   className="flex items-center gap-3 p-3 justify-start w-full border-b-2 border-stone-100 dark:border-slate-700 last:border-0"

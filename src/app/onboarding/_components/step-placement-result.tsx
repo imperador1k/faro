@@ -42,7 +42,7 @@ export const StepPlacementResult = () => {
           </h2>
           <p className="text-lg sm:text-xl font-black text-[#58cc02]">
             {t.rich("power_accumulated", {
-              span: (chunks) => (
+              span: (chunks: React.ReactNode) => (
                 <span className="underline decoration-4 underline-offset-4">
                   {chunks}
                 </span>
@@ -68,8 +68,10 @@ export const StepPlacementResult = () => {
             <p className="text-gray-500 dark:text-gray-300 font-bold text-sm">
               {t.rich("starting_section", {
                 section: result.section,
-                span: (chunks) => (
-                  <span className="text-[#042c60] dark:text-white">{chunks}</span>
+                span: (chunks: React.ReactNode) => (
+                  <span className="text-[#042c60] dark:text-white">
+                    {chunks}
+                  </span>
                 ),
               })}
             </p>

@@ -49,7 +49,7 @@ async function ReviewsData() {
         <div className="flex-1 flex flex-col items-center text-center md:items-start md:text-left gap-4">
           <h1 className="text-4xl md:text-5xl font-black text-stone-800 dark:text-slate-100 leading-tight flex items-center justify-center md:justify-start gap-2 flex-wrap">
             {t.rich("title", {
-              span: (chunks) => (
+              span: (chunks: React.ReactNode) => (
                 <span className="text-[#1CB0F6] bg-sky-100 px-4 py-1 rounded-2xl ml-1">
                   {chunks}
                 </span>

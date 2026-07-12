@@ -61,7 +61,7 @@ export const PracticeInfoModal = ({ isOpen, onOpenChange }: Props) => {
           <div className="flex flex-col items-center justify-center gap-6 p-8 w-full -mt-6 bg-white dark:bg-slate-900 rounded-t-[2.5rem] relative z-20">
             <p className="text-[15px] font-bold text-stone-500 dark:text-slate-400 text-center leading-relaxed">
               {t.rich("description", {
-                highlight: (chunks) => (
+                highlight: (chunks: React.ReactNode) => (
                   <span className="text-indigo-500 font-black">{chunks}</span>
                 ),
               })}

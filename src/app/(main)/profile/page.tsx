@@ -120,7 +120,7 @@ async function ProfileData() {
               className="w-full sm:w-auto h-11 sm:h-12 block"
             >
               <Button
-                variant="primary"
+                variant="default"
                 className="w-full h-full gap-2 rounded-xl sm:rounded-2xl px-4 sm:px-5 transition-all"
               >
                 <Settings className="h-4 w-4 md:h-5 md:w-5" />

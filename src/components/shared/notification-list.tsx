@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Heart, UserPlus, MessageCircle, Bell } from "lucide-react";
 import { onMarkNotificationAsRead } from "@/actions/user-actions";
@@ -38,7 +39,13 @@ export const NotificationList = ({ notifications }: Props) => {
     if (senderImage) {
       return (
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-stone-100 dark:bg-slate-800 overflow-hidden border border-stone-200 dark:border-slate-700">
-          <img src={senderImage} alt="User Avatar" className="h-full w-full object-cover" />
+          <Image
+            src={senderImage}
+            alt="User Avatar"
+            width={48}
+            height={48}
+            className="h-full w-full object-cover"
+          />
         </div>
       );
     }
@@ -97,18 +104,27 @@ export const NotificationList = ({ notifications }: Props) => {
   }
 
   const formatRelativeTime = (date: Date) => {
-    const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto', style: 'short' });
-    const daysDifference = Math.round((date.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-    
+    const rtf = new Intl.RelativeTimeFormat("en", {
+      numeric: "auto",
+      style: "short",
+    });
+    const daysDifference = Math.round(
+      (date.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24),
+    );
+
     if (daysDifference === 0) {
-      const hoursDifference = Math.round((date.getTime() - new Date().getTime()) / (1000 * 60 * 60));
+      const hoursDifference = Math.round(
+        (date.getTime() - new Date().getTime()) / (1000 * 60 * 60),
+      );
       if (hoursDifference === 0) {
-        const minsDifference = Math.round((date.getTime() - new Date().getTime()) / (1000 * 60));
-        return rtf.format(minsDifference, 'minute');
+        const minsDifference = Math.round(
+          (date.getTime() - new Date().getTime()) / (1000 * 60),
+        );
+        return rtf.format(minsDifference, "minute");
       }
-      return rtf.format(hoursDifference, 'hour');
+      return rtf.format(hoursDifference, "hour");
     }
-    return rtf.format(daysDifference, 'day');
+    return rtf.format(daysDifference, "day");
   };
 
   return (
@@ -139,21 +155,21 @@ export const NotificationList = ({ notifications }: Props) => {
                   "text-sm leading-snug",
                   !n.read
                     ? "font-semibold text-stone-900 dark:text-slate-100"
-                    : "text-stone-700 dark:text-slate-300"
+                    : "text-stone-700 dark:text-slate-300",
                 )}
               >
                 {n.message}
                 <span className="text-stone-400 dark:text-slate-500 font-normal ml-2 text-[13px]">
-                  {mounted && n.createdAt ? formatRelativeTime(new Date(n.createdAt)) : ""}
+                  {mounted && n.createdAt
+                    ? formatRelativeTime(new Date(n.createdAt))
+                    : ""}
                 </span>
               </p>
             </div>
-            
+
             {/* Action / Indicator Area */}
             <div className="flex flex-col items-center justify-center h-full px-2 pt-3">
-               {!n.read && (
-                 <div className="h-2 w-2 rounded-full bg-blue-500" />
-               )}
+              {!n.read && <div className="h-2 w-2 rounded-full bg-blue-500" />}
             </div>
           </Wrapper>
         );

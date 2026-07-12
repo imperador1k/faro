@@ -5,13 +5,13 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 
 // Animation configuration for staggered children entry
-const containerVariants: Variants = {
+const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -23,7 +23,7 @@ const containerVariants: Variants = {
 };
 
 // Card pop transition
-const cardVariants: Variants = {
+const cardVariants = {
   hidden: { opacity: 0, scale: 0.8, y: 30 },
   visible: {
     opacity: 1,
@@ -34,7 +34,7 @@ const cardVariants: Variants = {
 };
 
 // Individual child items variant within card
-const itemVariants: Variants = {
+const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,

@@ -166,14 +166,16 @@ export const OnboardingClient = ({ courses }: OnboardingClientProps) => {
         </AnimatePresence>
       </main>
 
-      <footer className="w-full p-4 bg-white dark:bg-slate-950 border-t-2 border-gray-100 dark:border-slate-800 lg:max-w-5xl lg:mx-auto shrink-0">
+      <footer className="w-full p-4 bg-white dark:bg-slate-950 border-t-2 border-gray-100 dark:border-slate-800 lg:max-w-5xl lg:mx-auto shrink-0 relative z-10">
         <Button
           onClick={handleContinue}
           disabled={!canContinue}
           variant={canContinue ? "default" : "locked"}
           size="lg"
           className={`w-full py-4 rounded-2xl text-lg ${
-            !canContinue ? "bg-[#e5e5e5] text-[#afafaf] border-none shadow-none opacity-100" : ""
+            !canContinue
+              ? "bg-[#e5e5e5] text-[#afafaf] border-none shadow-none opacity-100"
+              : ""
           }`}
         >
           {t("continue_button")}

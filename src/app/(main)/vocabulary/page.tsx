@@ -61,7 +61,7 @@ async function VocabularyData() {
             <p className="text-sky-100 font-bold text-base sm:text-lg lg:text-xl tracking-wide max-w-md mt-2 leading-tight">
               {t.rich("mastered_desc", {
                 count: vocabularyList.length,
-                span: (chunks) => (
+                span: (chunks: React.ReactNode) => (
                   <span className="text-white font-black">{chunks}</span>
                 ),
               })}

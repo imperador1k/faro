@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Mail, Key, ShieldCheck, Eye, EyeOff } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -124,7 +124,7 @@ export default function ForgotPasswordPage() {
     }
   };
 
-  const formVariants: Variants = {
+  const formVariants = {
     initial: { opacity: 0 },
     animate: {
       opacity: 1,
@@ -136,7 +136,7 @@ export default function ForgotPasswordPage() {
     exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } },
   };
 
-  const itemVariants: Variants = {
+  const itemVariants = {
     initial: { opacity: 0, y: 20 },
     animate: {
       opacity: 1,

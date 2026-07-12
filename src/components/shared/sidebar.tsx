@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, memo, useEffect } from "react";
 import { cn } from "@/lib/utils";
@@ -174,10 +175,12 @@ export const Sidebar = ({
         )}
       >
         <Link href="/learn" className="flex items-center gap-3 w-full">
-          <img
+          <Image
             alt="Faro Logo"
             className="h-10 w-10 shrink-0 drop-shadow-md transition-transform hover:scale-105 duration-300"
             src="/faro_icon.png"
+            width={40}
+            height={40}
           />
           <h1
             className={cn(

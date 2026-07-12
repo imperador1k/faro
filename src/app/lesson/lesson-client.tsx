@@ -525,7 +525,7 @@ export const LessonClient = ({
                 transition={{ delay: 0.1 }}
               >
                 <Button
-                  variant="primary"
+                  variant="default"
                   size="lg"
                   className="w-full h-16 text-xl rounded-2xl bg-[#58CC02] hover:bg-[#46a302] border-none shadow-[0_6px_0_0_#367c02] transition-all font-black"
                   onClick={() => router.push("/lesson?clinic=true")}
@@ -638,7 +638,7 @@ export const LessonClient = ({
                 transition={{ delay: 0.3 }}
               >
                 <Button
-                  variant="primary"
+                  variant="default"
                   size="lg"
                   className="w-full h-16 text-xl rounded-[2rem] tracking-wide uppercase shadow-[0_6px_0_0_#46a302] hover:shadow-[0_2px_0_0_#46a302] hover:translate-y-[4px] active:shadow-none active:translate-y-[6px] transition-all bg-[#58CC02] border-none font-black"
                   onClick={cancelExit}

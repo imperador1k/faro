@@ -83,18 +83,14 @@ export const HeartsModal = () => {
 
             <Button
               onClick={onShop}
-              variant="primary"
+              variant="default"
               className="bg-[#1CB0F6] hover:bg-[#1899d6] text-white border-b-4 border-[#147bb0] active:border-b-0 py-6 rounded-2xl text-lg font-black tracking-widest flex items-center gap-3"
             >
               <ShoppingCart className="w-6 h-6" />
               {t("shop_button")}
             </Button>
 
-            <Button
-              onClick={closeModal}
-              variant="ghost"
-              className="mt-2 py-4"
-            >
+            <Button onClick={closeModal} variant="ghost" className="mt-2 py-4">
               {t("later_button")}
             </Button>
           </div>

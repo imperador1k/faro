@@ -35,7 +35,10 @@ export const ArcadeInfoModal = ({ isOpen, onOpenChange }: Props) => {
         <div className="relative bg-white dark:bg-slate-900 border-2 border-stone-200 dark:border-slate-800 border-b-8 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col items-center">
           {/* Custom Close Button */}
           <DialogClose asChild>
-            <Button variant="ghost" className="absolute right-4 top-4 h-10 w-10 rounded-2xl bg-white/20 text-white hover:bg-white/30 z-50">
+            <Button
+              variant="ghost"
+              className="absolute right-4 top-4 h-10 w-10 rounded-2xl bg-white/20 text-white hover:bg-white/30 z-50"
+            >
               <X className="w-5 h-5 font-black" />
             </Button>
           </DialogClose>
@@ -57,7 +60,7 @@ export const ArcadeInfoModal = ({ isOpen, onOpenChange }: Props) => {
           <div className="flex flex-col items-center justify-center gap-6 p-8 w-full -mt-6 bg-white dark:bg-slate-900 rounded-t-[2.5rem] relative z-20">
             <p className="text-[15px] font-bold text-stone-500 dark:text-slate-400 text-center leading-relaxed">
               {t.rich("description", {
-                xp: (chunks) => (
+                xp: (chunks: React.ReactNode) => (
                   <span className="text-amber-500 font-black">{chunks}</span>
                 ),
               })}

@@ -56,7 +56,7 @@ export const DangerZone = () => {
 
         <p className="text-slate-500 dark:text-slate-400 font-medium mb-6 leading-relaxed">
           {t.rich("modal_description", {
-            span: (chunks) => (
+            span: (chunks: React.ReactNode) => (
               <span className="font-bold text-red-500">{chunks}</span>
             ),
           })}
@@ -65,7 +65,9 @@ export const DangerZone = () => {
         <div className="bg-slate-50 dark:bg-slate-950 border-2 border-slate-100 dark:border-slate-800 rounded-2xl p-5 mb-8 text-left shadow-inner">
           <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
             {t.rich("confirm_instruction", {
-              span: (chunks) => <span className="text-red-500">{chunks}</span>,
+              span: (chunks: React.ReactNode) => (
+                <span className="text-red-500">{chunks}</span>
+              ),
             })}
           </label>
           <input

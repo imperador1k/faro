@@ -54,7 +54,8 @@ export function NativeBridge() {
     const isTauri =
       typeof window !== "undefined" &&
       (navigator.userAgent.includes("TauriDesktop") ||
-        !!(window as any).__TAURI_INTERNALS__);
+        !!(window as unknown as { __TAURI_INTERNALS__?: boolean })
+          .__TAURI_INTERNALS__);
 
     if (!isCapacitor && !isTauri) return;
 

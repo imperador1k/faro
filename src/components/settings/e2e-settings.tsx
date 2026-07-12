@@ -124,7 +124,7 @@ export function E2ESettings() {
               </div>
               <p className="text-sm font-bold text-stone-500 dark:text-slate-400 leading-relaxed mb-6">
                 {t.rich("vault_explanation", {
-                  b: (chunks) => <b>{chunks}</b>,
+                  b: (chunks: React.ReactNode) => <b>{chunks}</b>,
                 })}
               </p>
               <Button

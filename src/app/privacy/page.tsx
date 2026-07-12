@@ -46,17 +46,17 @@ export default function PrivacyPage() {
           <div className="space-y-4 text-lg text-stone-600 dark:text-slate-300 leading-relaxed font-medium">
             <p>
               {t.rich("section1_p1", {
-                strong: (chunks) => <strong>{chunks}</strong>,
+                strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
               })}
             </p>
             <p>
               {t.rich("section1_p2", {
-                strong: (chunks) => <strong>{chunks}</strong>,
+                strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
               })}
             </p>
             <p>
               {t.rich("section1_p3", {
-                strong: (chunks) => <strong>{chunks}</strong>,
+                strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
               })}
             </p>
           </div>
@@ -98,12 +98,12 @@ export default function PrivacyPage() {
           <div className="space-y-4 text-lg text-stone-600 dark:text-slate-300 leading-relaxed font-medium">
             <p>
               {t.rich("section7_p1", {
-                strong: (chunks) => <strong>{chunks}</strong>,
+                strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
               })}
             </p>
             <p>
               {t.rich("section7_p2", {
-                strong: (chunks) => <strong>{chunks}</strong>,
+                strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
               })}
             </p>
           </div>

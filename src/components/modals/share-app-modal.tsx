@@ -56,18 +56,14 @@ export const ShareAppModal = () => {
           <div className="flex flex-col gap-3 w-full">
             <Button
               onClick={onShare}
-              variant="primary"
+              variant="default"
               className="bg-[#1CB0F6] hover:bg-[#1899d6] text-white border-b-4 border-[#147bb0] active:border-b-0 py-6 rounded-2xl text-lg font-black tracking-widest flex items-center gap-3"
             >
               <Send className="w-6 h-6" />
               {t("button_share")}
             </Button>
 
-            <Button
-              onClick={closeModal}
-              variant="ghost"
-              className="mt-2 py-4"
-            >
+            <Button onClick={closeModal} variant="ghost" className="mt-2 py-4">
               {t("button_later")}
             </Button>
           </div>

@@ -98,7 +98,7 @@ export const VocabularySprint = ({
     setIsRevealed(false);
     setFeedback("idle");
     setSelectedOption(null);
-  }, [currentIndex]);
+  }, [currentIndex, deck]);
 
   const animateAndNext = useCallback((direction: "left" | "right") => {
     setSlideDirection(direction);
@@ -154,6 +154,7 @@ export const VocabularySprint = ({
       animateAndNext,
       deck.length,
       currentIndex,
+      isPending,
     ],
   );
 

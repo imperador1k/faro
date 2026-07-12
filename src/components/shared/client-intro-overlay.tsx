@@ -87,7 +87,7 @@ export const ClientIntroOverlay = () => {
     }, 15); // Faster typing speed to prevent slow feeling
 
     return () => clearInterval(intervalId);
-  }, [step, currentFullText, isVisible]);
+  }, [step, currentFullText, isVisible, playWhoosh]);
 
   const changeLanguage = (langCode: string) => {
     if (langCode === locale) return;
@@ -251,14 +251,18 @@ export const ClientIntroOverlay = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="relative z-30 w-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-2 border-stone-200 dark:border-slate-700 rounded-3xl p-4 shadow-xl flex flex-col gap-4 mt-2 mb-4"
-              onClick={(e) => e.stopPropagation()} // Prevent advancing when clicking settings
+              onClick={(e: React.MouseEvent<HTMLDivElement>) =>
+                e.stopPropagation()
+              } // Prevent advancing when clicking settings
             >
               <div className="flex items-center justify-between gap-2">
                 <Button
                   variant="ghost"
                   size="sm"
                   className="flex-1 font-bold text-stone-500 dark:text-slate-400"
-                  onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                  onClick={() =>
+                    setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                  }
                 >
                   {resolvedTheme === "dark" ? (
                     <Sun className="w-4 h-4 mr-2" />

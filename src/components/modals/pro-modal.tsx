@@ -118,7 +118,7 @@ export const ProModal = () => {
               {/* Title */}
               <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-amber-900 drop-shadow-sm">
                 {t.rich("title", {
-                  span: (chunks) => (
+                  span: (chunks: React.ReactNode) => (
                     <span className="text-white drop-shadow-[0_2px_4px_rgba(180,80,0,0.5)]">
                       {chunks}
                     </span>
