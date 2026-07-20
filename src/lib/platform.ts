@@ -1,9 +1,25 @@
-export type Platform = "tauri" | "capacitor" | "android" | "ios" | "windows" | "macos" | "linux" | "pwa";
+export type Platform =
+  | "tauri"
+  | "capacitor"
+  | "android"
+  | "ios"
+  | "windows"
+  | "macos"
+  | "linux"
+  | "pwa";
 
 export function detectPlatform(): Platform {
   if (typeof window === "undefined") return "pwa";
 
-  if ((window as any).__TAURI__ || (window as any).__TAURI_INTERNALS__) return "tauri";
+  // Detect Tauri via globals (withGlobalTauri: true) OR via custom UserAgent
+  // The UserAgent "Faro TauriDesktop" is set in tauri.conf.json and is the
+  // most reliable fallback if globals haven't been injected yet.
+  if (
+    (window as any).__TAURI__ ||
+    (window as any).__TAURI_INTERNALS__ ||
+    navigator.userAgent.includes("TauriDesktop")
+  )
+    return "tauri";
   if ((window as any).Capacitor?.isNative) return "capacitor";
 
   const ua = navigator.userAgent;

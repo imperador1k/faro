@@ -27,9 +27,7 @@
   "plugins": {
     "deep-link": {
       "desktop": {
-        "schemes": [
-          "myduolingo"
-        ]
+        "schemes": ["myduolingo"]
       }
     },
     "updater": {
@@ -42,9 +40,6 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "externalBin": [
-      "../uninstaller-app/src-tauri/target/release/faro-uninstaller"
-    ],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
